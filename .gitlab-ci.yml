@@ -19,28 +19,28 @@ build:
     paths:
       - build
 
-#test:
-#  type: test
-#  tags:
-#    - htpc
-#  script:
-#    - ./test.sh
-#  dependencies:
-#    - build
-#  cache:
-#    policy: pull
-#    paths:
-#      - build
-#
-#package:
-#  type: package
-#  tags:
-#    - htpc
-#  script:
-#    - ./package.sh
-#  dependencies:
-#    - test
-#  cache:
-#    policy: pull
-#    paths:
-#      - build
+test:
+  type: test
+  tags:
+    - htpc
+  script:
+    - ./test.sh
+  dependencies:
+    - build
+  cache:
+    policy: pull
+    paths:
+      - build
+
+package:
+  type: package
+  tags:
+    - htpc
+  script:
+    - ./package.sh
+  dependencies:
+    - test
+  cache:
+    policy: pull
+    paths:
+      - build
