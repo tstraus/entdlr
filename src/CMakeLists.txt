@@ -3,16 +3,8 @@ set (CMAKE_RELWITHDEBINFO_POSTFIX rd)
 set (CMAKE_MINSIZEREL_POSTFIX rm)
 
 add_subdirectory (gtest)
-add_subdirectory (runtime)
-add_subdirectory (generated)
+add_subdirectory (antlr_runtime)
 
-project (entdlr)
-
-add_executable (${PROJECT_NAME} main.cpp)
-
-target_link_libraries (${PROJECT_NAME}
-    entdlr::parser
-)
-
-install (TARGETS ${PROJECT_NAME} DESTINATION bin)
+enable_testing ()
+add_subdirectory (entdlr)
 
