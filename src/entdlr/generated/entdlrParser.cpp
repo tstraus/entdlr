@@ -3,6 +3,7 @@
 
 
 #include "entdlrListener.h"
+#include "entdlrVisitor.h"
 
 #include "entdlrParser.h"
 
@@ -100,6 +101,14 @@ void entdlrParser::ProtoContext::exitRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<entdlrListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitProto(this);
+}
+
+
+antlrcpp::Any entdlrParser::ProtoContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitProto(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 entdlrParser::ProtoContext* entdlrParser::proto() {
@@ -223,6 +232,14 @@ void entdlrParser::SyntaxContext::exitRule(tree::ParseTreeListener *listener) {
     parserListener->exitSyntax(this);
 }
 
+
+antlrcpp::Any entdlrParser::SyntaxContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitSyntax(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 entdlrParser::SyntaxContext* entdlrParser::syntax() {
   SyntaxContext *_localctx = _tracker.createInstance<SyntaxContext>(_ctx, getState());
   enterRule(_localctx, 2, entdlrParser::RuleSyntax);
@@ -302,6 +319,14 @@ void entdlrParser::ImportStatementContext::exitRule(tree::ParseTreeListener *lis
   auto parserListener = dynamic_cast<entdlrListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitImportStatement(this);
+}
+
+
+antlrcpp::Any entdlrParser::ImportStatementContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitImportStatement(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 entdlrParser::ImportStatementContext* entdlrParser::importStatement() {
@@ -385,6 +410,14 @@ void entdlrParser::PackageStatementContext::exitRule(tree::ParseTreeListener *li
     parserListener->exitPackageStatement(this);
 }
 
+
+antlrcpp::Any entdlrParser::PackageStatementContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitPackageStatement(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 entdlrParser::PackageStatementContext* entdlrParser::packageStatement() {
   PackageStatementContext *_localctx = _tracker.createInstance<PackageStatementContext>(_ctx, getState());
   enterRule(_localctx, 6, entdlrParser::RulePackageStatement);
@@ -456,6 +489,14 @@ void entdlrParser::OptionContext::exitRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<entdlrListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitOption(this);
+}
+
+
+antlrcpp::Any entdlrParser::OptionContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitOption(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 entdlrParser::OptionContext* entdlrParser::option() {
@@ -567,6 +608,14 @@ void entdlrParser::OptionNameContext::exitRule(tree::ParseTreeListener *listener
   auto parserListener = dynamic_cast<entdlrListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitOptionName(this);
+}
+
+
+antlrcpp::Any entdlrParser::OptionNameContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitOptionName(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 entdlrParser::OptionNameContext* entdlrParser::optionName() {
@@ -687,6 +736,14 @@ void entdlrParser::OptionBodyContext::exitRule(tree::ParseTreeListener *listener
     parserListener->exitOptionBody(this);
 }
 
+
+antlrcpp::Any entdlrParser::OptionBodyContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitOptionBody(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 entdlrParser::OptionBodyContext* entdlrParser::optionBody() {
   OptionBodyContext *_localctx = _tracker.createInstance<OptionBodyContext>(_ctx, getState());
   enterRule(_localctx, 12, entdlrParser::RuleOptionBody);
@@ -755,6 +812,14 @@ void entdlrParser::OptionBodyVariableContext::exitRule(tree::ParseTreeListener *
     parserListener->exitOptionBodyVariable(this);
 }
 
+
+antlrcpp::Any entdlrParser::OptionBodyVariableContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitOptionBodyVariable(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 entdlrParser::OptionBodyVariableContext* entdlrParser::optionBodyVariable() {
   OptionBodyVariableContext *_localctx = _tracker.createInstance<OptionBodyVariableContext>(_ctx, getState());
   enterRule(_localctx, 14, entdlrParser::RuleOptionBodyVariable);
@@ -814,6 +879,14 @@ void entdlrParser::TopLevelDefContext::exitRule(tree::ParseTreeListener *listene
   auto parserListener = dynamic_cast<entdlrListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitTopLevelDef(this);
+}
+
+
+antlrcpp::Any entdlrParser::TopLevelDefContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitTopLevelDef(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 entdlrParser::TopLevelDefContext* entdlrParser::topLevelDef() {
@@ -895,6 +968,14 @@ void entdlrParser::MessageContext::exitRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<entdlrListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitMessage(this);
+}
+
+
+antlrcpp::Any entdlrParser::MessageContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitMessage(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 entdlrParser::MessageContext* entdlrParser::message() {
@@ -1016,6 +1097,14 @@ void entdlrParser::MessageBodyContext::exitRule(tree::ParseTreeListener *listene
   auto parserListener = dynamic_cast<entdlrListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitMessageBody(this);
+}
+
+
+antlrcpp::Any entdlrParser::MessageBodyContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitMessageBody(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 entdlrParser::MessageBodyContext* entdlrParser::messageBody() {
@@ -1169,6 +1258,14 @@ void entdlrParser::EnumDefinitionContext::exitRule(tree::ParseTreeListener *list
     parserListener->exitEnumDefinition(this);
 }
 
+
+antlrcpp::Any entdlrParser::EnumDefinitionContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitEnumDefinition(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 entdlrParser::EnumDefinitionContext* entdlrParser::enumDefinition() {
   EnumDefinitionContext *_localctx = _tracker.createInstance<EnumDefinitionContext>(_ctx, getState());
   enterRule(_localctx, 22, entdlrParser::RuleEnumDefinition);
@@ -1248,6 +1345,14 @@ void entdlrParser::EnumBodyContext::exitRule(tree::ParseTreeListener *listener) 
   auto parserListener = dynamic_cast<entdlrListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitEnumBody(this);
+}
+
+
+antlrcpp::Any entdlrParser::EnumBodyContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitEnumBody(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 entdlrParser::EnumBodyContext* entdlrParser::enumBody() {
@@ -1377,6 +1482,14 @@ void entdlrParser::EnumFieldContext::exitRule(tree::ParseTreeListener *listener)
     parserListener->exitEnumField(this);
 }
 
+
+antlrcpp::Any entdlrParser::EnumFieldContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitEnumField(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 entdlrParser::EnumFieldContext* entdlrParser::enumField() {
   EnumFieldContext *_localctx = _tracker.createInstance<EnumFieldContext>(_ctx, getState());
   enterRule(_localctx, 26, entdlrParser::RuleEnumField);
@@ -1473,6 +1586,14 @@ void entdlrParser::EnumValueOptionContext::exitRule(tree::ParseTreeListener *lis
     parserListener->exitEnumValueOption(this);
 }
 
+
+antlrcpp::Any entdlrParser::EnumValueOptionContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitEnumValueOption(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 entdlrParser::EnumValueOptionContext* entdlrParser::enumValueOption() {
   EnumValueOptionContext *_localctx = _tracker.createInstance<EnumValueOptionContext>(_ctx, getState());
   enterRule(_localctx, 28, entdlrParser::RuleEnumValueOption);
@@ -1560,6 +1681,14 @@ void entdlrParser::ServiceContext::exitRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<entdlrListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitService(this);
+}
+
+
+antlrcpp::Any entdlrParser::ServiceContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitService(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 entdlrParser::ServiceContext* entdlrParser::service() {
@@ -1721,6 +1850,14 @@ void entdlrParser::RpcContext::exitRule(tree::ParseTreeListener *listener) {
     parserListener->exitRpc(this);
 }
 
+
+antlrcpp::Any entdlrParser::RpcContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitRpc(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 entdlrParser::RpcContext* entdlrParser::rpc() {
   RpcContext *_localctx = _tracker.createInstance<RpcContext>(_ctx, getState());
   enterRule(_localctx, 32, entdlrParser::RuleRpc);
@@ -1863,6 +2000,14 @@ void entdlrParser::ReservedContext::exitRule(tree::ParseTreeListener *listener) 
     parserListener->exitReserved(this);
 }
 
+
+antlrcpp::Any entdlrParser::ReservedContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitReserved(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 entdlrParser::ReservedContext* entdlrParser::reserved() {
   ReservedContext *_localctx = _tracker.createInstance<ReservedContext>(_ctx, getState());
   enterRule(_localctx, 34, entdlrParser::RuleReserved);
@@ -1944,6 +2089,14 @@ void entdlrParser::RangesContext::exitRule(tree::ParseTreeListener *listener) {
     parserListener->exitRanges(this);
 }
 
+
+antlrcpp::Any entdlrParser::RangesContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitRanges(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 entdlrParser::RangesContext* entdlrParser::ranges() {
   RangesContext *_localctx = _tracker.createInstance<RangesContext>(_ctx, getState());
   enterRule(_localctx, 36, entdlrParser::RuleRanges);
@@ -2012,6 +2165,14 @@ void entdlrParser::RangeContext::exitRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<entdlrListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitRange(this);
+}
+
+
+antlrcpp::Any entdlrParser::RangeContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitRange(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 entdlrParser::RangeContext* entdlrParser::range() {
@@ -2092,6 +2253,14 @@ void entdlrParser::FieldNamesContext::exitRule(tree::ParseTreeListener *listener
   auto parserListener = dynamic_cast<entdlrListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitFieldNames(this);
+}
+
+
+antlrcpp::Any entdlrParser::FieldNamesContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitFieldNames(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 entdlrParser::FieldNamesContext* entdlrParser::fieldNames() {
@@ -2216,6 +2385,14 @@ void entdlrParser::TypeContext::exitRule(tree::ParseTreeListener *listener) {
     parserListener->exitType(this);
 }
 
+
+antlrcpp::Any entdlrParser::TypeContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitType(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 entdlrParser::TypeContext* entdlrParser::type() {
   TypeContext *_localctx = _tracker.createInstance<TypeContext>(_ctx, getState());
   enterRule(_localctx, 42, entdlrParser::RuleType);
@@ -2303,6 +2480,14 @@ void entdlrParser::FieldNumberContext::exitRule(tree::ParseTreeListener *listene
     parserListener->exitFieldNumber(this);
 }
 
+
+antlrcpp::Any entdlrParser::FieldNumberContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitFieldNumber(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 entdlrParser::FieldNumberContext* entdlrParser::fieldNumber() {
   FieldNumberContext *_localctx = _tracker.createInstance<FieldNumberContext>(_ctx, getState());
   enterRule(_localctx, 44, entdlrParser::RuleFieldNumber);
@@ -2382,6 +2567,14 @@ void entdlrParser::FieldContext::exitRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<entdlrListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitField(this);
+}
+
+
+antlrcpp::Any entdlrParser::FieldContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitField(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 entdlrParser::FieldContext* entdlrParser::field() {
@@ -2474,6 +2667,14 @@ void entdlrParser::FieldOptionsContext::exitRule(tree::ParseTreeListener *listen
     parserListener->exitFieldOptions(this);
 }
 
+
+antlrcpp::Any entdlrParser::FieldOptionsContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitFieldOptions(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 entdlrParser::FieldOptionsContext* entdlrParser::fieldOptions() {
   FieldOptionsContext *_localctx = _tracker.createInstance<FieldOptionsContext>(_ctx, getState());
   enterRule(_localctx, 48, entdlrParser::RuleFieldOptions);
@@ -2542,6 +2743,14 @@ void entdlrParser::FieldOptionContext::exitRule(tree::ParseTreeListener *listene
   auto parserListener = dynamic_cast<entdlrListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitFieldOption(this);
+}
+
+
+antlrcpp::Any entdlrParser::FieldOptionContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitFieldOption(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 entdlrParser::FieldOptionContext* entdlrParser::fieldOption() {
@@ -2623,6 +2832,14 @@ void entdlrParser::OneofContext::exitRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<entdlrListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitOneof(this);
+}
+
+
+antlrcpp::Any entdlrParser::OneofContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitOneof(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 entdlrParser::OneofContext* entdlrParser::oneof() {
@@ -2785,6 +3002,14 @@ void entdlrParser::OneofFieldContext::exitRule(tree::ParseTreeListener *listener
     parserListener->exitOneofField(this);
 }
 
+
+antlrcpp::Any entdlrParser::OneofFieldContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitOneofField(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 entdlrParser::OneofFieldContext* entdlrParser::oneofField() {
   OneofFieldContext *_localctx = _tracker.createInstance<OneofFieldContext>(_ctx, getState());
   enterRule(_localctx, 54, entdlrParser::RuleOneofField);
@@ -2901,6 +3126,14 @@ void entdlrParser::MapFieldContext::exitRule(tree::ParseTreeListener *listener) 
   auto parserListener = dynamic_cast<entdlrListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitMapField(this);
+}
+
+
+antlrcpp::Any entdlrParser::MapFieldContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitMapField(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 entdlrParser::MapFieldContext* entdlrParser::mapField() {
@@ -3027,6 +3260,14 @@ void entdlrParser::KeyTypeContext::exitRule(tree::ParseTreeListener *listener) {
     parserListener->exitKeyType(this);
 }
 
+
+antlrcpp::Any entdlrParser::KeyTypeContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitKeyType(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 entdlrParser::KeyTypeContext* entdlrParser::keyType() {
   KeyTypeContext *_localctx = _tracker.createInstance<KeyTypeContext>(_ctx, getState());
   enterRule(_localctx, 58, entdlrParser::RuleKeyType);
@@ -3128,6 +3369,14 @@ void entdlrParser::ReservedWordContext::exitRule(tree::ParseTreeListener *listen
     parserListener->exitReservedWord(this);
 }
 
+
+antlrcpp::Any entdlrParser::ReservedWordContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitReservedWord(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 entdlrParser::ReservedWordContext* entdlrParser::reservedWord() {
   ReservedWordContext *_localctx = _tracker.createInstance<ReservedWordContext>(_ctx, getState());
   enterRule(_localctx, 60, entdlrParser::RuleReservedWord);
@@ -3206,6 +3455,14 @@ void entdlrParser::FullIdentContext::exitRule(tree::ParseTreeListener *listener)
     parserListener->exitFullIdent(this);
 }
 
+
+antlrcpp::Any entdlrParser::FullIdentContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitFullIdent(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 entdlrParser::FullIdentContext* entdlrParser::fullIdent() {
   FullIdentContext *_localctx = _tracker.createInstance<FullIdentContext>(_ctx, getState());
   enterRule(_localctx, 62, entdlrParser::RuleFullIdent);
@@ -3268,6 +3525,14 @@ void entdlrParser::MessageNameContext::exitRule(tree::ParseTreeListener *listene
     parserListener->exitMessageName(this);
 }
 
+
+antlrcpp::Any entdlrParser::MessageNameContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitMessageName(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 entdlrParser::MessageNameContext* entdlrParser::messageName() {
   MessageNameContext *_localctx = _tracker.createInstance<MessageNameContext>(_ctx, getState());
   enterRule(_localctx, 64, entdlrParser::RuleMessageName);
@@ -3317,6 +3582,14 @@ void entdlrParser::EnumNameContext::exitRule(tree::ParseTreeListener *listener) 
     parserListener->exitEnumName(this);
 }
 
+
+antlrcpp::Any entdlrParser::EnumNameContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitEnumName(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 entdlrParser::EnumNameContext* entdlrParser::enumName() {
   EnumNameContext *_localctx = _tracker.createInstance<EnumNameContext>(_ctx, getState());
   enterRule(_localctx, 66, entdlrParser::RuleEnumName);
@@ -3364,6 +3637,14 @@ void entdlrParser::MessageOrEnumNameContext::exitRule(tree::ParseTreeListener *l
   auto parserListener = dynamic_cast<entdlrListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitMessageOrEnumName(this);
+}
+
+
+antlrcpp::Any entdlrParser::MessageOrEnumNameContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitMessageOrEnumName(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 entdlrParser::MessageOrEnumNameContext* entdlrParser::messageOrEnumName() {
@@ -3417,6 +3698,14 @@ void entdlrParser::FieldNameContext::exitRule(tree::ParseTreeListener *listener)
   auto parserListener = dynamic_cast<entdlrListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitFieldName(this);
+}
+
+
+antlrcpp::Any entdlrParser::FieldNameContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitFieldName(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 entdlrParser::FieldNameContext* entdlrParser::fieldName() {
@@ -3493,6 +3782,14 @@ void entdlrParser::OneofNameContext::exitRule(tree::ParseTreeListener *listener)
     parserListener->exitOneofName(this);
 }
 
+
+antlrcpp::Any entdlrParser::OneofNameContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitOneofName(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 entdlrParser::OneofNameContext* entdlrParser::oneofName() {
   OneofNameContext *_localctx = _tracker.createInstance<OneofNameContext>(_ctx, getState());
   enterRule(_localctx, 72, entdlrParser::RuleOneofName);
@@ -3540,6 +3837,14 @@ void entdlrParser::MapNameContext::exitRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<entdlrListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitMapName(this);
+}
+
+
+antlrcpp::Any entdlrParser::MapNameContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitMapName(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 entdlrParser::MapNameContext* entdlrParser::mapName() {
@@ -3591,6 +3896,14 @@ void entdlrParser::ServiceNameContext::exitRule(tree::ParseTreeListener *listene
     parserListener->exitServiceName(this);
 }
 
+
+antlrcpp::Any entdlrParser::ServiceNameContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitServiceName(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 entdlrParser::ServiceNameContext* entdlrParser::serviceName() {
   ServiceNameContext *_localctx = _tracker.createInstance<ServiceNameContext>(_ctx, getState());
   enterRule(_localctx, 76, entdlrParser::RuleServiceName);
@@ -3638,6 +3951,14 @@ void entdlrParser::RpcNameContext::exitRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<entdlrListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitRpcName(this);
+}
+
+
+antlrcpp::Any entdlrParser::RpcNameContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitRpcName(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 entdlrParser::RpcNameContext* entdlrParser::rpcName() {
@@ -3703,6 +4024,14 @@ void entdlrParser::MessageTypeContext::exitRule(tree::ParseTreeListener *listene
   auto parserListener = dynamic_cast<entdlrListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitMessageType(this);
+}
+
+
+antlrcpp::Any entdlrParser::MessageTypeContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitMessageType(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 entdlrParser::MessageTypeContext* entdlrParser::messageType() {
@@ -3802,6 +4131,14 @@ void entdlrParser::MessageOrEnumTypeContext::exitRule(tree::ParseTreeListener *l
     parserListener->exitMessageOrEnumType(this);
 }
 
+
+antlrcpp::Any entdlrParser::MessageOrEnumTypeContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitMessageOrEnumType(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 entdlrParser::MessageOrEnumTypeContext* entdlrParser::messageOrEnumType() {
   MessageOrEnumTypeContext *_localctx = _tracker.createInstance<MessageOrEnumTypeContext>(_ctx, getState());
   enterRule(_localctx, 82, entdlrParser::RuleMessageOrEnumType);
@@ -3899,6 +4236,14 @@ void entdlrParser::EmptyStatementContext::exitRule(tree::ParseTreeListener *list
     parserListener->exitEmptyStatement(this);
 }
 
+
+antlrcpp::Any entdlrParser::EmptyStatementContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitEmptyStatement(this);
+  else
+    return visitor->visitChildren(this);
+}
+
 entdlrParser::EmptyStatementContext* entdlrParser::emptyStatement() {
   EmptyStatementContext *_localctx = _tracker.createInstance<EmptyStatementContext>(_ctx, getState());
   enterRule(_localctx, 84, entdlrParser::RuleEmptyStatement);
@@ -3970,6 +4315,14 @@ void entdlrParser::ConstantContext::exitRule(tree::ParseTreeListener *listener) 
   auto parserListener = dynamic_cast<entdlrListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitConstant(this);
+}
+
+
+antlrcpp::Any entdlrParser::ConstantContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<entdlrVisitor*>(visitor))
+    return parserVisitor->visitConstant(this);
+  else
+    return visitor->visitChildren(this);
 }
 
 entdlrParser::ConstantContext* entdlrParser::constant() {

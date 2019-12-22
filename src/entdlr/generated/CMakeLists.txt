@@ -5,6 +5,8 @@ set (HEADERS
     entdlrLexer.h
     entdlrBaseListener.h
     entdlrListener.h
+    entdlrBaseVisitor.h
+    entdlrVisitor.h
 )
 
 set (SOURCE
@@ -12,6 +14,8 @@ set (SOURCE
     entdlrLexer.cpp
     entdlrBaseListener.cpp
     entdlrListener.cpp
+    entdlrBaseVisitor.cpp
+    entdlrVisitor.cpp
 )
 
 add_library (${PROJECT_NAME} STATIC ${HEADERS} ${SOURCE})
