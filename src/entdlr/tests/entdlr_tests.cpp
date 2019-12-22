@@ -1,6 +1,14 @@
-#include "gtest/gtest.h"
+#include "lest.hpp"
 
-TEST(EntdlrTests, Hello)
+const lest::test spec[] =
 {
-    EXPECT_TRUE(true);
+    CASE("EntdlrTests.Hello")
+    {
+        EXPECT(true);
+    }
+};
+
+int main(int argc, char** argv)
+{
+    return lest::run(spec, argc, argv);
 }
