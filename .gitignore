@@ -1,0 +1,6 @@
+*.swp
+*.swo
+.vs/
+.vscode/
+.idea/
+.antlr/
