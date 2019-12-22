@@ -1,6 +1,12 @@
 *.swp
 *.swo
+
 .vs/
 .vscode/
 .idea/
 .antlr/
+cmake-build-debug/
+cmake-build-release/
+
+build/
+dist/
