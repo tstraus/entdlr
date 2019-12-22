@@ -5,6 +5,8 @@
 #include "entdlrParser.h"
 #include "entdlrVisitor.h"
 
+#include "inja.hpp"
+
 using std::cout; using std::endl;
 
 int main(int argc, char** argv)
@@ -12,7 +14,7 @@ int main(int argc, char** argv)
     cout << "entdlr" << endl;
 
     std::ifstream file;
-    file.open("../example.proto");
+    file.open("../samples/example.proto");
 
     antlr4::ANTLRInputStream input(file);
     entdlrLexer lexer(&input);
