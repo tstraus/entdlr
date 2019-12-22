@@ -8,4 +8,4 @@ fi
 
 cd build
 
-cmake --build . --parallel --config $BUILD_TYPE --target install
+cmake --build . --parallel 8 --config $BUILD_TYPE --target install
