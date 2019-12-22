@@ -1,0 +1,46 @@
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+stages:
+  - build
+  - test
+  - package
+
+build:
+  type: build
+  tags:
+    - htpc
+  script:
+    - ./generate.sh
+    - ./configure.sh
+    - ./build.sh
+  cache:
+    policy: push
+    paths:
+      - build
+
+#test:
+#  type: test
+#  tags:
+#    - htpc
+#  script:
+#    - ./test.sh
+#  dependencies:
+#    - build
+#  cache:
+#    policy: pull
+#    paths:
+#      - build
+#
+#package:
+#  type: package
+#  tags:
+#    - htpc
+#  script:
+#    - ./package.sh
+#  dependencies:
+#    - test
+#  cache:
+#    policy: pull
+#    paths:
+#      - build
