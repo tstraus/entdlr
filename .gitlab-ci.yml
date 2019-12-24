@@ -13,7 +13,7 @@ build:
   script:
     - ./generate.sh
     - ./configure.sh
-    - ./build.sh
+    - ./build.sh 8
   cache:
     policy: push
     paths:
