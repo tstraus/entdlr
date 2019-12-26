@@ -9,7 +9,7 @@ add_executable (${PROJECT_NAME} ${SOURCE})
 add_test (NAME ${PROJECT_NAME} COMMAND ${PROJECT_NAME})
 
 target_link_libraries (${PROJECT_NAME}
-    entdlr::parser
+    entdlr::fbs_parser
 )
 
 install (TARGETS ${PROJECT_NAME} DESTINATION tests)

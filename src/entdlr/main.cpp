@@ -1,9 +1,9 @@
 #include <iostream>
 
 #include "antlr4-runtime.h"
-#include "entdlrLexer.h"
-#include "entdlrParser.h"
-#include "entdlrVisitor.h"
+#include "FlatBuffersLexer.h"
+#include "FlatBuffersParser.h"
+#include "FlatBuffersVisitor.h"
 
 #include "inja.hpp"
 
@@ -17,9 +17,9 @@ int main(int argc, char** argv)
     file.open("../samples/example.proto");
 
     antlr4::ANTLRInputStream input(file);
-    entdlrLexer lexer(&input);
+    FlatBuffersLexer lexer(&input);
     antlr4::CommonTokenStream tokens(&lexer);
-    entdlrParser parser(&tokens);
+    FlatBuffersParser parser(&tokens);
 
     return 0;
 }

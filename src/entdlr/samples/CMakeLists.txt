@@ -1,9 +1,12 @@
 set (SAMPLES
-    ./addressbook.proto
-    ./conformance.proto
-    ./example.proto
-    ./helloworld.proto
-    ./helloworldreserved.proto
+    ./flatbench.fbs
+    ./greeter.fbs
+    ./monster.fbs
+    ./monster2.fbs
+    ./namespace_test1.fbs
+    ./namespace_test2.fbs
+    ./resultinfo.fbs
+    ./saveschema.fbs
 )
 
 install (FILES ${SAMPLES} DESTINATION samples)

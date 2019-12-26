@@ -1,0 +1,107 @@
+
+// Generated from FlatBuffers.g4 by ANTLR 4.7.2
+
+#pragma once
+
+
+#include "antlr4-runtime.h"
+#include "FlatBuffersListener.h"
+
+
+/**
+ * This class provides an empty implementation of FlatBuffersListener,
+ * which can be extended to create a listener which only needs to handle a subset
+ * of the available methods.
+ */
+class  FlatBuffersBaseListener : public FlatBuffersListener {
+public:
+
+  virtual void enterSchema(FlatBuffersParser::SchemaContext * /*ctx*/) override { }
+  virtual void exitSchema(FlatBuffersParser::SchemaContext * /*ctx*/) override { }
+
+  virtual void enterInclude(FlatBuffersParser::IncludeContext * /*ctx*/) override { }
+  virtual void exitInclude(FlatBuffersParser::IncludeContext * /*ctx*/) override { }
+
+  virtual void enterNamespace_decl(FlatBuffersParser::Namespace_declContext * /*ctx*/) override { }
+  virtual void exitNamespace_decl(FlatBuffersParser::Namespace_declContext * /*ctx*/) override { }
+
+  virtual void enterAttribute_decl(FlatBuffersParser::Attribute_declContext * /*ctx*/) override { }
+  virtual void exitAttribute_decl(FlatBuffersParser::Attribute_declContext * /*ctx*/) override { }
+
+  virtual void enterType_decl(FlatBuffersParser::Type_declContext * /*ctx*/) override { }
+  virtual void exitType_decl(FlatBuffersParser::Type_declContext * /*ctx*/) override { }
+
+  virtual void enterEnum_decl(FlatBuffersParser::Enum_declContext * /*ctx*/) override { }
+  virtual void exitEnum_decl(FlatBuffersParser::Enum_declContext * /*ctx*/) override { }
+
+  virtual void enterRoot_decl(FlatBuffersParser::Root_declContext * /*ctx*/) override { }
+  virtual void exitRoot_decl(FlatBuffersParser::Root_declContext * /*ctx*/) override { }
+
+  virtual void enterField_decl(FlatBuffersParser::Field_declContext * /*ctx*/) override { }
+  virtual void exitField_decl(FlatBuffersParser::Field_declContext * /*ctx*/) override { }
+
+  virtual void enterRpc_decl(FlatBuffersParser::Rpc_declContext * /*ctx*/) override { }
+  virtual void exitRpc_decl(FlatBuffersParser::Rpc_declContext * /*ctx*/) override { }
+
+  virtual void enterRpc_method(FlatBuffersParser::Rpc_methodContext * /*ctx*/) override { }
+  virtual void exitRpc_method(FlatBuffersParser::Rpc_methodContext * /*ctx*/) override { }
+
+  virtual void enterType(FlatBuffersParser::TypeContext * /*ctx*/) override { }
+  virtual void exitType(FlatBuffersParser::TypeContext * /*ctx*/) override { }
+
+  virtual void enterEnumval_decl(FlatBuffersParser::Enumval_declContext * /*ctx*/) override { }
+  virtual void exitEnumval_decl(FlatBuffersParser::Enumval_declContext * /*ctx*/) override { }
+
+  virtual void enterCommasep_enumval_decl(FlatBuffersParser::Commasep_enumval_declContext * /*ctx*/) override { }
+  virtual void exitCommasep_enumval_decl(FlatBuffersParser::Commasep_enumval_declContext * /*ctx*/) override { }
+
+  virtual void enterIdent_with_opt_single_value(FlatBuffersParser::Ident_with_opt_single_valueContext * /*ctx*/) override { }
+  virtual void exitIdent_with_opt_single_value(FlatBuffersParser::Ident_with_opt_single_valueContext * /*ctx*/) override { }
+
+  virtual void enterCommasep_ident_with_opt_single_value(FlatBuffersParser::Commasep_ident_with_opt_single_valueContext * /*ctx*/) override { }
+  virtual void exitCommasep_ident_with_opt_single_value(FlatBuffersParser::Commasep_ident_with_opt_single_valueContext * /*ctx*/) override { }
+
+  virtual void enterMetadata(FlatBuffersParser::MetadataContext * /*ctx*/) override { }
+  virtual void exitMetadata(FlatBuffersParser::MetadataContext * /*ctx*/) override { }
+
+  virtual void enterScalar(FlatBuffersParser::ScalarContext * /*ctx*/) override { }
+  virtual void exitScalar(FlatBuffersParser::ScalarContext * /*ctx*/) override { }
+
+  virtual void enterObject(FlatBuffersParser::ObjectContext * /*ctx*/) override { }
+  virtual void exitObject(FlatBuffersParser::ObjectContext * /*ctx*/) override { }
+
+  virtual void enterIdent_with_value(FlatBuffersParser::Ident_with_valueContext * /*ctx*/) override { }
+  virtual void exitIdent_with_value(FlatBuffersParser::Ident_with_valueContext * /*ctx*/) override { }
+
+  virtual void enterCommasep_ident_with_value(FlatBuffersParser::Commasep_ident_with_valueContext * /*ctx*/) override { }
+  virtual void exitCommasep_ident_with_value(FlatBuffersParser::Commasep_ident_with_valueContext * /*ctx*/) override { }
+
+  virtual void enterSingle_value(FlatBuffersParser::Single_valueContext * /*ctx*/) override { }
+  virtual void exitSingle_value(FlatBuffersParser::Single_valueContext * /*ctx*/) override { }
+
+  virtual void enterValue(FlatBuffersParser::ValueContext * /*ctx*/) override { }
+  virtual void exitValue(FlatBuffersParser::ValueContext * /*ctx*/) override { }
+
+  virtual void enterCommasep_value(FlatBuffersParser::Commasep_valueContext * /*ctx*/) override { }
+  virtual void exitCommasep_value(FlatBuffersParser::Commasep_valueContext * /*ctx*/) override { }
+
+  virtual void enterFile_extension_decl(FlatBuffersParser::File_extension_declContext * /*ctx*/) override { }
+  virtual void exitFile_extension_decl(FlatBuffersParser::File_extension_declContext * /*ctx*/) override { }
+
+  virtual void enterFile_identifier_decl(FlatBuffersParser::File_identifier_declContext * /*ctx*/) override { }
+  virtual void exitFile_identifier_decl(FlatBuffersParser::File_identifier_declContext * /*ctx*/) override { }
+
+  virtual void enterNs_ident(FlatBuffersParser::Ns_identContext * /*ctx*/) override { }
+  virtual void exitNs_ident(FlatBuffersParser::Ns_identContext * /*ctx*/) override { }
+
+  virtual void enterInteger_const(FlatBuffersParser::Integer_constContext * /*ctx*/) override { }
+  virtual void exitInteger_const(FlatBuffersParser::Integer_constContext * /*ctx*/) override { }
+
+
+  virtual void enterEveryRule(antlr4::ParserRuleContext * /*ctx*/) override { }
+  virtual void exitEveryRule(antlr4::ParserRuleContext * /*ctx*/) override { }
+  virtual void visitTerminal(antlr4::tree::TerminalNode * /*node*/) override { }
+  virtual void visitErrorNode(antlr4::tree::ErrorNode * /*node*/) override { }
+
+};
+

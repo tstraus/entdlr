@@ -15,7 +15,7 @@ target_include_directories (${PROJECT_NAME}
 )
 
 target_link_libraries (${PROJECT_NAME}
-    PUBLIC entdlr::parser
+    PUBLIC entdlr::fbs_parser
 )
 
 install (TARGETS ${PROJECT_NAME} DESTINATION bin)

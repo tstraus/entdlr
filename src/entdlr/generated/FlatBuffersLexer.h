@@ -1,5 +1,5 @@
 
-// Generated from entdlr.g4 by ANTLR 4.7.2
+// Generated from FlatBuffers.g4 by ANTLR 4.7.2
 
 #pragma once
 
@@ -9,23 +9,19 @@
 
 
 
-class  entdlrLexer : public antlr4::Lexer {
+class  FlatBuffersLexer : public antlr4::Lexer {
 public:
   enum {
-    T__0 = 1, BOOL = 2, BYTES = 3, DOUBLE = 4, ENUM = 5, FIXED32 = 6, FIXED64 = 7, 
-    FLOAT = 8, IMPORT = 9, INT32 = 10, INT64 = 11, MAP = 12, MESSAGE = 13, 
-    ONEOF = 14, OPTION = 15, PACKAGE = 16, PROTO3_DOUBLE = 17, PROTO3_SINGLE = 18, 
-    PUBLIC = 19, REPEATED = 20, RESERVED = 21, RETURNS = 22, RPC = 23, SERVICE = 24, 
-    SFIXED32 = 25, SFIXED64 = 26, SINT32 = 27, SINT64 = 28, STREAM = 29, 
-    STRING = 30, SYNTAX = 31, TO = 32, UINT32 = 33, UINT64 = 34, WEAK = 35, 
-    Ident = 36, IntLit = 37, FloatLit = 38, BoolLit = 39, StrLit = 40, Quote = 41, 
-    LPAREN = 42, RPAREN = 43, LBRACE = 44, RBRACE = 45, LBRACK = 46, RBRACK = 47, 
-    LCHEVR = 48, RCHEVR = 49, SEMI = 50, COMMA = 51, DOT = 52, MINUS = 53, 
-    PLUS = 54, ASSIGN = 55, WS = 56, COMMENT = 57, LINE_COMMENT = 58
+    T__0 = 1, T__1 = 2, T__2 = 3, T__3 = 4, T__4 = 5, T__5 = 6, T__6 = 7, 
+    T__7 = 8, T__8 = 9, T__9 = 10, T__10 = 11, T__11 = 12, T__12 = 13, T__13 = 14, 
+    T__14 = 15, T__15 = 16, T__16 = 17, T__17 = 18, T__18 = 19, T__19 = 20, 
+    T__20 = 21, T__21 = 22, STRING_CONSTANT = 23, BASE_TYPE_NAME = 24, IDENT = 25, 
+    HEX_INTEGER_CONSTANT = 26, INTEGER_CONSTANT = 27, FLOAT_CONSTANT = 28, 
+    BLOCK_COMMENT = 29, COMMENT = 30, WHITESPACE = 31
   };
 
-  entdlrLexer(antlr4::CharStream *input);
-  ~entdlrLexer();
+  FlatBuffersLexer(antlr4::CharStream *input);
+  ~FlatBuffersLexer();
 
   virtual std::string getGrammarFileName() const override;
   virtual const std::vector<std::string>& getRuleNames() const override;

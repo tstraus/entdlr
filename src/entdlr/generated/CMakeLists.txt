@@ -1,25 +1,25 @@
-project (entdlr_parser)
+project (entdlr_fbs_parser)
 
 set (HEADERS
-    entdlrParser.h
-    entdlrLexer.h
-    entdlrBaseListener.h
-    entdlrListener.h
-    entdlrBaseVisitor.h
-    entdlrVisitor.h
+    FlatBuffersParser.h
+    FlatBuffersLexer.h
+    FlatBuffersBaseListener.h
+    FlatBuffersListener.h
+    FlatBuffersBaseVisitor.h
+    FlatBuffersVisitor.h
 )
 
 set (SOURCE
-    entdlrParser.cpp
-    entdlrLexer.cpp
-    entdlrBaseListener.cpp
-    entdlrListener.cpp
-    entdlrBaseVisitor.cpp
-    entdlrVisitor.cpp
+    FlatBuffersParser.cpp
+    FlatBuffersLexer.cpp
+    FlatBuffersBaseListener.cpp
+    FlatBuffersListener.cpp
+    FlatBuffersBaseVisitor.cpp
+    FlatBuffersVisitor.cpp
 )
 
 add_library (${PROJECT_NAME} STATIC ${HEADERS} ${SOURCE})
-add_library (entdlr::parser ALIAS ${PROJECT_NAME})
+add_library (entdlr::fbs_parser ALIAS ${PROJECT_NAME})
 
 target_include_directories (${PROJECT_NAME}
     PUBLIC ${CMAKE_CURRENT_LIST_DIR}
