@@ -50,6 +50,7 @@ table Monster {
   testarrayofstring:[string] (id: 10);
   testarrayofstring2:[string] (id: 28);
   testarrayofbools:[bool] (id: 24);
+  testfixedarrayofchar:[char:16];
   enemy:MyGame.Example.Monster (id:12);  // Test referring by full namespace.
   test:Any (id: 8);
   test4:[Test] (id: 9);

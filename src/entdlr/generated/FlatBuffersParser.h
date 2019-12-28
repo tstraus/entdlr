@@ -257,6 +257,7 @@ public:
     TypeContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     TypeContext *type();
+    Integer_constContext *integer_const();
     antlr4::tree::TerminalNode *BASE_TYPE_NAME();
     Ns_identContext *ns_ident();
 

@@ -24,7 +24,8 @@ rpc_decl : 'rpc_service' IDENT '{' rpc_method+ '}' ;
 rpc_method : IDENT '(' IDENT ')' ':' IDENT metadata ';' ;
 
 // fixed original grammar: allow namespaces for IDENTs
-type : '[' type ']' | BASE_TYPE_NAME | ns_ident ;
+// add fixed size arrays TSS
+type : '[' type ( ':' integer_const )? ']' | BASE_TYPE_NAME | ns_ident ;
 
 enumval_decl : ns_ident ( '=' integer_const )? ;
 
