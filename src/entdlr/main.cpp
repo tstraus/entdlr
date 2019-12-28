@@ -59,7 +59,14 @@ int main(int argc, char** argv)
 
         // values of the enum
         for (const auto& v : e->commasep_enumval_decl()->enumval_decl())
-            cout << "    " << v->ns_ident()->IDENT()[0]->getSymbol()->getText() << endl;
+        {
+            cout << "    " << v->ns_ident()->IDENT()[0]->getSymbol()->getText();
+
+            if (v->integer_const() && v->integer_const()->INTEGER_CONSTANT())
+                cout << " = " << v->integer_const()->INTEGER_CONSTANT()->getSymbol()->getText();
+
+            cout << endl;
+        }
     }
 
     // print types and their fields
