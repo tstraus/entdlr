@@ -18,7 +18,7 @@ namespace Entdlr
 
         static Context parse(const std::string& content);
 
-        static Context mergeContexts(const std::vector<Context>& contexts);
+        static Context merge(const std::vector<Context>& contexts);
 
     private:
         static Namespace parseNamespace(const std::vector<FlatBuffersParser::Namespace_declContext*>& namespaces);

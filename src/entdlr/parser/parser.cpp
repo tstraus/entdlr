@@ -28,7 +28,7 @@ namespace Entdlr
 
         else throw std::runtime_error("Unable to parse directory \"" + dirname + "\"");
 
-        return mergeContexts(contexts);
+        return merge(contexts);
     }
 
     Context Parser::parseFile(const std::string& filename)
@@ -88,20 +88,12 @@ namespace Entdlr
         }
     }
 
-    Context Parser::mergeContexts(const std::vector<Context> &contexts)
+    Context Parser::merge(const std::vector<Context> &contexts)
     {
         Context output;
 
         for (const auto& context : contexts)
         {
-            // add up the global namespace enums
-            for (const auto& e : context.enums)
-                output.add(e.second);
-
-            // add up the global namespace structs
-            for (const auto& s : context.structs)
-                output.add(s.second);
-
             // add up the namespaces
             for (const auto& n : context.namespaces)
                 output.add(n.second);
