@@ -2,7 +2,7 @@ set (CMAKE_DEBUG_POSTFIX d)
 set (CMAKE_RELWITHDEBINFO_POSTFIX rd)
 set (CMAKE_MINSIZEREL_POSTFIX rm)
 
-add_subdirectory (grammar/generated)
+add_subdirectory (parser)
 add_subdirectory (context)
 add_subdirectory (tests)
 
@@ -13,7 +13,7 @@ add_executable (${PROJECT_NAME}
 )
 
 target_link_libraries (${PROJECT_NAME}
-    PUBLIC entdlr::fbs_parser
+    PUBLIC entdlr::parser
     PUBLIC inja
 )
 

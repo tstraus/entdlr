@@ -1,4 +1,4 @@
-project (entdlr_fbs_parser)
+project (entdlr_flat_buffer_parser)
 
 set (HEADERS
     FlatBuffersParser.h
@@ -19,7 +19,7 @@ set (SOURCE
 )
 
 add_library (${PROJECT_NAME} STATIC ${HEADERS} ${SOURCE})
-add_library (entdlr::fbs_parser ALIAS ${PROJECT_NAME})
+add_library (entdlr::flat_buffer_parser ALIAS ${PROJECT_NAME})
 
 target_include_directories (${PROJECT_NAME}
     PUBLIC ${CMAKE_CURRENT_LIST_DIR}

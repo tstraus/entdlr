@@ -1,0 +1,26 @@
+project (entdlr_parser)
+
+add_subdirectory (grammar/generated)
+
+set (HEADERS
+    parser.h
+)
+
+set (SOURCE
+    parser.cpp
+)
+
+add_library (${PROJECT_NAME} STATIC ${HEADERS} ${SOURCE})
+add_library (entdlr::parser ALIAS ${PROJECT_NAME})
+
+target_include_directories (${PROJECT_NAME}
+    PUBLIC ${CMAKE_CURRENT_LIST_DIR}
+)
+
+target_link_libraries (${PROJECT_NAME}
+    PUBLIC entdlr::flat_buffer_parser
+)
+
+install (TARGETS ${PROJECT_NAME} DESTINATION lib)
+install (FILES ${HEADERS} DESTINATION include/entdlr/parser)
+

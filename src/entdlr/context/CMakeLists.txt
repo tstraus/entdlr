@@ -1,10 +1,16 @@
 project (entdlr_context)
 
 set (HEADERS
+    enum.h
+    struct.h
+    namespace.h
     context.h
 )
 
 set (SOURCE
+    enum.cpp
+    struct.cpp
+    namespace.cpp
     context.cpp
 )
 
