@@ -9,6 +9,7 @@ add_subdirectory (tests)
 project (entdlr)
 
 add_executable (${PROJECT_NAME}
+    argh.h
     main.cpp
 )
 

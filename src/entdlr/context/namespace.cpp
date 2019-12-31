@@ -10,11 +10,6 @@ namespace Entdlr
         return out;
     }
 
-    void Namespace::add(const Namespace& n)
-    {
-        namespaces[n.name] = n;
-    }
-
     void Namespace::add(const Enum& e)
     {
         enums[e.name] = e;

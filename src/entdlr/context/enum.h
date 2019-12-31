@@ -27,7 +27,7 @@ namespace Entdlr
         void add(const std::string& name, const std::optional<int64_t> value);
 
     private:
-        int64_t previousValue;
+        int64_t nextValue;
     };
 };
 

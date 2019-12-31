@@ -1,5 +1,9 @@
 #include "enum.h"
 
+#include <iostream>
+
+using std::cout; using std::endl;
+
 namespace Entdlr
 {
     EnumValue EnumValue::create(const std::string& name, const int64_t& value)
@@ -15,7 +19,7 @@ namespace Entdlr
     {
         Enum out;
         out.name = name;
-        out.previousValue = 0;
+        out.nextValue = 0;
 
         return out;
     }
@@ -27,12 +31,12 @@ namespace Entdlr
             if (value)
             {
                 values[*value] = EnumValue::create(name, *value);
-                previousValue = *value;
+                nextValue = *value + 1;
             }
 
             else
             {
-                const auto newValue = previousValue++;
+                const auto newValue = nextValue++;
                 values[newValue] = EnumValue::create(name, newValue);
             }
         }

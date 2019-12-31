@@ -13,12 +13,10 @@ namespace Entdlr
     {
     public:
         std::string name;
-        std::map<std::string, Namespace> namespaces; // [namespace name]
         std::map<std::string, Enum> enums; // [enum name]
         std::map<std::string, Struct> structs; // [struct name]
 
         static Namespace create(const std::string& name);
-        void add(const Namespace& n);
         void add(const Enum& e);
         void add(const Struct& s);
     };
