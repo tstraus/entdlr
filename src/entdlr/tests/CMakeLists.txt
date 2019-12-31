@@ -1,5 +1,7 @@
 project (entdlr_tests)
 
+add_subdirectory (samples)
+
 set (SOURCE
     "entdlr_tests.cpp"
     "lest.hpp"
