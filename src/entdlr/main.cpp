@@ -37,11 +37,13 @@ int main(int argc, char** argv)
             context = Entdlr::Parser::parseDir(dirname);
 
         // print namespaces
-        for (const auto &n : context.namespaces) {
+        for (const auto &n : context.namespaces)
+        {
             cout << n.second.name << endl;
 
             // print enums
-            for (const auto &e : n.second.enums) {
+            for (const auto &e : n.second.enums)
+            {
                 cout << "    " << e.second.name << " : enum" << endl;
 
                 for (const auto &v : e.second.values)
@@ -49,7 +51,8 @@ int main(int argc, char** argv)
             }
 
             // print structs
-            for (const auto &s : n.second.structs) {
+            for (const auto &s : n.second.structs)
+            {
                 cout << "    " << s.second.name << " : struct" << endl;
 
                 for (const auto &f : s.second.fields)
