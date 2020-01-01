@@ -17,9 +17,9 @@ int main(int argc, char** argv)
         {
             cout <<
             "Usage: entdlr [OPTION]\n" <<
-            "  -f, --file=FILE      parse the specified file\n" <<
-            "  -d, --dir=DIRECTORY  parse all \".fbs\" files in the directory"
-            << endl;
+            "  -h, --help           Basic use help (this)\n" <<
+            "  -f, --file=FILE      Parse the specified file\n" <<
+            "  -d, --dir=DIRECTORY  Parse all \".fbs\" files in the directory" << endl;
 
             return 0;
         }
