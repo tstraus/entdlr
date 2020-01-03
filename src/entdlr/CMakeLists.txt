@@ -11,14 +11,15 @@ project (entdlr)
 
 add_executable (${PROJECT_NAME}
     argh.h
+    rang.hpp
     main.cpp
 )
 
 target_link_libraries (${PROJECT_NAME}
     PUBLIC entdlr::parser
+    PUBLIC entdlr::template
     PUBLIC inja
 )
 
 install (TARGETS ${PROJECT_NAME} DESTINATION bin)
 install (FILES ${HEADERS} DESTINATION include/entdlr)
-

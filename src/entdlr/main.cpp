@@ -1,14 +1,19 @@
 #include <iostream>
 
-#include "argh.h"
 #include "parser.h"
+#include "template.h"
+
+#include "argh.h"
+#include "rang.hpp"
 
 using std::cout; using std::endl;
+using namespace rang;
 
 int main(int argc, char** argv)
 {
     try
     {
+        std::string template_name = "";
         std::string filename = "";
         std::string dirname = "";
 
@@ -18,12 +23,14 @@ int main(int argc, char** argv)
             cout <<
             "Usage: entdlr [OPTION]\n" <<
             "  -h, --help           Basic use help (this)\n" <<
-            "  -f, --file=FILE      Parse the specified file\n" <<
+            "  -t, --template=FILE  Template file to use. Default: \"../samples/display.tmpl\"\n" <<
+            "  -f, --file=FILE      Parse the specified file. Default: \"../samples/monster.fbs\"\n" <<
             "  -d, --dir=DIRECTORY  Parse all \".fbs\" files in the directory" << endl;
 
             return 0;
         }
 
+        args({ "-t", "--template" }, "../samples/display.tmpl") >> template_name;
         args({ "-f", "--file" }) >> filename;
         args({ "-d", "--dir" }) >> dirname;
 
@@ -36,36 +43,14 @@ int main(int argc, char** argv)
         if (!dirname.empty())
             context = Entdlr::Parser::parseDir(dirname);
 
-        // print namespaces
-        for (const auto &n : context.namespaces)
-        {
-            cout << n.second.name << endl;
-
-            // print enums
-            for (const auto &e : n.second.enums)
-            {
-                cout << "    " << e.second.name << " : enum" << endl;
-
-                for (const auto &v : e.second.values)
-                    cout << "        " << v.second.name << " = " << v.second.value << endl;
-            }
-
-            // print structs
-            for (const auto &s : n.second.structs)
-            {
-                cout << "    " << s.second.name << " : struct" << endl;
-
-                for (const auto &f : s.second.fields)
-                    cout << "         " << f.name << " : " << f.type << endl;
-            }
-        }
+        cout << Entdlr::Template::applyTemplate(context, template_name) << endl;
 
         return 0;
     }
 
     catch (std::exception& e)
     {
-        cout << "ERROR: " << e.what() << endl;
+        cout << fg::red << "ERROR: " << fg::reset << e.what() << endl;
 
         return 1;
     }

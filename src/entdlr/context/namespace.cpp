@@ -12,11 +12,11 @@ namespace Entdlr
 
     void Namespace::add(const Enum& e)
     {
-        enums[e.name] = e;
+        enums.push_back(e);
     }
 
     void Namespace::add(const Struct& s)
     {
-        structs[s.name] = s;
+        structs.push_back(s);
     }
 };

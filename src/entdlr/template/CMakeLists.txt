@@ -2,10 +2,12 @@ project (entdlr_template)
 
 set (HEADERS
     template.h
+    json_helpers.h
 )
 
 set (SOURCE
     template.cpp
+    json_helpers.cpp
 )
 
 add_library (${PROJECT_NAME} STATIC ${HEADERS} ${SOURCE})

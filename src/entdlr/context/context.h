@@ -10,7 +10,7 @@ namespace Entdlr
     class Context
     {
     public:
-        std::map<std::string, Namespace> namespaces; // [namespace name]
+        std::vector<Namespace> namespaces;
 
         void add(const Namespace& n);
     };

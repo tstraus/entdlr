@@ -30,14 +30,14 @@ namespace Entdlr
         {
             if (value)
             {
-                values[*value] = EnumValue::create(name, *value);
+                values.push_back(EnumValue::create(name, *value));
                 nextValue = *value + 1;
             }
 
             else
             {
                 const auto newValue = nextValue++;
-                values[newValue] = EnumValue::create(name, newValue);
+                values.push_back(EnumValue::create(name, newValue));
             }
         }
     }

@@ -5,7 +5,7 @@
 #include "struct.h"
 
 #include <string>
-#include <map>
+#include <vector>
 
 namespace Entdlr
 {
@@ -13,8 +13,8 @@ namespace Entdlr
     {
     public:
         std::string name;
-        std::map<std::string, Enum> enums; // [enum name]
-        std::map<std::string, Struct> structs; // [struct name]
+        std::vector<Enum> enums;
+        std::vector<Struct> structs;
 
         static Namespace create(const std::string& name);
         void add(const Enum& e);

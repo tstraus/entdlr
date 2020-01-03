@@ -96,7 +96,7 @@ namespace Entdlr
         {
             // add up the namespaces
             for (const auto& n : context.namespaces)
-                output.add(n.second);
+                output.add(n);
         }
 
         return output;
@@ -232,4 +232,4 @@ namespace Entdlr
 
         return Field::create(name, type);
     }
-};
+}

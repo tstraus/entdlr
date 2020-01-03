@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 #include <string>
-#include <map>
+#include <vector>
 #include <optional>
 
 namespace Entdlr
@@ -21,7 +21,7 @@ namespace Entdlr
     {
     public:
         std::string name;
-        std::map<int64_t, EnumValue> values; // [value]
+        std::vector<EnumValue> values;
 
         static Enum create(const std::string& name);
         void add(const std::string& name, const std::optional<int64_t> value);
