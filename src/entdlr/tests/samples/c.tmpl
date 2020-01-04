@@ -1,0 +1,21 @@
+## for namespace in entdlr.namespaces
+## for enum in namespace.enums
+enum {{namespace.name}}_{{enum.name}}
+{
+## for e in enum.values
+    {{namespace.name}}_{{e.name}} = {{e.value}},
+## endfor
+};
+
+## endfor
+
+## for struct in namespace.structs
+struct {{namespace.name}}_{{struct.name}}
+{
+## for field in struct.fields
+    {{field.type}} {{field.name}};
+## endfor
+};
+
+## endfor
+## endfor

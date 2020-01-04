@@ -7,7 +7,10 @@ set (SAMPLES
     ./namespace_test2.fbs
     ./resultinfo.fbs
     ./saveschema.fbs
+
     ./display.tmpl
+    ./c.tmpl
+    ./cpp.tmpl
 )
 
 install (FILES ${SAMPLES} DESTINATION samples)
