@@ -24,7 +24,7 @@ int main(int argc, char** argv)
             "Usage: entdlr [OPTION]\n" <<
             "  -h, --help           Basic use help (this)\n" <<
             "  -t, --template=FILE  Template file to use. Default: \"../samples/display.tmpl\"\n" <<
-            "  -f, --file=FILE      Parse the specified file. Default: \"../samples/monster.fbs\"\n" <<
+            "  -f, --file=FILE      Parse the specified file. Default: \"../samples/entity.fbs\"\n" <<
             "  -d, --dir=DIRECTORY  Parse all \".fbs\" files in the directory" << endl;
 
             return 0;
@@ -35,7 +35,7 @@ int main(int argc, char** argv)
         args({ "-d", "--dir" }) >> dirname;
 
         if (filename.empty() && dirname.empty())
-            filename = "../samples/monster.fbs";
+            filename = "../samples/entity.fbs";
 
         Entdlr::Context context;
         if (!filename.empty())

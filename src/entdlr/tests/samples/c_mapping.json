@@ -1,0 +1,24 @@
+{
+    "mappings" : {
+        "byte": "int8_t",
+        "int8": "int8_t",
+        "ubyte": "uint8_t",
+        "uint8": "uint8_t",
+        "short": "int16_t",
+        "int16": "int16_t",
+        "ushort": "uint16_t",
+        "uint16": "uint16_t",
+        "int": "int32_t",
+        "int32": "int32_t",
+        "uint": "uint32_t",
+        "uint32": "uint32_t",
+        "long": "int64_t",
+        "int64": "int64_t",
+        "ulong": "uint64_t",
+        "uint64": "uint64_t",
+        "float": "float",
+        "float32": "float",
+        "double": "double",
+        "float64": "double"
+    }
+}

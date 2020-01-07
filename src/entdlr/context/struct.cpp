@@ -2,11 +2,13 @@
 
 namespace Entdlr
 {
-    Field Field::create(const std::string& name, const std::string& type)
+    Field Field::create(const std::string& name, const std::string& type, const bool& isArray, const uint32_t& arraySize)
     {
         Field out;
         out.name = name;
         out.type = type;
+        out.isArray = isArray;
+        out.arraySize = arraySize;
 
         return out;
     }

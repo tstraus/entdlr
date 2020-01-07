@@ -1,3 +1,5 @@
+#include <stdint.h>
+
 ## for namespace in entdlr.namespaces
 namespace {{namespace.name}}
 {
@@ -12,10 +14,16 @@ namespace {{namespace.name}}
 ## endfor
 
 ## for struct in namespace.structs
-    struct {{struct.name}}
+    class {{struct.name}}
     {
+    public:
 ## for field in struct.fields
+## if field.isArray == false
         {{field.type}} {{field.name}};
+## endif
+## if field.isArray == true and field.arraySize > 0
+        {{field.type}} {{field.name}}[{{field.arraySize}}];
+## endif
 ## endfor
     };
 

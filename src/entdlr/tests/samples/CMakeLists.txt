@@ -1,4 +1,5 @@
 set (SAMPLES
+    ./entity.fbs
     ./flatbench.fbs
     ./greeter.fbs
     ./monster.fbs
@@ -11,6 +12,9 @@ set (SAMPLES
     ./display.tmpl
     ./c.tmpl
     ./cpp.tmpl
+
+    ./c_mapping.json
+    ./cpp_mapping.json
 )
 
 install (FILES ${SAMPLES} DESTINATION samples)

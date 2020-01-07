@@ -11,8 +11,10 @@ namespace Entdlr
     public:
         std::string name;
         std::string type;
+        bool isArray;
+        uint32_t arraySize;
 
-        static Field create(const std::string& name, const std::string& type);
+        static Field create(const std::string& name, const std::string& type, const bool& isArray, const uint32_t& arraySize);
     };
 
     class Struct

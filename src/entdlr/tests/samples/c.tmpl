@@ -13,7 +13,12 @@ enum {{namespace.name}}_{{enum.name}}
 struct {{namespace.name}}_{{struct.name}}
 {
 ## for field in struct.fields
+## if field.isArray == false
     {{field.type}} {{field.name}};
+## endif
+## if field.isArray == true and field.arraySize > 0
+    {{field.type}} {{field.name}}[{{field.arraySize}}];
+## endif
 ## endfor
 };
 

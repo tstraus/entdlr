@@ -174,6 +174,8 @@ namespace Entdlr
     {
         const auto name = field->IDENT()->getSymbol()->getText();
         std::string type = "";
+        bool isArray = false;
+        uint32_t arraySize = 0;
 
         // plain type
         if (field->type()->BASE_TYPE_NAME())
@@ -185,13 +187,12 @@ namespace Entdlr
         else if (field->type()->type() && field->type()->type()->BASE_TYPE_NAME())
         {
             type = field->type()->type()->BASE_TYPE_NAME()->getSymbol()->getText();
-            type += "[";
+
+            isArray = true;
 
             // fixed sized array
             if (field->type()->integer_const() && field->type()->integer_const()->INTEGER_CONSTANT())
-                type += field->type()->integer_const()->INTEGER_CONSTANT()->getSymbol()->getText();
-
-            type += "]";
+                arraySize = std::stoul(field->type()->integer_const()->INTEGER_CONSTANT()->getSymbol()->getText());
         }
 
         // namespaced type
@@ -221,15 +222,13 @@ namespace Entdlr
                 type += segment->getSymbol()->getText();
             }
 
-            type += "[";
+            isArray = true;
 
-            // fixed sized array
+            // fixed size array
             if (field->type()->integer_const() && field->type()->integer_const()->INTEGER_CONSTANT())
-                type += field->type()->integer_const()->INTEGER_CONSTANT()->getSymbol()->getText();
-
-            type += "]";
+                arraySize = std::stoul(field->type()->integer_const()->INTEGER_CONSTANT()->getSymbol()->getText());
         }
 
-        return Field::create(name, type);
+        return Field::create(name, type, isArray, arraySize);
     }
 }

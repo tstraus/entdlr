@@ -48,7 +48,9 @@ namespace Entdlr
     {
         j = json{
             { "name", f.name },
-            { "type", f.type }
+            { "type", f.type },
+            { "isArray", f.isArray },
+            { "arraySize", f.arraySize }
         };
     }
 
@@ -56,6 +58,8 @@ namespace Entdlr
     {
         j.at("name").get_to(f.name);
         j.at("type").get_to(f.type);
+        j.at("isArray").get_to(f.isArray);
+        j.at("arraySize").get_to(f.arraySize);
     }
 
     void to_json(json& j, const Enum& e)
