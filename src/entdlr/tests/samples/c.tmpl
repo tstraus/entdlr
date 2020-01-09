@@ -3,7 +3,7 @@
 enum {{namespace.name}}_{{enum.name}}
 {
 ## for e in enum.values
-    {{namespace.name}}_{{e.name}} = {{e.value}},
+    {{namespace.name}}_{{enum.name}}_{{e.name}} = {{e.value}},
 ## endfor
 };
 

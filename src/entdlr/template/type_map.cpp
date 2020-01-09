@@ -26,12 +26,19 @@ namespace Entdlr
     {
         auto output = context;
 
-        /*for (auto& n : output.namespaces)
+        for (auto& n : output.namespaces)
         {
+            for (auto& s : n.structs)
+            {
+                for (auto& f : s.fields)
+                {
+                    if (mappings.count(f.type))
+                        f.type = mappings[f.type];
+                }
+            }
+        }
 
-        }*/
-
-        return context; // need to change this to actually do something...
+        return output;
     }
 
     std::optional<std::string> TypeMap::getType(const std::string& key)
