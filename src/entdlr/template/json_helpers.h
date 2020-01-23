@@ -20,6 +20,12 @@ namespace Entdlr
     void to_json(json& j, const Field& f);
     void from_json(const json& j, Field& f);
 
+    void to_json(json& j, const Union& u);
+    void from_json(const json& j, Union& u);
+
+    void to_json(json& j, const UnionType& t);
+    void from_json(const json& j, UnionType& t);
+
     void to_json(json& j, const Enum& e);
     void from_json(const json& j, Enum& e);
 

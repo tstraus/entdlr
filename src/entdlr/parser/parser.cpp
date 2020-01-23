@@ -69,12 +69,17 @@ namespace Entdlr
 
             // get enums defined in the file
             const auto enums = parseEnums(schema->enum_decl());
-            for (const auto &e : enums)
+            for (const auto& e : enums)
                 ns.add(e);
+
+            // get unions defined in the file
+            const auto unions = parseUnions(schema->union_decl());
+            for (const auto& u : unions)
+                ns.add(u);
 
             // get structs defined in the file
             const auto structs = parseStructs(schema->type_decl());
-            for (const auto &s : structs)
+            for (const auto& s : structs)
                 ns.add(s);
 
             context.add(ns);
@@ -145,6 +150,82 @@ namespace Entdlr
             }
 
             output.push_back(e);
+        }
+
+        return output;
+    }
+
+    std::vector<Union> Parser::parseUnions(const std::vector<FlatBuffersParser::Union_declContext*>& unions)
+    {
+        std::vector<Union> output;
+
+        for (const auto& un : unions)
+        {
+            auto u = Union::create(un->IDENT()->getSymbol()->getText()); // make a new union with the name
+
+            // get union types
+            for (const auto& t : un->commasep_uniontype_decl()->uniontype_decl())
+            {
+                std::string type = "";
+                bool isArray = false;
+                uint32_t arraySize = 0;
+
+                // plain type
+                if (t->type()->BASE_TYPE_NAME())
+                {
+                    type = t->type()->BASE_TYPE_NAME()->getSymbol()->getText();
+                }
+
+                // array of plain type
+                else if (t->type()->type() && t->type()->type()->BASE_TYPE_NAME())
+                {
+                    type = t->type()->type()->BASE_TYPE_NAME()->getSymbol()->getText();
+
+                    isArray = true;
+
+                    // fixed sized array
+                    if (t->type()->integer_const() && t->type()->integer_const()->INTEGER_CONSTANT())
+                        arraySize = std::stoul(t->type()->integer_const()->INTEGER_CONSTANT()->getSymbol()->getText());
+                }
+
+                // namespaced type
+                else if (t->type()->ns_ident())
+                {
+                    bool afterFirst = false;
+                    for (const auto& segment : t->type()->ns_ident()->IDENT())
+                    { // get the namespace separated by "::"
+                        if (afterFirst)
+                            type += "::";
+                        else afterFirst = true;
+
+                        type += segment->getSymbol()->getText();
+                    }
+                }
+
+                // array of namespaced type
+                if (t->type()->type() && t->type()->type()->ns_ident())
+                {
+                    bool afterFirst = false;
+                    for (const auto& segment : t->type()->type()->ns_ident()->IDENT())
+                    { // get the namespace separated by "::"
+                        if (afterFirst)
+                            type += "::";
+                        else afterFirst = true;
+
+                        type += segment->getSymbol()->getText();
+                    }
+
+                    isArray = true;
+
+                    // fixed size array
+                    if (t->type()->integer_const() && t->type()->integer_const()->INTEGER_CONSTANT())
+                        arraySize = std::stoul(t->type()->integer_const()->INTEGER_CONSTANT()->getSymbol()->getText());
+                }
+
+                u.add(UnionType::create(type, isArray, arraySize));
+            }
+
+            output.push_back(u);
         }
 
         return output;

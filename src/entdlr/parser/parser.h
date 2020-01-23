@@ -25,6 +25,8 @@ namespace Entdlr
 
         static std::vector<Enum> parseEnums(const std::vector<FlatBuffersParser::Enum_declContext*>& enums);
 
+        static std::vector<Union> parseUnions(const std::vector<FlatBuffersParser::Union_declContext*>& unions);
+
         static std::vector<Struct> parseStructs(const std::vector<FlatBuffersParser::Type_declContext*>& structs);
 
         static Field parseField(FlatBuffersParser::Field_declContext* field);

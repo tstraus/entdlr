@@ -22,6 +22,12 @@ struct DisEntityType
     extra : uint8;
 }
 
+union DisEntityTypeUnion
+{
+    DisEntityType,
+    [uint32 : 2]
+}
+
 struct Position
 {
     x : length;
@@ -35,7 +41,7 @@ struct EntityState
     timestamp : float64; // the time this data was current
     callsign : string (max_length:60); // callsign of the entity, if it has one
     force : EntityForce; // what force the entity is on
-    type : DisEntityType;
+    type : DisEntityTypeUnion;
     position : Position;
     targets : [uint64:4];
 }

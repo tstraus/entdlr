@@ -4,8 +4,8 @@ namespace Entdlr
 {
     void to_json(json& j, const Context& c)
     {
-        j = json{
-                { "namespaces", c.namespaces }
+        j = json {
+            { "namespaces", c.namespaces }
         };
     }
 
@@ -16,9 +16,10 @@ namespace Entdlr
 
     void to_json(json& j, const Namespace& n)
     {
-        j = json{
+        j = json {
             { "name", n.name },
             { "enums", n.enums },
+            { "unions", n.unions },
             { "structs", n.structs }
         };
     }
@@ -27,12 +28,13 @@ namespace Entdlr
     {
         j.at("name").get_to(n.name);
         j.at("enums").get_to(n.enums);
+        j.at("unions").get_to(n.unions);
         j.at("structs").get_to(n.structs);
     }
 
     void to_json(json& j, const Struct& s)
     {
-        j = json{
+        j = json {
             { "name", s.name },
             { "fields", s.fields }
         };
@@ -46,7 +48,7 @@ namespace Entdlr
 
     void to_json(json& j, const Field& f)
     {
-        j = json{
+        j = json {
             { "name", f.name },
             { "type", f.type },
             { "isArray", f.isArray },
@@ -62,9 +64,39 @@ namespace Entdlr
         j.at("arraySize").get_to(f.arraySize);
     }
 
+    void to_json(json& j, const Union& u)
+    {
+        j = json {
+            { "name", u.name },
+            { "types", u.types }
+        };
+    }
+
+    void from_json(const json& j, Union& u)
+    {
+        j.at("name").get_to(u.name);
+        j.at("types").get_to(u.types);
+    }
+
+    void to_json(json& j, const UnionType& t)
+    {
+        j = json {
+            { "type", t.type },
+            { "isArray", t.isArray },
+            { "arraySize", t.arraySize }
+        };
+    }
+
+    void from_json(const json& j, UnionType& t)
+    {
+        j.at("type").get_to(t.type);
+        j.at("isArray").get_to(t.isArray);
+        j.at("arraySize").get_to(t.arraySize);
+    }
+
     void to_json(json& j, const Enum& e)
     {
-        j = json{
+        j = json {
             { "name", e.name },
             { "values", e.values }
         };
@@ -78,7 +110,7 @@ namespace Entdlr
 
     void to_json(json& j, const EnumValue& e)
     {
-        j = json{
+        j = json {
             { "name", e.name },
             { "value", e.value }
         };

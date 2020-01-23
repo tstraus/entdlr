@@ -31,6 +31,8 @@ public:
 
     virtual antlrcpp::Any visitEnum_decl(FlatBuffersParser::Enum_declContext *context) = 0;
 
+    virtual antlrcpp::Any visitUnion_decl(FlatBuffersParser::Union_declContext *context) = 0;
+
     virtual antlrcpp::Any visitRoot_decl(FlatBuffersParser::Root_declContext *context) = 0;
 
     virtual antlrcpp::Any visitField_decl(FlatBuffersParser::Field_declContext *context) = 0;
@@ -40,6 +42,10 @@ public:
     virtual antlrcpp::Any visitRpc_method(FlatBuffersParser::Rpc_methodContext *context) = 0;
 
     virtual antlrcpp::Any visitType(FlatBuffersParser::TypeContext *context) = 0;
+
+    virtual antlrcpp::Any visitUniontype_decl(FlatBuffersParser::Uniontype_declContext *context) = 0;
+
+    virtual antlrcpp::Any visitCommasep_uniontype_decl(FlatBuffersParser::Commasep_uniontype_declContext *context) = 0;
 
     virtual antlrcpp::Any visitEnumval_decl(FlatBuffersParser::Enumval_declContext *context) = 0;
 

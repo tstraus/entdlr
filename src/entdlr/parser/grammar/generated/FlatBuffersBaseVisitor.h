@@ -39,6 +39,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitUnion_decl(FlatBuffersParser::Union_declContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitRoot_decl(FlatBuffersParser::Root_declContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -56,6 +60,14 @@ public:
   }
 
   virtual antlrcpp::Any visitType(FlatBuffersParser::TypeContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitUniontype_decl(FlatBuffersParser::Uniontype_declContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitCommasep_uniontype_decl(FlatBuffersParser::Commasep_uniontype_declContext *ctx) override {
     return visitChildren(ctx);
   }
 

@@ -2,6 +2,7 @@
 #define __ENTDLR_NAMESPACE_H__
 
 #include "enum.h"
+#include "union.h"
 #include "struct.h"
 
 #include <string>
@@ -14,10 +15,12 @@ namespace Entdlr
     public:
         std::string name;
         std::vector<Enum> enums;
+        std::vector<Union> unions;
         std::vector<Struct> structs;
 
         static Namespace create(const std::string& name);
         void add(const Enum& e);
+        void add(const Union& u);
         void add(const Struct& s);
     };
 };

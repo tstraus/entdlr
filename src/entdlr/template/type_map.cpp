@@ -28,6 +28,15 @@ namespace Entdlr
 
         for (auto& n : output.namespaces)
         {
+            for (auto& u : n.unions)
+            {
+                for (auto& t : u.types)
+                {
+                    if (mappings.count(t.type))
+                        t.type = mappings[t.type];
+                }
+            }
+
             for (auto& s : n.structs)
             {
                 for (auto& f : s.fields)

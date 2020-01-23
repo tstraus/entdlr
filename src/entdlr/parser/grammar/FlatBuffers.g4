@@ -3,7 +3,7 @@ grammar FlatBuffers ;
 
 // Parser rules
 
-schema : include* ( namespace_decl | type_decl | enum_decl | root_decl | file_extension_decl | file_identifier_decl | attribute_decl | rpc_decl | object )* ;
+schema : include* ( namespace_decl | type_decl | enum_decl | union_decl | root_decl | file_extension_decl | file_identifier_decl | attribute_decl | rpc_decl | object )* ;
 
 include : 'include' STRING_CONSTANT ';' ;
 
@@ -13,7 +13,9 @@ attribute_decl : 'attribute' STRING_CONSTANT ';' ;
 
 type_decl : ( 'table' | 'struct' ) IDENT metadata '{' ( field_decl )* '}' ;
 
-enum_decl : ( 'enum' IDENT ( ':' type )? | 'union' IDENT ) metadata '{' commasep_enumval_decl '}' ;
+enum_decl : 'enum' IDENT ( ':' type )? metadata '{' commasep_enumval_decl '}' ;
+
+union_decl : 'union' IDENT metadata '{' commasep_uniontype_decl '}' ;
 
 root_decl : 'root_type' IDENT ';' ;
 
@@ -26,6 +28,10 @@ rpc_method : IDENT '(' IDENT ')' ':' IDENT metadata ';' ;
 // fixed original grammar: allow namespaces for IDENTs
 // add fixed size arrays TSS
 type : '[' type ( ':' integer_const )? ']' | BASE_TYPE_NAME | ns_ident ;
+
+uniontype_decl : type ;
+
+commasep_uniontype_decl : uniontype_decl ( ',' uniontype_decl )* ','? ;
 
 enumval_decl : ns_ident ( '=' integer_const )? ;
 

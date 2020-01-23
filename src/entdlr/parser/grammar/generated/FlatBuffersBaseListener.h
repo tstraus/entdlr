@@ -34,6 +34,9 @@ public:
   virtual void enterEnum_decl(FlatBuffersParser::Enum_declContext * /*ctx*/) override { }
   virtual void exitEnum_decl(FlatBuffersParser::Enum_declContext * /*ctx*/) override { }
 
+  virtual void enterUnion_decl(FlatBuffersParser::Union_declContext * /*ctx*/) override { }
+  virtual void exitUnion_decl(FlatBuffersParser::Union_declContext * /*ctx*/) override { }
+
   virtual void enterRoot_decl(FlatBuffersParser::Root_declContext * /*ctx*/) override { }
   virtual void exitRoot_decl(FlatBuffersParser::Root_declContext * /*ctx*/) override { }
 
@@ -48,6 +51,12 @@ public:
 
   virtual void enterType(FlatBuffersParser::TypeContext * /*ctx*/) override { }
   virtual void exitType(FlatBuffersParser::TypeContext * /*ctx*/) override { }
+
+  virtual void enterUniontype_decl(FlatBuffersParser::Uniontype_declContext * /*ctx*/) override { }
+  virtual void exitUniontype_decl(FlatBuffersParser::Uniontype_declContext * /*ctx*/) override { }
+
+  virtual void enterCommasep_uniontype_decl(FlatBuffersParser::Commasep_uniontype_declContext * /*ctx*/) override { }
+  virtual void exitCommasep_uniontype_decl(FlatBuffersParser::Commasep_uniontype_declContext * /*ctx*/) override { }
 
   virtual void enterEnumval_decl(FlatBuffersParser::Enumval_declContext * /*ctx*/) override { }
   virtual void exitEnumval_decl(FlatBuffersParser::Enumval_declContext * /*ctx*/) override { }

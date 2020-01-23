@@ -2,6 +2,7 @@ project (entdlr_context)
 
 set (HEADERS
     enum.h
+    union.h
     struct.h
     namespace.h
     context.h
@@ -9,6 +10,7 @@ set (HEADERS
 
 set (SOURCE
     enum.cpp
+    union.cpp
     struct.cpp
     namespace.cpp
     context.cpp

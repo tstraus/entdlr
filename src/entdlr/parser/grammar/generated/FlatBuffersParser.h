@@ -22,13 +22,14 @@ public:
 
   enum {
     RuleSchema = 0, RuleInclude = 1, RuleNamespace_decl = 2, RuleAttribute_decl = 3, 
-    RuleType_decl = 4, RuleEnum_decl = 5, RuleRoot_decl = 6, RuleField_decl = 7, 
-    RuleRpc_decl = 8, RuleRpc_method = 9, RuleType = 10, RuleEnumval_decl = 11, 
-    RuleCommasep_enumval_decl = 12, RuleIdent_with_opt_single_value = 13, 
-    RuleCommasep_ident_with_opt_single_value = 14, RuleMetadata = 15, RuleScalar = 16, 
-    RuleObject = 17, RuleIdent_with_value = 18, RuleCommasep_ident_with_value = 19, 
-    RuleSingle_value = 20, RuleValue = 21, RuleCommasep_value = 22, RuleFile_extension_decl = 23, 
-    RuleFile_identifier_decl = 24, RuleNs_ident = 25, RuleInteger_const = 26
+    RuleType_decl = 4, RuleEnum_decl = 5, RuleUnion_decl = 6, RuleRoot_decl = 7, 
+    RuleField_decl = 8, RuleRpc_decl = 9, RuleRpc_method = 10, RuleType = 11, 
+    RuleUniontype_decl = 12, RuleCommasep_uniontype_decl = 13, RuleEnumval_decl = 14, 
+    RuleCommasep_enumval_decl = 15, RuleIdent_with_opt_single_value = 16, 
+    RuleCommasep_ident_with_opt_single_value = 17, RuleMetadata = 18, RuleScalar = 19, 
+    RuleObject = 20, RuleIdent_with_value = 21, RuleCommasep_ident_with_value = 22, 
+    RuleSingle_value = 23, RuleValue = 24, RuleCommasep_value = 25, RuleFile_extension_decl = 26, 
+    RuleFile_identifier_decl = 27, RuleNs_ident = 28, RuleInteger_const = 29
   };
 
   FlatBuffersParser(antlr4::TokenStream *input);
@@ -47,11 +48,14 @@ public:
   class Attribute_declContext;
   class Type_declContext;
   class Enum_declContext;
+  class Union_declContext;
   class Root_declContext;
   class Field_declContext;
   class Rpc_declContext;
   class Rpc_methodContext;
   class TypeContext;
+  class Uniontype_declContext;
+  class Commasep_uniontype_declContext;
   class Enumval_declContext;
   class Commasep_enumval_declContext;
   class Ident_with_opt_single_valueContext;
@@ -81,6 +85,8 @@ public:
     Type_declContext* type_decl(size_t i);
     std::vector<Enum_declContext *> enum_decl();
     Enum_declContext* enum_decl(size_t i);
+    std::vector<Union_declContext *> union_decl();
+    Union_declContext* union_decl(size_t i);
     std::vector<Root_declContext *> root_decl();
     Root_declContext* root_decl(size_t i);
     std::vector<File_extension_declContext *> file_extension_decl();
@@ -171,9 +177,9 @@ public:
   public:
     Enum_declContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *IDENT();
     MetadataContext *metadata();
     Commasep_enumval_declContext *commasep_enumval_decl();
-    antlr4::tree::TerminalNode *IDENT();
     TypeContext *type();
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
@@ -184,6 +190,23 @@ public:
   };
 
   Enum_declContext* enum_decl();
+
+  class  Union_declContext : public antlr4::ParserRuleContext {
+  public:
+    Union_declContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *IDENT();
+    MetadataContext *metadata();
+    Commasep_uniontype_declContext *commasep_uniontype_decl();
+
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  Union_declContext* union_decl();
 
   class  Root_declContext : public antlr4::ParserRuleContext {
   public:
@@ -269,6 +292,37 @@ public:
   };
 
   TypeContext* type();
+
+  class  Uniontype_declContext : public antlr4::ParserRuleContext {
+  public:
+    Uniontype_declContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    TypeContext *type();
+
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  Uniontype_declContext* uniontype_decl();
+
+  class  Commasep_uniontype_declContext : public antlr4::ParserRuleContext {
+  public:
+    Commasep_uniontype_declContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    std::vector<Uniontype_declContext *> uniontype_decl();
+    Uniontype_declContext* uniontype_decl(size_t i);
+
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  Commasep_uniontype_declContext* commasep_uniontype_decl();
 
   class  Enumval_declContext : public antlr4::ParserRuleContext {
   public:

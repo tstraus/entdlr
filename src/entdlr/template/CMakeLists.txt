@@ -24,6 +24,10 @@ target_link_libraries (${PROJECT_NAME}
     PUBLIC inja
 )
 
+if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    target_link_libraries (${PROJECT_NAME} PUBLIC stdc++fs)
+endif ()
+
 install (TARGETS ${PROJECT_NAME} DESTINATION lib)
 install (FILES ${HEADERS} DESTINATION include/entdlr/template)
 

@@ -3,10 +3,24 @@
 enum {{namespace.name}}_{{enum.name}}
 {
 ## for e in enum.values
-    {{namespace.name}}_{{enum.name}}_{{e.name}} = {{e.value}},
+    {{namespace.name}}_{{enum.name}}_{{upper(e.name)}} = {{e.value}},
 ## endfor
 };
 
+## endfor
+
+## for union in namespace.unions
+union {{namespace.name}}_{{union.name}}
+{
+## for t in union.types
+## if t.isArray == false
+    {{t.type}},
+## endif
+## if t.isArray == true and t.arraySize > 0
+    {{t.type}}[{{t.arraySize}}],
+## endif
+## endfor
+};
 ## endfor
 
 ## for struct in namespace.structs
