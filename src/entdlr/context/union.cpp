@@ -6,20 +6,26 @@ using std::cout; using std::endl;
 
 namespace Entdlr
 {
-    UnionType UnionType::create(const std::string& type, const bool& isArray, const uint32_t& arraySize)
+    UnionType UnionType::create(const Token& token, const bool& isArray, const uint32_t& arraySize)
     {
         UnionType out;
-        out.type = type;
+        out.filename = token.filename;
+        out.line = token.line;
+        out.column = token.column;
+        out.name = token.name;
         out.isArray = isArray;
         out.arraySize = arraySize;
 
         return out;
     }
 
-    Union Union::create(const std::string& name)
+    Union Union::create(const Token& token)
     {
         Union out;
-        out.name = name;
+        out.filename = token.filename;
+        out.line = token.line;
+        out.column = token.column;
+        out.name = token.name;
 
         return out;
     }

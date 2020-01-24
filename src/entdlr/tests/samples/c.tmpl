@@ -14,10 +14,10 @@ union {{namespace.name}}_{{union.name}}
 {
 ## for t in union.types
 ## if t.isArray == false
-    {{t.type}},
+    {{t.name}},
 ## endif
 ## if t.isArray == true and t.arraySize > 0
-    {{t.type}}[{{t.arraySize}}],
+    {{t.name}}[{{t.arraySize}}],
 ## endif
 ## endfor
 };

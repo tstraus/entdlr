@@ -4,21 +4,21 @@
 #include "enum.h"
 #include "union.h"
 #include "struct.h"
+#include "token.h"
 
 #include <string>
 #include <vector>
 
 namespace Entdlr
 {
-    class Namespace
+    class Namespace : public Token
     {
     public:
-        std::string name;
         std::vector<Enum> enums;
         std::vector<Union> unions;
         std::vector<Struct> structs;
 
-        static Namespace create(const std::string& name);
+        static Namespace create(const Token& token);
         void add(const Enum& e);
         void add(const Union& u);
         void add(const Struct& s);

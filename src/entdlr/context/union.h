@@ -6,25 +6,25 @@
 #include <vector>
 #include <optional>
 
+#include "token.h"
+
 namespace Entdlr
 {
-    class UnionType
+    class UnionType : public Token
     {
     public:
-        std::string type;
         bool isArray;
         uint32_t arraySize;
 
-        static UnionType create(const std::string& type, const bool& isArray, const uint32_t& arraySize);
+        static UnionType create(const Token& token, const bool& isArray, const uint32_t& arraySize);
     };
 
-    class Union
+    class Union : public Token
     {
     public:
-        std::string name;
         std::vector<UnionType> types;
 
-        static Union create(const std::string& name);
+        static Union create(const Token& token);
         void add(const UnionType& type);
     };
 };

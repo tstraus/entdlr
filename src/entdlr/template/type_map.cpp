@@ -32,8 +32,8 @@ namespace Entdlr
             {
                 for (auto& t : u.types)
                 {
-                    if (mappings.count(t.type))
-                        t.type = mappings[t.type];
+                    if (mappings.count(t.name))
+                        t.name = mappings[t.name];
                 }
             }
 

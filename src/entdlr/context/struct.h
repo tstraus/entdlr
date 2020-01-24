@@ -4,26 +4,26 @@
 #include <string>
 #include <vector>
 
+#include "token.h"
+
 namespace Entdlr
 {
-    class Field
+    class Field : public Token
     {
     public:
-        std::string name;
         std::string type;
         bool isArray;
         uint32_t arraySize;
 
-        static Field create(const std::string& name, const std::string& type, const bool& isArray, const uint32_t& arraySize);
+        static Field create(const Token& token, const std::string& type, const bool& isArray, const uint32_t& arraySize);
     };
 
-    class Struct
+    class Struct : public Token
     {
     public:
-        std::string name;
         std::vector<Field> fields;
 
-        static Struct create(const std::string& name);
+        static Struct create(const Token& token);
         void add(const Field& field);
     };
 };

@@ -40,7 +40,7 @@ namespace Entdlr
             std::stringstream buffer;
             buffer << file.rdbuf();
 
-            return parse(buffer.str());
+            return parse(buffer.str(), filename);
         }
 
         catch (std::exception& e)
@@ -49,7 +49,7 @@ namespace Entdlr
         }
     }
 
-    Context Parser::parse(const std::string& content)
+    Context Parser::parse(const std::string& content, const std::string& filename)
     {
         try
         {
@@ -65,20 +65,20 @@ namespace Entdlr
             Context context;
 
             // get the namespace in the file
-            auto ns = parseNamespace(schema->namespace_decl());
+            auto ns = parseNamespace(schema->namespace_decl(), filename);
 
             // get enums defined in the file
-            const auto enums = parseEnums(schema->enum_decl());
+            const auto enums = parseEnums(schema->enum_decl(), filename);
             for (const auto& e : enums)
                 ns.add(e);
 
             // get unions defined in the file
-            const auto unions = parseUnions(schema->union_decl());
+            const auto unions = parseUnions(schema->union_decl(), filename);
             for (const auto& u : unions)
                 ns.add(u);
 
             // get structs defined in the file
-            const auto structs = parseStructs(schema->type_decl());
+            const auto structs = parseStructs(schema->type_decl(), filename);
             for (const auto& s : structs)
                 ns.add(s);
 
@@ -107,7 +107,7 @@ namespace Entdlr
         return output;
     }
 
-    Namespace Parser::parseNamespace(const std::vector<FlatBuffersParser::Namespace_declContext*>& namespaces)
+    Namespace Parser::parseNamespace(const std::vector<FlatBuffersParser::Namespace_declContext*>& namespaces, const std::string& filename)
     {
         std::string output = "";
 
@@ -128,25 +128,27 @@ namespace Entdlr
         else if (namespaces.size() > 1)
             throw std::runtime_error(std::to_string(namespaces[1]->getStart()->getLine()) + ", " + std::to_string(namespaces[1]->getStart()->getCharPositionInLine()) + ": Multiple namespaces in file");
 
-        return Namespace::create(output);
+        //return Namespace::create(output);
+        return Namespace::create(Token{output, filename, namespaces[0]->getStart()->getLine(), namespaces[0]->getStart()->getCharPositionInLine()});
     }
 
-    std::vector<Enum> Parser::parseEnums(const std::vector<FlatBuffersParser::Enum_declContext*>& enums)
+    std::vector<Enum> Parser::parseEnums(const std::vector<FlatBuffersParser::Enum_declContext*>& enums, const std::string& filename)
     {
         std::vector<Enum> output;
 
         for (const auto& en : enums)
         {
-            auto e = Enum::create(en->IDENT()->getSymbol()->getText()); // make a new enum with the name
+            auto e = Enum::create(Token{en->IDENT()->getSymbol()->getText(), filename, en->getStart()->getLine(), en->getStart()->getCharPositionInLine()}); // make a new enum with the name
 
             // get enum values
             for (const auto& v : en->commasep_enumval_decl()->enumval_decl())
             {
                 const auto& valueName = v->ns_ident()->IDENT()[0]->getSymbol()->getText();
                 if (v->integer_const() && v->integer_const()->INTEGER_CONSTANT())
-                    e.add(valueName, std::stoll(v->integer_const()->INTEGER_CONSTANT()->getSymbol()->getText()));
+                    e.add(Token{valueName, filename, v->getStart()->getLine(), v->getStart()->getCharPositionInLine()},
+                        std::stoll(v->integer_const()->INTEGER_CONSTANT()->getSymbol()->getText()));
 
-                else e.add(valueName, {});
+                else e.add(Token{valueName, filename, v->getStart()->getLine(), v->getStart()->getCharPositionInLine()}, {});
             }
 
             output.push_back(e);
@@ -155,13 +157,13 @@ namespace Entdlr
         return output;
     }
 
-    std::vector<Union> Parser::parseUnions(const std::vector<FlatBuffersParser::Union_declContext*>& unions)
+    std::vector<Union> Parser::parseUnions(const std::vector<FlatBuffersParser::Union_declContext*>& unions, const std::string& filename)
     {
         std::vector<Union> output;
 
         for (const auto& un : unions)
         {
-            auto u = Union::create(un->IDENT()->getSymbol()->getText()); // make a new union with the name
+            auto u = Union::create(Token{un->IDENT()->getSymbol()->getText(), filename, un->getStart()->getLine(), un->getStart()->getCharPositionInLine()}); // make a new union with the name
 
             // get union types
             for (const auto& t : un->commasep_uniontype_decl()->uniontype_decl())
@@ -222,7 +224,7 @@ namespace Entdlr
                         arraySize = std::stoul(t->type()->integer_const()->INTEGER_CONSTANT()->getSymbol()->getText());
                 }
 
-                u.add(UnionType::create(type, isArray, arraySize));
+                u.add(UnionType::create(Token{type, filename, t->getStart()->getLine(), t->getStart()->getCharPositionInLine()}, isArray, arraySize));
             }
 
             output.push_back(u);
@@ -231,18 +233,18 @@ namespace Entdlr
         return output;
     }
 
-    std::vector<Struct> Parser::parseStructs(const std::vector<FlatBuffersParser::Type_declContext*>& structs)
+    std::vector<Struct> Parser::parseStructs(const std::vector<FlatBuffersParser::Type_declContext*>& structs, const std::string& filename)
     {
         std::vector<Struct> output;
 
         for (const auto& st : structs)
         {
-            auto s = Struct::create(st->IDENT()->getSymbol()->getText()); // make a new struct with the name
+            auto s = Struct::create(Token{st->IDENT()->getSymbol()->getText(), filename, st->getStart()->getLine(), st->getStart()->getCharPositionInLine()}); // make a new struct with the name
 
             // get the fields of the struct
             for (const auto& f : st->field_decl())
             {
-                s.add(parseField(f));
+                s.add(parseField(f, filename));
             }
 
             output.push_back(s);
@@ -251,7 +253,7 @@ namespace Entdlr
         return output;
     }
 
-    Field Parser::parseField(FlatBuffersParser::Field_declContext* field)
+    Field Parser::parseField(FlatBuffersParser::Field_declContext* field, const std::string& filename)
     {
         const auto name = field->IDENT()->getSymbol()->getText();
         std::string type = "";
@@ -310,6 +312,6 @@ namespace Entdlr
                 arraySize = std::stoul(field->type()->integer_const()->INTEGER_CONSTANT()->getSymbol()->getText());
         }
 
-        return Field::create(name, type, isArray, arraySize);
+        return Field::create(Token{name, filename, field->getStart()->getLine(), field->getStart()->getCharPositionInLine()}, type, isArray, arraySize);
     }
 }

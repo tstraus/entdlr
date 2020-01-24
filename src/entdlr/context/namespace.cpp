@@ -2,10 +2,13 @@
 
 namespace Entdlr
 {
-    Namespace Namespace::create(const std::string& name)
+    Namespace Namespace::create(const Token& token)
     {
         Namespace out;
-        out.name = name;
+        out.filename = token.filename;
+        out.line = token.line;
+        out.column = token.column;
+        out.name = token.name;
 
         return out;
     }

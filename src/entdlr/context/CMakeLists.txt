@@ -1,6 +1,7 @@
 project (entdlr_context)
 
 set (HEADERS
+    token.h
     enum.h
     union.h
     struct.h
