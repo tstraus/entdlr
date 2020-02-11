@@ -1,9 +1,7 @@
-project (entdlr_tests)
-
-add_subdirectory (samples)
+project (parser_tests)
 
 set (SOURCE
-    "entdlr_tests.cpp"
+    "parser_tests.cpp"
 )
 
 add_executable (${PROJECT_NAME} ${SOURCE})

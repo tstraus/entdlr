@@ -4,6 +4,7 @@ set (CMAKE_MINSIZEREL_POSTFIX rm)
 
 add_subdirectory (antlr_runtime)
 add_subdirectory (inja)
+add_subdirectory (doctest)
 
 enable_testing ()
 add_subdirectory (entdlr)

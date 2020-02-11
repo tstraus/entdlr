@@ -1,14 +1,7 @@
-#include "lest.hpp"
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include "doctest.h"
 
-const lest::test spec[] =
+TEST_CASE("EntdlrTests.Hello")
 {
-    CASE("EntdlrTests.Hello")
-    {
-        EXPECT(true);
-    }
-};
-
-int main(int argc, char** argv)
-{
-    return lest::run(spec, argc, argv);
+    CHECK(true == true);
 }

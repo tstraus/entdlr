@@ -111,6 +111,9 @@ namespace Entdlr
     {
         std::string output = "";
 
+        if (namespaces.size() == 0) // global namespace
+            return Namespace::create(Token{output, filename, 0, 0});
+
         if (namespaces.size() == 1)
         {
             const auto& ns = namespaces[0];
@@ -128,7 +131,6 @@ namespace Entdlr
         else if (namespaces.size() > 1)
             throw std::runtime_error(std::to_string(namespaces[1]->getStart()->getLine()) + ", " + std::to_string(namespaces[1]->getStart()->getCharPositionInLine()) + ": Multiple namespaces in file");
 
-        //return Namespace::create(output);
         return Namespace::create(Token{output, filename, namespaces[0]->getStart()->getLine(), namespaces[0]->getStart()->getCharPositionInLine()});
     }
 
