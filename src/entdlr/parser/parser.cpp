@@ -140,7 +140,16 @@ namespace Entdlr
 
         for (const auto& en : enums)
         {
-            auto e = Enum::create(Token{en->IDENT()->getSymbol()->getText(), filename, en->getStart()->getLine(), en->getStart()->getCharPositionInLine()}); // make a new enum with the name
+            Enum e;
+            Token t = { en->IDENT()->getSymbol()->getText(), filename, en->getStart()->getLine(), en->getStart()->getCharPositionInLine() };
+            if (en->type())
+            {
+                if (en->type()->BASE_TYPE_NAME())
+                    e = Enum::create(t, en->type()->BASE_TYPE_NAME()->getSymbol()->getText()); // make a new enum with the name
+                else throw std::runtime_error(std::to_string(en->type()->getStart()->getLine()) + ", " + std::to_string(en->type()->getStart()->getCharPositionInLine()) + ": enums can only be primitive types");
+            }
+
+            else e = Enum::create(t);
 
             // get enum values
             for (const auto& v : en->commasep_enumval_decl()->enumval_decl())

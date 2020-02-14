@@ -1,7 +1,7 @@
 ## for namespace in entdlr.namespaces
 {{namespace.name}}
 ## for enum in namespace.enums
-    {{enum.name}} : enum
+    {{enum.name}} : enum ({{enum.type}})
 ## for e in enum.values
         {{e.name}} = {{e.value}}
 ## endfor

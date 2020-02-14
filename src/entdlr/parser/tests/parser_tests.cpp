@@ -61,6 +61,7 @@ TEST_SUITE("Parsing")
 
             const auto& e = n.enums[0];
             CHECK(e.name == "Force");
+            CHECK(e.type == "uint8");
             REQUIRE(e.values.size() == 4);
 
             const auto& values = e.values;

@@ -21,9 +21,10 @@ namespace Entdlr
     class Enum : public Token
     {
     public:
+        std::string type;
         std::vector<EnumValue> values;
 
-        static Enum create(const Token& token);
+        static Enum create(const Token& token, const std::string& type = "int32");
         void add(const Token& token, const std::optional<int64_t> value);
 
     private:

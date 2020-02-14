@@ -128,6 +128,7 @@ namespace Entdlr
     {
         j = json {
             { "name", e.name },
+            { "type", e.type },
             { "filename", e.filename },
             { "line", e.line },
             { "column", e.column },
@@ -138,6 +139,7 @@ namespace Entdlr
     void from_json(const json& j, Enum& e)
     {
         j.at("name").get_to(e.name);
+        j.at("type").get_to(e.type);
         j.at("filename").get_to(e.filename);
         j.at("line").get_to(e.line);
         j.at("column").get_to(e.column);

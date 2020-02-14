@@ -4,7 +4,7 @@
 namespace {{namespace.name}}
 {
 ## for enum in namespace.enums
-    enum class {{enum.name}}
+    enum class {{enum.name}} : {{enum.type}}
     {
 ## for e in enum.values
         {{e.name}} = {{e.value}},

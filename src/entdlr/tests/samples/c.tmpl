@@ -1,6 +1,6 @@
 ## for namespace in entdlr.namespaces
 ## for enum in namespace.enums
-enum {{namespace.name}}_{{enum.name}}
+enum {{namespace.name}}_{{enum.name}} : {{enum.type}}
 {
 ## for e in enum.values
     {{namespace.name}}_{{enum.name}}_{{upper(e.name)}} = {{e.value}},
