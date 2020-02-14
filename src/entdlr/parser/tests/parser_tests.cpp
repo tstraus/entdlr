@@ -20,7 +20,7 @@ TEST_SUITE("Parsing")
                 }
             )";
 
-            const auto context = Parser::parse(input, "test");
+            const auto context = Parser::parse(input);
             REQUIRE(context.namespaces.size() == 1);
 
             const auto& n = context.namespaces[0];
@@ -52,7 +52,7 @@ TEST_SUITE("Parsing")
                 }
             )";
 
-            const auto context = Parser::parse(input, "test");
+            const auto context = Parser::parse(input);
             REQUIRE(context.namespaces.size() == 1);
 
             const auto& n = context.namespaces[0];
@@ -72,6 +72,35 @@ TEST_SUITE("Parsing")
             CHECK(values[2].value == 10);
             CHECK(values[3].name == "Other");
             CHECK(values[3].value == 11);
+        }
+
+        SUBCASE("Unions")
+        {
+            std::string input = R"(
+                union EntityIdUnion
+                {
+                    uint64,
+                    [uint16 : 4]
+                }
+            )";
+
+            const auto context = Parser::parse(input);
+            REQUIRE(context.namespaces.size() == 1);
+
+            const auto& n = context.namespaces[0];
+            CHECK(n.name == "");
+            REQUIRE(n.unions.size() == 1);
+
+            const auto& u = n.unions[0];
+            CHECK(u.name == "EntityIdUnion");
+            REQUIRE(u.types.size() == 2);
+
+            const auto& types = u.types;
+            CHECK(types[0].name == "uint64");
+            CHECK(types[0].isArray == false);
+            CHECK(types[1].name == "uint16");
+            CHECK(types[1].isArray == true);
+            CHECK(types[1].arraySize == 4);
         }
     }
 }
