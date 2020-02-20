@@ -32,6 +32,17 @@
 ## if field.isArray == true and field.arraySize > 0
         {{field.name}} : {{field.type}}[{{field.arraySize}}]
 ## endif
+## for attribute in field.attributes
+## if attribute.isString == false and attribute.isNumber == false
+            {{attribute.name}}
+## endif
+## if attribute.isString == true
+            {{attribute.name}} : {{attribute.string}}
+## endif
+## if attribute.isNumber == true
+            {{attribute.name}} : {{attribute.number}}
+## endif
+## endfor
 ## endfor
 ## endfor
 ## endfor

@@ -67,7 +67,8 @@ namespace Entdlr
             { "column", f.column },
             { "type", f.type },
             { "isArray", f.isArray },
-            { "arraySize", f.arraySize }
+            { "arraySize", f.arraySize },
+            { "attributes", f.attributes }
         };
     }
 
@@ -80,6 +81,33 @@ namespace Entdlr
         j.at("type").get_to(f.type);
         j.at("isArray").get_to(f.isArray);
         j.at("arraySize").get_to(f.arraySize);
+        j.at("attributes").get_to(f.attributes);
+    }
+
+    void to_json(json& j, const Attribute& a)
+    {
+        j = json{
+            { "name", a.name },
+            { "filename", a.filename },
+            { "line", a.line },
+            { "column", a.column },
+            { "isString", a.isString },
+            { "string", a.string },
+            { "isNumber", a.isNumber },
+            { "number", a.number },
+        };
+    }
+
+    void from_json(const json& j, Attribute& a)
+    {
+        j.at("name").get_to(a.name);
+        j.at("filename").get_to(a.filename);
+        j.at("line").get_to(a.line);
+        j.at("column").get_to(a.column);
+        j.at("isString").get_to(a.isString);
+        j.at("string").get_to(a.string);
+        j.at("isNumber").get_to(a.isNumber);
+        j.at("number").get_to(a.number);
     }
 
     void to_json(json& j, const Union& u)

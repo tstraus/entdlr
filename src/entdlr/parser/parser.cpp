@@ -270,6 +270,7 @@ namespace Entdlr
         std::string type = "";
         bool isArray = false;
         uint32_t arraySize = 0;
+        std::vector<Attribute> attributes;
 
         // plain type
         if (field->type()->BASE_TYPE_NAME())
@@ -323,6 +324,73 @@ namespace Entdlr
                 arraySize = std::stoul(field->type()->integer_const()->INTEGER_CONSTANT()->getSymbol()->getText());
         }
 
-        return Field::create(Token{name, filename, field->getStart()->getLine(), field->getStart()->getCharPositionInLine()}, type, isArray, arraySize);
+        // check for metadata
+        if (field->metadata() && field->metadata()->commasep_ident_with_opt_single_value() && field->metadata()->commasep_ident_with_opt_single_value())
+        {
+            for (const auto& attribute : field->metadata()->commasep_ident_with_opt_single_value()->ident_with_opt_single_value())
+            {
+                if (attribute->single_value()->STRING_CONSTANT())
+                {
+                    //cout << " : " << attribute->single_value()->STRING_CONSTANT()->getSymbol()->getText();
+                    attributes.push_back(Attribute::create(
+                        Token{ attribute->IDENT()->getSymbol()->getText(), filename, attribute->getStart()->getLine(), attribute->getStart()->getCharPositionInLine() },
+                        attribute->single_value()->STRING_CONSTANT()->getSymbol()->getText()
+                    ));
+                }
+
+                else if (attribute->single_value()->scalar())
+                {
+                    //cout << " : ";
+                    const auto& scalar = attribute->single_value()->scalar();
+                    if (scalar->INTEGER_CONSTANT())
+                    {
+                        //cout << scalar->INTEGER_CONSTANT()->getSymbol()->getText();
+                        attributes.push_back(Attribute::create(
+                            Token{ attribute->IDENT()->getSymbol()->getText(), filename, attribute->getStart()->getLine(), attribute->getStart()->getCharPositionInLine() },
+                            std::stod(scalar->INTEGER_CONSTANT()->getSymbol()->getText())
+                        ));
+                    }
+
+                    else if (scalar->HEX_INTEGER_CONSTANT())
+                    {
+                        //cout << scalar->HEX_INTEGER_CONSTANT()->getSymbol()->getText();
+                        attributes.push_back(Attribute::create(
+                            Token{ attribute->IDENT()->getSymbol()->getText(), filename, attribute->getStart()->getLine(), attribute->getStart()->getCharPositionInLine() },
+                            std::stod(scalar->HEX_INTEGER_CONSTANT()->getSymbol()->getText())
+                        ));
+                    }
+
+                    else if (scalar->FLOAT_CONSTANT())
+                    {
+                        //cout << scalar->FLOAT_CONSTANT()->getSymbol()->getText();
+                        attributes.push_back(Attribute::create(
+                            Token{ attribute->IDENT()->getSymbol()->getText(), filename, attribute->getStart()->getLine(), attribute->getStart()->getCharPositionInLine() },
+                            std::stod(scalar->FLOAT_CONSTANT()->getSymbol()->getText())
+                        ));
+                    }
+
+                    else if (scalar->IDENT())
+                    {
+                        //cout << scalar->IDENT()->getSymbol()->getText();
+                        attributes.push_back(Attribute::create(
+                            Token{ attribute->IDENT()->getSymbol()->getText(), filename, attribute->getStart()->getLine(), attribute->getStart()->getCharPositionInLine() },
+                            std::stod(scalar->IDENT()->getSymbol()->getText())
+                        ));
+                    }
+                }
+
+                else
+                {
+                    //cout << attribute->IDENT()->getSymbol()->getText();
+                    attributes.push_back(Attribute::create(
+                        Token{ attribute->IDENT()->getSymbol()->getText(), filename, attribute->getStart()->getLine(), attribute->getStart()->getCharPositionInLine() })
+                    );
+                }
+
+                //cout << endl;
+            }
+        }
+
+        return Field::create(Token{name, filename, field->getStart()->getLine(), field->getStart()->getCharPositionInLine()}, type, isArray, arraySize, attributes);
     }
 }

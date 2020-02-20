@@ -241,6 +241,9 @@ TEST_SUITE("Parsing")
             CHECK(f[2].type == "string");
             CHECK(f[2].isArray == true);
             CHECK(f[2].arraySize == 2);
+            REQUIRE(f[2].attributes.size() == 1);
+            CHECK(f[2].attributes[0].name == "max_length");
+            CHECK(f[2].attributes[0].number == 10);
             // TODO: get metadata fields into context
         }
     }
