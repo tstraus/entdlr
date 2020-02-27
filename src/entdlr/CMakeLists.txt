@@ -5,7 +5,7 @@ set (CMAKE_MINSIZEREL_POSTFIX rm)
 add_subdirectory (parser)
 add_subdirectory (context)
 add_subdirectory (template)
-add_subdirectory (tests)
+add_subdirectory (samples)
 
 project (entdlr)
 
