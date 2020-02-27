@@ -7,7 +7,12 @@ namespace {{namespace.name}}
     enum class {{enum.name}} : {{enum.type}}
     {
 ## for e in enum.values
+## if loop.is_last == false
         {{e.name}} = {{e.value}},
+## endif
+## if loop.is_last == true
+        {{e.name}} = {{e.value}}
+## endif
 ## endfor
     };
 
@@ -18,10 +23,20 @@ namespace {{namespace.name}}
     {
 ## for t in union.types
 ## if t.isArray == false
+## if loop.is_last == false
         {{t.name}},
 ## endif
+## if loop.is_last == true
+        {{t.name}}
+## endif
+## endif
 ## if t.isArray == true and t.arraySize > 0
+## if loop.is_last == false
         {{t.name}}[{{t.arraySize}}],
+## endif
+## if loop.is_last == true
+        {{t.name}}[{{t.arraySize}}]
+## endif
 ## endif
 ## endfor
     };
@@ -41,6 +56,25 @@ namespace {{namespace.name}}
 ## endfor
     };
 
+## endfor
+
+## for facility in namespace.facilities
+    class {{facility.name}} : public Facility
+    {
+    public:
+## for method in facility.methods
+        {{method.returnType}} {{method.name}} (
+## for parameter in method.parameters
+## if loop.is_last == false
+            {{parameter.type}} {{parameter.name}},
+## endif
+## if loop.is_last == true
+            {{parameter.type}} {{parameter.name}}
+## endif
+## endfor
+        );
+## endfor
+    };
 ## endfor
 };
 ## endfor
