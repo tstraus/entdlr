@@ -1,0 +1,20 @@
+namespace grid;
+
+struct Date
+{
+    year : int16;
+    month : uint8;
+    day : uint8;
+}
+
+struct TimeResult
+{
+    timestamp : time;
+    date : Date;
+}
+
+facility Time
+{
+    now() : TimeResult;
+    difference(start: time, end: time) : time;
+}

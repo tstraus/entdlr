@@ -47,6 +47,24 @@ public:
   virtual void enterRpc_method(FlatBuffersParser::Rpc_methodContext *ctx) = 0;
   virtual void exitRpc_method(FlatBuffersParser::Rpc_methodContext *ctx) = 0;
 
+  virtual void enterFacility_decl(FlatBuffersParser::Facility_declContext *ctx) = 0;
+  virtual void exitFacility_decl(FlatBuffersParser::Facility_declContext *ctx) = 0;
+
+  virtual void enterFacility_method(FlatBuffersParser::Facility_methodContext *ctx) = 0;
+  virtual void exitFacility_method(FlatBuffersParser::Facility_methodContext *ctx) = 0;
+
+  virtual void enterMethod_parameters(FlatBuffersParser::Method_parametersContext *ctx) = 0;
+  virtual void exitMethod_parameters(FlatBuffersParser::Method_parametersContext *ctx) = 0;
+
+  virtual void enterMethod_parameter(FlatBuffersParser::Method_parameterContext *ctx) = 0;
+  virtual void exitMethod_parameter(FlatBuffersParser::Method_parameterContext *ctx) = 0;
+
+  virtual void enterMethod_return_type(FlatBuffersParser::Method_return_typeContext *ctx) = 0;
+  virtual void exitMethod_return_type(FlatBuffersParser::Method_return_typeContext *ctx) = 0;
+
+  virtual void enterMethod_type(FlatBuffersParser::Method_typeContext *ctx) = 0;
+  virtual void exitMethod_type(FlatBuffersParser::Method_typeContext *ctx) = 0;
+
   virtual void enterType(FlatBuffersParser::TypeContext *ctx) = 0;
   virtual void exitType(FlatBuffersParser::TypeContext *ctx) = 0;
 

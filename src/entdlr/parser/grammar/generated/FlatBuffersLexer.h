@@ -15,9 +15,9 @@ public:
     T__0 = 1, T__1 = 2, T__2 = 3, T__3 = 4, T__4 = 5, T__5 = 6, T__6 = 7, 
     T__7 = 8, T__8 = 9, T__9 = 10, T__10 = 11, T__11 = 12, T__12 = 13, T__13 = 14, 
     T__14 = 15, T__15 = 16, T__16 = 17, T__17 = 18, T__18 = 19, T__19 = 20, 
-    T__20 = 21, T__21 = 22, STRING_CONSTANT = 23, BASE_TYPE_NAME = 24, IDENT = 25, 
-    HEX_INTEGER_CONSTANT = 26, INTEGER_CONSTANT = 27, FLOAT_CONSTANT = 28, 
-    BLOCK_COMMENT = 29, COMMENT = 30, WHITESPACE = 31
+    T__20 = 21, T__21 = 22, T__22 = 23, STRING_CONSTANT = 24, BASE_TYPE_NAME = 25, 
+    IDENT = 26, HEX_INTEGER_CONSTANT = 27, INTEGER_CONSTANT = 28, FLOAT_CONSTANT = 29, 
+    BLOCK_COMMENT = 30, COMMENT = 31, WHITESPACE = 32
   };
 
   FlatBuffersLexer(antlr4::CharStream *input);

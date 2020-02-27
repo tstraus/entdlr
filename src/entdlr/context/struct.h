@@ -30,7 +30,7 @@ namespace Entdlr
         uint32_t arraySize;
         std::vector<Attribute> attributes;
 
-        static Field create(const Token& token, const std::string& type, const bool& isArray, const uint32_t& arraySize, std::vector<Attribute> attributes);
+        static Field create(const Token& token, const std::string& type, const bool& isArray, const uint32_t& arraySize, std::vector<Attribute>& attributes);
     };
 
     class Struct : public Token

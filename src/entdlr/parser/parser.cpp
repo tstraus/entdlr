@@ -82,6 +82,11 @@ namespace Entdlr
             for (const auto& s : structs)
                 ns.add(s);
 
+            // get facilities defined in the file
+            const auto facilities = parseFacilities(schema->facility_decl(), filename);
+            for (const auto& f : facilities)
+                ns.add(f);
+
             context.add(ns);
 
             return context;
@@ -331,7 +336,6 @@ namespace Entdlr
             {
                 if (attribute->single_value()->STRING_CONSTANT())
                 {
-                    //cout << " : " << attribute->single_value()->STRING_CONSTANT()->getSymbol()->getText();
                     attributes.push_back(Attribute::create(
                         Token{ attribute->IDENT()->getSymbol()->getText(), filename, attribute->getStart()->getLine(), attribute->getStart()->getCharPositionInLine() },
                         attribute->single_value()->STRING_CONSTANT()->getSymbol()->getText()
@@ -340,11 +344,9 @@ namespace Entdlr
 
                 else if (attribute->single_value()->scalar())
                 {
-                    //cout << " : ";
                     const auto& scalar = attribute->single_value()->scalar();
                     if (scalar->INTEGER_CONSTANT())
                     {
-                        //cout << scalar->INTEGER_CONSTANT()->getSymbol()->getText();
                         attributes.push_back(Attribute::create(
                             Token{ attribute->IDENT()->getSymbol()->getText(), filename, attribute->getStart()->getLine(), attribute->getStart()->getCharPositionInLine() },
                             std::stod(scalar->INTEGER_CONSTANT()->getSymbol()->getText())
@@ -353,7 +355,6 @@ namespace Entdlr
 
                     else if (scalar->HEX_INTEGER_CONSTANT())
                     {
-                        //cout << scalar->HEX_INTEGER_CONSTANT()->getSymbol()->getText();
                         attributes.push_back(Attribute::create(
                             Token{ attribute->IDENT()->getSymbol()->getText(), filename, attribute->getStart()->getLine(), attribute->getStart()->getCharPositionInLine() },
                             std::stod(scalar->HEX_INTEGER_CONSTANT()->getSymbol()->getText())
@@ -362,7 +363,6 @@ namespace Entdlr
 
                     else if (scalar->FLOAT_CONSTANT())
                     {
-                        //cout << scalar->FLOAT_CONSTANT()->getSymbol()->getText();
                         attributes.push_back(Attribute::create(
                             Token{ attribute->IDENT()->getSymbol()->getText(), filename, attribute->getStart()->getLine(), attribute->getStart()->getCharPositionInLine() },
                             std::stod(scalar->FLOAT_CONSTANT()->getSymbol()->getText())
@@ -371,7 +371,6 @@ namespace Entdlr
 
                     else if (scalar->IDENT())
                     {
-                        //cout << scalar->IDENT()->getSymbol()->getText();
                         attributes.push_back(Attribute::create(
                             Token{ attribute->IDENT()->getSymbol()->getText(), filename, attribute->getStart()->getLine(), attribute->getStart()->getCharPositionInLine() },
                             std::stod(scalar->IDENT()->getSymbol()->getText())
@@ -381,16 +380,83 @@ namespace Entdlr
 
                 else
                 {
-                    //cout << attribute->IDENT()->getSymbol()->getText();
                     attributes.push_back(Attribute::create(
                         Token{ attribute->IDENT()->getSymbol()->getText(), filename, attribute->getStart()->getLine(), attribute->getStart()->getCharPositionInLine() })
                     );
                 }
-
-                //cout << endl;
             }
         }
 
         return Field::create(Token{name, filename, field->getStart()->getLine(), field->getStart()->getCharPositionInLine()}, type, isArray, arraySize, attributes);
+    }
+
+    std::vector<Facility> Parser::parseFacilities(const std::vector<FlatBuffersParser::Facility_declContext*>& facilities, const std::string& filename)
+    {
+        std::vector<Facility> output;
+
+        for (const auto& facility : facilities)
+        {
+            auto f = Facility::create(Token{facility->IDENT()->getSymbol()->getText(), filename, facility->getStart()->getLine(), facility->getStart()->getCharPositionInLine()});
+
+            // get the methods of the facility
+            for (const auto& m : facility->facility_method())
+            {
+                f.add(parseMethod(m, filename));
+            }
+
+            output.push_back(f);
+        }
+
+        return output;
+    }
+
+    Method Parser::parseMethod(FlatBuffersParser::Facility_methodContext* method, const std::string& filename)
+    {
+        std::string returnType = "";
+        if (method->method_return_type()->method_type()->BASE_TYPE_NAME())
+        {
+            returnType = method->method_return_type()->method_type()->BASE_TYPE_NAME()->getSymbol()->getText();
+        }
+
+        else if (method->method_return_type()->method_type()->ns_ident())
+        {
+            bool afterFirst = false;
+            for (const auto& segment : method->method_return_type()->method_type()->ns_ident()->IDENT())
+            { // get the namespace separated by "::"
+                if (afterFirst)
+                    returnType += "::";
+                else afterFirst = true;
+
+                returnType += segment->getSymbol()->getText();
+            }
+        }
+
+        auto output = Method::create(Token{method->IDENT()->getSymbol()->getText(), filename, method->getStart()->getLine(), method->getStart()->getCharPositionInLine()}, returnType);
+
+        for (const auto& p : method->method_parameters()->method_parameter())
+        {
+            std::string t = "";
+            if (p->method_type()->BASE_TYPE_NAME())
+            {
+                t = p->method_type()->BASE_TYPE_NAME()->getSymbol()->getText();
+            }
+
+            else if (p->method_type()->ns_ident())
+            {
+                bool afterFirst = false;
+                for (const auto& segment : p->method_type()->ns_ident()->IDENT())
+                { // get the namespace separated by "::"
+                    if (afterFirst)
+                        t += "::";
+                    else afterFirst = true;
+
+                    t += segment->getSymbol()->getText();
+                }
+            }
+
+            output.add(Parameter::create(Token{p->IDENT()->getSymbol()->getText(), filename, p->getStart()->getLine(), p->getStart()->getCharPositionInLine()}, t));
+        }
+
+        return output;
     }
 }

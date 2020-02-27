@@ -5,6 +5,7 @@ set (HEADERS
     enum.h
     union.h
     struct.h
+    facility.h
     namespace.h
     context.h
 )
@@ -13,6 +14,7 @@ set (SOURCE
     enum.cpp
     union.cpp
     struct.cpp
+    facility.cpp
     namespace.cpp
     context.cpp
 )

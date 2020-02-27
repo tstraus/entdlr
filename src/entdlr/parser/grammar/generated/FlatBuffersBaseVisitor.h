@@ -59,6 +59,30 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitFacility_decl(FlatBuffersParser::Facility_declContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitFacility_method(FlatBuffersParser::Facility_methodContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitMethod_parameters(FlatBuffersParser::Method_parametersContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitMethod_parameter(FlatBuffersParser::Method_parameterContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitMethod_return_type(FlatBuffersParser::Method_return_typeContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitMethod_type(FlatBuffersParser::Method_typeContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitType(FlatBuffersParser::TypeContext *ctx) override {
     return visitChildren(ctx);
   }

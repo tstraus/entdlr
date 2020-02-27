@@ -41,6 +41,18 @@ public:
 
     virtual antlrcpp::Any visitRpc_method(FlatBuffersParser::Rpc_methodContext *context) = 0;
 
+    virtual antlrcpp::Any visitFacility_decl(FlatBuffersParser::Facility_declContext *context) = 0;
+
+    virtual antlrcpp::Any visitFacility_method(FlatBuffersParser::Facility_methodContext *context) = 0;
+
+    virtual antlrcpp::Any visitMethod_parameters(FlatBuffersParser::Method_parametersContext *context) = 0;
+
+    virtual antlrcpp::Any visitMethod_parameter(FlatBuffersParser::Method_parameterContext *context) = 0;
+
+    virtual antlrcpp::Any visitMethod_return_type(FlatBuffersParser::Method_return_typeContext *context) = 0;
+
+    virtual antlrcpp::Any visitMethod_type(FlatBuffersParser::Method_typeContext *context) = 0;
+
     virtual antlrcpp::Any visitType(FlatBuffersParser::TypeContext *context) = 0;
 
     virtual antlrcpp::Any visitUniontype_decl(FlatBuffersParser::Uniontype_declContext *context) = 0;

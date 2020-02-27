@@ -27,4 +27,9 @@ namespace Entdlr
     {
         structs.push_back(s);
     }
+
+    void Namespace::add(const Facility& f)
+    {
+        facilities.push_back(f);
+    }
 };

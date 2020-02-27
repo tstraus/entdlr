@@ -45,5 +45,14 @@
 ## endfor
 ## endfor
 ## endfor
+## for facility in namespace.facilities
+    {{facility.name}} : facility
+## for method in facility.methods
+        {{method.name}} : {{method.returnType}}
+## for parameter in method.parameters
+            {{parameter.name}} : {{parameter.type}}
+## endfor
+## endfor
+## endfor
 ## endfor
 ##

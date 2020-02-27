@@ -3,7 +3,7 @@ grammar FlatBuffers ;
 
 // Parser rules
 
-schema : include* ( namespace_decl | type_decl | enum_decl | union_decl | root_decl | file_extension_decl | file_identifier_decl | attribute_decl | rpc_decl | object )* ;
+schema : include* ( namespace_decl | type_decl | enum_decl | union_decl | root_decl | file_extension_decl | file_identifier_decl | attribute_decl | rpc_decl | facility_decl | object )* ;
 
 include : 'include' STRING_CONSTANT ';' ;
 
@@ -24,6 +24,15 @@ field_decl : IDENT ':' type ( '=' scalar )? metadata ';' ;
 rpc_decl : 'rpc_service' IDENT '{' rpc_method+ '}' ;
 
 rpc_method : IDENT '(' IDENT ')' ':' IDENT metadata ';' ;
+
+// overload grpc syntax for facilities
+facility_decl : 'facility' IDENT '{' facility_method+ '}' ;
+
+facility_method : IDENT '(' method_parameters ')' ':' method_return_type metadata ';' ;
+method_parameters : ( method_parameter )? ( ',' method_parameter )* ;
+method_parameter : IDENT ':' method_type ;
+method_return_type : method_type ;
+method_type : BASE_TYPE_NAME | ns_ident ;
 
 // fixed original grammar: allow namespaces for IDENTs
 // add fixed size arrays TSS

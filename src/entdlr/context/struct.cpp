@@ -47,7 +47,7 @@ namespace Entdlr
         return out;
     }
 
-    Field Field::create(const Token& token, const std::string& type, const bool& isArray, const uint32_t& arraySize, std::vector<Attribute> attributes)
+    Field Field::create(const Token& token, const std::string& type, const bool& isArray, const uint32_t& arraySize, std::vector<Attribute>& attributes)
     {
         Field out;
         out.filename = token.filename;

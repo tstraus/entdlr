@@ -3,6 +3,9 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
 
+#include <iostream>
+using std::cout; using std::endl;
+
 using namespace Entdlr;
 
 TEST_SUITE("Parsing")
@@ -244,7 +247,48 @@ TEST_SUITE("Parsing")
             REQUIRE(f[2].attributes.size() == 1);
             CHECK(f[2].attributes[0].name == "max_length");
             CHECK(f[2].attributes[0].number == 10);
-            // TODO: get metadata fields into context
+        }
+    }
+
+    TEST_CASE("Facilities")
+    {
+        SUBCASE("Parameters")
+        {
+            std::string input = R"(
+                facility Time
+                {
+                    now_0() : time;
+                    now_1(start: uint64) : time;
+                    now_2(start: int32, end: uint16) : time;
+                }
+            )";
+
+            const auto context = Parser::parse(input);
+            const auto& f = context.namespaces[0].facilities[0];
+
+            CHECK(f.name == "Time");
+            REQUIRE(f.methods.size() == 3);
+
+            const auto& m0 = f.methods[0];
+            CHECK(m0.name == "now_0");
+            CHECK(m0.returnType == "time");
+            CHECK(m0.parameters.size() == 0);
+
+            const auto& m1 = f.methods[1];
+            CHECK(m1.name == "now_1");
+            CHECK(m1.returnType == "time");
+            REQUIRE(m1.parameters.size() == 1);
+            CHECK(m1.parameters[0].name == "start");
+            CHECK(m1.parameters[0].type == "uint64");
+
+            const auto& m2 = f.methods[2];
+            CHECK(m2.name == "now_2");
+            CHECK(m2.returnType == "time");
+            REQUIRE(m2.parameters.size() == 2);
+            CHECK(m2.parameters[0].name == "start");
+            CHECK(m2.parameters[0].type == "int32");
+            CHECK(m2.parameters[1].name == "end");
+            CHECK(m2.parameters[1].type == "uint16");
         }
     }
 }
