@@ -16,5 +16,5 @@ struct TimeResult
 facility Time
 {
     now() : TimeResult;
-    difference(start: time, end: time) : time;
+    difference(start: time, mut end: time) : time;
 }

@@ -413,29 +413,33 @@ namespace Entdlr
     Method Parser::parseMethod(FlatBuffersParser::Facility_methodContext* method, const std::string& filename)
     {
         std::string returnType = "";
-        if (method->method_return_type()->method_type()->BASE_TYPE_NAME())
+        if (method->method_return_type() && method->method_return_type()->method_type())
         {
-            returnType = method->method_return_type()->method_type()->BASE_TYPE_NAME()->getSymbol()->getText();
-        }
+            if (method->method_return_type()->method_type()->BASE_TYPE_NAME())
+                returnType = method->method_return_type()->method_type()->BASE_TYPE_NAME()->getSymbol()->getText();
 
-        else if (method->method_return_type()->method_type()->ns_ident())
-        {
-            bool afterFirst = false;
-            for (const auto& segment : method->method_return_type()->method_type()->ns_ident()->IDENT())
-            { // get the namespace separated by "::"
-                if (afterFirst)
-                    returnType += "::";
-                else afterFirst = true;
+            else if (method->method_return_type()->method_type()->ns_ident())
+            {
+                bool afterFirst = false;
+                for (const auto& segment : method->method_return_type()->method_type()->ns_ident()->IDENT())
+                { // get the namespace separated by "::"
+                    if (afterFirst)
+                        returnType += "::";
+                    else afterFirst = true;
 
-                returnType += segment->getSymbol()->getText();
+                    returnType += segment->getSymbol()->getText();
+                }
             }
         }
+
+        else returnType = "void";
 
         auto output = Method::create(Token{method->IDENT()->getSymbol()->getText(), filename, method->getStart()->getLine(), method->getStart()->getCharPositionInLine()}, returnType);
 
         for (const auto& p : method->method_parameters()->method_parameter())
         {
             std::string t = "";
+            bool constant = true;
             if (p->method_type()->BASE_TYPE_NAME())
             {
                 t = p->method_type()->BASE_TYPE_NAME()->getSymbol()->getText();
@@ -454,7 +458,10 @@ namespace Entdlr
                 }
             }
 
-            output.add(Parameter::create(Token{p->IDENT()->getSymbol()->getText(), filename, p->getStart()->getLine(), p->getStart()->getCharPositionInLine()}, t));
+            if (p->mut())
+                constant = false;
+
+            output.add(Parameter::create(Token{p->IDENT()->getSymbol()->getText(), filename, p->getStart()->getLine(), p->getStart()->getCharPositionInLine()}, t, constant));
         }
 
         return output;

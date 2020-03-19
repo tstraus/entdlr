@@ -12,8 +12,9 @@ namespace Entdlr
     {
     public:
         std::string type;
+        bool constant;
 
-        static Parameter create(const Token& token, const std::string& type);
+        static Parameter create(const Token& token, const std::string& type, const bool constant = true);
     };
 
     class Method : public Token

@@ -2,7 +2,7 @@
 
 namespace Entdlr
 {
-    Parameter Parameter::create(const Token& token, const std::string& type)
+    Parameter Parameter::create(const Token& token, const std::string& type, const bool constant)
     {
         Parameter out;
         out.filename = token.filename;
@@ -10,6 +10,7 @@ namespace Entdlr
         out.column = token.column;
         out.name = token.name;
         out.type = type;
+        out.constant = constant;
 
         return out;
     }

@@ -59,6 +59,9 @@ public:
   virtual void enterMethod_parameter(FlatBuffersParser::Method_parameterContext *ctx) = 0;
   virtual void exitMethod_parameter(FlatBuffersParser::Method_parameterContext *ctx) = 0;
 
+  virtual void enterMut(FlatBuffersParser::MutContext *ctx) = 0;
+  virtual void exitMut(FlatBuffersParser::MutContext *ctx) = 0;
+
   virtual void enterMethod_return_type(FlatBuffersParser::Method_return_typeContext *ctx) = 0;
   virtual void exitMethod_return_type(FlatBuffersParser::Method_return_typeContext *ctx) = 0;
 

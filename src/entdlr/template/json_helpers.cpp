@@ -226,7 +226,8 @@ namespace Entdlr {
                 {"filename", p.filename},
                 {"line",     p.line},
                 {"column",   p.column},
-                {"type",     p.type}
+                {"type",     p.type},
+                {"constant", p.constant}
         };
     }
 
@@ -237,5 +238,6 @@ namespace Entdlr {
         j.at("line").get_to(p.line);
         j.at("column").get_to(p.column);
         j.at("type").get_to(p.type);
+        j.at("constant").get_to(p.constant);
     }
 }

@@ -28,9 +28,10 @@ rpc_method : IDENT '(' IDENT ')' ':' IDENT metadata ';' ;
 // overload grpc syntax for facilities
 facility_decl : 'facility' IDENT '{' facility_method+ '}' ;
 
-facility_method : IDENT '(' method_parameters ')' ':' method_return_type metadata ';' ;
+facility_method : IDENT '(' method_parameters ')' (':' method_return_type)? metadata ';' ;
 method_parameters : ( method_parameter )? ( ',' method_parameter )* ;
-method_parameter : IDENT ':' method_type ;
+method_parameter : mut? IDENT ':' method_type ;
+mut : 'mut' ;
 method_return_type : method_type ;
 method_type : BASE_TYPE_NAME | ns_ident ;
 

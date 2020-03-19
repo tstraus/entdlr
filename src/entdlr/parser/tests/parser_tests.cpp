@@ -257,9 +257,11 @@ TEST_SUITE("Parsing")
             std::string input = R"(
                 facility Time
                 {
+                    now_a();
+                    now_b(start: uint64);
                     now_0() : time;
-                    now_1(start: uint64) : time;
-                    now_2(start: int32, end: uint16) : time;
+                    now_1(mut start: uint64) : time;
+                    now_2(start: int32, mut end: uint16) : time;
                 }
             )";
 
@@ -267,28 +269,44 @@ TEST_SUITE("Parsing")
             const auto& f = context.namespaces[0].facilities[0];
 
             CHECK(f.name == "Time");
-            REQUIRE(f.methods.size() == 3);
+            REQUIRE(f.methods.size() == 5);
 
-            const auto& m0 = f.methods[0];
+            const auto& ma = f.methods[0];
+            CHECK(ma.name == "now_a");
+            CHECK(ma.returnType == "void");
+            CHECK(ma.parameters.size() == 0);
+
+            const auto& mb = f.methods[1];
+            CHECK(mb.name == "now_b");
+            CHECK(mb.returnType == "void");
+            REQUIRE(mb.parameters.size() == 1);
+            CHECK(mb.parameters[0].name == "start");
+            CHECK(mb.parameters[0].type == "uint64");
+            CHECK(mb.parameters[0].constant == true);
+
+            const auto& m0 = f.methods[2];
             CHECK(m0.name == "now_0");
             CHECK(m0.returnType == "time");
             CHECK(m0.parameters.size() == 0);
 
-            const auto& m1 = f.methods[1];
+            const auto& m1 = f.methods[3];
             CHECK(m1.name == "now_1");
             CHECK(m1.returnType == "time");
             REQUIRE(m1.parameters.size() == 1);
             CHECK(m1.parameters[0].name == "start");
             CHECK(m1.parameters[0].type == "uint64");
+            CHECK(m1.parameters[0].constant == false);
 
-            const auto& m2 = f.methods[2];
+            const auto& m2 = f.methods[4];
             CHECK(m2.name == "now_2");
             CHECK(m2.returnType == "time");
             REQUIRE(m2.parameters.size() == 2);
             CHECK(m2.parameters[0].name == "start");
             CHECK(m2.parameters[0].type == "int32");
+            CHECK(m2.parameters[0].constant == true);
             CHECK(m2.parameters[1].name == "end");
             CHECK(m2.parameters[1].type == "uint16");
+            CHECK(m2.parameters[1].constant == false);
         }
     }
 }

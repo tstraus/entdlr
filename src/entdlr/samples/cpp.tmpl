@@ -66,10 +66,20 @@ namespace {{namespace.name}}
         {{method.returnType}} {{method.name}} (
 ## for parameter in method.parameters
 ## if loop.is_last == false
-            {{parameter.type}} {{parameter.name}},
+## if parameter.constant == true
+            const {{parameter.type}}& {{parameter.name}},
+## endif
+## if parameter.constant == false
+            {{parameter.type}}& {{parameter.name}},
+## endif
 ## endif
 ## if loop.is_last == true
-            {{parameter.type}} {{parameter.name}}
+## if parameter.constant == true
+            const {{parameter.type}}& {{parameter.name}}
+## endif
+## if parameter.constant == false
+            {{parameter.type}}& {{parameter.name}}
+## endif
 ## endif
 ## endfor
         );
