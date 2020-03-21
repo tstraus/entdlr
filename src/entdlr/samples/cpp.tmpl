@@ -56,6 +56,9 @@ namespace {{namespace.name}}
 ## endfor
 
 ## for method in struct.methods
+## if method.isStatic == true
+        static
+## endif
         {{method.returnType}} {{method.name}} (
 ## for parameter in method.parameters
 ## if loop.is_last == false
@@ -87,6 +90,9 @@ namespace {{namespace.name}}
     {
     public:
 ## for method in facility.methods
+## if method.isStatic == true
+        static
+## endif
         {{method.returnType}} {{method.name}} (
 ## for parameter in method.parameters
 ## if loop.is_last == false

@@ -17,4 +17,6 @@ facility Time
 {
     now() : TimeResult;
     difference(start: time, mut end: time) : time;
+
+    static isValid() : bool;
 }

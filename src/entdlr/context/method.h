@@ -22,8 +22,9 @@ namespace Entdlr
     public:
         std::string returnType;
         std::vector<Parameter> parameters;
+        bool isStatic;
 
-        static Method create(const Token& token, const std::string& returnType);
+        static Method create(const Token& token, const std::string& returnType, const bool& isStatic = false);
         void add(const Parameter& parameter);
     };
 };

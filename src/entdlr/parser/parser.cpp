@@ -399,6 +399,11 @@ namespace Entdlr
     Method Parser::parseMethod(FlatBuffersParser::Method_declContext* method, const std::string& filename)
     {
         std::string returnType = "";
+        bool isStatic = false;
+
+        if (method->static_decl())
+            isStatic = true;
+
         if (method->method_return_type() && method->method_return_type()->method_type())
         {
             if (method->method_return_type()->method_type()->BASE_TYPE_NAME())
@@ -420,12 +425,14 @@ namespace Entdlr
 
         else returnType = "void";
 
-        auto output = Method::create(Token{method->IDENT()->getSymbol()->getText(), filename, method->getStart()->getLine(), method->getStart()->getCharPositionInLine()}, returnType);
+        auto output = Method::create(Token{method->IDENT()->getSymbol()->getText(), filename, method->getStart()->getLine(), method->getStart()->getCharPositionInLine()},
+                returnType, isStatic);
 
         for (const auto& p : method->method_parameters()->method_parameter())
         {
             std::string t = "";
             bool constant = true;
+
             if (p->method_type()->BASE_TYPE_NAME())
             {
                 t = p->method_type()->BASE_TYPE_NAME()->getSymbol()->getText();
@@ -444,7 +451,7 @@ namespace Entdlr
                 }
             }
 
-            if (p->mut())
+            if (p->mutable_decl())
                 constant = false;
 
             output.add(Parameter::create(Token{p->IDENT()->getSymbol()->getText(), filename, p->getStart()->getLine(), p->getStart()->getCharPositionInLine()}, t, constant));

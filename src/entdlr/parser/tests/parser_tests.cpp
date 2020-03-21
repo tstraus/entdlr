@@ -266,6 +266,7 @@ TEST_SUITE("Parsing")
                     azTo(otherPos: Position) : angle;
                     elTo(mut otherPos: Position) : angle;
                     between(a: Position, mut b: Position) : bool;
+                    static create(lat: angle, lon: angle, alt: length) : Position;
                 }
             )";
 
@@ -273,21 +274,24 @@ TEST_SUITE("Parsing")
             const auto& s = context.namespaces[0].structs[0];
 
             CHECK(s.name == "Position");
-            REQUIRE(s.methods.size() == 5);
+            REQUIRE(s.methods.size() == 6);
 
             const auto& m1 = s.methods[0];
             CHECK(m1.name == "normalize");
             CHECK(m1.returnType == "void");
+            CHECK(m1.isStatic == false);
             CHECK(m1.parameters.size() == 0);
 
             const auto& m2 = s.methods[1];
             CHECK(m2.name == "valid");
             CHECK(m2.returnType == "bool");
+            CHECK(m2.isStatic == false);
             REQUIRE(m2.parameters.size() == 0);
 
             const auto& m3 = s.methods[2];
             CHECK(m3.name == "azTo");
             CHECK(m3.returnType == "angle");
+            CHECK(m3.isStatic == false);
             REQUIRE(m3.parameters.size() == 1);
             CHECK(m3.parameters[0].name == "otherPos");
             CHECK(m3.parameters[0].type == "Position");
@@ -296,6 +300,7 @@ TEST_SUITE("Parsing")
             const auto& m4 = s.methods[3];
             CHECK(m4.name == "elTo");
             CHECK(m4.returnType == "angle");
+            CHECK(m4.isStatic == false);
             REQUIRE(m4.parameters.size() == 1);
             CHECK(m4.parameters[0].name == "otherPos");
             CHECK(m4.parameters[0].type == "Position");
@@ -304,6 +309,7 @@ TEST_SUITE("Parsing")
             const auto& m5 = s.methods[4];
             CHECK(m5.name == "between");
             CHECK(m5.returnType == "bool");
+            CHECK(m5.isStatic == false);
             REQUIRE(m5.parameters.size() == 2);
             CHECK(m5.parameters[0].name == "a");
             CHECK(m5.parameters[0].type == "Position");
@@ -311,6 +317,21 @@ TEST_SUITE("Parsing")
             CHECK(m5.parameters[1].name == "b");
             CHECK(m5.parameters[1].type == "Position");
             CHECK(m5.parameters[1].constant == false);
+
+            const auto& m6 = s.methods[5];
+            CHECK(m6.name == "create");
+            CHECK(m6.returnType == "Position");
+            CHECK(m6.isStatic == true);
+            REQUIRE(m6.parameters.size() == 3);
+            CHECK(m6.parameters[0].name == "lat");
+            CHECK(m6.parameters[0].type == "angle");
+            CHECK(m6.parameters[0].constant == true);
+            CHECK(m6.parameters[1].name == "lon");
+            CHECK(m6.parameters[1].type == "angle");
+            CHECK(m6.parameters[1].constant == true);
+            CHECK(m6.parameters[2].name == "alt");
+            CHECK(m6.parameters[2].type == "length");
+            CHECK(m6.parameters[2].constant == true);
 
             REQUIRE(s.fields.size() == 3);
 
@@ -333,6 +354,7 @@ TEST_SUITE("Parsing")
                     now_0() : time;
                     now_1(mut start: uint64) : time;
                     now_2(start: int32, mut end: uint16) : time;
+                    static create(lat: angle, lon: angle, alt: length) : Position;
                 }
             )";
 
@@ -340,7 +362,7 @@ TEST_SUITE("Parsing")
             const auto& f = context.namespaces[0].facilities[0];
 
             CHECK(f.name == "Time");
-            REQUIRE(f.methods.size() == 5);
+            REQUIRE(f.methods.size() == 6);
 
             const auto& ma = f.methods[0];
             CHECK(ma.name == "now_a");
@@ -378,6 +400,22 @@ TEST_SUITE("Parsing")
             CHECK(m2.parameters[1].name == "end");
             CHECK(m2.parameters[1].type == "uint16");
             CHECK(m2.parameters[1].constant == false);
+
+            const auto& m6 = f.methods[5];
+            CHECK(m6.name == "create");
+            CHECK(m6.returnType == "Position");
+            CHECK(m6.isStatic == true);
+            REQUIRE(m6.parameters.size() == 3);
+            CHECK(m6.parameters[0].name == "lat");
+            CHECK(m6.parameters[0].type == "angle");
+            CHECK(m6.parameters[0].constant == true);
+            CHECK(m6.parameters[1].name == "lon");
+            CHECK(m6.parameters[1].type == "angle");
+            CHECK(m6.parameters[1].constant == true);
+            CHECK(m6.parameters[2].name == "alt");
+            CHECK(m6.parameters[2].type == "length");
+            CHECK(m6.parameters[2].constant == true);
+
         }
     }
 }

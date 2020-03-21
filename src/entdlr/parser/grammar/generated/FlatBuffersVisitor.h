@@ -49,7 +49,9 @@ public:
 
     virtual antlrcpp::Any visitMethod_parameter(FlatBuffersParser::Method_parameterContext *context) = 0;
 
-    virtual antlrcpp::Any visitMut(FlatBuffersParser::MutContext *context) = 0;
+    virtual antlrcpp::Any visitMutable_decl(FlatBuffersParser::Mutable_declContext *context) = 0;
+
+    virtual antlrcpp::Any visitStatic_decl(FlatBuffersParser::Static_declContext *context) = 0;
 
     virtual antlrcpp::Any visitMethod_return_type(FlatBuffersParser::Method_return_typeContext *context) = 0;
 

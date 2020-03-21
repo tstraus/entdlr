@@ -15,9 +15,9 @@ public:
     T__0 = 1, T__1 = 2, T__2 = 3, T__3 = 4, T__4 = 5, T__5 = 6, T__6 = 7, 
     T__7 = 8, T__8 = 9, T__9 = 10, T__10 = 11, T__11 = 12, T__12 = 13, T__13 = 14, 
     T__14 = 15, T__15 = 16, T__16 = 17, T__17 = 18, T__18 = 19, T__19 = 20, 
-    T__20 = 21, T__21 = 22, T__22 = 23, T__23 = 24, STRING_CONSTANT = 25, 
-    BASE_TYPE_NAME = 26, IDENT = 27, HEX_INTEGER_CONSTANT = 28, INTEGER_CONSTANT = 29, 
-    FLOAT_CONSTANT = 30, BLOCK_COMMENT = 31, COMMENT = 32, WHITESPACE = 33
+    T__20 = 21, T__21 = 22, T__22 = 23, T__23 = 24, T__24 = 25, STRING_CONSTANT = 26, 
+    BASE_TYPE_NAME = 27, IDENT = 28, HEX_INTEGER_CONSTANT = 29, INTEGER_CONSTANT = 30, 
+    FLOAT_CONSTANT = 31, BLOCK_COMMENT = 32, COMMENT = 33, WHITESPACE = 34
   };
 
   enum {
@@ -25,13 +25,13 @@ public:
     RuleType_decl = 4, RuleEnum_decl = 5, RuleUnion_decl = 6, RuleRoot_decl = 7, 
     RuleField_decl = 8, RuleRpc_decl = 9, RuleRpc_method = 10, RuleFacility_decl = 11, 
     RuleMethod_decl = 12, RuleMethod_parameters = 13, RuleMethod_parameter = 14, 
-    RuleMut = 15, RuleMethod_return_type = 16, RuleMethod_type = 17, RuleType = 18, 
-    RuleUniontype_decl = 19, RuleCommasep_uniontype_decl = 20, RuleEnumval_decl = 21, 
-    RuleCommasep_enumval_decl = 22, RuleIdent_with_opt_single_value = 23, 
-    RuleCommasep_ident_with_opt_single_value = 24, RuleMetadata = 25, RuleScalar = 26, 
-    RuleObject = 27, RuleIdent_with_value = 28, RuleCommasep_ident_with_value = 29, 
-    RuleSingle_value = 30, RuleValue = 31, RuleCommasep_value = 32, RuleFile_extension_decl = 33, 
-    RuleFile_identifier_decl = 34, RuleNs_ident = 35, RuleInteger_const = 36
+    RuleMutable_decl = 15, RuleStatic_decl = 16, RuleMethod_return_type = 17, 
+    RuleMethod_type = 18, RuleType = 19, RuleUniontype_decl = 20, RuleCommasep_uniontype_decl = 21, 
+    RuleEnumval_decl = 22, RuleCommasep_enumval_decl = 23, RuleIdent_with_opt_single_value = 24, 
+    RuleCommasep_ident_with_opt_single_value = 25, RuleMetadata = 26, RuleScalar = 27, 
+    RuleObject = 28, RuleIdent_with_value = 29, RuleCommasep_ident_with_value = 30, 
+    RuleSingle_value = 31, RuleValue = 32, RuleCommasep_value = 33, RuleFile_extension_decl = 34, 
+    RuleFile_identifier_decl = 35, RuleNs_ident = 36, RuleInteger_const = 37
   };
 
   FlatBuffersParser(antlr4::TokenStream *input);
@@ -59,7 +59,8 @@ public:
   class Method_declContext;
   class Method_parametersContext;
   class Method_parameterContext;
-  class MutContext;
+  class Mutable_declContext;
+  class Static_declContext;
   class Method_return_typeContext;
   class Method_typeContext;
   class TypeContext;
@@ -312,6 +313,7 @@ public:
     antlr4::tree::TerminalNode *IDENT();
     Method_parametersContext *method_parameters();
     MetadataContext *metadata();
+    Static_declContext *static_decl();
     Method_return_typeContext *method_return_type();
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
@@ -345,7 +347,7 @@ public:
     virtual size_t getRuleIndex() const override;
     antlr4::tree::TerminalNode *IDENT();
     Method_typeContext *method_type();
-    MutContext *mut();
+    Mutable_declContext *mutable_decl();
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
@@ -356,9 +358,9 @@ public:
 
   Method_parameterContext* method_parameter();
 
-  class  MutContext : public antlr4::ParserRuleContext {
+  class  Mutable_declContext : public antlr4::ParserRuleContext {
   public:
-    MutContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    Mutable_declContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
@@ -368,7 +370,21 @@ public:
    
   };
 
-  MutContext* mut();
+  Mutable_declContext* mutable_decl();
+
+  class  Static_declContext : public antlr4::ParserRuleContext {
+  public:
+    Static_declContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  Static_declContext* static_decl();
 
   class  Method_return_typeContext : public antlr4::ParserRuleContext {
   public:

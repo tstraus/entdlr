@@ -42,7 +42,7 @@ namespace Entdlr {
                 {"line",     s.line},
                 {"column",   s.column},
                 {"fields",   s.fields},
-                {"methods",   s.methods}
+                {"methods",  s.methods}
         };
     }
 
@@ -207,6 +207,7 @@ namespace Entdlr {
                 {"line",       m.line},
                 {"column",     m.column},
                 {"returnType", m.returnType},
+                {"isStatic",   m.isStatic},
                 {"parameters", m.parameters}
         };
     }
@@ -218,6 +219,7 @@ namespace Entdlr {
         j.at("line").get_to(m.line);
         j.at("column").get_to(m.column);
         j.at("returnType").get_to(m.returnType);
+        j.at("isStatic").get_to(m.isStatic);
         j.at("parameters").get_to(m.parameters);
     }
 

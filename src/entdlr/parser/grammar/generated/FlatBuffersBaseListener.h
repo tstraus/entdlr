@@ -61,8 +61,11 @@ public:
   virtual void enterMethod_parameter(FlatBuffersParser::Method_parameterContext * /*ctx*/) override { }
   virtual void exitMethod_parameter(FlatBuffersParser::Method_parameterContext * /*ctx*/) override { }
 
-  virtual void enterMut(FlatBuffersParser::MutContext * /*ctx*/) override { }
-  virtual void exitMut(FlatBuffersParser::MutContext * /*ctx*/) override { }
+  virtual void enterMutable_decl(FlatBuffersParser::Mutable_declContext * /*ctx*/) override { }
+  virtual void exitMutable_decl(FlatBuffersParser::Mutable_declContext * /*ctx*/) override { }
+
+  virtual void enterStatic_decl(FlatBuffersParser::Static_declContext * /*ctx*/) override { }
+  virtual void exitStatic_decl(FlatBuffersParser::Static_declContext * /*ctx*/) override { }
 
   virtual void enterMethod_return_type(FlatBuffersParser::Method_return_typeContext * /*ctx*/) override { }
   virtual void exitMethod_return_type(FlatBuffersParser::Method_return_typeContext * /*ctx*/) override { }

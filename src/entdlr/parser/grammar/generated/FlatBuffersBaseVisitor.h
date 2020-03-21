@@ -75,7 +75,11 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitMut(FlatBuffersParser::MutContext *ctx) override {
+  virtual antlrcpp::Any visitMutable_decl(FlatBuffersParser::Mutable_declContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitStatic_decl(FlatBuffersParser::Static_declContext *ctx) override {
     return visitChildren(ctx);
   }
 

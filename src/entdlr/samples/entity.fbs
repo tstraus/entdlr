@@ -22,6 +22,7 @@ struct DisEntityType
     extra : uint8;
 
     isSubset(other: DisEntityType) : bool;
+    static fromString(str: string) : DisEntityType;
 }
 
 union DisEntityTypeUnion
