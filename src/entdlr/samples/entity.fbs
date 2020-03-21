@@ -20,6 +20,8 @@ struct DisEntityType
     subcategory : uint8;
     specific : uint8;
     extra : uint8;
+
+    isSubset(other: DisEntityType) : bool;
 }
 
 union DisEntityTypeUnion

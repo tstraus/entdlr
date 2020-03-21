@@ -4,6 +4,7 @@ set (HEADERS
     token.h
     enum.h
     union.h
+    method.h
     struct.h
     facility.h
     namespace.h
@@ -13,6 +14,7 @@ set (HEADERS
 set (SOURCE
     enum.cpp
     union.cpp
+    method.cpp
     struct.cpp
     facility.cpp
     namespace.cpp

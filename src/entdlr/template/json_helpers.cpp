@@ -41,7 +41,8 @@ namespace Entdlr {
                 {"filename", s.filename},
                 {"line",     s.line},
                 {"column",   s.column},
-                {"fields",   s.fields}
+                {"fields",   s.fields},
+                {"methods",   s.methods}
         };
     }
 
@@ -51,6 +52,7 @@ namespace Entdlr {
         j.at("line").get_to(s.line);
         j.at("column").get_to(s.column);
         j.at("fields").get_to(s.fields);
+        j.at("methods").get_to(s.methods);
     }
 
     void to_json(json &j, const Field &f) {

@@ -44,6 +44,18 @@
 ## endif
 ## endfor
 ## endfor
+
+## for method in struct.methods
+        {{method.name}} : {{method.returnType}}
+## for parameter in method.parameters
+## if parameter.constant == true
+            {{parameter.name}} : {{parameter.type}}
+## endif
+## if parameter.constant == false
+            {{parameter.name}} : mutable {{parameter.type}}
+## endif
+## endfor
+## endfor
 ## endfor
 ## for facility in namespace.facilities
     {{facility.name}} : facility

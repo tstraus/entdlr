@@ -11,7 +11,7 @@ namespace_decl : 'namespace' IDENT ( '.' IDENT )* ';' ;
 
 attribute_decl : 'attribute' STRING_CONSTANT ';' ;
 
-type_decl : ( 'table' | 'struct' ) IDENT metadata '{' ( field_decl )* '}' ;
+type_decl : ( 'table' | 'struct' ) IDENT metadata '{' ( field_decl | method_decl )* '}' ;
 
 enum_decl : 'enum' IDENT ( ':' type )? metadata '{' commasep_enumval_decl '}' ;
 
@@ -26,9 +26,9 @@ rpc_decl : 'rpc_service' IDENT '{' rpc_method+ '}' ;
 rpc_method : IDENT '(' IDENT ')' ':' IDENT metadata ';' ;
 
 // overload grpc syntax for facilities
-facility_decl : 'facility' IDENT '{' facility_method+ '}' ;
+facility_decl : 'facility' IDENT '{' method_decl+ '}' ;
 
-facility_method : IDENT '(' method_parameters ')' (':' method_return_type)? metadata ';' ;
+method_decl : IDENT '(' method_parameters ')' (':' method_return_type)? metadata ';' ;
 method_parameters : ( method_parameter )? ( ',' method_parameter )* ;
 method_parameter : mut? IDENT ':' method_type ;
 mut : 'mut' ;

@@ -24,7 +24,7 @@ public:
     RuleSchema = 0, RuleInclude = 1, RuleNamespace_decl = 2, RuleAttribute_decl = 3, 
     RuleType_decl = 4, RuleEnum_decl = 5, RuleUnion_decl = 6, RuleRoot_decl = 7, 
     RuleField_decl = 8, RuleRpc_decl = 9, RuleRpc_method = 10, RuleFacility_decl = 11, 
-    RuleFacility_method = 12, RuleMethod_parameters = 13, RuleMethod_parameter = 14, 
+    RuleMethod_decl = 12, RuleMethod_parameters = 13, RuleMethod_parameter = 14, 
     RuleMut = 15, RuleMethod_return_type = 16, RuleMethod_type = 17, RuleType = 18, 
     RuleUniontype_decl = 19, RuleCommasep_uniontype_decl = 20, RuleEnumval_decl = 21, 
     RuleCommasep_enumval_decl = 22, RuleIdent_with_opt_single_value = 23, 
@@ -56,7 +56,7 @@ public:
   class Rpc_declContext;
   class Rpc_methodContext;
   class Facility_declContext;
-  class Facility_methodContext;
+  class Method_declContext;
   class Method_parametersContext;
   class Method_parameterContext;
   class MutContext;
@@ -174,6 +174,8 @@ public:
     MetadataContext *metadata();
     std::vector<Field_declContext *> field_decl();
     Field_declContext* field_decl(size_t i);
+    std::vector<Method_declContext *> method_decl();
+    Method_declContext* method_decl(size_t i);
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
@@ -291,8 +293,8 @@ public:
     Facility_declContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     antlr4::tree::TerminalNode *IDENT();
-    std::vector<Facility_methodContext *> facility_method();
-    Facility_methodContext* facility_method(size_t i);
+    std::vector<Method_declContext *> method_decl();
+    Method_declContext* method_decl(size_t i);
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
@@ -303,9 +305,9 @@ public:
 
   Facility_declContext* facility_decl();
 
-  class  Facility_methodContext : public antlr4::ParserRuleContext {
+  class  Method_declContext : public antlr4::ParserRuleContext {
   public:
-    Facility_methodContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    Method_declContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     antlr4::tree::TerminalNode *IDENT();
     Method_parametersContext *method_parameters();
@@ -319,7 +321,7 @@ public:
    
   };
 
-  Facility_methodContext* facility_method();
+  Method_declContext* method_decl();
 
   class  Method_parametersContext : public antlr4::ParserRuleContext {
   public:

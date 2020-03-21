@@ -263,6 +263,12 @@ namespace Entdlr
                 s.add(parseField(f, filename));
             }
 
+            // get the methods of the struct
+            for (const auto& m : st->method_decl())
+            {
+                s.add(parseMethod(m, filename));
+            }
+
             output.push_back(s);
         }
 
@@ -390,27 +396,7 @@ namespace Entdlr
         return Field::create(Token{name, filename, field->getStart()->getLine(), field->getStart()->getCharPositionInLine()}, type, isArray, arraySize, attributes);
     }
 
-    std::vector<Facility> Parser::parseFacilities(const std::vector<FlatBuffersParser::Facility_declContext*>& facilities, const std::string& filename)
-    {
-        std::vector<Facility> output;
-
-        for (const auto& facility : facilities)
-        {
-            auto f = Facility::create(Token{facility->IDENT()->getSymbol()->getText(), filename, facility->getStart()->getLine(), facility->getStart()->getCharPositionInLine()});
-
-            // get the methods of the facility
-            for (const auto& m : facility->facility_method())
-            {
-                f.add(parseMethod(m, filename));
-            }
-
-            output.push_back(f);
-        }
-
-        return output;
-    }
-
-    Method Parser::parseMethod(FlatBuffersParser::Facility_methodContext* method, const std::string& filename)
+    Method Parser::parseMethod(FlatBuffersParser::Method_declContext* method, const std::string& filename)
     {
         std::string returnType = "";
         if (method->method_return_type() && method->method_return_type()->method_type())
@@ -462,6 +448,26 @@ namespace Entdlr
                 constant = false;
 
             output.add(Parameter::create(Token{p->IDENT()->getSymbol()->getText(), filename, p->getStart()->getLine(), p->getStart()->getCharPositionInLine()}, t, constant));
+        }
+
+        return output;
+    }
+
+    std::vector<Facility> Parser::parseFacilities(const std::vector<FlatBuffersParser::Facility_declContext*>& facilities, const std::string& filename)
+    {
+        std::vector<Facility> output;
+
+        for (const auto& facility : facilities)
+        {
+            auto f = Facility::create(Token{facility->IDENT()->getSymbol()->getText(), filename, facility->getStart()->getLine(), facility->getStart()->getCharPositionInLine()});
+
+            // get the methods of the facility
+            for (const auto& m : facility->method_decl())
+            {
+                f.add(parseMethod(m, filename));
+            }
+
+            output.push_back(f);
         }
 
         return output;

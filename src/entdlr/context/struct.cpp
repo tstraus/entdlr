@@ -77,4 +77,9 @@ namespace Entdlr
     {
         fields.push_back(field);
     }
+
+    void Struct::add(const Method& method)
+    {
+        methods.push_back(method);
+    }
 };

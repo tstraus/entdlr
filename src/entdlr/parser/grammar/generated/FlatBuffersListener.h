@@ -50,8 +50,8 @@ public:
   virtual void enterFacility_decl(FlatBuffersParser::Facility_declContext *ctx) = 0;
   virtual void exitFacility_decl(FlatBuffersParser::Facility_declContext *ctx) = 0;
 
-  virtual void enterFacility_method(FlatBuffersParser::Facility_methodContext *ctx) = 0;
-  virtual void exitFacility_method(FlatBuffersParser::Facility_methodContext *ctx) = 0;
+  virtual void enterMethod_decl(FlatBuffersParser::Method_declContext *ctx) = 0;
+  virtual void exitMethod_decl(FlatBuffersParser::Method_declContext *ctx) = 0;
 
   virtual void enterMethod_parameters(FlatBuffersParser::Method_parametersContext *ctx) = 0;
   virtual void exitMethod_parameters(FlatBuffersParser::Method_parametersContext *ctx) = 0;

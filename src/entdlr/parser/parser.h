@@ -31,9 +31,9 @@ namespace Entdlr
 
         static Field parseField(FlatBuffersParser::Field_declContext* field, const std::string& filename);
 
-        static std::vector<Facility> parseFacilities(const std::vector<FlatBuffersParser::Facility_declContext*>& facilities, const std::string& filename);
+        static Method parseMethod(FlatBuffersParser::Method_declContext* method, const std::string& filename);
 
-        static Method parseMethod(FlatBuffersParser::Facility_methodContext* method, const std::string& filename);
+        static std::vector<Facility> parseFacilities(const std::vector<FlatBuffersParser::Facility_declContext*>& facilities, const std::string& filename);
     };
 };
 

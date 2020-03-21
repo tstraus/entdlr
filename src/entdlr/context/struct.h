@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "token.h"
+#include "method.h"
 
 namespace Entdlr
 {
@@ -37,9 +38,11 @@ namespace Entdlr
     {
     public:
         std::vector<Field> fields;
+        std::vector<Method> methods;
 
         static Struct create(const Token& token);
         void add(const Field& field);
+        void add(const Method& method);
     };
 };
 

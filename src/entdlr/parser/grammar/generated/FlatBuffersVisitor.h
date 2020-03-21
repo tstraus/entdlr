@@ -43,7 +43,7 @@ public:
 
     virtual antlrcpp::Any visitFacility_decl(FlatBuffersParser::Facility_declContext *context) = 0;
 
-    virtual antlrcpp::Any visitFacility_method(FlatBuffersParser::Facility_methodContext *context) = 0;
+    virtual antlrcpp::Any visitMethod_decl(FlatBuffersParser::Method_declContext *context) = 0;
 
     virtual antlrcpp::Any visitMethod_parameters(FlatBuffersParser::Method_parametersContext *context) = 0;
 

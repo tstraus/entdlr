@@ -250,9 +250,80 @@ TEST_SUITE("Parsing")
         }
     }
 
-    TEST_CASE("Facilities")
+    TEST_CASE("Methods")
     {
-        SUBCASE("Parameters")
+        SUBCASE("Structs")
+        {
+            std::string input = R"(
+                struct Position
+                {
+                    x : float64;
+                    y : float64;
+                    z : float64;
+
+                    normalize();
+                    valid() : bool;
+                    azTo(otherPos: Position) : angle;
+                    elTo(mut otherPos: Position) : angle;
+                    between(a: Position, mut b: Position) : bool;
+                }
+            )";
+
+            const auto context = Parser::parse(input);
+            const auto& s = context.namespaces[0].structs[0];
+
+            CHECK(s.name == "Position");
+            REQUIRE(s.methods.size() == 5);
+
+            const auto& m1 = s.methods[0];
+            CHECK(m1.name == "normalize");
+            CHECK(m1.returnType == "void");
+            CHECK(m1.parameters.size() == 0);
+
+            const auto& m2 = s.methods[1];
+            CHECK(m2.name == "valid");
+            CHECK(m2.returnType == "bool");
+            REQUIRE(m2.parameters.size() == 0);
+
+            const auto& m3 = s.methods[2];
+            CHECK(m3.name == "azTo");
+            CHECK(m3.returnType == "angle");
+            REQUIRE(m3.parameters.size() == 1);
+            CHECK(m3.parameters[0].name == "otherPos");
+            CHECK(m3.parameters[0].type == "Position");
+            CHECK(m3.parameters[0].constant == true);
+
+            const auto& m4 = s.methods[3];
+            CHECK(m4.name == "elTo");
+            CHECK(m4.returnType == "angle");
+            REQUIRE(m4.parameters.size() == 1);
+            CHECK(m4.parameters[0].name == "otherPos");
+            CHECK(m4.parameters[0].type == "Position");
+            CHECK(m4.parameters[0].constant == false);
+
+            const auto& m5 = s.methods[4];
+            CHECK(m5.name == "between");
+            CHECK(m5.returnType == "bool");
+            REQUIRE(m5.parameters.size() == 2);
+            CHECK(m5.parameters[0].name == "a");
+            CHECK(m5.parameters[0].type == "Position");
+            CHECK(m5.parameters[0].constant == true);
+            CHECK(m5.parameters[1].name == "b");
+            CHECK(m5.parameters[1].type == "Position");
+            CHECK(m5.parameters[1].constant == false);
+
+            REQUIRE(s.fields.size() == 3);
+
+            const auto& fields = s.fields;
+            CHECK(fields[0].name == "x");
+            CHECK(fields[0].type == "float64");
+            CHECK(fields[1].name == "y");
+            CHECK(fields[1].type == "float64");
+            CHECK(fields[2].name == "z");
+            CHECK(fields[2].type == "float64");
+        }
+
+        SUBCASE("Facilities")
         {
             std::string input = R"(
                 facility Time

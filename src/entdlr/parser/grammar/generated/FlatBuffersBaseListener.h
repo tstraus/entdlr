@@ -52,8 +52,8 @@ public:
   virtual void enterFacility_decl(FlatBuffersParser::Facility_declContext * /*ctx*/) override { }
   virtual void exitFacility_decl(FlatBuffersParser::Facility_declContext * /*ctx*/) override { }
 
-  virtual void enterFacility_method(FlatBuffersParser::Facility_methodContext * /*ctx*/) override { }
-  virtual void exitFacility_method(FlatBuffersParser::Facility_methodContext * /*ctx*/) override { }
+  virtual void enterMethod_decl(FlatBuffersParser::Method_declContext * /*ctx*/) override { }
+  virtual void exitMethod_decl(FlatBuffersParser::Method_declContext * /*ctx*/) override { }
 
   virtual void enterMethod_parameters(FlatBuffersParser::Method_parametersContext * /*ctx*/) override { }
   virtual void exitMethod_parameters(FlatBuffersParser::Method_parametersContext * /*ctx*/) override { }

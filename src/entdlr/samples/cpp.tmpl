@@ -54,6 +54,30 @@ namespace {{namespace.name}}
         {{field.type}} {{field.name}}[{{field.arraySize}}];
 ## endif
 ## endfor
+
+## for method in struct.methods
+        {{method.returnType}} {{method.name}} (
+## for parameter in method.parameters
+## if loop.is_last == false
+## if parameter.constant == true
+            const {{parameter.type}}& {{parameter.name}},
+## endif
+## if parameter.constant == false
+            {{parameter.type}}& {{parameter.name}},
+## endif
+## endif
+## if loop.is_last == true
+## if parameter.constant == true
+            const {{parameter.type}}& {{parameter.name}}
+## endif
+## if parameter.constant == false
+            {{parameter.type}}& {{parameter.name}}
+## endif
+## endif
+## endfor
+        );
+
+## endfor
     };
 
 ## endfor
