@@ -16,6 +16,8 @@ set (SAMPLES
 
     ./c_mapping.json
     ./cpp_mapping.json
+
+    ./display.wren
 )
 
 install (FILES ${SAMPLES} DESTINATION samples)

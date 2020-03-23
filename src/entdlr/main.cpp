@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "parser.h"
-#include "template.h"
+#include "template_router.h"
 
 #include "argh.h"
 #include "rang.hpp"
@@ -42,8 +42,9 @@ int main(int argc, char** argv)
             context = Entdlr::Parser::parseFile(filename);
         if (!dirname.empty())
             context = Entdlr::Parser::parseDir(dirname);
-
-        cout << Entdlr::Template::applyTemplate(context, template_name) << endl;
+        
+        Entdlr::TemplateRouter t;
+        cout << t.applyTemplate(context, template_name) << endl;
 
         return 0;
     }

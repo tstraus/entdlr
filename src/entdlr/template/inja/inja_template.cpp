@@ -1,4 +1,4 @@
-#include "template.h"
+#include "inja_template.h"
 #include "json_helpers.h"
 #include "type_map.h"
 
@@ -11,7 +11,12 @@ using std::cout; using std::endl;
 
 namespace Entdlr
 {
-    std::string Template::applyTemplate(const Context& context, const std::string& template_name)
+    std::string InjaTemplate::getFileExtension() const
+    {
+        return ".tmpl";
+    }
+
+    std::string InjaTemplate::applyTemplate(const Context& context, const std::string& template_name)
     {
         // open and read the template file
         std::ifstream template_file(template_name);
@@ -21,7 +26,7 @@ namespace Entdlr
         auto c = context;
 
         // try to open a type map file for the template
-        const std::string templateExtension(".tmpl");
+        const auto templateExtension = getFileExtension();
         if (template_name != templateExtension &&
             template_name.size() > templateExtension.size() &&
             template_name.substr(template_name.size() - templateExtension.size()) == ".tmpl"
