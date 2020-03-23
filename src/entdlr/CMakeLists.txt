@@ -17,8 +17,7 @@ add_executable (${PROJECT_NAME}
 
 target_link_libraries (${PROJECT_NAME}
     PUBLIC entdlr::parser
-    PUBLIC entdlr::template::inja
-    PUBLIC inja
+    PUBLIC entdlr::template
 )
 
 install (TARGETS ${PROJECT_NAME} DESTINATION bin)
