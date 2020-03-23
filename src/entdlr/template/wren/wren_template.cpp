@@ -95,7 +95,9 @@ namespace Entdlr
 
     void WrenTemplate::print(WrenVM* vm, const char* text)
     {
-        std::cout << "script -> " << text << std::endl;
+        // wren adds it's own newlines in a separte call to print
+        if (std::string(text) != "\n")
+            cout << "script -> " << text << endl;
 
         ss << text;
     }
