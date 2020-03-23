@@ -23,6 +23,8 @@ namespace Entdlr
         WrenConfiguration config;
         wrenInitConfiguration(&config);
         config.writeFn = print;
+        config.loadModuleFn = loadModule;
+        config.errorFn = error;
 
         vm = wrenNewVM(&config);
     }
@@ -44,12 +46,14 @@ namespace Entdlr
         std::stringstream script;
         script << script_file.rdbuf();
 
-        wrenInterpret(vm, "entdlr", script.str().c_str());
+        WrenInterpretResult result = wrenInterpret(vm, "entdlr", script.str().c_str());
 
-        return ss.str();
+        if (result == WrenInterpretResult::WREN_RESULT_SUCCESS)
+            return ss.str();
+        else return "";
     }
 
-    char* WrenTemplate::loadModule(const char* name)
+    char* WrenTemplate::loadModule(WrenVM* vm, const char* name)
     {
         std::string path(name);
         path += ".wren";
@@ -63,6 +67,27 @@ namespace Entdlr
         std::memcpy(cbuffer, source.c_str(), source.size());
 
         return cbuffer;
+    }
+
+    void WrenTemplate::error(WrenVM* vm, WrenErrorType type, const char* module_name, int line, const char* message)
+    {
+        switch (type)
+        {
+        case WrenErrorType::WREN_ERROR_COMPILE:
+            cout << "ERROR: Wren Compilation Failed -> " << module_name << " : " << line << " : " << message << endl;
+            break;
+
+        case WrenErrorType::WREN_ERROR_RUNTIME:
+            cout << "ERROR: Wren Runtime Failed -> " << message << endl;
+            break;
+
+        case WrenErrorType::WREN_ERROR_STACK_TRACE:
+            cout << "ERROR: Wren Stack Trace -> " << module_name << " : " << line << " : " << message << endl;
+            break;
+
+        default:
+            break;
+        }
     }
 
     WrenForeignMethodFn WrenTemplate::bindForeignMethod(WrenVM* vm, const char* module,

@@ -24,3 +24,5 @@ target_link_libraries (${PROJECT_NAME}
 install (TARGETS ${PROJECT_NAME} DESTINATION lib)
 install (FILES ${HEADERS} DESTINATION include/entdlr/template/wren)
 
+add_subdirectory (tests)
+

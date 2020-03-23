@@ -19,7 +19,9 @@ namespace Entdlr
         std::string applyTemplate(const Context& context, const std::string& template_name);
 
     private:
-        static char* loadModule(const char* name);
+        static char* loadModule(WrenVM* vm, const char* name);
+
+        static void error(WrenVM* vm, WrenErrorType type, const char* module_name, int line, const char* message);
 
         static WrenForeignMethodFn bindForeignMethod(WrenVM* vm, const char* module,
             const char* className, bool isStatic, const char* signature);
