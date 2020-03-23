@@ -97,6 +97,6 @@ namespace Entdlr
     {
         std::cout << "script -> " << text << std::endl;
 
-        ss << text << "\n";
+        ss << text;
     }
 };
