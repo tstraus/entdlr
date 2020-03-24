@@ -7,14 +7,16 @@ set (SOURCE
 set (SCRIPTS
     "Test.wren"
     "Simple.wren"
+    "Context.wren"
 )
 
 add_executable (${PROJECT_NAME} ${SOURCE})
 add_test (NAME ${PROJECT_NAME} COMMAND ${PROJECT_NAME})
 
 target_link_libraries (${PROJECT_NAME}
-    entdlr::template::wren
-    doctest
+    PUBLIC entdlr::parser
+    PUBLIC entdlr::template::wren
+    PUBLIC doctest
 )
 
 install (TARGETS ${PROJECT_NAME} DESTINATION tests)

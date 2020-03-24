@@ -1,10 +1,12 @@
 project (entdlr_template_wren)
 
 set (HEADERS
+    context_helper.h
     wren_template.h
 )
 
 set (SOURCE
+    context_helper.cpp
     wren_template.cpp
 )
 

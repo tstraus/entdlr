@@ -1,4 +1,5 @@
 #include "wren_template.h"
+#include "parser.h"
 
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
@@ -14,10 +15,28 @@ TEST_SUITE("WrenTemplateTests")
     {
         SUBCASE("Simple")
         {
-            Context c;
+            std::string input = R"(
+                namespace grid;
+
+                enum Force : uint8
+                {
+                    Unknown,
+                    Blue,
+                    Red = 10,
+                    Other
+                }
+
+                union EntityIdUnion
+                {
+                    uint64,
+                    [uint16 : 4]
+                }
+            )";
+
+            const auto context = Parser::parse(input);
             WrenTemplate t;
 
-            const auto output = t.applyTemplate(c, "Simple.wren");
+            const auto output = t.applyTemplate(context, "Simple.wren");
             cout << output << endl;
 
             CHECK(output == "SimpleWrenTest\nstaticTest\nmethodTest\n");
