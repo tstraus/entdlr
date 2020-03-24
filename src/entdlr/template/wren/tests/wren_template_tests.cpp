@@ -20,7 +20,7 @@ TEST_SUITE("WrenTemplateTests")
             const auto output = t.applyTemplate(c, "Simple.wren");
             cout << output << endl;
 
-            CHECK(true == true);
+            CHECK(output == "SimpleWrenTest\nstaticTest\nmethodTest\n");
         }
     }
 }

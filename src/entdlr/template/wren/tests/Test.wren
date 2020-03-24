@@ -3,11 +3,11 @@ class TestPrinter {
         
     }
 
-    static print() {
-        System.print("Test")
+    static staticTest() {
+        System.print("staticTest")
     }
 
-    otherPrint() {
-        System.print("OtherTest")
+    methodTest() {
+        System.print("methodTest")
     }
 }

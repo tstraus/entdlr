@@ -19,3 +19,15 @@ target_link_libraries (${PROJECT_NAME}
 
 install (TARGETS ${PROJECT_NAME} DESTINATION tests)
 install (FILES ${SCRIPTS} DESTINATION tests)
+
+# also copy test scripts to where ctest runs the tests
+foreach (SCRIPT ${SCRIPTS})
+    add_custom_command(
+        TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy
+        ${CMAKE_CURRENT_LIST_DIR}/${SCRIPT}
+        ${CMAKE_CURRENT_BINARY_DIR}/${SCRIPT}
+        DEPENDS ${CMAKE_CURRENT_LIST_DIR}/${SCRIPT}
+    )
+endforeach()
+

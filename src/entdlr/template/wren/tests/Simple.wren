@@ -1,8 +1,9 @@
 import "Test" for TestPrinter
 
-TestPrinter.print()
+System.print("SimpleWrenTest")
+
+TestPrinter.staticTest()
 
 var t = TestPrinter.new()
-t.otherPrint()
+t.methodTest()
 
-System.print("ENTDLR")
