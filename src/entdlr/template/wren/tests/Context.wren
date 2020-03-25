@@ -16,6 +16,9 @@ class Context {
     foreign static numEnumValues(namespace, enum)
     foreign static numUnions(namespace)
     foreign static numUnionTypes(namespace, union)
+    foreign static numStructs(namespace)
+    foreign static numFields(namespace, struct)
+    foreign static numAttributes(namespace, struct, field)
 
     // Namespace
     foreign static getNamespaceName(index)
@@ -33,6 +36,20 @@ class Context {
     foreign static getUnionTypeName(namespace, union, index)
     foreign static getUnionTypeIsArray(namespace, union, index)
     foreign static getUnionTypeArraySize(namespace, union, index)
+
+    // Struct
+    foreign static getStructName(namespace, index)
+    // Field
+    foreign static getFieldName(namespace, struct, index)
+    foreign static getFieldType(namespace, struct, index)
+    foreign static getFieldIsArray(namespace, struct, index)
+    foreign static getFieldArraySize(namespace, struct, index)
+    // Attribute
+    foreign static getAttributeName(namespace, struct, field, index)
+    foreign static getAttributeIsString(namespace, struct, field, index)
+    foreign static getAttributeString(namespace, struct, field, index)
+    foreign static getAttributeIsNumber(namespace, struct, field, index)
+    foreign static getAttributeNumber(namespace, struct, field, index)
 }
 
 class Namespace {
@@ -57,6 +74,11 @@ class Namespace {
         for (i in 0...Context.numUnions(namespace)) {
             var u = Union.new(namespace, Context.getUnionName(namespace, i))
             _unions[u.name] = u
+        }
+
+        for (i in 0...Context.numStructs(namespace)) {
+            var s = Struct.new(namespace, Context.getStructName(namespace, i))
+            _structs[s.name] = s
         }
     }
 }
@@ -117,3 +139,56 @@ class UnionType {
     }
 }
 
+class Struct {
+    name { _name }
+    fields { _fields }
+    methods { _methods }
+
+    construct new(namespace, struct) {
+        _name = struct
+        _fields = {}
+        _methods = {}
+
+        for (i in 0...Context.numFields(namespace, struct)) {
+            var f = Field.new(namespace, struct, i)
+            _fields[f.name] = f
+        }
+    }
+}
+
+class Field {
+    name { _name }
+    type { _type }
+    isArray { _isArray }
+    arraySize { _arraySize }
+    attributes { _attributes }
+
+    construct new(namespace, struct, index) {
+        _name = Context.getFieldName(namespace, struct, index)
+        _type = Context.getFieldType(namespace, struct, index)
+        _isArray = Context.getFieldIsArray(namespace, struct, index)
+        _arraySize = Context.getFieldArraySize(namespace, struct, index)
+        _attributes = {}
+
+        for (i in 0...Context.numAttributes(namespace, struct, _name)) {
+            var a = Attribute.new(namespace, struct, _name, i)
+            _attributes[a.name] = a
+        }
+    }
+}
+
+class Attribute {
+    name { _name }
+    isString { _isString }
+    string { _string }
+    isNumber { _isNumber }
+    number { _number }
+
+    construct new(namespace, struct, field, index) {
+        _name = Context.getAttributeName(namespace, struct, field, index)
+        _isString = Context.getAttributeIsString(namespace, struct, field, index)
+        _string = Context.getAttributeString(namespace, struct, field, index)
+        _isNumber = Context.getAttributeIsNumber(namespace, struct, field, index)
+        _number = Context.getAttributeNumber(namespace, struct, field, index)
+    }
+}

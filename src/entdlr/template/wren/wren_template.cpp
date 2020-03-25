@@ -27,6 +27,9 @@ namespace Entdlr
         boundForeignMethods["Context::Context::numEnumValues(_,_)static"] = ContextHelper::numEnumValues;
         boundForeignMethods["Context::Context::numUnions(_)static"] = ContextHelper::numUnions;
         boundForeignMethods["Context::Context::numUnionTypes(_,_)static"] = ContextHelper::numUnionTypes;
+        boundForeignMethods["Context::Context::numStructs(_)static"] = ContextHelper::numStructs;
+        boundForeignMethods["Context::Context::numFields(_,_)static"] = ContextHelper::numFields;
+        boundForeignMethods["Context::Context::numAttributes(_,_,_)static"] = ContextHelper::numAttributes;
         boundForeignMethods["Context::Context::getNamespaceName(_)static"] = ContextHelper::getNamespaceName;
         boundForeignMethods["Context::Context::getEnumName(_,_)static"] = ContextHelper::getEnumName;
         boundForeignMethods["Context::Context::getEnumType(_,_)static"] = ContextHelper::getEnumType;
@@ -36,6 +39,16 @@ namespace Entdlr
         boundForeignMethods["Context::Context::getUnionTypeName(_,_,_)static"] = ContextHelper::getUnionTypeName;
         boundForeignMethods["Context::Context::getUnionTypeIsArray(_,_,_)static"] = ContextHelper::getUnionTypeIsArray;
         boundForeignMethods["Context::Context::getUnionTypeArraySize(_,_,_)static"] = ContextHelper::getUnionTypeArraySize;
+        boundForeignMethods["Context::Context::getStructName(_,_)static"] = ContextHelper::getStructName;
+        boundForeignMethods["Context::Context::getFieldName(_,_,_)static"] = ContextHelper::getFieldName;
+        boundForeignMethods["Context::Context::getFieldType(_,_,_)static"] = ContextHelper::getFieldType;
+        boundForeignMethods["Context::Context::getFieldIsArray(_,_,_)static"] = ContextHelper::getFieldIsArray;
+        boundForeignMethods["Context::Context::getFieldArraySize(_,_,_)static"] = ContextHelper::getFieldArraySize;
+        boundForeignMethods["Context::Context::getAttributeName(_,_,_,_)static"] = ContextHelper::getAttributeName;
+        boundForeignMethods["Context::Context::getAttributeIsString(_,_,_,_)static"] = ContextHelper::getAttributeIsString;
+        boundForeignMethods["Context::Context::getAttributeString(_,_,_,_)static"] = ContextHelper::getAttributeString;
+        boundForeignMethods["Context::Context::getAttributeIsNumber(_,_,_,_)static"] = ContextHelper::getAttributeIsNumber;
+        boundForeignMethods["Context::Context::getAttributeNumber(_,_,_,_)static"] = ContextHelper::getAttributeNumber;
 
         WrenConfiguration config;
         wrenInitConfiguration(&config);

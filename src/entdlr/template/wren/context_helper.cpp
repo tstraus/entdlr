@@ -63,6 +63,42 @@ namespace Entdlr
         wrenSetSlotDouble(vm, 0, output);
     }
 
+    void ContextHelper::numStructs(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+
+        size_t output = 0;
+        if (auto n = getNamespace(_namespace))
+            output = n->structs.size();
+
+        wrenSetSlotDouble(vm, 0, output);
+    }
+
+    void ContextHelper::numFields(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _struct = wrenGetSlotString(vm, 2);
+
+        size_t output = 0;
+        if (auto s = getStruct(_namespace, _struct))
+            output = s->fields.size();
+
+        wrenSetSlotDouble(vm, 0, output);
+    }
+
+    void ContextHelper::numAttributes(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _struct = wrenGetSlotString(vm, 2);
+        std::string _field = wrenGetSlotString(vm, 3);
+
+        size_t output = 0;
+        if (auto f = getField(_namespace, _struct, _field))
+            output = f->attributes.size();
+
+        wrenSetSlotDouble(vm, 0, output);
+    }
+
     void ContextHelper::getNamespaceName(WrenVM* vm)
     {
         size_t index = wrenGetSlotDouble(vm, 1);
@@ -175,6 +211,140 @@ namespace Entdlr
         wrenSetSlotDouble(vm, 0, output);
     }
 
+    void ContextHelper::getStructName(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        size_t index = wrenGetSlotDouble(vm, 2);
+
+        std::string output = "";
+        if (auto s = getStruct(_namespace, index))
+            output = s->name;
+
+        wrenSetSlotString(vm, 0, output.c_str());
+    }
+
+    void ContextHelper::getFieldName(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _struct = wrenGetSlotString(vm, 2);
+        size_t index = wrenGetSlotDouble(vm, 3);
+
+        std::string output = "";
+        if (auto f = getField(_namespace, _struct, index))
+            output = f->name;
+
+        wrenSetSlotString(vm, 0, output.c_str());
+    }
+
+    void ContextHelper::getFieldType(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _struct = wrenGetSlotString(vm, 2);
+        size_t index = wrenGetSlotDouble(vm, 3);
+
+        std::string output = "";
+        if (auto f = getField(_namespace, _struct, index))
+            output = f->type;
+
+        wrenSetSlotString(vm, 0, output.c_str());
+    }
+
+    void ContextHelper::getFieldIsArray(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _struct = wrenGetSlotString(vm, 2);
+        size_t index = wrenGetSlotDouble(vm, 3);
+
+        bool output = false;
+        if (auto f = getField(_namespace, _struct, index))
+            output = f->isArray;
+
+        wrenSetSlotBool(vm, 0, output);
+    }
+
+    void ContextHelper::getFieldArraySize(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _struct = wrenGetSlotString(vm, 2);
+        size_t index = wrenGetSlotDouble(vm, 3);
+
+        size_t output = 0;
+        if (auto f = getField(_namespace, _struct, index))
+            output = f->arraySize;
+
+        wrenSetSlotDouble(vm, 0, output);
+    }
+
+    void ContextHelper::getAttributeName(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _struct = wrenGetSlotString(vm, 2);
+        std::string _field = wrenGetSlotString(vm, 3);
+        size_t index = wrenGetSlotDouble(vm, 4);
+
+        std::string output = "";
+        if (auto a = getAttribute(_namespace, _struct, _field, index))
+            output = a->name;
+
+        wrenSetSlotString(vm, 0, output.c_str());
+    }
+
+    void ContextHelper::getAttributeIsString(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _struct = wrenGetSlotString(vm, 2);
+        std::string _field = wrenGetSlotString(vm, 3);
+        size_t index = wrenGetSlotDouble(vm, 4);
+
+        bool output = false;
+        if (auto a = getAttribute(_namespace, _struct, _field, index))
+            output = a->isString;
+
+        wrenSetSlotBool(vm, 0, output);
+    }
+
+    void ContextHelper::getAttributeString(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _struct = wrenGetSlotString(vm, 2);
+        std::string _field = wrenGetSlotString(vm, 3);
+        size_t index = wrenGetSlotDouble(vm, 4);
+
+        std::string output = "";
+        if (auto a = getAttribute(_namespace, _struct, _field, index))
+            output = a->string;
+
+        wrenSetSlotString(vm, 0, output.c_str());
+    }
+
+    void ContextHelper::getAttributeIsNumber(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _struct = wrenGetSlotString(vm, 2);
+        std::string _field = wrenGetSlotString(vm, 3);
+        size_t index = wrenGetSlotDouble(vm, 4);
+
+        bool output = false;
+        if (auto a = getAttribute(_namespace, _struct, _field, index))
+            output = a->isNumber;
+
+        wrenSetSlotBool(vm, 0, output);
+    }
+
+    void ContextHelper::getAttributeNumber(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _struct = wrenGetSlotString(vm, 2);
+        std::string _field = wrenGetSlotString(vm, 3);
+        size_t index = wrenGetSlotDouble(vm, 4);
+
+        double output = 0.0;
+        if (auto a = getAttribute(_namespace, _struct, _field, index))
+            output = a->number;
+
+        wrenSetSlotDouble(vm, 0, output);
+    }
+
     std::optional<Namespace> ContextHelper::getNamespace(const std::string& _namespace)
     {
         for (const auto& n : context.namespaces)
@@ -253,6 +423,67 @@ namespace Entdlr
         {
             if (u->types.size() > index)
                 return u->types[index];
+        }
+
+        return {};
+    }
+
+    std::optional<Struct> ContextHelper::getStruct(const std::string& _namespace, const std::string& _struct)
+    {
+        if (auto n = getNamespace(_namespace))
+        {
+            for (const auto& s : n->structs)
+            {
+                if (s.name == _struct)
+                    return s;
+            }
+        }
+
+        return {};
+    }
+
+    std::optional<Struct> ContextHelper::getStruct(const std::string& _namespace, size_t index)
+    {
+        if (auto n = getNamespace(_namespace))
+        {
+            if (n->structs.size() > index)
+                return n->structs[index];
+        }
+
+        return {};
+    }
+
+    std::optional<Field> ContextHelper::getField(const std::string& _namespace, const std::string& _struct, const std::string& _field)
+    {
+        if (auto s = getStruct(_namespace, _struct))
+        {
+            for (const auto& f : s->fields)
+            {
+                if (f.name == _field)
+                return f;
+            }
+        }
+
+        return {};
+    }
+
+    std::optional<Field> ContextHelper::getField(const std::string& _namespace, const std::string& _struct, size_t index)
+    {
+        if (auto s = getStruct(_namespace, _struct))
+        {
+            if (s->fields.size() > index)
+                return s->fields[index];
+        }
+
+        return {};
+    }
+
+    std::optional<Attribute> ContextHelper::getAttribute(const std::string& _namespace, const std::string& _struct, const std::string& _field, size_t index)
+    {
+        if (auto f = getField(_namespace, _struct, _field))
+        {
+            if (f->attributes.size() > index)
+                return f->attributes[index];
         }
 
         return {};

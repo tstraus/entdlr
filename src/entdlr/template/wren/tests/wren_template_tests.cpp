@@ -31,6 +31,15 @@ TEST_SUITE("WrenTemplateTests")
                     uint64,
                     [uint16 : 4]
                 }
+
+                struct Position
+                {
+                    w : string (max_length:60);
+                    x : float64;
+                    y : [float64];
+                    z : [float64:8];
+                    also : float32 (asdf:"fdsa");
+                }
             )";
 
             const auto context = Parser::parse(input);

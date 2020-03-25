@@ -20,6 +20,9 @@ namespace Entdlr
         static void numEnumValues(WrenVM* vm);
         static void numUnions(WrenVM* vm);
         static void numUnionTypes(WrenVM* vm);
+        static void numStructs(WrenVM* vm);
+        static void numFields(WrenVM* vm);
+        static void numAttributes(WrenVM* vm);
 
         // Namespace
         static void getNamespaceName(WrenVM* vm);
@@ -38,6 +41,20 @@ namespace Entdlr
         static void getUnionTypeIsArray(WrenVM* vm);
         static void getUnionTypeArraySize(WrenVM* vm);
 
+        // Struct
+        static void getStructName(WrenVM* vm);
+        // Field
+        static void getFieldName(WrenVM* vm);
+        static void getFieldType(WrenVM* vm);
+        static void getFieldIsArray(WrenVM* vm);
+        static void getFieldArraySize(WrenVM* vm);
+        // Attribute
+        static void getAttributeName(WrenVM* vm);
+        static void getAttributeIsString(WrenVM* vm);
+        static void getAttributeString(WrenVM* vm);
+        static void getAttributeIsNumber(WrenVM* vm);
+        static void getAttributeNumber(WrenVM* vm);
+
     private:
         static std::optional<Namespace> getNamespace(const std::string& _namespace);
         static std::optional<Enum> getEnum(const std::string& _namespace, const std::string& _enum);
@@ -46,8 +63,11 @@ namespace Entdlr
         static std::optional<Union> getUnion(const std::string& _namespace, const std::string& _union);
         static std::optional<Union> getUnion(const std::string& _namespace, size_t index);
         static std::optional<UnionType> getUnionType(const std::string& _namespace, const std::string& _union, size_t index);
-
-
+        static std::optional<Struct> getStruct(const std::string& _namespace, const std::string& _struct);
+        static std::optional<Struct> getStruct(const std::string& _namespace, size_t index);
+        static std::optional<Field> getField(const std::string& _namespace, const std::string& _struct, const std::string& _field);
+        static std::optional<Field> getField(const std::string& _namespace, const std::string& _struct, size_t index);
+        static std::optional<Attribute> getAttribute(const std::string& _namespace, const std::string& _struct, const std::string& _field, size_t index);
     };
 };
 

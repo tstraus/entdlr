@@ -48,6 +48,3 @@ struct EntityState
     position : Position;
     targets : [uint64:4];
 }
-
-root_type EntityState;
-
