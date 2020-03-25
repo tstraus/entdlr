@@ -5,7 +5,6 @@ set (SOURCE
 )
 
 set (SCRIPTS
-    "Test.wren"
     "Simple.wren"
     "Context.wren"
 )
