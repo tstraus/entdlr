@@ -19,6 +19,8 @@ class Context {
     foreign static numStructs(namespace)
     foreign static numFields(namespace, struct)
     foreign static numAttributes(namespace, struct, field)
+    foreign static numStructMethods(namespace, struct)
+    foreign static numStructMethodParameters(namespace, struct, method)
 
     // Namespace
     foreign static getNamespaceName(index)
@@ -50,6 +52,14 @@ class Context {
     foreign static getAttributeString(namespace, struct, field, index)
     foreign static getAttributeIsNumber(namespace, struct, field, index)
     foreign static getAttributeNumber(namespace, struct, field, index)
+    // Method
+    foreign static getStructMethodName(namespace, struct, index)
+    foreign static getStructMethodReturnType(namespace, struct, method)
+    foreign static getStructMethodIsStatic(namespace, struct, method)
+    // Parameter
+    foreign static getStructMethodParameterName(namespace, struct, method, index)
+    foreign static getStructMethodParameterType(namespace, struct, method, index)
+    foreign static getStructMethodParameterConstant(namespace, struct, method, index)
 }
 
 class Namespace {
@@ -90,9 +100,7 @@ class Enum {
 
     construct new(namespace, enum) {
         _name = enum
-        _type = ""
         _values = {}
-
         _type = Context.getEnumType(namespace, enum)
 
         for (i in 0...Context.numEnumValues(namespace, enum)) {
@@ -153,6 +161,11 @@ class Struct {
             var f = Field.new(namespace, struct, i)
             _fields[f.name] = f
         }
+
+        for (i in 0...Context.numStructMethods(namespace, struct)) {
+            var m = Method.newStructMethod(namespace, struct, Context.getStructMethodName(namespace, struct, i))
+            _methods[m.name] = m
+        }
     }
 }
 
@@ -190,5 +203,36 @@ class Attribute {
         _string = Context.getAttributeString(namespace, struct, field, index)
         _isNumber = Context.getAttributeIsNumber(namespace, struct, field, index)
         _number = Context.getAttributeNumber(namespace, struct, field, index)
+    }
+}
+
+class Method {
+    name { _name }
+    returnType { _returnType }
+    parameters { _parameters }
+    isStatic { _isStatic }
+
+    construct newStructMethod(namespace, struct, method) {
+        _name = method
+        _returnType = Context.getStructMethodReturnType(namespace, struct, method)
+        _isStatic = Context.getStructMethodIsStatic(namespace, struct, method)
+        _parameters = {}
+
+        for (i in 0...Context.numStructMethodParameters(namespace, struct, method)) {
+            var p = Parameter.newStructMethodParameter(namespace, struct, method, i)
+            _parameters[p.name] = p
+        }
+    }
+}
+
+class Parameter {
+    name { _name }
+    type { _type }
+    constant { _constant }
+
+    construct newStructMethodParameter(namespace, struct, method, index) {
+        _name = Context.getStructMethodParameterName(namespace, struct, method, index)
+        _type = Context.getStructMethodParameterType(namespace, struct, method, index)
+        _constant = Context.getStructMethodParameterConstant(namespace, struct, method, index)
     }
 }

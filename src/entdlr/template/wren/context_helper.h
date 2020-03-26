@@ -23,6 +23,8 @@ namespace Entdlr
         static void numStructs(WrenVM* vm);
         static void numFields(WrenVM* vm);
         static void numAttributes(WrenVM* vm);
+        static void numStructMethods(WrenVM* vm);
+        static void numStructMethodParameters(WrenVM* vm);
 
         // Namespace
         static void getNamespaceName(WrenVM* vm);
@@ -54,6 +56,14 @@ namespace Entdlr
         static void getAttributeString(WrenVM* vm);
         static void getAttributeIsNumber(WrenVM* vm);
         static void getAttributeNumber(WrenVM* vm);
+        // Method
+        static void getStructMethodName(WrenVM* vm);
+        static void getStructMethodReturnType(WrenVM* vm);
+        static void getStructMethodIsStatic(WrenVM* vm);
+        // Parameter
+        static void getStructMethodParameterName(WrenVM* vm);
+        static void getStructMethodParameterType(WrenVM* vm);
+        static void getStructMethodParameterConstant(WrenVM* vm);
 
     private:
         static std::optional<Namespace> getNamespace(const std::string& _namespace);
@@ -68,6 +78,9 @@ namespace Entdlr
         static std::optional<Field> getField(const std::string& _namespace, const std::string& _struct, const std::string& _field);
         static std::optional<Field> getField(const std::string& _namespace, const std::string& _struct, size_t index);
         static std::optional<Attribute> getAttribute(const std::string& _namespace, const std::string& _struct, const std::string& _field, size_t index);
+        static std::optional<Method> getMethod(const std::string& _namespace, const std::string& _struct, const std::string& _method);
+        static std::optional<Method> getMethod(const std::string& _namespace, const std::string& _struct, size_t index);
+        static std::optional<Parameter> getParameter(const std::string& _namespace, const std::string& _struct, const std::string& _method, size_t index);
     };
 };
 

@@ -30,6 +30,8 @@ namespace Entdlr
         boundForeignMethods["Context::Context::numStructs(_)static"] = ContextHelper::numStructs;
         boundForeignMethods["Context::Context::numFields(_,_)static"] = ContextHelper::numFields;
         boundForeignMethods["Context::Context::numAttributes(_,_,_)static"] = ContextHelper::numAttributes;
+        boundForeignMethods["Context::Context::numStructMethods(_,_)static"] = ContextHelper::numStructMethods;
+        boundForeignMethods["Context::Context::numStructMethodParameters(_,_,_)static"] = ContextHelper::numStructMethodParameters;
         boundForeignMethods["Context::Context::getNamespaceName(_)static"] = ContextHelper::getNamespaceName;
         boundForeignMethods["Context::Context::getEnumName(_,_)static"] = ContextHelper::getEnumName;
         boundForeignMethods["Context::Context::getEnumType(_,_)static"] = ContextHelper::getEnumType;
@@ -49,6 +51,12 @@ namespace Entdlr
         boundForeignMethods["Context::Context::getAttributeString(_,_,_,_)static"] = ContextHelper::getAttributeString;
         boundForeignMethods["Context::Context::getAttributeIsNumber(_,_,_,_)static"] = ContextHelper::getAttributeIsNumber;
         boundForeignMethods["Context::Context::getAttributeNumber(_,_,_,_)static"] = ContextHelper::getAttributeNumber;
+        boundForeignMethods["Context::Context::getStructMethodName(_,_,_)static"] = ContextHelper::getStructMethodName;
+        boundForeignMethods["Context::Context::getStructMethodReturnType(_,_,_)static"] = ContextHelper::getStructMethodReturnType;
+        boundForeignMethods["Context::Context::getStructMethodIsStatic(_,_,_)static"] = ContextHelper::getStructMethodIsStatic;
+        boundForeignMethods["Context::Context::getStructMethodParameterName(_,_,_,_)static"] = ContextHelper::getStructMethodParameterName;
+        boundForeignMethods["Context::Context::getStructMethodParameterType(_,_,_,_)static"] = ContextHelper::getStructMethodParameterType;
+        boundForeignMethods["Context::Context::getStructMethodParameterConstant(_,_,_,_)static"] = ContextHelper::getStructMethodParameterConstant;
 
         WrenConfiguration config;
         wrenInitConfiguration(&config);

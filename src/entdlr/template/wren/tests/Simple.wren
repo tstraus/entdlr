@@ -62,6 +62,24 @@ for (nKey in c.namespaces.keys) {
                 System.print()
             }
         }
+
+        for (mKey in s.methods.keys) {
+            var m = s.methods[mKey]
+            System.write("        ")
+            if (m.isStatic) {
+                System.write("static ")
+            }
+            System.print(m.name + " : " + m.returnType)
+
+            for (pKey in m.parameters.keys) {
+                var p = m.parameters[pKey]
+                System.write("            " + p.name + " : ")
+                if (!p.constant) {
+                    System.write("mutable ")
+                }
+                System.print(p.type)
+            }
+        }
     }
 }
 

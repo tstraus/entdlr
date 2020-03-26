@@ -39,6 +39,9 @@ TEST_SUITE("WrenTemplateTests")
                     y : [float64];
                     z : [float64:8];
                     also : float32 (asdf:"fdsa");
+
+                    static azTo(otherPos: Position) : angle;
+                    elTo(mut otherPos: Position) : angle;
                 }
             )";
 
