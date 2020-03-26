@@ -1,5 +1,6 @@
 #include "wren_template.h"
 #include "context_helper.h"
+#include "wren_context.h"
 
 #include <unordered_map>
 #include <filesystem>
@@ -111,13 +112,21 @@ namespace Entdlr
 
     char* WrenTemplate::loadModule(WrenVM* vm, const char* name)
     {
-        std::string path(name);
-        path += ".wren";
-        std::ifstream fin;
-        fin.open(path, std::ios::in);
-        std::stringstream buffer;
-        buffer << fin.rdbuf() << '\0';
-        std::string source = buffer.str();
+        std::string source = "";
+
+        if (std::string(name) == "Context")
+            source = contextSource;
+
+        else
+        {    
+            std::string path(name);
+            path += ".wren";
+            std::ifstream fin;
+            fin.open(path, std::ios::in);
+            std::stringstream buffer;
+            buffer << fin.rdbuf() << '\0';
+            source = buffer.str();
+        }
 
         char* cbuffer = (char*)malloc(source.size());
         std::memcpy(cbuffer, source.c_str(), source.size());

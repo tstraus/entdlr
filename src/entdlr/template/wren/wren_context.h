@@ -1,3 +1,7 @@
+#ifndef __ENTDLR_WREN_CONTEXT_H__
+#define __ENTDLR_WREN_CONTEXT_H__
+
+const std::string contextSource = R"(
 class Context {
     namespaces { _namespaces }
 
@@ -288,3 +292,6 @@ class Facility {
         }
     }
 }
+)";
+
+#endif // __ENTDLR_WREN_CONTEXT_H__

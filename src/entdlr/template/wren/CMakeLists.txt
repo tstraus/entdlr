@@ -3,6 +3,7 @@ project (entdlr_template_wren)
 set (HEADERS
     context_helper.h
     wren_template.h
+    wren_context.h
 )
 
 set (SOURCE

@@ -6,7 +6,6 @@ set (SOURCE
 
 set (SCRIPTS
     "Simple.wren"
-    "Context.wren"
 )
 
 add_executable (${PROJECT_NAME} ${SOURCE})
