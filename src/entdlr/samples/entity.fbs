@@ -22,7 +22,7 @@ struct DisEntityType
     extra : uint8;
 
     isSubset(other: DisEntityType) : bool;
-    static fromString(str: string) : DisEntityType;
+    static fromString(mut str: string) : DisEntityType;
 }
 
 union DisEntityTypeUnion
@@ -48,6 +48,3 @@ struct EntityState
     position : Position;
     targets : [uint64:4];
 }
-
-root_type EntityState;
-
