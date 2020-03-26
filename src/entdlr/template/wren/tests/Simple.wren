@@ -81,5 +81,27 @@ for (nKey in c.namespaces.keys) {
             }
         }
     }
+
+    for (fKey in n.facilities.keys) {
+        var f = n.facilities[fKey]
+        System.print("    " + f.name + " : facility")
+
+        for (mKey in f.methods.keys) {
+            var m = f.methods[mKey]
+            System.write("        ")
+            if (m.isStatic) {
+                System.write("static ")
+            }
+            System.print(m.name + " : " + m.returnType)
+            for (pKey in m.parameters.keys) {
+                var p = m.parameters[pKey]
+                System.write("            " + p.name + " : ")
+                if (!p.constant) {
+                    System.write("mutable ")
+                }
+                System.print(p.type)
+            }
+        }
+    }
 }
 

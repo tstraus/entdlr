@@ -25,6 +25,9 @@ namespace Entdlr
         static void numAttributes(WrenVM* vm);
         static void numStructMethods(WrenVM* vm);
         static void numStructMethodParameters(WrenVM* vm);
+        static void numFacilities(WrenVM* vm);
+        static void numFacilityMethods(WrenVM* vm);
+        static void numFacilityMethodParameters(WrenVM* vm);
 
         // Namespace
         static void getNamespaceName(WrenVM* vm);
@@ -65,6 +68,18 @@ namespace Entdlr
         static void getStructMethodParameterType(WrenVM* vm);
         static void getStructMethodParameterConstant(WrenVM* vm);
 
+        // Facility
+        static void getFacilityName(WrenVM* vm);
+        // Method
+        static void getFacilityMethodName(WrenVM* vm);
+        static void getFacilityMethodReturnType(WrenVM* vm);
+        static void getFacilityMethodIsStatic(WrenVM* vm);
+        // Parameter
+        static void getFacilityMethodParameterName(WrenVM* vm);
+        static void getFacilityMethodParameterType(WrenVM* vm);
+        static void getFacilityMethodParameterConstant(WrenVM* vm);
+
+
     private:
         static std::optional<Namespace> getNamespace(const std::string& _namespace);
         static std::optional<Enum> getEnum(const std::string& _namespace, const std::string& _enum);
@@ -78,9 +93,14 @@ namespace Entdlr
         static std::optional<Field> getField(const std::string& _namespace, const std::string& _struct, const std::string& _field);
         static std::optional<Field> getField(const std::string& _namespace, const std::string& _struct, size_t index);
         static std::optional<Attribute> getAttribute(const std::string& _namespace, const std::string& _struct, const std::string& _field, size_t index);
-        static std::optional<Method> getMethod(const std::string& _namespace, const std::string& _struct, const std::string& _method);
-        static std::optional<Method> getMethod(const std::string& _namespace, const std::string& _struct, size_t index);
-        static std::optional<Parameter> getParameter(const std::string& _namespace, const std::string& _struct, const std::string& _method, size_t index);
+        static std::optional<Method> getStructMethod(const std::string& _namespace, const std::string& _struct, const std::string& _method);
+        static std::optional<Method> getStructMethod(const std::string& _namespace, const std::string& _struct, size_t index);
+        static std::optional<Method> getFacilityMethod(const std::string& _namespace, const std::string& _facility, const std::string& _method);
+        static std::optional<Method> getFacilityMethod(const std::string& _namespace, const std::string& _facility, size_t index);
+        static std::optional<Parameter> getStructParameter(const std::string& _namespace, const std::string& _struct, const std::string& _method, size_t index);
+        static std::optional<Parameter> getFacilityParameter(const std::string& _namespace, const std::string& _facility, const std::string& _method, size_t index);
+        static std::optional<Facility> getFacility(const std::string& _namespace, const std::string& _facility);
+        static std::optional<Facility> getFacility(const std::string& _namespace, size_t index);
     };
 };
 

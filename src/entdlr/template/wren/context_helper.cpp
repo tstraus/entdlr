@@ -118,7 +118,43 @@ namespace Entdlr
         std::string _method = wrenGetSlotString(vm, 3);
 
         size_t output = 0;
-        if (auto m = getMethod(_namespace, _struct, _method))
+        if (auto m = getStructMethod(_namespace, _struct, _method))
+            output = m->parameters.size();
+
+        wrenSetSlotDouble(vm, 0, output);
+    }
+
+    void ContextHelper::numFacilities(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+
+        size_t output = 0;
+        if (auto n = getNamespace(_namespace))
+            output = n->facilities.size();
+
+        wrenSetSlotDouble(vm, 0, output);
+    }
+
+    void ContextHelper::numFacilityMethods(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _facility = wrenGetSlotString(vm, 2);
+
+        size_t output = 0;
+        if (auto f = getFacility(_namespace, _facility))
+            output = f->methods.size();
+
+        wrenSetSlotDouble(vm, 0, output);
+    }
+
+    void ContextHelper::numFacilityMethodParameters(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _facility = wrenGetSlotString(vm, 2);
+        std::string _method = wrenGetSlotString(vm, 3);
+
+        size_t output = 0;
+        if (auto m = getFacilityMethod(_namespace, _facility, _method))
             output = m->parameters.size();
 
         wrenSetSlotDouble(vm, 0, output);
@@ -377,7 +413,7 @@ namespace Entdlr
         size_t index = wrenGetSlotDouble(vm, 3);
 
         std::string output = "";
-        if (auto m = getMethod(_namespace, _struct, index))
+        if (auto m = getStructMethod(_namespace, _struct, index))
             output = m->name;
 
         wrenSetSlotString(vm, 0, output.c_str());
@@ -390,7 +426,7 @@ namespace Entdlr
         std::string _method = wrenGetSlotString(vm, 3);
 
         std::string output = "";
-        if (auto m = getMethod(_namespace, _struct, _method))
+        if (auto m = getStructMethod(_namespace, _struct, _method))
             output = m->returnType;
 
         wrenSetSlotString(vm, 0, output.c_str());
@@ -403,7 +439,7 @@ namespace Entdlr
         std::string _method = wrenGetSlotString(vm, 3);
 
         bool output = false;
-        if (auto m = getMethod(_namespace, _struct, _method))
+        if (auto m = getStructMethod(_namespace, _struct, _method))
             output = m->isStatic;
 
         wrenSetSlotBool(vm, 0, output);
@@ -417,7 +453,7 @@ namespace Entdlr
         size_t index = wrenGetSlotDouble(vm, 4);
 
         std::string output = "";
-        if (auto p = getParameter(_namespace, _struct, _method, index))
+        if (auto p = getStructParameter(_namespace, _struct, _method, index))
             output = p->name;
 
         wrenSetSlotString(vm, 0, output.c_str());
@@ -431,7 +467,7 @@ namespace Entdlr
         size_t index = wrenGetSlotDouble(vm, 4);
 
         std::string output = "";
-        if (auto p = getParameter(_namespace, _struct, _method, index))
+        if (auto p = getStructParameter(_namespace, _struct, _method, index))
             output = p->type;
 
         wrenSetSlotString(vm, 0, output.c_str());
@@ -445,7 +481,100 @@ namespace Entdlr
         size_t index = wrenGetSlotDouble(vm, 4);
 
         bool output = false;
-        if (auto p = getParameter(_namespace, _struct, _method, index))
+        if (auto p = getStructParameter(_namespace, _struct, _method, index))
+            output = p->constant;
+
+        wrenSetSlotBool(vm, 0, output);
+    }
+
+    void ContextHelper::getFacilityName(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        size_t index = wrenGetSlotDouble(vm, 2);
+
+        std::string output = "";
+        if (auto f = getFacility(_namespace, index))
+            output = f->name;
+
+        wrenSetSlotString(vm, 0, output.c_str());
+    }
+
+    void ContextHelper::getFacilityMethodName(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _facility = wrenGetSlotString(vm, 2);
+        size_t index = wrenGetSlotDouble(vm, 3);
+
+        std::string output = "";
+        if (auto m = getFacilityMethod(_namespace, _facility, index))
+            output = m->name;
+
+        wrenSetSlotString(vm, 0, output.c_str());
+    }
+
+    void ContextHelper::getFacilityMethodReturnType(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _facility = wrenGetSlotString(vm, 2);
+        std::string _method = wrenGetSlotString(vm, 3);
+
+        std::string output = "";
+        if (auto m = getFacilityMethod(_namespace, _facility, _method))
+            output = m->returnType;
+
+        wrenSetSlotString(vm, 0, output.c_str());
+    }
+
+    void ContextHelper::getFacilityMethodIsStatic(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _facility = wrenGetSlotString(vm, 2);
+        std::string _method = wrenGetSlotString(vm, 3);
+
+        bool output = false;
+        if (auto m = getFacilityMethod(_namespace, _facility, _method))
+            output = m->isStatic;
+
+        wrenSetSlotBool(vm, 0, output);
+    }
+
+    void ContextHelper::getFacilityMethodParameterName(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _facility = wrenGetSlotString(vm, 2);
+        std::string _method = wrenGetSlotString(vm, 3);
+        size_t index = wrenGetSlotDouble(vm, 4);
+
+        std::string output = "";
+        if (auto p = getFacilityParameter(_namespace, _facility, _method, index))
+            output = p->name;
+
+        wrenSetSlotString(vm, 0, output.c_str());
+    }
+
+    void ContextHelper::getFacilityMethodParameterType(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _facility = wrenGetSlotString(vm, 2);
+        std::string _method = wrenGetSlotString(vm, 3);
+        size_t index = wrenGetSlotDouble(vm, 4);
+
+        std::string output = "";
+        if (auto p = getFacilityParameter(_namespace, _facility, _method, index))
+            output = p->type;
+
+        wrenSetSlotString(vm, 0, output.c_str());
+    }
+
+    void ContextHelper::getFacilityMethodParameterConstant(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _facility = wrenGetSlotString(vm, 2);
+        std::string _method = wrenGetSlotString(vm, 3);
+        size_t index = wrenGetSlotDouble(vm, 4);
+
+        bool output = false;
+        if (auto p = getFacilityParameter(_namespace, _facility, _method, index))
             output = p->constant;
 
         wrenSetSlotBool(vm, 0, output);
@@ -595,7 +724,7 @@ namespace Entdlr
         return {};
     }
 
-    std::optional<Method> ContextHelper::getMethod(const std::string& _namespace, const std::string& _struct, const std::string& _method)
+    std::optional<Method> ContextHelper::getStructMethod(const std::string& _namespace, const std::string& _struct, const std::string& _method)
     {
         if (auto s = getStruct(_namespace, _struct))
         {
@@ -609,7 +738,7 @@ namespace Entdlr
         return {};
     }
 
-    std::optional<Method> ContextHelper::getMethod(const std::string& _namespace, const std::string& _struct, size_t index)
+    std::optional<Method> ContextHelper::getStructMethod(const std::string& _namespace, const std::string& _struct, size_t index)
     {
         if (auto s = getStruct(_namespace, _struct))
         {
@@ -619,13 +748,73 @@ namespace Entdlr
 
         return {};
     }
-
-    std::optional<Parameter> ContextHelper::getParameter(const std::string& _namespace, const std::string& _struct, const std::string& _method, size_t index)
+    std::optional<Method> ContextHelper::getFacilityMethod(const std::string& _namespace, const std::string& _facility, const std::string& _method)
     {
-        if (auto m = getMethod(_namespace, _struct, _method))
+        if (auto f = getFacility(_namespace, _facility))
+        {
+            for (const auto& m : f->methods)
+            {
+                if (m.name == _method)
+                    return m;
+            }
+        }
+
+        return {};
+    }
+
+    std::optional<Method> ContextHelper::getFacilityMethod(const std::string& _namespace, const std::string& _facility, size_t index)
+    {
+        if (auto f = getFacility(_namespace, _facility))
+        {
+            if (f->methods.size() > index)
+                return f->methods[index];
+        }
+
+        return {};
+    }
+
+    std::optional<Parameter> ContextHelper::getStructParameter(const std::string& _namespace, const std::string& _struct, const std::string& _method, size_t index)
+    {
+        if (auto m = getStructMethod(_namespace, _struct, _method))
         {
             if (m->parameters.size() > index)
                 return m->parameters[index];
+        }
+
+        return {};
+    }
+
+    std::optional<Parameter> ContextHelper::getFacilityParameter(const std::string& _namespace, const std::string& _facility, const std::string& _method, size_t index)
+    {
+        if (auto m = getFacilityMethod(_namespace, _facility, _method))
+        {
+            if (m->parameters.size() > index)
+                return m->parameters[index];
+        }
+
+        return {};
+    }
+
+    std::optional<Facility> ContextHelper::getFacility(const std::string& _namespace, const std::string& _facility)
+    {
+        if (auto n = getNamespace(_namespace))
+        {
+            for (const auto& f : n->facilities)
+            {
+                if (f.name == _facility)
+                    return f;
+            }
+        }
+
+        return {};
+    }
+
+    std::optional<Facility> ContextHelper::getFacility(const std::string& _namespace, size_t index)
+    {
+        if (auto n = getNamespace(_namespace))
+        {
+            if (n->facilities.size() > index)
+                return n->facilities[index];
         }
 
         return {};

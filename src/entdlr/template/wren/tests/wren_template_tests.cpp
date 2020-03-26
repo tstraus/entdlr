@@ -43,6 +43,14 @@ TEST_SUITE("WrenTemplateTests")
                     static azTo(otherPos: Position) : angle;
                     elTo(mut otherPos: Position) : angle;
                 }
+
+                facility Time
+                {
+                    now() : TimeResult;
+                    difference(start: time, mut end: time) : time;
+
+                    static isValid() : bool;
+                }
             )";
 
             const auto context = Parser::parse(input);

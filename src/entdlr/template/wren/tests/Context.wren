@@ -21,6 +21,9 @@ class Context {
     foreign static numAttributes(namespace, struct, field)
     foreign static numStructMethods(namespace, struct)
     foreign static numStructMethodParameters(namespace, struct, method)
+    foreign static numFacilities(namespace)
+    foreign static numFacilityMethods(namespace, facility)
+    foreign static numFacilityMethodParameters(namespace, facility, method)
 
     // Namespace
     foreign static getNamespaceName(index)
@@ -60,6 +63,17 @@ class Context {
     foreign static getStructMethodParameterName(namespace, struct, method, index)
     foreign static getStructMethodParameterType(namespace, struct, method, index)
     foreign static getStructMethodParameterConstant(namespace, struct, method, index)
+
+    // Facility
+    foreign static getFacilityName(namespace, index)
+    // Method
+    foreign static getFacilityMethodName(namespace, facility, index)
+    foreign static getFacilityMethodReturnType(namespace, facility, method)
+    foreign static getFacilityMethodIsStatic(namespace, facility, method)
+    // Parameter
+    foreign static getFacilityMethodParameterName(namespace, facility, method, index)
+    foreign static getFacilityMethodParameterType(namespace, facility, method, index)
+    foreign static getFacilityMethodParameterConstant(namespace, facility, method, index)
 }
 
 class Namespace {
@@ -89,6 +103,11 @@ class Namespace {
         for (i in 0...Context.numStructs(namespace)) {
             var s = Struct.new(namespace, Context.getStructName(namespace, i))
             _structs[s.name] = s
+        }
+
+        for (i in 0...Context.numFacilities(namespace)) {
+            var f = Facility.new(namespace, Context.getFacilityName(namespace, i))
+            _facilities[f.name] = f
         }
     }
 }
@@ -223,6 +242,18 @@ class Method {
             _parameters[p.name] = p
         }
     }
+
+    construct newFacilityMethod(namespace, facility, method) {
+        _name = method
+        _returnType = Context.getFacilityMethodReturnType(namespace, facility, method)
+        _isStatic = Context.getFacilityMethodIsStatic(namespace, facility, method)
+        _parameters = {}
+
+        for (i in 0...Context.numFacilityMethodParameters(namespace, facility, method)) {
+            var p = Parameter.newFacilityMethodParameter(namespace, facility, method, i)
+            _parameters[p.name] = p
+        }
+    }
 }
 
 class Parameter {
@@ -234,5 +265,26 @@ class Parameter {
         _name = Context.getStructMethodParameterName(namespace, struct, method, index)
         _type = Context.getStructMethodParameterType(namespace, struct, method, index)
         _constant = Context.getStructMethodParameterConstant(namespace, struct, method, index)
+    }
+
+    construct newFacilityMethodParameter(namespace, facility, method, index) {
+        _name = Context.getFacilityMethodParameterName(namespace, facility, method, index)
+        _type = Context.getFacilityMethodParameterType(namespace, facility, method, index)
+        _constant = Context.getFacilityMethodParameterConstant(namespace, facility, method, index)
+    }
+}
+
+class Facility {
+    name { _name }
+    methods { _methods }
+
+    construct new(namespace, facility) {
+        _name = facility
+        _methods = {}
+
+        for (i in 0...Context.numFacilityMethods(namespace, facility)) {
+            var m = Method.newFacilityMethod(namespace, facility, Context.getFacilityMethodName(namespace, facility, i))
+            _methods[m.name] = m
+        }
     }
 }
