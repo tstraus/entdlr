@@ -5,24 +5,11 @@
 #include <vector>
 
 #include "token.h"
+#include "attribute.h"
 #include "method.h"
 
 namespace Entdlr
 {
-    class Attribute : public Token
-    {
-    public:
-        bool isString;
-        std::string string;
-
-        bool isNumber;
-        double number;
-
-        static Attribute create(const Token& token);
-        static Attribute create(const Token& token, const std::string& s);
-        static Attribute create(const Token& token, const double n);
-    };
-
     class Field : public Token
     {
     public:
@@ -31,7 +18,7 @@ namespace Entdlr
         uint32_t arraySize;
         std::vector<Attribute> attributes;
 
-        static Field create(const Token& token, const std::string& type, const bool& isArray, const uint32_t& arraySize, std::vector<Attribute>& attributes);
+        static Field create(const Token& token, const std::string& type, const bool& isArray, const uint32_t& arraySize, const std::vector<Attribute>& attributes = {});
     };
 
     class Struct : public Token
@@ -39,8 +26,9 @@ namespace Entdlr
     public:
         std::vector<Field> fields;
         std::vector<Method> methods;
+        std::vector<Attribute> attributes;
 
-        static Struct create(const Token& token);
+        static Struct create(const Token& token, const std::vector<Attribute>& attributes = {});
         void add(const Field& field);
         void add(const Method& method);
     };

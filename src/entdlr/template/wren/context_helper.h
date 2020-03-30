@@ -17,12 +17,15 @@ namespace Entdlr
         // get sizes
         static void numNamespaces(WrenVM* vm);
         static void numEnums(WrenVM* vm);
+        static void numEnumAttributes(WrenVM* vm);
         static void numEnumValues(WrenVM* vm);
         static void numUnions(WrenVM* vm);
+        static void numUnionAttributes(WrenVM* vm);
         static void numUnionTypes(WrenVM* vm);
         static void numStructs(WrenVM* vm);
+        static void numStructAttributes(WrenVM* vm);
         static void numFields(WrenVM* vm);
-        static void numAttributes(WrenVM* vm);
+        static void numFieldAttributes(WrenVM* vm);
         static void numStructMethods(WrenVM* vm);
         static void numStructMethodParameters(WrenVM* vm);
         static void numFacilities(WrenVM* vm);
@@ -35,12 +38,22 @@ namespace Entdlr
         // Enum
         static void getEnumName(WrenVM* vm);
         static void getEnumType(WrenVM* vm);
+        static void getEnumAttributeName(WrenVM* vm);
+        static void getEnumAttributeIsString(WrenVM* vm);
+        static void getEnumAttributeString(WrenVM* vm);
+        static void getEnumAttributeIsNumber(WrenVM* vm);
+        static void getEnumAttributeNumber(WrenVM* vm);
         // EnumValue
         static void getEnumValueName(WrenVM* vm);
         static void getEnumValueValue(WrenVM* vm);
 
         // Union
         static void getUnionName(WrenVM* vm);
+        static void getUnionAttributeName(WrenVM* vm);
+        static void getUnionAttributeIsString(WrenVM* vm);
+        static void getUnionAttributeString(WrenVM* vm);
+        static void getUnionAttributeIsNumber(WrenVM* vm);
+        static void getUnionAttributeNumber(WrenVM* vm);
         // UnionType
         static void getUnionTypeName(WrenVM* vm);
         static void getUnionTypeIsArray(WrenVM* vm);
@@ -48,17 +61,22 @@ namespace Entdlr
 
         // Struct
         static void getStructName(WrenVM* vm);
+        static void getStructAttributeName(WrenVM* vm);
+        static void getStructAttributeIsString(WrenVM* vm);
+        static void getStructAttributeString(WrenVM* vm);
+        static void getStructAttributeIsNumber(WrenVM* vm);
+        static void getStructAttributeNumber(WrenVM* vm);
         // Field
         static void getFieldName(WrenVM* vm);
         static void getFieldType(WrenVM* vm);
         static void getFieldIsArray(WrenVM* vm);
         static void getFieldArraySize(WrenVM* vm);
         // Attribute
-        static void getAttributeName(WrenVM* vm);
-        static void getAttributeIsString(WrenVM* vm);
-        static void getAttributeString(WrenVM* vm);
-        static void getAttributeIsNumber(WrenVM* vm);
-        static void getAttributeNumber(WrenVM* vm);
+        static void getFieldAttributeName(WrenVM* vm);
+        static void getFieldAttributeIsString(WrenVM* vm);
+        static void getFieldAttributeString(WrenVM* vm);
+        static void getFieldAttributeIsNumber(WrenVM* vm);
+        static void getFieldAttributeNumber(WrenVM* vm);
         // Method
         static void getStructMethodName(WrenVM* vm);
         static void getStructMethodReturnType(WrenVM* vm);
@@ -79,7 +97,6 @@ namespace Entdlr
         static void getFacilityMethodParameterType(WrenVM* vm);
         static void getFacilityMethodParameterConstant(WrenVM* vm);
 
-
     private:
         static std::optional<Namespace> getNamespace(const std::string& _namespace);
         static std::optional<Enum> getEnum(const std::string& _namespace, const std::string& _enum);
@@ -92,7 +109,10 @@ namespace Entdlr
         static std::optional<Struct> getStruct(const std::string& _namespace, size_t index);
         static std::optional<Field> getField(const std::string& _namespace, const std::string& _struct, const std::string& _field);
         static std::optional<Field> getField(const std::string& _namespace, const std::string& _struct, size_t index);
-        static std::optional<Attribute> getAttribute(const std::string& _namespace, const std::string& _struct, const std::string& _field, size_t index);
+        static std::optional<Attribute> getEnumAttribute(const std::string& _namespace, const std::string& _enum, size_t index);
+        static std::optional<Attribute> getUnionAttribute(const std::string& _namespace, const std::string& _union, size_t index);
+        static std::optional<Attribute> getStructAttribute(const std::string& _namespace, const std::string& _struct, size_t index);
+        static std::optional<Attribute> getFieldAttribute(const std::string& _namespace, const std::string& _struct, const std::string& _field, size_t index);
         static std::optional<Method> getStructMethod(const std::string& _namespace, const std::string& _struct, const std::string& _method);
         static std::optional<Method> getStructMethod(const std::string& _namespace, const std::string& _struct, size_t index);
         static std::optional<Method> getFacilityMethod(const std::string& _namespace, const std::string& _facility, const std::string& _method);

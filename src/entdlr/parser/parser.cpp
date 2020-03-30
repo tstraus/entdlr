@@ -147,14 +147,16 @@ namespace Entdlr
         {
             Enum e;
             Token t = { en->IDENT()->getSymbol()->getText(), filename, en->getStart()->getLine(), en->getStart()->getCharPositionInLine() };
+            std::vector<Attribute> attributes = parseAttributes(en->metadata(), filename);
+
             if (en->type())
             {
                 if (en->type()->BASE_TYPE_NAME())
-                    e = Enum::create(t, en->type()->BASE_TYPE_NAME()->getSymbol()->getText()); // make a new enum with the name
+                    e = Enum::create(t, en->type()->BASE_TYPE_NAME()->getSymbol()->getText(), attributes); // make a new enum with the name
                 else throw std::runtime_error(std::to_string(en->type()->getStart()->getLine()) + ", " + std::to_string(en->type()->getStart()->getCharPositionInLine()) + ": enums can only be primitive types");
             }
 
-            else e = Enum::create(t);
+            else e = Enum::create(t, "int32", attributes);
 
             // get enum values
             for (const auto& v : en->commasep_enumval_decl()->enumval_decl())
@@ -180,6 +182,7 @@ namespace Entdlr
         for (const auto& un : unions)
         {
             auto u = Union::create(Token{un->IDENT()->getSymbol()->getText(), filename, un->getStart()->getLine(), un->getStart()->getCharPositionInLine()}); // make a new union with the name
+            u.attributes = parseAttributes(un->metadata(), filename);
 
             // get union types
             for (const auto& t : un->commasep_uniontype_decl()->uniontype_decl())
@@ -256,6 +259,8 @@ namespace Entdlr
         for (const auto& st : structs)
         {
             auto s = Struct::create(Token{st->IDENT()->getSymbol()->getText(), filename, st->getStart()->getLine(), st->getStart()->getCharPositionInLine()}); // make a new struct with the name
+
+            s.attributes = parseAttributes(st->metadata(), filename);
 
             // get the fields of the struct
             for (const auto& f : st->field_decl())
@@ -335,63 +340,7 @@ namespace Entdlr
                 arraySize = std::stoul(field->type()->integer_const()->INTEGER_CONSTANT()->getSymbol()->getText());
         }
 
-        // check for metadata
-        if (field->metadata() && field->metadata()->commasep_ident_with_opt_single_value() && field->metadata()->commasep_ident_with_opt_single_value())
-        {
-            for (const auto& attribute : field->metadata()->commasep_ident_with_opt_single_value()->ident_with_opt_single_value())
-            {
-                if (attribute->single_value()->STRING_CONSTANT())
-                {
-                    attributes.push_back(Attribute::create(
-                        Token{ attribute->IDENT()->getSymbol()->getText(), filename, attribute->getStart()->getLine(), attribute->getStart()->getCharPositionInLine() },
-                        attribute->single_value()->STRING_CONSTANT()->getSymbol()->getText()
-                    ));
-                }
-
-                else if (attribute->single_value()->scalar())
-                {
-                    const auto& scalar = attribute->single_value()->scalar();
-                    if (scalar->INTEGER_CONSTANT())
-                    {
-                        attributes.push_back(Attribute::create(
-                            Token{ attribute->IDENT()->getSymbol()->getText(), filename, attribute->getStart()->getLine(), attribute->getStart()->getCharPositionInLine() },
-                            std::stod(scalar->INTEGER_CONSTANT()->getSymbol()->getText())
-                        ));
-                    }
-
-                    else if (scalar->HEX_INTEGER_CONSTANT())
-                    {
-                        attributes.push_back(Attribute::create(
-                            Token{ attribute->IDENT()->getSymbol()->getText(), filename, attribute->getStart()->getLine(), attribute->getStart()->getCharPositionInLine() },
-                            std::stod(scalar->HEX_INTEGER_CONSTANT()->getSymbol()->getText())
-                        ));
-                    }
-
-                    else if (scalar->FLOAT_CONSTANT())
-                    {
-                        attributes.push_back(Attribute::create(
-                            Token{ attribute->IDENT()->getSymbol()->getText(), filename, attribute->getStart()->getLine(), attribute->getStart()->getCharPositionInLine() },
-                            std::stod(scalar->FLOAT_CONSTANT()->getSymbol()->getText())
-                        ));
-                    }
-
-                    else if (scalar->IDENT())
-                    {
-                        attributes.push_back(Attribute::create(
-                            Token{ attribute->IDENT()->getSymbol()->getText(), filename, attribute->getStart()->getLine(), attribute->getStart()->getCharPositionInLine() },
-                            std::stod(scalar->IDENT()->getSymbol()->getText())
-                        ));
-                    }
-                }
-
-                else
-                {
-                    attributes.push_back(Attribute::create(
-                        Token{ attribute->IDENT()->getSymbol()->getText(), filename, attribute->getStart()->getLine(), attribute->getStart()->getCharPositionInLine() })
-                    );
-                }
-            }
-        }
+        attributes = parseAttributes(field->metadata(), filename);
 
         return Field::create(Token{name, filename, field->getStart()->getLine(), field->getStart()->getCharPositionInLine()}, type, isArray, arraySize, attributes);
     }
@@ -458,6 +407,71 @@ namespace Entdlr
         }
 
         return output;
+    }
+
+    std::vector<Attribute> Parser::parseAttributes(FlatBuffersParser::MetadataContext* metadata, const std::string& filename)
+    {
+        std::vector<Attribute> attributes;
+
+        // check for metadata
+        if (metadata && metadata->commasep_ident_with_opt_single_value() && metadata->commasep_ident_with_opt_single_value())
+        {
+            for (const auto& attribute : metadata->commasep_ident_with_opt_single_value()->ident_with_opt_single_value())
+            {
+                if (attribute->single_value() && attribute->single_value()->STRING_CONSTANT())
+                {
+                    attributes.push_back(Attribute::create(
+                        Token{ attribute->IDENT()->getSymbol()->getText(), filename, attribute->getStart()->getLine(), attribute->getStart()->getCharPositionInLine() },
+                        attribute->single_value()->STRING_CONSTANT()->getSymbol()->getText()
+                    ));
+                }
+
+                else if (attribute->single_value() && attribute->single_value()->scalar())
+                {
+                    const auto& scalar = attribute->single_value()->scalar();
+                    if (scalar->INTEGER_CONSTANT())
+                    {
+                        attributes.push_back(Attribute::create(
+                            Token{ attribute->IDENT()->getSymbol()->getText(), filename, attribute->getStart()->getLine(), attribute->getStart()->getCharPositionInLine() },
+                            std::stod(scalar->INTEGER_CONSTANT()->getSymbol()->getText())
+                        ));
+                    }
+
+                    else if (scalar->HEX_INTEGER_CONSTANT())
+                    {
+                        attributes.push_back(Attribute::create(
+                            Token{ attribute->IDENT()->getSymbol()->getText(), filename, attribute->getStart()->getLine(), attribute->getStart()->getCharPositionInLine() },
+                            std::stod(scalar->HEX_INTEGER_CONSTANT()->getSymbol()->getText())
+                        ));
+                    }
+
+                    else if (scalar->FLOAT_CONSTANT())
+                    {
+                        attributes.push_back(Attribute::create(
+                            Token{ attribute->IDENT()->getSymbol()->getText(), filename, attribute->getStart()->getLine(), attribute->getStart()->getCharPositionInLine() },
+                            std::stod(scalar->FLOAT_CONSTANT()->getSymbol()->getText())
+                        ));
+                    }
+
+                    else if (scalar->IDENT())
+                    {
+                        attributes.push_back(Attribute::create(
+                            Token{ attribute->IDENT()->getSymbol()->getText(), filename, attribute->getStart()->getLine(), attribute->getStart()->getCharPositionInLine() },
+                            std::stod(scalar->IDENT()->getSymbol()->getText())
+                        ));
+                    }
+                }
+
+                else
+                {
+                    attributes.push_back(Attribute::create(
+                        Token{ attribute->IDENT()->getSymbol()->getText(), filename, attribute->getStart()->getLine(), attribute->getStart()->getCharPositionInLine() })
+                    );
+                }
+            }
+        }
+
+        return attributes;
     }
 
     std::vector<Facility> Parser::parseFacilities(const std::vector<FlatBuffersParser::Facility_declContext*>& facilities, const std::string& filename)

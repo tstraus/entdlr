@@ -2,7 +2,7 @@ include "measurements.fbs";
 
 namespace grid;
 
-enum EntityForce : uint8
+enum EntityForce : uint8 (complicated)
 {
     Unknown,
     Friendly,
@@ -11,7 +11,7 @@ enum EntityForce : uint8
     Other = 10
 }
 
-struct DisEntityType
+struct DisEntityType (correlated, fanciness:6.23)
 {
     kind : uint8;
     domain : uint8;
@@ -25,7 +25,7 @@ struct DisEntityType
     static fromString(mut str: string) : DisEntityType;
 }
 
-union DisEntityTypeUnion
+union DisEntityTypeUnion (comment:"I like this one")
 {
     DisEntityType,
     [uint32 : 2]
@@ -38,7 +38,7 @@ struct Position
     z : length;
 }
 
-struct EntityState
+struct EntityState (correlated)
 {
     entityID : uint64; // the entity in the event this message is related to
     timestamp : float64; // the time this data was current

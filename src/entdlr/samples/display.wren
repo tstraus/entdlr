@@ -8,7 +8,23 @@ for (nKey in c.namespaces.keys) {
 
     for (eKey in n.enums.keys) {
         var e = n.enums[eKey]
-        System.print("    " + e.name + " : enum (" + e.type + ")")
+        System.write("    " + e.name + " : enum (" + e.type + ")")
+
+        if (e.attributes.count > 0) {
+            System.write(" {")
+            for (atKey in e.attributes.keys) {
+                var attr = e.attributes[atKey]
+                System.write(" " + attr.name)
+                if (attr.isString) {
+                    System.write(":" + attr.string)
+                }
+                if (attr.isNumber) {
+                    System.write(":" + attr.number.toString)
+                }
+            }
+            System.write(" }")
+        }
+        System.print()
 
         for (vKey in e.values.keys) {
             var v = e.values[vKey]
@@ -18,7 +34,23 @@ for (nKey in c.namespaces.keys) {
 
     for (uKey in n.unions.keys) {
         var u = n.unions[uKey]
-        System.print("    " + u.name + " : union")
+        System.write("    " + u.name + " : union")
+
+        if (u.attributes.count > 0) {
+            System.write(" {")
+            for (atKey in u.attributes.keys) {
+                var attr = u.attributes[atKey]
+                System.write(" " + attr.name)
+                if (attr.isString) {
+                    System.write(":" + attr.string)
+                }
+                if (attr.isNumber) {
+                    System.write(":" + attr.number.toString)
+                }
+            }
+            System.write(" }")
+        }
+        System.print()
 
         for (tKey in u.types.keys) {
             var t = u.types[tKey]
@@ -36,7 +68,23 @@ for (nKey in c.namespaces.keys) {
 
     for (sKey in n.structs.keys) {
         var s = n.structs[sKey]
-        System.print("    " + s.name + " : struct")
+        System.write("    " + s.name + " : struct")
+
+        if (s.attributes.count > 0) {
+            System.write(" {")
+            for (atKey in s.attributes.keys) {
+                var attr = s.attributes[atKey]
+                System.write(" " + attr.name)
+                if (attr.isString) {
+                    System.write(":" + attr.string)
+                }
+                if (attr.isNumber) {
+                    System.write(":" + attr.number.toString)
+                }
+            }
+            System.write(" }")
+        }
+        System.print()
 
         for (fKey in s.fields.keys) {
             var f = s.fields[fKey]

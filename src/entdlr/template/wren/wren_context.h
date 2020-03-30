@@ -17,12 +17,15 @@ class Context {
     // get sizes
     foreign static numNamespaces()
     foreign static numEnums(namespace)
+    foreign static numEnumAttributes(namespace, enum)
     foreign static numEnumValues(namespace, enum)
     foreign static numUnions(namespace)
+    foreign static numUnionAttributes(namespace, union)
     foreign static numUnionTypes(namespace, union)
     foreign static numStructs(namespace)
+    foreign static numStructAttributes(namespace, struct)
     foreign static numFields(namespace, struct)
-    foreign static numAttributes(namespace, struct, field)
+    foreign static numFieldAttributes(namespace, struct, field)
     foreign static numStructMethods(namespace, struct)
     foreign static numStructMethodParameters(namespace, struct, method)
     foreign static numFacilities(namespace)
@@ -35,12 +38,22 @@ class Context {
     // Enum
     foreign static getEnumName(namespace, index)
     foreign static getEnumType(namespace, index)
+    foreign static getEnumAttributeName(namespace, enum, index)
+    foreign static getEnumAttributeIsString(namespace, enum, index)
+    foreign static getEnumAttributeString(namespace, enum, index)
+    foreign static getEnumAttributeIsNumber(namespace, enum, index)
+    foreign static getEnumAttributeNumber(namespace, enum, index)
     // EnumValue
     foreign static getEnumValueName(namespace, enum, index)
     foreign static getEnumValueValue(namespace, enum, index)
 
     // Union
     foreign static getUnionName(namespace, index)
+    foreign static getUnionAttributeName(namespace, union, index)
+    foreign static getUnionAttributeIsString(namespace, union, index)
+    foreign static getUnionAttributeString(namespace, union, index)
+    foreign static getUnionAttributeIsNumber(namespace, union, index)
+    foreign static getUnionAttributeNumber(namespace, union, index)
     // UnionType
     foreign static getUnionTypeName(namespace, union, index)
     foreign static getUnionTypeIsArray(namespace, union, index)
@@ -48,17 +61,22 @@ class Context {
 
     // Struct
     foreign static getStructName(namespace, index)
+    foreign static getStructAttributeName(namespace, struct, index)
+    foreign static getStructAttributeIsString(namespace, struct, index)
+    foreign static getStructAttributeString(namespace, struct, index)
+    foreign static getStructAttributeIsNumber(namespace, struct, index)
+    foreign static getStructAttributeNumber(namespace, struct, index)
     // Field
     foreign static getFieldName(namespace, struct, index)
     foreign static getFieldType(namespace, struct, index)
     foreign static getFieldIsArray(namespace, struct, index)
     foreign static getFieldArraySize(namespace, struct, index)
     // Attribute
-    foreign static getAttributeName(namespace, struct, field, index)
-    foreign static getAttributeIsString(namespace, struct, field, index)
-    foreign static getAttributeString(namespace, struct, field, index)
-    foreign static getAttributeIsNumber(namespace, struct, field, index)
-    foreign static getAttributeNumber(namespace, struct, field, index)
+    foreign static getFieldAttributeName(namespace, struct, field, index)
+    foreign static getFieldAttributeIsString(namespace, struct, field, index)
+    foreign static getFieldAttributeString(namespace, struct, field, index)
+    foreign static getFieldAttributeIsNumber(namespace, struct, field, index)
+    foreign static getFieldAttributeNumber(namespace, struct, field, index)
     // Method
     foreign static getStructMethodName(namespace, struct, index)
     foreign static getStructMethodReturnType(namespace, struct, method)
@@ -120,11 +138,18 @@ class Enum {
     name { _name }
     type { _type }
     values { _values }
+    attributes { _attributes }
 
     construct new(namespace, enum) {
         _name = enum
         _values = {}
         _type = Context.getEnumType(namespace, enum)
+        _attributes = {}
+
+        for (i in 0...Context.numEnumAttributes(namespace, enum)) {
+            var a = Attribute.newEnumAttribute(namespace, enum, i)
+            _attributes[a.name] = a
+        }
 
         for (i in 0...Context.numEnumValues(namespace, enum)) {
             var v = EnumValue.new(namespace, enum, i)
@@ -146,10 +171,17 @@ class EnumValue {
 class Union {
     name { _name }
     types { _types }
+    attributes { _attributes }
 
     construct new(namespace, union) {
         _name = union
         _types = {}
+        _attributes = {}
+
+        for (i in 0...Context.numUnionAttributes(namespace, union)) {
+            var a = Attribute.newUnionAttribute(namespace, union, i)
+            _attributes[a.name] = a
+        }
         
         for (i in 0...Context.numUnionTypes(namespace, union)) {
             var u = UnionType.new(namespace, union, i)
@@ -174,11 +206,18 @@ class Struct {
     name { _name }
     fields { _fields }
     methods { _methods }
+    attributes { _attributes }
 
     construct new(namespace, struct) {
         _name = struct
         _fields = {}
         _methods = {}
+        _attributes = {}
+
+        for (i in 0...Context.numStructAttributes(namespace, struct)) {
+            var a = Attribute.newStructAttribute(namespace, struct, i)
+            _attributes[a.name] = a
+        }
 
         for (i in 0...Context.numFields(namespace, struct)) {
             var f = Field.new(namespace, struct, i)
@@ -206,8 +245,8 @@ class Field {
         _arraySize = Context.getFieldArraySize(namespace, struct, index)
         _attributes = {}
 
-        for (i in 0...Context.numAttributes(namespace, struct, _name)) {
-            var a = Attribute.new(namespace, struct, _name, i)
+        for (i in 0...Context.numFieldAttributes(namespace, struct, _name)) {
+            var a = Attribute.newFieldAttribute(namespace, struct, _name, i)
             _attributes[a.name] = a
         }
     }
@@ -220,12 +259,36 @@ class Attribute {
     isNumber { _isNumber }
     number { _number }
 
-    construct new(namespace, struct, field, index) {
-        _name = Context.getAttributeName(namespace, struct, field, index)
-        _isString = Context.getAttributeIsString(namespace, struct, field, index)
-        _string = Context.getAttributeString(namespace, struct, field, index)
-        _isNumber = Context.getAttributeIsNumber(namespace, struct, field, index)
-        _number = Context.getAttributeNumber(namespace, struct, field, index)
+    construct newEnumAttribute(namespace, enum, index) {
+        _name = Context.getEnumAttributeName(namespace, enum, index)
+        _isString = Context.getEnumAttributeIsString(namespace, enum, index)
+        _string = Context.getEnumAttributeString(namespace, enum, index)
+        _isNumber = Context.getEnumAttributeIsNumber(namespace, enum, index)
+        _number = Context.getEnumAttributeNumber(namespace, enum, index)
+    }
+
+    construct newUnionAttribute(namespace, union, index) {
+        _name = Context.getUnionAttributeName(namespace, union, index)
+        _isString = Context.getUnionAttributeIsString(namespace, union, index)
+        _string = Context.getUnionAttributeString(namespace, union, index)
+        _isNumber = Context.getUnionAttributeIsNumber(namespace, union, index)
+        _number = Context.getUnionAttributeNumber(namespace, union, index)
+    }
+
+    construct newStructAttribute(namespace, struct, index) {
+        _name = Context.getStructAttributeName(namespace, struct, index)
+        _isString = Context.getStructAttributeIsString(namespace, struct, index)
+        _string = Context.getStructAttributeString(namespace, struct, index)
+        _isNumber = Context.getStructAttributeIsNumber(namespace, struct, index)
+        _number = Context.getStructAttributeNumber(namespace, struct, index)
+    }
+
+    construct newFieldAttribute(namespace, struct, field, index) {
+        _name = Context.getFieldAttributeName(namespace, struct, field, index)
+        _isString = Context.getFieldAttributeIsString(namespace, struct, field, index)
+        _string = Context.getFieldAttributeString(namespace, struct, field, index)
+        _isNumber = Context.getFieldAttributeIsNumber(namespace, struct, field, index)
+        _number = Context.getFieldAttributeNumber(namespace, struct, field, index)
     }
 }
 

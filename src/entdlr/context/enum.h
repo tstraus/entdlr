@@ -7,6 +7,7 @@
 #include <optional>
 
 #include "token.h"
+#include "attribute.h"
 
 namespace Entdlr
 {
@@ -23,8 +24,9 @@ namespace Entdlr
     public:
         std::string type;
         std::vector<EnumValue> values;
+        std::vector<Attribute> attributes;
 
-        static Enum create(const Token& token, const std::string& type = "int32");
+        static Enum create(const Token& token, const std::string& type = "int32", const std::vector<Attribute>& attributes = {});
         void add(const Token& token, const std::optional<int64_t> value);
 
     private:

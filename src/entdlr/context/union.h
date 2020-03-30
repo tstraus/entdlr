@@ -7,6 +7,7 @@
 #include <optional>
 
 #include "token.h"
+#include "attribute.h"
 
 namespace Entdlr
 {
@@ -23,8 +24,9 @@ namespace Entdlr
     {
     public:
         std::vector<UnionType> types;
+        std::vector<Attribute> attributes;
 
-        static Union create(const Token& token);
+        static Union create(const Token& token, const std::vector<Attribute>& attributes = {});
         void add(const UnionType& type);
     };
 };

@@ -15,7 +15,7 @@ TEST_SUITE("Parsing")
         SUBCASE("Struct")
         {
             std::string input = R"(
-                struct Position
+                struct Position (correlated)
                 {
                     x : float64;
                     y : float64;
@@ -33,6 +33,12 @@ TEST_SUITE("Parsing")
             const auto& s = n.structs[0];
             CHECK(s.name == "Position");
             REQUIRE(s.fields.size() == 3);
+            REQUIRE(s.attributes.size() == 1);
+
+            const auto& attributes = s.attributes;
+            CHECK(attributes[0].name == "correlated");
+            CHECK(attributes[0].isNumber == false);
+            CHECK(attributes[0].isString == false);
 
             const auto& fields = s.fields;
             CHECK(fields[0].name == "x");
