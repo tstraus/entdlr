@@ -231,6 +231,18 @@ namespace Entdlr
         wrenSetSlotString(vm, 0, output.c_str());
     }
 
+    void ContextHelper::getEnumComment(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _enum = wrenGetSlotString(vm, 2);
+
+        std::string output = "";
+        if (auto e = getEnum(_namespace, _enum))
+            output = e->comment;
+
+        wrenSetSlotString(vm, 0, output.c_str());
+    }
+
     void ContextHelper::getEnumAttributeName(WrenVM* vm)
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
@@ -330,6 +342,18 @@ namespace Entdlr
         std::string output = "";
         if (auto u = getUnion(_namespace, index))
             output = u->name;
+
+        wrenSetSlotString(vm, 0, output.c_str());
+    }
+
+    void ContextHelper::getUnionComment(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _union = wrenGetSlotString(vm, 2);
+
+        std::string output = "";
+        if (auto u = getUnion(_namespace, _union))
+            output = u->comment;
 
         wrenSetSlotString(vm, 0, output.c_str());
     }
@@ -446,6 +470,18 @@ namespace Entdlr
         std::string output = "";
         if (auto s = getStruct(_namespace, index))
             output = s->name;
+
+        wrenSetSlotString(vm, 0, output.c_str());
+    }
+
+    void ContextHelper::getStructComment(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _struct = wrenGetSlotString(vm, 2);
+
+        std::string output = "";
+        if (auto s = getStruct(_namespace, _struct))
+            output = s->comment;
 
         wrenSetSlotString(vm, 0, output.c_str());
     }
@@ -567,6 +603,19 @@ namespace Entdlr
         wrenSetSlotDouble(vm, 0, output);
     }
 
+    void ContextHelper::getFieldComment(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _struct = wrenGetSlotString(vm, 2);
+        size_t index = wrenGetSlotDouble(vm, 3);
+
+        std::string output = "";
+        if (auto f = getField(_namespace, _struct, index))
+            output = f->comment;
+
+        wrenSetSlotString(vm, 0, output.c_str());
+    }
+
     void ContextHelper::getFieldAttributeName(WrenVM* vm)
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
@@ -676,6 +725,19 @@ namespace Entdlr
         wrenSetSlotBool(vm, 0, output);
     }
 
+    void ContextHelper::getStructMethodComment(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _struct = wrenGetSlotString(vm, 2);
+        std::string _method = wrenGetSlotString(vm, 3);
+
+        std::string output = "";
+        if (auto m = getStructMethod(_namespace, _struct, _method))
+            output = m->comment;
+
+        wrenSetSlotString(vm, 0, output.c_str());
+    }
+
     void ContextHelper::getStructMethodParameterName(WrenVM* vm)
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
@@ -730,6 +792,18 @@ namespace Entdlr
         wrenSetSlotString(vm, 0, output.c_str());
     }
 
+    void ContextHelper::getFacilityComment(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _facility = wrenGetSlotString(vm, 2);
+
+        std::string output = "";
+        if (auto f = getFacility(_namespace, _facility))
+            output = f->comment;
+
+        wrenSetSlotString(vm, 0, output.c_str());
+    }
+
     void ContextHelper::getFacilityMethodName(WrenVM* vm)
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
@@ -767,6 +841,19 @@ namespace Entdlr
             output = m->isStatic;
 
         wrenSetSlotBool(vm, 0, output);
+    }
+
+    void ContextHelper::getFacilityMethodComment(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _facility = wrenGetSlotString(vm, 2);
+        std::string _method = wrenGetSlotString(vm, 3);
+
+        std::string output = "";
+        if (auto m = getFacilityMethod(_namespace, _facility, _method))
+            output = m->comment;
+
+        wrenSetSlotString(vm, 0, output.c_str());
     }
 
     void ContextHelper::getFacilityMethodParameterName(WrenVM* vm)

@@ -37,7 +37,8 @@ class Context {
 
     // Enum
     foreign static getEnumName(namespace, index)
-    foreign static getEnumType(namespace, index)
+    foreign static getEnumType(namespace, enum)
+    foreign static getEnumComment(namespace, enum)
     foreign static getEnumAttributeName(namespace, enum, index)
     foreign static getEnumAttributeIsString(namespace, enum, index)
     foreign static getEnumAttributeString(namespace, enum, index)
@@ -49,6 +50,7 @@ class Context {
 
     // Union
     foreign static getUnionName(namespace, index)
+    foreign static getUnionComment(namespace, union)
     foreign static getUnionAttributeName(namespace, union, index)
     foreign static getUnionAttributeIsString(namespace, union, index)
     foreign static getUnionAttributeString(namespace, union, index)
@@ -61,6 +63,7 @@ class Context {
 
     // Struct
     foreign static getStructName(namespace, index)
+    foreign static getStructComment(namespace, struct)
     foreign static getStructAttributeName(namespace, struct, index)
     foreign static getStructAttributeIsString(namespace, struct, index)
     foreign static getStructAttributeString(namespace, struct, index)
@@ -71,6 +74,7 @@ class Context {
     foreign static getFieldType(namespace, struct, index)
     foreign static getFieldIsArray(namespace, struct, index)
     foreign static getFieldArraySize(namespace, struct, index)
+    foreign static getFieldComment(namespace, struct, index)
     // Attribute
     foreign static getFieldAttributeName(namespace, struct, field, index)
     foreign static getFieldAttributeIsString(namespace, struct, field, index)
@@ -81,6 +85,7 @@ class Context {
     foreign static getStructMethodName(namespace, struct, index)
     foreign static getStructMethodReturnType(namespace, struct, method)
     foreign static getStructMethodIsStatic(namespace, struct, method)
+    foreign static getStructMethodComment(namespace, struct, method)
     // Parameter
     foreign static getStructMethodParameterName(namespace, struct, method, index)
     foreign static getStructMethodParameterType(namespace, struct, method, index)
@@ -88,10 +93,12 @@ class Context {
 
     // Facility
     foreign static getFacilityName(namespace, index)
+    foreign static getFacilityComment(namespace, facility)
     // Method
     foreign static getFacilityMethodName(namespace, facility, index)
     foreign static getFacilityMethodReturnType(namespace, facility, method)
     foreign static getFacilityMethodIsStatic(namespace, facility, method)
+    foreign static getFacilityMethodComment(namespace, facility, method)
     // Parameter
     foreign static getFacilityMethodParameterName(namespace, facility, method, index)
     foreign static getFacilityMethodParameterType(namespace, facility, method, index)
@@ -139,11 +146,13 @@ class Enum {
     type { _type }
     values { _values }
     attributes { _attributes }
+    comment { _comment }
 
     construct new(namespace, enum) {
         _name = enum
         _values = {}
         _type = Context.getEnumType(namespace, enum)
+        _comment = Context.getEnumComment(namespace, enum)
         _attributes = {}
 
         for (i in 0...Context.numEnumAttributes(namespace, enum)) {
@@ -172,9 +181,11 @@ class Union {
     name { _name }
     types { _types }
     attributes { _attributes }
+    comment { _comment }
 
     construct new(namespace, union) {
         _name = union
+        _comment = Context.getUnionComment(namespace, union)
         _types = {}
         _attributes = {}
 
@@ -207,9 +218,11 @@ class Struct {
     fields { _fields }
     methods { _methods }
     attributes { _attributes }
+    comment { _comment }
 
     construct new(namespace, struct) {
         _name = struct
+        _comment = Context.getStructComment(namespace, struct)
         _fields = {}
         _methods = {}
         _attributes = {}
@@ -237,12 +250,14 @@ class Field {
     isArray { _isArray }
     arraySize { _arraySize }
     attributes { _attributes }
+    comment { _comment }
 
     construct new(namespace, struct, index) {
         _name = Context.getFieldName(namespace, struct, index)
         _type = Context.getFieldType(namespace, struct, index)
         _isArray = Context.getFieldIsArray(namespace, struct, index)
         _arraySize = Context.getFieldArraySize(namespace, struct, index)
+        _comment = Context.getFieldComment(namespace, struct, index)
         _attributes = {}
 
         for (i in 0...Context.numFieldAttributes(namespace, struct, _name)) {
@@ -297,11 +312,13 @@ class Method {
     returnType { _returnType }
     parameters { _parameters }
     isStatic { _isStatic }
+    comment { _comment }
 
     construct newStructMethod(namespace, struct, method) {
         _name = method
         _returnType = Context.getStructMethodReturnType(namespace, struct, method)
         _isStatic = Context.getStructMethodIsStatic(namespace, struct, method)
+        _comment = Context.getStructMethodComment(namespace, struct, method)
         _parameters = {}
 
         for (i in 0...Context.numStructMethodParameters(namespace, struct, method)) {
@@ -314,6 +331,7 @@ class Method {
         _name = method
         _returnType = Context.getFacilityMethodReturnType(namespace, facility, method)
         _isStatic = Context.getFacilityMethodIsStatic(namespace, facility, method)
+        _comment = Context.getFacilityMethodComment(namespace, facility, method)
         _parameters = {}
 
         for (i in 0...Context.numFacilityMethodParameters(namespace, facility, method)) {
@@ -344,9 +362,11 @@ class Parameter {
 class Facility {
     name { _name }
     methods { _methods }
+    comment { _comment }
 
     construct new(namespace, facility) {
         _name = facility
+        _comment = Context.getFacilityComment(namespace, facility)
         _methods = {}
 
         for (i in 0...Context.numFacilityMethods(namespace, facility)) {

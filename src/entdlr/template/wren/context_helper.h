@@ -38,6 +38,7 @@ namespace Entdlr
         // Enum
         static void getEnumName(WrenVM* vm);
         static void getEnumType(WrenVM* vm);
+        static void getEnumComment(WrenVM* vm);
         static void getEnumAttributeName(WrenVM* vm);
         static void getEnumAttributeIsString(WrenVM* vm);
         static void getEnumAttributeString(WrenVM* vm);
@@ -49,6 +50,7 @@ namespace Entdlr
 
         // Union
         static void getUnionName(WrenVM* vm);
+        static void getUnionComment(WrenVM* vm);
         static void getUnionAttributeName(WrenVM* vm);
         static void getUnionAttributeIsString(WrenVM* vm);
         static void getUnionAttributeString(WrenVM* vm);
@@ -61,6 +63,7 @@ namespace Entdlr
 
         // Struct
         static void getStructName(WrenVM* vm);
+        static void getStructComment(WrenVM* vm);
         static void getStructAttributeName(WrenVM* vm);
         static void getStructAttributeIsString(WrenVM* vm);
         static void getStructAttributeString(WrenVM* vm);
@@ -71,6 +74,7 @@ namespace Entdlr
         static void getFieldType(WrenVM* vm);
         static void getFieldIsArray(WrenVM* vm);
         static void getFieldArraySize(WrenVM* vm);
+        static void getFieldComment(WrenVM* vm);
         // Attribute
         static void getFieldAttributeName(WrenVM* vm);
         static void getFieldAttributeIsString(WrenVM* vm);
@@ -81,6 +85,7 @@ namespace Entdlr
         static void getStructMethodName(WrenVM* vm);
         static void getStructMethodReturnType(WrenVM* vm);
         static void getStructMethodIsStatic(WrenVM* vm);
+        static void getStructMethodComment(WrenVM* vm);
         // Parameter
         static void getStructMethodParameterName(WrenVM* vm);
         static void getStructMethodParameterType(WrenVM* vm);
@@ -88,10 +93,12 @@ namespace Entdlr
 
         // Facility
         static void getFacilityName(WrenVM* vm);
+        static void getFacilityComment(WrenVM* vm);
         // Method
         static void getFacilityMethodName(WrenVM* vm);
         static void getFacilityMethodReturnType(WrenVM* vm);
         static void getFacilityMethodIsStatic(WrenVM* vm);
+        static void getFacilityMethodComment(WrenVM* vm);
         // Parameter
         static void getFacilityMethodParameterName(WrenVM* vm);
         static void getFacilityMethodParameterType(WrenVM* vm);

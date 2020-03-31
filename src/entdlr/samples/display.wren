@@ -8,6 +8,11 @@ for (nKey in c.namespaces.keys) {
 
     for (eKey in n.enums.keys) {
         var e = n.enums[eKey]
+
+        if (e.comment.count > 0) {
+            System.print("    /// " + e.comment)
+        }
+
         System.write("    " + e.name + " : enum (" + e.type + ")")
 
         if (e.attributes.count > 0) {
@@ -34,6 +39,11 @@ for (nKey in c.namespaces.keys) {
 
     for (uKey in n.unions.keys) {
         var u = n.unions[uKey]
+
+        if (u.comment.count > 0) {
+            System.print("    /// " + u.comment)
+        }
+
         System.write("    " + u.name + " : union")
 
         if (u.attributes.count > 0) {
@@ -68,6 +78,11 @@ for (nKey in c.namespaces.keys) {
 
     for (sKey in n.structs.keys) {
         var s = n.structs[sKey]
+
+        if (s.comment.count > 0) {
+            System.print("    /// " + s.comment)
+        }
+
         System.write("    " + s.name + " : struct")
 
         if (s.attributes.count > 0) {
@@ -96,6 +111,9 @@ for (nKey in c.namespaces.keys) {
                 }
                 System.write("]")
             }
+            if (f.comment.count > 0) {
+                System.write(" /// " + f.comment)
+            }
             System.print()
 
             for (aKey in f.attributes.keys) {
@@ -117,7 +135,11 @@ for (nKey in c.namespaces.keys) {
             if (m.isStatic) {
                 System.write("static ")
             }
-            System.print(m.name + " : " + m.returnType)
+            System.write(m.name + " : " + m.returnType)
+            if (m.comment.count > 0) {
+                System.write(" /// " + m.comment)
+            }
+            System.print()
 
             for (pKey in m.parameters.keys) {
                 var p = m.parameters[pKey]
@@ -132,6 +154,11 @@ for (nKey in c.namespaces.keys) {
 
     for (fKey in n.facilities.keys) {
         var f = n.facilities[fKey]
+
+        if (f.comment.count > 0) {
+            System.print("    /// " + f.comment)
+        }
+
         System.print("    " + f.name + " : facility")
 
         for (mKey in f.methods.keys) {

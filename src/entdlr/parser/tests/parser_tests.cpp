@@ -15,10 +15,11 @@ TEST_SUITE("Parsing")
         SUBCASE("Struct")
         {
             std::string input = R"(
+                /// struct comment
                 struct Position (correlated)
                 {
-                    x : float64;
-                    y : float64;
+                    x : float64; /// field comment
+                    y : float64; // ignored comment
                     z : float64;
                 }
             )";
@@ -32,6 +33,7 @@ TEST_SUITE("Parsing")
 
             const auto& s = n.structs[0];
             CHECK(s.name == "Position");
+            CHECK(s.comment == "struct comment");
             REQUIRE(s.fields.size() == 3);
             REQUIRE(s.attributes.size() == 1);
 
@@ -43,15 +45,19 @@ TEST_SUITE("Parsing")
             const auto& fields = s.fields;
             CHECK(fields[0].name == "x");
             CHECK(fields[0].type == "float64");
+            CHECK(fields[0].comment == "field comment");
             CHECK(fields[1].name == "y");
             CHECK(fields[1].type == "float64");
+            CHECK(fields[1].comment == "");
             CHECK(fields[2].name == "z");
             CHECK(fields[2].type == "float64");
+            CHECK(fields[2].comment == "");
         }
 
         SUBCASE("Enum")
         {
             std::string input = R"(
+                /// enum comment
                 enum Force : uint8
                 {
                     Unknown,
@@ -71,6 +77,7 @@ TEST_SUITE("Parsing")
             const auto& e = n.enums[0];
             CHECK(e.name == "Force");
             CHECK(e.type == "uint8");
+            CHECK(e.comment == "enum comment");
             REQUIRE(e.values.size() == 4);
 
             const auto& values = e.values;
@@ -87,6 +94,7 @@ TEST_SUITE("Parsing")
         SUBCASE("Unions")
         {
             std::string input = R"(
+                /// union comment
                 union EntityIdUnion
                 {
                     uint64,
@@ -103,6 +111,7 @@ TEST_SUITE("Parsing")
 
             const auto& u = n.unions[0];
             CHECK(u.name == "EntityIdUnion");
+            CHECK(u.comment == "union comment");
             REQUIRE(u.types.size() == 2);
 
             const auto& types = u.types;
@@ -267,7 +276,7 @@ TEST_SUITE("Parsing")
                     y : float64;
                     z : float64;
 
-                    normalize();
+                    normalize(); /// method comment
                     valid() : bool;
                     azTo(otherPos: Position) : angle;
                     elTo(mut otherPos: Position) : angle;
@@ -287,6 +296,7 @@ TEST_SUITE("Parsing")
             CHECK(m1.returnType == "void");
             CHECK(m1.isStatic == false);
             CHECK(m1.parameters.size() == 0);
+            CHECK(m1.comment == "method comment");
 
             const auto& m2 = s.methods[1];
             CHECK(m2.name == "valid");
@@ -353,12 +363,13 @@ TEST_SUITE("Parsing")
         SUBCASE("Facilities")
         {
             std::string input = R"(
+                /// facility comment
                 facility Time
                 {
                     now_a();
                     now_b(start: uint64);
                     now_0() : time;
-                    now_1(mut start: uint64) : time;
+                    now_1(mut start: uint64) : time; /// method comment
                     now_2(start: int32, mut end: uint16) : time;
                     static create(lat: angle, lon: angle, alt: length) : Position;
                 }
@@ -368,6 +379,7 @@ TEST_SUITE("Parsing")
             const auto& f = context.namespaces[0].facilities[0];
 
             CHECK(f.name == "Time");
+            CHECK(f.comment == "facility comment");
             REQUIRE(f.methods.size() == 6);
 
             const auto& ma = f.methods[0];
@@ -395,6 +407,7 @@ TEST_SUITE("Parsing")
             CHECK(m1.parameters[0].name == "start");
             CHECK(m1.parameters[0].type == "uint64");
             CHECK(m1.parameters[0].constant == false);
+            CHECK(m1.comment == "method comment");
 
             const auto& m2 = f.methods[4];
             CHECK(m2.name == "now_2");
@@ -421,7 +434,6 @@ TEST_SUITE("Parsing")
             CHECK(m6.parameters[2].name == "alt");
             CHECK(m6.parameters[2].type == "length");
             CHECK(m6.parameters[2].constant == true);
-
         }
     }
 }
