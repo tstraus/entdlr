@@ -15,7 +15,7 @@ namespace Entdlr
         return out;
     }
 
-    Method Method::create(const Token& token, const std::string& returnType, const bool& isStatic)
+    Method Method::create(const Token& token, const std::string& returnType, const bool& isStatic, const std::string& comment)
     {
         Method out;
         out.filename = token.filename;
@@ -24,6 +24,7 @@ namespace Entdlr
         out.name = token.name;
         out.returnType = returnType;
         out.isStatic = isStatic;
+        out.comment = comment;
 
         return out;
     }

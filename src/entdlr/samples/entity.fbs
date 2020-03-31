@@ -41,6 +41,7 @@ struct Position
     z : length;
 }
 
+/// represents an entity in the simulation
 struct EntityState (correlated)
 {
     entityID : uint64; /// the entity in the event this message is related to

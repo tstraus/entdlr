@@ -13,8 +13,9 @@ namespace Entdlr
     {
     public:
         std::vector<Method> methods;
+        std::string comment;
 
-        static Facility create(const Token& token);
+        static Facility create(const Token& token, const std::string& comment = "");
         void add(const Method& method);
     };
 };

@@ -4,6 +4,7 @@
 namespace {{namespace.name}}
 {
 ## for enum in namespace.enums
+    /// {{enum.comment}}
     enum class {{enum.name}} : {{enum.type}}
     {
 ## for e in enum.values
@@ -19,6 +20,7 @@ namespace {{namespace.name}}
 ## endfor
 
 ## for union in namespace.unions
+    /// {{union.comment}}
     union {{union.name}}
     {
 ## for t in union.types
@@ -43,19 +45,21 @@ namespace {{namespace.name}}
 ## endfor
 
 ## for struct in namespace.structs
+    /// {{struct.comment}}
     class {{struct.name}}
     {
     public:
 ## for field in struct.fields
 ## if field.isArray == false
-        {{field.type}} {{field.name}};
+        {{field.type}} {{field.name}}; /// {{field.comment}}
 ## endif
 ## if field.isArray == true and field.arraySize > 0
-        {{field.type}} {{field.name}}[{{field.arraySize}}];
+        {{field.type}} {{field.name}}[{{field.arraySize}}]; /// {{field.comment}}
 ## endif
 ## endfor
 
 ## for method in struct.methods
+        /// {{method.comment}}
 ## if method.isStatic == true
         static
 ## endif
@@ -86,10 +90,12 @@ namespace {{namespace.name}}
 ## endfor
 
 ## for facility in namespace.facilities
+    /// {{facility.comment}}
     class {{facility.name}} : public Facility
     {
     public:
 ## for method in facility.methods
+        /// {{method.comment}}
 ## if method.isStatic == true
         static
 ## endif

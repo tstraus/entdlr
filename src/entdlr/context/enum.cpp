@@ -18,7 +18,7 @@ namespace Entdlr
         return out;
     }
 
-    Enum Enum::create(const Token& token, const std::string& type, const std::vector<Attribute>& attributes)
+    Enum Enum::create(const Token& token, const std::string& type, const std::vector<Attribute>& attributes, const std::string& comment)
     {
         Enum out;
         out.filename = token.filename;
@@ -28,6 +28,7 @@ namespace Entdlr
         out.nextValue = 0;
         out.type = type;
         out.attributes = attributes;
+        out.comment = comment;
 
         return out;
     }

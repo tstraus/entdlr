@@ -2,7 +2,7 @@
 
 namespace Entdlr
 {
-    Field Field::create(const Token& token, const std::string& type, const bool& isArray, const uint32_t& arraySize, const std::vector<Attribute>& attributes)
+    Field Field::create(const Token& token, const std::string& type, const bool& isArray, const uint32_t& arraySize, const std::vector<Attribute>& attributes, const std::string& comment)
     {
         Field out;
         out.filename = token.filename;
@@ -13,11 +13,12 @@ namespace Entdlr
         out.isArray = isArray;
         out.arraySize = arraySize;
         out.attributes = attributes;
+        out.comment = comment;
 
         return out;
     }
 
-    Struct Struct::create(const Token& token, const std::vector<Attribute>& attributes)
+    Struct Struct::create(const Token& token, const std::vector<Attribute>& attributes, const std::string& comment)
     {
         Struct out;
         out.filename = token.filename;
@@ -25,6 +26,7 @@ namespace Entdlr
         out.column = token.column;
         out.name = token.name;
         out.attributes = attributes;
+        out.comment = comment;
 
         return out;
     }

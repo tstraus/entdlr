@@ -43,7 +43,8 @@ namespace Entdlr {
                 {"column",     s.column},
                 {"fields",     s.fields},
                 {"methods",    s.methods},
-                {"attributes", s.attributes}
+                {"attributes", s.attributes},
+                {"comment",    s.comment}
         };
     }
 
@@ -55,6 +56,7 @@ namespace Entdlr {
         j.at("fields").get_to(s.fields);
         j.at("methods").get_to(s.methods);
         j.at("attributes").get_to(s.attributes);
+        j.at("comment").get_to(s.comment);
     }
 
     void to_json(json& j, const Field& f) {
@@ -66,7 +68,8 @@ namespace Entdlr {
                 {"type",       f.type},
                 {"isArray",    f.isArray},
                 {"arraySize",  f.arraySize},
-                {"attributes", f.attributes}
+                {"attributes", f.attributes},
+                {"comment",    f.comment}
         };
     }
 
@@ -79,6 +82,7 @@ namespace Entdlr {
         j.at("isArray").get_to(f.isArray);
         j.at("arraySize").get_to(f.arraySize);
         j.at("attributes").get_to(f.attributes);
+        j.at("comment").get_to(f.comment);
     }
 
     void to_json(json& j, const Attribute& a) {
@@ -112,7 +116,8 @@ namespace Entdlr {
                 {"line",       u.line},
                 {"column",     u.column},
                 {"types",      u.types},
-                {"attributes", u.attributes}
+                {"attributes", u.attributes},
+                {"comment",    u.comment}
         };
     }
 
@@ -123,6 +128,7 @@ namespace Entdlr {
         j.at("column").get_to(u.column);
         j.at("types").get_to(u.types);
         j.at("attributes").get_to(u.attributes);
+        j.at("comment").get_to(u.comment);
     }
 
     void to_json(json& j, const UnionType& t) {
@@ -153,7 +159,8 @@ namespace Entdlr {
                 {"line",         e.line},
                 {"column",       e.column},
                 {"values",       e.values},
-                {"attributes",   e.attributes}
+                {"attributes",   e.attributes},
+                {"comment",      e.comment}
         };
     }
 
@@ -165,6 +172,7 @@ namespace Entdlr {
         j.at("column").get_to(e.column);
         j.at("values").get_to(e.values);
         j.at("attributes").get_to(e.attributes);
+        j.at("comment").get_to(e.comment);
     }
 
     void to_json(json& j, const EnumValue& e) {
@@ -192,7 +200,8 @@ namespace Entdlr {
                 {"filename", f.filename},
                 {"line",     f.line},
                 {"column",   f.column},
-                {"methods",  f.methods}
+                {"methods",  f.methods},
+                {"comment",  f.comment}
         };
     }
 
@@ -203,6 +212,7 @@ namespace Entdlr {
         j.at("line").get_to(f.line);
         j.at("column").get_to(f.column);
         j.at("methods").get_to(f.methods);
+        j.at("comment").get_to(f.comment);
     }
 
     void to_json(json& j, const Method& m)
@@ -214,7 +224,8 @@ namespace Entdlr {
                 {"column",     m.column},
                 {"returnType", m.returnType},
                 {"isStatic",   m.isStatic},
-                {"parameters", m.parameters}
+                {"parameters", m.parameters},
+                {"comment",    m.comment}
         };
     }
 
@@ -227,6 +238,7 @@ namespace Entdlr {
         j.at("returnType").get_to(m.returnType);
         j.at("isStatic").get_to(m.isStatic);
         j.at("parameters").get_to(m.parameters);
+        j.at("comment").get_to(m.comment);
     }
 
     void to_json(json& j, const Parameter& p)

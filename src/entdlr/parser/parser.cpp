@@ -146,11 +146,13 @@ namespace Entdlr
         for (const auto& en : enums)
         {
             Enum e;
+            std::string comment = "";
             Token t = { en->IDENT()->getSymbol()->getText(), filename, en->getStart()->getLine(), en->getStart()->getCharPositionInLine() };
             std::vector<Attribute> attributes = parseAttributes(en->metadata(), filename);
 
             if (en->DOC_COMMENT())
-                cout << "enum -> " << en->DOC_COMMENT()->getSymbol()->getText() << endl;
+                comment = trimComment(en->DOC_COMMENT()->getSymbol()->getText());
+                //cout << "enum -> " << en->DOC_COMMENT()->getSymbol()->getText() << endl;
 
             if (en->type())
             {
@@ -172,6 +174,8 @@ namespace Entdlr
                 else e.add(Token{valueName, filename, v->getStart()->getLine(), v->getStart()->getCharPositionInLine()}, {});
             }
 
+            e.comment = comment;
+
             output.push_back(e);
         }
 
@@ -188,7 +192,8 @@ namespace Entdlr
             u.attributes = parseAttributes(un->metadata(), filename);
 
             if (un->DOC_COMMENT())
-                cout << "union -> " << un->DOC_COMMENT()->getSymbol()->getText() << endl;
+                u.comment = trimComment(un->DOC_COMMENT()->getSymbol()->getText());
+                //cout << "union -> " << un->DOC_COMMENT()->getSymbol()->getText() << endl;
 
             // get union types
             for (const auto& t : un->commasep_uniontype_decl()->uniontype_decl())
@@ -267,7 +272,8 @@ namespace Entdlr
             auto s = Struct::create(Token{st->IDENT()->getSymbol()->getText(), filename, st->getStart()->getLine(), st->getStart()->getCharPositionInLine()}); // make a new struct with the name
 
             if (st->DOC_COMMENT())
-                cout << "struct -> " << st->DOC_COMMENT()->getSymbol()->getText() << endl;
+                s.comment = trimComment(st->DOC_COMMENT()->getSymbol()->getText());
+                //cout << "struct -> " << st->DOC_COMMENT()->getSymbol()->getText() << endl;
 
             s.attributes = parseAttributes(st->metadata(), filename);
 
@@ -296,9 +302,11 @@ namespace Entdlr
         bool isArray = false;
         uint32_t arraySize = 0;
         std::vector<Attribute> attributes;
+        std::string comment = "";
 
         if (field->DOC_COMMENT())
-            cout  << "field -> " << field->DOC_COMMENT()->getSymbol()->getText() << endl;
+            comment = trimComment(field->DOC_COMMENT()->getSymbol()->getText());
+            //cout  << "field -> " << field->DOC_COMMENT()->getSymbol()->getText() << endl;
 
         // plain type
         if (field->type()->BASE_TYPE_NAME())
@@ -354,16 +362,18 @@ namespace Entdlr
 
         attributes = parseAttributes(field->metadata(), filename);
 
-        return Field::create(Token{name, filename, field->getStart()->getLine(), field->getStart()->getCharPositionInLine()}, type, isArray, arraySize, attributes);
+        return Field::create(Token{name, filename, field->getStart()->getLine(), field->getStart()->getCharPositionInLine()}, type, isArray, arraySize, attributes, comment);
     }
 
     Method Parser::parseMethod(FlatBuffersParser::Method_declContext* method, const std::string& filename)
     {
         std::string returnType = "";
         bool isStatic = false;
+        std::string comment = "";
 
         if (method->DOC_COMMENT())
-            cout  << "method -> " << method->DOC_COMMENT()->getSymbol()->getText() << endl;
+            comment = trimComment(method->DOC_COMMENT()->getSymbol()->getText());
+            //cout  << "method -> " << method->DOC_COMMENT()->getSymbol()->getText() << endl;
 
         if (method->static_decl())
             isStatic = true;
@@ -390,7 +400,7 @@ namespace Entdlr
         else returnType = "void";
 
         auto output = Method::create(Token{method->IDENT()->getSymbol()->getText(), filename, method->getStart()->getLine(), method->getStart()->getCharPositionInLine()},
-                returnType, isStatic);
+                returnType, isStatic, comment);
 
         for (const auto& p : method->method_parameters()->method_parameter())
         {
@@ -498,7 +508,8 @@ namespace Entdlr
             auto f = Facility::create(Token{facility->IDENT()->getSymbol()->getText(), filename, facility->getStart()->getLine(), facility->getStart()->getCharPositionInLine()});
 
             if (facility->DOC_COMMENT())
-                cout << "facility -> " << facility->DOC_COMMENT()->getSymbol()->getText() << endl;
+                f.comment = trimComment(facility->DOC_COMMENT()->getSymbol()->getText());
+                //cout << "facility -> " << facility->DOC_COMMENT()->getSymbol()->getText() << endl;
 
             // get the methods of the facility
             for (const auto& m : facility->method_decl())
@@ -508,6 +519,16 @@ namespace Entdlr
 
             output.push_back(f);
         }
+
+        return output;
+    }
+
+    std::string Parser::trimComment(const std::string& comment)
+    {
+        std::string output = comment.substr(3, comment.size()); // chop off the '///'
+
+        while (output.size() && (output[0] == ' ' || output[0] == '\t'))
+            output = output.substr(1, output.size()); // chop off leading whitespace
 
         return output;
     }

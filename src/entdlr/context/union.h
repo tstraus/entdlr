@@ -25,8 +25,9 @@ namespace Entdlr
     public:
         std::vector<UnionType> types;
         std::vector<Attribute> attributes;
+        std::string comment;
 
-        static Union create(const Token& token, const std::vector<Attribute>& attributes = {});
+        static Union create(const Token& token, const std::vector<Attribute>& attributes = {}, const std::string& comment = "");
         void add(const UnionType& type);
     };
 };

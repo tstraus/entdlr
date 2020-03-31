@@ -19,7 +19,7 @@ namespace Entdlr
         return out;
     }
 
-    Union Union::create(const Token& token, const std::vector<Attribute>& attributes)
+    Union Union::create(const Token& token, const std::vector<Attribute>& attributes, const std::string& comment)
     {
         Union out;
         out.filename = token.filename;
@@ -27,6 +27,7 @@ namespace Entdlr
         out.column = token.column;
         out.name = token.name;
         out.attributes = attributes;
+        out.comment = comment;
 
         return out;
     }

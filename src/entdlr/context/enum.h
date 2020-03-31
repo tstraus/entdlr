@@ -25,8 +25,9 @@ namespace Entdlr
         std::string type;
         std::vector<EnumValue> values;
         std::vector<Attribute> attributes;
+        std::string comment;
 
-        static Enum create(const Token& token, const std::string& type = "int32", const std::vector<Attribute>& attributes = {});
+        static Enum create(const Token& token, const std::string& type = "int32", const std::vector<Attribute>& attributes = {}, const std::string& comment = "");
         void add(const Token& token, const std::optional<int64_t> value);
 
     private:
