@@ -17,7 +17,8 @@ public:
     T__14 = 15, T__15 = 16, T__16 = 17, T__17 = 18, T__18 = 19, T__19 = 20, 
     T__20 = 21, T__21 = 22, T__22 = 23, T__23 = 24, T__24 = 25, STRING_CONSTANT = 26, 
     BASE_TYPE_NAME = 27, IDENT = 28, HEX_INTEGER_CONSTANT = 29, INTEGER_CONSTANT = 30, 
-    FLOAT_CONSTANT = 31, BLOCK_COMMENT = 32, COMMENT = 33, WHITESPACE = 34
+    FLOAT_CONSTANT = 31, BLOCK_COMMENT = 32, DOC_COMMENT = 33, COMMENT = 34, 
+    WHITESPACE = 35
   };
 
   enum {
@@ -173,6 +174,7 @@ public:
     virtual size_t getRuleIndex() const override;
     antlr4::tree::TerminalNode *IDENT();
     MetadataContext *metadata();
+    antlr4::tree::TerminalNode *DOC_COMMENT();
     std::vector<Field_declContext *> field_decl();
     Field_declContext* field_decl(size_t i);
     std::vector<Method_declContext *> method_decl();
@@ -194,6 +196,7 @@ public:
     antlr4::tree::TerminalNode *IDENT();
     MetadataContext *metadata();
     Commasep_enumval_declContext *commasep_enumval_decl();
+    antlr4::tree::TerminalNode *DOC_COMMENT();
     TypeContext *type();
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
@@ -212,6 +215,7 @@ public:
     antlr4::tree::TerminalNode *IDENT();
     MetadataContext *metadata();
     Commasep_uniontype_declContext *commasep_uniontype_decl();
+    antlr4::tree::TerminalNode *DOC_COMMENT();
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
@@ -245,6 +249,7 @@ public:
     TypeContext *type();
     MetadataContext *metadata();
     ScalarContext *scalar();
+    antlr4::tree::TerminalNode *DOC_COMMENT();
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
@@ -294,6 +299,7 @@ public:
     Facility_declContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     antlr4::tree::TerminalNode *IDENT();
+    antlr4::tree::TerminalNode *DOC_COMMENT();
     std::vector<Method_declContext *> method_decl();
     Method_declContext* method_decl(size_t i);
 
@@ -315,6 +321,7 @@ public:
     MetadataContext *metadata();
     Static_declContext *static_decl();
     Method_return_typeContext *method_return_type();
+    antlr4::tree::TerminalNode *DOC_COMMENT();
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;

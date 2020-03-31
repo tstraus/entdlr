@@ -11,24 +11,24 @@ namespace_decl : 'namespace' IDENT ( '.' IDENT )* ';' ;
 
 attribute_decl : 'attribute' STRING_CONSTANT ';' ;
 
-type_decl : ( 'table' | 'struct' ) IDENT metadata '{' ( field_decl | method_decl )* '}' ;
+type_decl : DOC_COMMENT? ( 'table' | 'struct' ) IDENT metadata '{' ( field_decl | method_decl )* '}' ;
 
-enum_decl : 'enum' IDENT ( ':' type )? metadata '{' commasep_enumval_decl '}' ;
+enum_decl : DOC_COMMENT? 'enum' IDENT ( ':' type )? metadata '{' commasep_enumval_decl '}' ;
 
-union_decl : 'union' IDENT metadata '{' commasep_uniontype_decl '}' ;
+union_decl : DOC_COMMENT? 'union' IDENT metadata '{' commasep_uniontype_decl '}' ;
 
 root_decl : 'root_type' IDENT ';' ;
 
-field_decl : IDENT ':' type ( '=' scalar )? metadata ';' ;
+field_decl : IDENT ':' type ( '=' scalar )? metadata ';' DOC_COMMENT? ;
 
 rpc_decl : 'rpc_service' IDENT '{' rpc_method+ '}' ;
 
 rpc_method : IDENT '(' IDENT ')' ':' IDENT metadata ';' ;
 
 // overload grpc syntax for facilities
-facility_decl : 'facility' IDENT '{' method_decl+ '}' ;
+facility_decl : DOC_COMMENT? 'facility' IDENT '{' method_decl+ '}' ;
 
-method_decl : static_decl? IDENT '(' method_parameters ')' (':' method_return_type)? metadata ';' ;
+method_decl : static_decl? IDENT '(' method_parameters ')' (':' method_return_type)? metadata ';' DOC_COMMENT? ;
 method_parameters : ( method_parameter )? ( ',' method_parameter )* ;
 method_parameter : mutable_decl? IDENT ':' method_type ;
 mutable_decl : 'mut' ;
@@ -92,6 +92,8 @@ INTEGER_CONSTANT : [-+]? [0-9]+ | 'true' | 'false' ;
 FLOAT_CONSTANT : '-'? [0-9]+ '.' [0-9]+ (('e'|'E') ('+'|'-')? [0-9]+ )? ;
 
 BLOCK_COMMENT:	'/*' .*? '*/' -> channel(HIDDEN);
+
+DOC_COMMENT : '///' ~[\r\n]* ;
 
 // fixed original grammar: allow line comments
 COMMENT : '//' ~[\r\n]* -> channel(HIDDEN);

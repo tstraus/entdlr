@@ -149,6 +149,9 @@ namespace Entdlr
             Token t = { en->IDENT()->getSymbol()->getText(), filename, en->getStart()->getLine(), en->getStart()->getCharPositionInLine() };
             std::vector<Attribute> attributes = parseAttributes(en->metadata(), filename);
 
+            if (en->DOC_COMMENT())
+                cout << "enum -> " << en->DOC_COMMENT()->getSymbol()->getText() << endl;
+
             if (en->type())
             {
                 if (en->type()->BASE_TYPE_NAME())
@@ -183,6 +186,9 @@ namespace Entdlr
         {
             auto u = Union::create(Token{un->IDENT()->getSymbol()->getText(), filename, un->getStart()->getLine(), un->getStart()->getCharPositionInLine()}); // make a new union with the name
             u.attributes = parseAttributes(un->metadata(), filename);
+
+            if (un->DOC_COMMENT())
+                cout << "union -> " << un->DOC_COMMENT()->getSymbol()->getText() << endl;
 
             // get union types
             for (const auto& t : un->commasep_uniontype_decl()->uniontype_decl())
@@ -260,6 +266,9 @@ namespace Entdlr
         {
             auto s = Struct::create(Token{st->IDENT()->getSymbol()->getText(), filename, st->getStart()->getLine(), st->getStart()->getCharPositionInLine()}); // make a new struct with the name
 
+            if (st->DOC_COMMENT())
+                cout << "struct -> " << st->DOC_COMMENT()->getSymbol()->getText() << endl;
+
             s.attributes = parseAttributes(st->metadata(), filename);
 
             // get the fields of the struct
@@ -287,6 +296,9 @@ namespace Entdlr
         bool isArray = false;
         uint32_t arraySize = 0;
         std::vector<Attribute> attributes;
+
+        if (field->DOC_COMMENT())
+            cout  << "field -> " << field->DOC_COMMENT()->getSymbol()->getText() << endl;
 
         // plain type
         if (field->type()->BASE_TYPE_NAME())
@@ -349,6 +361,9 @@ namespace Entdlr
     {
         std::string returnType = "";
         bool isStatic = false;
+
+        if (method->DOC_COMMENT())
+            cout  << "method -> " << method->DOC_COMMENT()->getSymbol()->getText() << endl;
 
         if (method->static_decl())
             isStatic = true;
@@ -481,6 +496,9 @@ namespace Entdlr
         for (const auto& facility : facilities)
         {
             auto f = Facility::create(Token{facility->IDENT()->getSymbol()->getText(), filename, facility->getStart()->getLine(), facility->getStart()->getCharPositionInLine()});
+
+            if (facility->DOC_COMMENT())
+                cout << "facility -> " << facility->DOC_COMMENT()->getSymbol()->getText() << endl;
 
             // get the methods of the facility
             for (const auto& m : facility->method_decl())

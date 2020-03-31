@@ -2,6 +2,7 @@ include "measurements.fbs";
 
 namespace grid;
 
+/// document your enums
 enum EntityForce : uint8 (complicated)
 {
     Unknown,
@@ -11,6 +12,7 @@ enum EntityForce : uint8 (complicated)
     Other = 10
 }
 
+/// document your structs
 struct DisEntityType (correlated, fanciness:6.23)
 {
     kind : uint8;
@@ -21,11 +23,12 @@ struct DisEntityType (correlated, fanciness:6.23)
     specific : uint8;
     extra : uint8;
 
-    isSubset(other: DisEntityType) : bool;
-    static fromString(mut str: string) : DisEntityType;
+    isSubset(other: DisEntityType) : bool; /// document your methods
+    static fromString(mut str: string) : DisEntityType; // or not
 }
 
-union DisEntityTypeUnion (comment:"I like this one")
+/// document your unions
+union DisEntityTypeUnion (note:"I like this one")
 {
     DisEntityType,
     [uint32 : 2]
@@ -40,11 +43,11 @@ struct Position
 
 struct EntityState (correlated)
 {
-    entityID : uint64; // the entity in the event this message is related to
-    timestamp : float64; // the time this data was current
-    callsign : string (max_length:60); // callsign of the entity, if it has one
-    force : EntityForce; // what force the entity is on
+    entityID : uint64; /// the entity in the event this message is related to
+    timestamp : float64; /// the time this data was current
+    callsign : string (max_length:60); /// callsign of the entity, if it has one
+    force : EntityForce; /// what force the entity is on
     type : DisEntityTypeUnion;
-    position : Position;
+    position : Position; // this comment is ignored
     targets : [uint64:4];
 }
