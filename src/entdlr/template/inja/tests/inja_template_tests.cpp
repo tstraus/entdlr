@@ -24,11 +24,11 @@ TEST_SUITE("InjaTemplateTests")
             CHECK(output == "entdlr");
         }
 
-        SUBCASE("Fallback")
+        SUBCASE("WrenFunction")
         {
             Context context;
             Namespace n;
-            n.name = "FallbackTest";
+            n.name = "WrenFunction";
             context.add(n);
 
             InjaTemplate t;
@@ -40,7 +40,7 @@ TEST_SUITE("InjaTemplateTests")
 )";
             const auto output = t.applyString(context, input);
 
-            CHECK(output == "\nfallback\n");
+            CHECK(output == "\nI did the thing -> WrenFunction\n");
         }
     }
 }
