@@ -41,12 +41,43 @@ namespace Entdlr
             }
         }
 
+        return applyString(c, tmpl.str());
+    }
+
+    std::string InjaTemplate::applyString(const Context& context, const std::string& tmpl)
+    {
+        // set up wren first
+        WrenConfiguration config;
+        wrenInitConfiguration(&config);
+        vm = wrenNewVM(&config);
+
         json j;
-        j["entdlr"] = c;
+        j["entdlr"] = context;
 
         //cout << j.dump(true) << endl;
         //cout << tmpl.str() << endl;
 
-        return inja::render(tmpl.str(), j);
+        inja::Environment env;
+        env.set_fallback(
+            [this](const std::string& name, const unsigned int numArgs, const inja::Arguments& args)
+            {
+                return checkWren(name, numArgs, args);
+            }
+        );
+
+        const auto output = env.render(tmpl, j);
+
+        wrenFreeVM(vm);
+
+        return output;
+    }
+
+    std::string InjaTemplate::checkWren(const std::string& name, const unsigned int numArgs, const inja::Arguments& args)
+    {
+        cout << name << "(" << numArgs << ")" << endl;
+        for (const auto& arg : args)
+            cout << "    " << *arg << endl;
+
+        return "fallback";
     }
 }

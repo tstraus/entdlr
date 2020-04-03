@@ -1771,6 +1771,10 @@ class FunctionStorage {
     data.function = function;
   }
 
+  void set_fallback(std::function<std::string(const std::string&, const unsigned int, const Arguments&)> fallback) {
+    m_fallback = fallback;
+  }
+
   Bytecode::Op find_builtin(nonstd::string_view name, unsigned int num_args) const {
     if (auto ptr = get(name, num_args)) {
       return ptr->op;
@@ -1785,7 +1789,9 @@ class FunctionStorage {
     return nullptr;
   }
 
- private:
+  std::function<std::string(const std::string&, const unsigned int, const Arguments&)> m_fallback;
+
+private:
   struct FunctionData {
     unsigned int num_args {0};
     Bytecode::Op op {Bytecode::Op::Nop}; // for builtins
@@ -3004,11 +3010,15 @@ class Renderer {
     try {
       return &m_data->at(json::json_pointer(ptr.data()));
     } catch (std::exception&) {
+      std::vector<const json*> arguments {};
       // try to evaluate as a no-argument callback
       if (auto callback = m_callbacks.find_callback(bc.str, 0)) {
-        std::vector<const json*> arguments {};
         m_tmp_val = callback(arguments);
         return &m_tmp_val;
+      }
+      else if (m_callbacks.m_fallback) {
+          m_tmp_val = m_callbacks.m_fallback(bc.str, 0, arguments);
+          return &m_tmp_val;
       }
       inja_throw("render_error", "variable '" + static_cast<std::string>(bc.str) + "' not found");
       return nullptr;
@@ -3379,11 +3389,17 @@ class Renderer {
           Renderer(m_included_templates, m_callbacks).render_to(os, m_included_templates.find(get_imm(bc)->get_ref<const std::string&>())->second, *m_data);
           break;
         case Bytecode::Op::Callback: {
+          json result;
           auto callback = m_callbacks.find_callback(bc.str, bc.args);
-          if (!callback) {
+          if (!callback && !m_callbacks.m_fallback) {
             inja_throw("render_error", "function '" + static_cast<std::string>(bc.str) + "' (" + std::to_string(static_cast<unsigned int>(bc.args)) + ") not found");
           }
-          json result = callback(get_args(bc));
+          if (!callback && m_callbacks.m_fallback) {
+            result = m_callbacks.m_fallback(bc.str, bc.args, get_args(bc));
+          }
+          else {
+            result = callback(get_args(bc));
+          }
           pop_args(bc);
           m_stack.emplace_back(std::move(result));
           break;
@@ -3636,7 +3652,12 @@ class Environment {
     m_callbacks.add_callback(name, numArgs, callback);
   }
 
-  /** Includes a template with a given name into the environment.
+  void set_fallback(std::function<std::string(const std::string&, const unsigned int, const Arguments&)> fallback)
+  {
+      m_callbacks.set_fallback(fallback);
+  }
+
+    /** Includes a template with a given name into the environment.
    * Then, a template can be rendered in another template using the
    * include "<name>" syntax.
    */

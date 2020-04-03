@@ -118,7 +118,7 @@ namespace Entdlr
 
     std::string WrenTemplate::applyTemplate(const Context& context, const std::string& template_name)
     {
-        // give our context to out helpers
+        // give our context to our helpers
         ContextHelper::setContext(context);
 
         // open and read the script file
