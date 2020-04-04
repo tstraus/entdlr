@@ -14,8 +14,8 @@ set (SAMPLES
     ./c.tmpl
     ./cpp.tmpl
 
-    ./c_mapping.json
-    ./cpp_mapping.json
+    ./c.json
+    ./cpp.json
 
     ./display.wren
 )

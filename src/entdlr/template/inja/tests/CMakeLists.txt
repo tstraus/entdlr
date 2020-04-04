@@ -5,7 +5,8 @@ set (SOURCE
 )
 
 set (TEMPLATES
-    "Fallback.tmpl"
+    "Functions.tmpl"
+    "Functions.wren"
 )
 
 add_executable (${PROJECT_NAME} ${SOURCE})

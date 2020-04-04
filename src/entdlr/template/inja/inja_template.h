@@ -15,7 +15,7 @@ namespace Entdlr
 
         std::string applyTemplate(const Context& context, const std::string& template_name);
 
-        std::string applyString(const Context& context, const std::string& tmpl);
+        std::string applyString(const Context& context, const std::string& tmpl, const std::string& functions = "");
 
     private:
         std::string checkWren(const std::string& name, const unsigned int numArgs, const inja::Arguments& args);
