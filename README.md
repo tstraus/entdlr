@@ -52,7 +52,7 @@ struct Vec3 // declare a struct named Vec3
 
     static new() : Vec3; // a static method that returns a new Vec3
     static fromString(str : string) : Vec3; // arguemnts are assumed to be constant
-    cross(mut other : Vec3) : float32; // unless the mut keyword is there
+    cross(mut other : Vec3) : float32; // unless the mut keyword is provided
 }
 ```
 
@@ -90,7 +90,7 @@ struct Scalar
 Templates are what uses the `Context` to create output. They can be written in a template lanuage similar to Jinja called Inja, with user written functions defined in the scripting language Wren. Templates can also be written entirely in Wren, with Wren's console output becoming the template's output. Inja templates are easier to work with but less flexible than full Wren script templates.
 
 ### Inja
-Inja templates use the filename extension `.tmpl`. Working with the `Context` in Inja is based on iterating over it's lists. `{{  }}` pulls values out of the context. `##` is used for creating whole line statements, `{%  %}` for in line statements. `for` and `if` statements are available. Functions can be called inside statements with `function_name(arg1, arg2)`, `upper(_)` is one of several functions built into Inja.
+Inja templates use the filename extension `.tmpl`. Working with the `Context` in Inja is based on iterating over it's lists. `{{  }}` pulls values out of the context. `##` is used for creating whole line statements, `{%  %}` for in line statements. `for` and `if` statements are available. `{#  #}` is used for comments. Functions can be called inside statements with `function_name(arg1, arg2)`, `upper(_)` is one of several functions built into Inja.
 ```jinja
 ## for namespace in entdlr.namespaces
 {{ namespace.name }}
