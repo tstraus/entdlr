@@ -22,6 +22,7 @@ namespace Entdlr
 
         static void error(WrenVM* vm, WrenErrorType type, const char* module_name, int line, const char* message);
         static void print(WrenVM* vm, const char* text);
+        static char* loadModule(WrenVM* vm, const char* name);
 
         WrenVM* vm;
     };

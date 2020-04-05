@@ -17,7 +17,7 @@ set (SAMPLES
     ./c.json
     ./cpp.json
 
-    ./display.wren
+    ./dump.wren
 )
 
 install (FILES ${SAMPLES} DESTINATION samples)

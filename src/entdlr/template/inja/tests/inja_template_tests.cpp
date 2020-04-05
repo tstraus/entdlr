@@ -63,7 +63,7 @@ class Functions {
         {
             const auto output = t.applyTemplate(context, "Functions.tmpl");
 
-            CHECK(output == "I did the thing -> WrenFunction\nERROR: (11, 22)\n");
+            CHECK(output == "I did the thing inside module -> WrenFunction\nERROR: (11, 22)\n");
         }
     }
 }

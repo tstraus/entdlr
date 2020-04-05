@@ -8,7 +8,9 @@
 
 #include "inja.hpp"
 
-using std::cout; using std::endl;
+using std::cout; using std::endl; using std::cerr;
+
+std::string scriptDir;
 
 namespace Entdlr
 {
@@ -19,6 +21,11 @@ namespace Entdlr
 
     std::string InjaTemplate::applyTemplate(const Context& context, const std::string& template_name)
     {
+        // save the location for loading other scripts
+        scriptDir = std::filesystem::path(template_name).parent_path().string();
+        if (scriptDir == "")
+            scriptDir = "./";
+
         // open and read the template file
         std::ifstream templateFile(template_name);
         std::stringstream tmpl;
@@ -65,6 +72,7 @@ namespace Entdlr
         wrenInitConfiguration(&config);
         config.writeFn = print;
         config.errorFn = error;
+        config.loadModuleFn = loadModule;
         vm = wrenNewVM(&config);
 
         // load the script into wren
@@ -196,6 +204,25 @@ namespace Entdlr
     void InjaTemplate::print(WrenVM* vm, const char* text)
     {
         // wren adds its own newlines in a separte call to print
-        cout << text;
+        cerr << text;
+    }
+
+    char* InjaTemplate::loadModule(WrenVM* vm, const char* name)
+    {
+        std::string source = "";
+
+        std::string path = scriptDir + "/";
+        path += std::string(name);
+        path += ".wren";
+        std::ifstream fin;
+        fin.open(path, std::ios::in);
+        std::stringstream buffer;
+        buffer << fin.rdbuf() << '\0';
+        source = buffer.str();
+
+        char* cbuffer = (char*)malloc(source.size());
+        std::memcpy(cbuffer, source.c_str(), source.size());
+
+        return cbuffer;
     }
 }

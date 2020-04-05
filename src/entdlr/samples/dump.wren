@@ -152,8 +152,8 @@ for (nKey in c.namespaces.keys) {
         }
     }
 
-    for (fKey in n.interfaces.keys) {
-        var i = n.interfaces[fKey]
+    for (iKey in n.interfaces.keys) {
+        var i = n.interfaces[iKey]
 
         if (i.comment.count > 0) {
             System.print("    /// " + i.comment)
@@ -161,8 +161,8 @@ for (nKey in c.namespaces.keys) {
 
         System.print("    " + i.name + " : interface")
 
-        for (mKey in f.methods.keys) {
-            var m = f.methods[mKey]
+        for (mKey in i.methods.keys) {
+            var m = i.methods[mKey]
             System.write("        ")
             if (m.isStatic) {
                 System.write("static ")

@@ -7,6 +7,7 @@ set (SOURCE
 set (TEMPLATES
     "Functions.tmpl"
     "Functions.wren"
+    "Module.wren"
 )
 
 add_executable (${PROJECT_NAME} ${SOURCE})
