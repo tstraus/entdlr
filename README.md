@@ -102,7 +102,7 @@ Inja templates use the filename extension `.tmpl`. Working with the `Context` in
 ## endfor
 ## endfor
 ```
-If more capability is required in Inja scripts, you may write additional functions in Wren. Wren functions must be defined in a file next to the template file with the same name, but with the filename extension `.wren`. These scripts must have a class named `Functions`, who's static methods are those that are made available in Inja. Other classes and modules can be used in these methods, but they are not directly exposed to Inja. The value returned from the Wren function is then given to Inja.
+If more capability is required in Inja scripts, you may write additional functions in Wren. Wren functions must be defined in a file next to the template file with the same name, but with the filename extension `.wren`. These scripts must have a class named `Functions`, who's static methods are those that are made available in Inja. Other classes and modules can be used in these methods, but they are not directly exposed to Inja. Files that define additional modules must be in the same directory as the template. The value returned from the Wren function is then given to Inja.
 
 ```javascript
 // [ ./Example.wren ]
