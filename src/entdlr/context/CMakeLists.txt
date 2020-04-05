@@ -7,7 +7,7 @@ set (HEADERS
     union.h
     method.h
     struct.h
-    facility.h
+    interface.h
     namespace.h
     context.h
 )
@@ -18,7 +18,7 @@ set (SOURCE
     union.cpp
     method.cpp
     struct.cpp
-    facility.cpp
+    interface.cpp
     namespace.cpp
     context.cpp
 )

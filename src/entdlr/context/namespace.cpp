@@ -28,8 +28,8 @@ namespace Entdlr
         structs.push_back(s);
     }
 
-    void Namespace::add(const Facility& f)
+    void Namespace::add(const Interface& i)
     {
-        facilities.push_back(f);
+        interfaces.push_back(i);
     }
 };

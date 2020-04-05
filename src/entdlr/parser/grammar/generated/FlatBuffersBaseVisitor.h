@@ -59,7 +59,7 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitFacility_decl(FlatBuffersParser::Facility_declContext *ctx) override {
+  virtual antlrcpp::Any visitInterface_decl(FlatBuffersParser::Interface_declContext *ctx) override {
     return visitChildren(ctx);
   }
 

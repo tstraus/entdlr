@@ -49,8 +49,8 @@ public:
   virtual void enterRpc_method(FlatBuffersParser::Rpc_methodContext * /*ctx*/) override { }
   virtual void exitRpc_method(FlatBuffersParser::Rpc_methodContext * /*ctx*/) override { }
 
-  virtual void enterFacility_decl(FlatBuffersParser::Facility_declContext * /*ctx*/) override { }
-  virtual void exitFacility_decl(FlatBuffersParser::Facility_declContext * /*ctx*/) override { }
+  virtual void enterInterface_decl(FlatBuffersParser::Interface_declContext * /*ctx*/) override { }
+  virtual void exitInterface_decl(FlatBuffersParser::Interface_declContext * /*ctx*/) override { }
 
   virtual void enterMethod_decl(FlatBuffersParser::Method_declContext * /*ctx*/) override { }
   virtual void exitMethod_decl(FlatBuffersParser::Method_declContext * /*ctx*/) override { }

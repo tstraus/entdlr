@@ -13,7 +13,7 @@ struct TimeResult
     date : Date;
 }
 
-facility Time
+interface Time
 {
     now() : TimeResult;
     difference(start: time, mut end: time) : time;

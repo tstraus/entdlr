@@ -17,7 +17,7 @@ null
 'rpc_service'
 '('
 ')'
-'facility'
+'interface'
 ','
 'mut'
 'static'
@@ -86,7 +86,7 @@ root_decl
 field_decl
 rpc_decl
 rpc_method
-facility_decl
+interface_decl
 method_decl
 method_parameters
 method_parameter

@@ -1,6 +1,6 @@
 # **ENTDLR**
 ## **ENT**ity **D**efinition **L**anguage **R**edux
-A tool for defining structures and classes generically and generating implementations by templating. An extended version of the FlatBuffers language is used to create these definitions, which can include namespaces, enums, unions, structs, and facilities. Facilities are useful for defining the pure interface of a library, with the names and signatures of methods. Methods can also be added to structs.
+A tool for defining structures and classes generically and generating implementations by templating. An extended version of the FlatBuffers language is used to create these definitions, which can include `namespace`s, `enum`s, `union`s, `struct`s, and `interface`s. Interfaces are useful for defining the pure interface of a library, with the names and signatures of methods. Methods can also be added to structs.
 
 ## Definitions
 Definitions are what `entdlr` parses into a `Context`. They are what defines your structures and interfaces. 
@@ -56,17 +56,17 @@ struct Vec3 // declare a struct named Vec3
 }
 ```
 
-### Facilities
-Facilities are structs without fields which are useful for defining abstract classes as library interfaces.
+### Interfaces
+Interfaces are structs without fields which are useful for defining abstract classes as library interfaces.
 ```c++
-facility Time // define a facility named Time
+interface Time // define a interface named Time
 {
     now() : uint64; // give it a method
 }
 ```
 
 ### Other Features
-Attributes can be added to enum, union, struct, facility, field, and method declarations. Attributes are keys with an optional value. These attributes are passed into the template as members of what they are of. 
+Attributes can be added to enum, union, struct, interface, field, and method declarations. Attributes are keys with an optional value. These attributes are passed into the template as members of what they are of. 
 ```c++
 struct Request (correlated) // a key only attribute
 {

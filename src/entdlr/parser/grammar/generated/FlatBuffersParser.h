@@ -24,7 +24,7 @@ public:
   enum {
     RuleSchema = 0, RuleInclude = 1, RuleNamespace_decl = 2, RuleAttribute_decl = 3, 
     RuleType_decl = 4, RuleEnum_decl = 5, RuleUnion_decl = 6, RuleRoot_decl = 7, 
-    RuleField_decl = 8, RuleRpc_decl = 9, RuleRpc_method = 10, RuleFacility_decl = 11, 
+    RuleField_decl = 8, RuleRpc_decl = 9, RuleRpc_method = 10, RuleInterface_decl = 11, 
     RuleMethod_decl = 12, RuleMethod_parameters = 13, RuleMethod_parameter = 14, 
     RuleMutable_decl = 15, RuleStatic_decl = 16, RuleMethod_return_type = 17, 
     RuleMethod_type = 18, RuleType = 19, RuleUniontype_decl = 20, RuleCommasep_uniontype_decl = 21, 
@@ -56,7 +56,7 @@ public:
   class Field_declContext;
   class Rpc_declContext;
   class Rpc_methodContext;
-  class Facility_declContext;
+  class Interface_declContext;
   class Method_declContext;
   class Method_parametersContext;
   class Method_parameterContext;
@@ -108,8 +108,8 @@ public:
     Attribute_declContext* attribute_decl(size_t i);
     std::vector<Rpc_declContext *> rpc_decl();
     Rpc_declContext* rpc_decl(size_t i);
-    std::vector<Facility_declContext *> facility_decl();
-    Facility_declContext* facility_decl(size_t i);
+    std::vector<Interface_declContext *> interface_decl();
+    Interface_declContext* interface_decl(size_t i);
     std::vector<ObjectContext *> object();
     ObjectContext* object(size_t i);
 
@@ -294,9 +294,9 @@ public:
 
   Rpc_methodContext* rpc_method();
 
-  class  Facility_declContext : public antlr4::ParserRuleContext {
+  class  Interface_declContext : public antlr4::ParserRuleContext {
   public:
-    Facility_declContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    Interface_declContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     antlr4::tree::TerminalNode *IDENT();
     antlr4::tree::TerminalNode *DOC_COMMENT();
@@ -310,7 +310,7 @@ public:
    
   };
 
-  Facility_declContext* facility_decl();
+  Interface_declContext* interface_decl();
 
   class  Method_declContext : public antlr4::ParserRuleContext {
   public:

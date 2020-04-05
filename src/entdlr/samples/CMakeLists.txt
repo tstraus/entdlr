@@ -1,6 +1,6 @@
 set (SAMPLES
     ./entity.fbs
-    ./time_facility.fbs
+    ./time_interface.fbs
     ./flatbench.fbs
     ./greeter.fbs
     ./monster.fbs

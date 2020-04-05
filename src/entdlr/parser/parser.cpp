@@ -82,10 +82,10 @@ namespace Entdlr
             for (const auto& s : structs)
                 ns.add(s);
 
-            // get facilities defined in the file
-            const auto facilities = parseFacilities(schema->facility_decl(), filename);
-            for (const auto& f : facilities)
-                ns.add(f);
+            // get interfaces defined in the file
+            const auto interfaces = parseInterfaces(schema->interface_decl(), filename);
+            for (const auto& i : interfaces)
+                ns.add(i);
 
             context.add(ns);
 
@@ -499,20 +499,20 @@ namespace Entdlr
         return attributes;
     }
 
-    std::vector<Facility> Parser::parseFacilities(const std::vector<FlatBuffersParser::Facility_declContext*>& facilities, const std::string& filename)
+    std::vector<Interface> Parser::parseInterfaces(const std::vector<FlatBuffersParser::Interface_declContext*>& interfaces, const std::string& filename)
     {
-        std::vector<Facility> output;
+        std::vector<Interface> output;
 
-        for (const auto& facility : facilities)
+        for (const auto& interface : interfaces)
         {
-            auto f = Facility::create(Token{facility->IDENT()->getSymbol()->getText(), filename, facility->getStart()->getLine(), facility->getStart()->getCharPositionInLine()});
+            auto f = Interface::create(Token{interface->IDENT()->getSymbol()->getText(), filename, interface->getStart()->getLine(), interface->getStart()->getCharPositionInLine()});
 
-            if (facility->DOC_COMMENT())
-                f.comment = trimComment(facility->DOC_COMMENT()->getSymbol()->getText());
-                //cout << "facility -> " << facility->DOC_COMMENT()->getSymbol()->getText() << endl;
+            if (interface->DOC_COMMENT())
+                f.comment = trimComment(interface->DOC_COMMENT()->getSymbol()->getText());
+                //cout << "interface -> " << interface->DOC_COMMENT()->getSymbol()->getText() << endl;
 
-            // get the methods of the facility
-            for (const auto& m : facility->method_decl())
+            // get the methods of the interface
+            for (const auto& m : interface->method_decl())
             {
                 f.add(parseMethod(m, filename));
             }

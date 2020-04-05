@@ -28,9 +28,9 @@ class Context {
     foreign static numFieldAttributes(namespace, struct, field)
     foreign static numStructMethods(namespace, struct)
     foreign static numStructMethodParameters(namespace, struct, method)
-    foreign static numFacilities(namespace)
-    foreign static numFacilityMethods(namespace, facility)
-    foreign static numFacilityMethodParameters(namespace, facility, method)
+    foreign static numInterfaces(namespace)
+    foreign static numInterfaceMethods(namespace, interface)
+    foreign static numInterfaceMethodParameters(namespace, interface, method)
 
     // Namespace
     foreign static getNamespaceName(index)
@@ -91,18 +91,18 @@ class Context {
     foreign static getStructMethodParameterType(namespace, struct, method, index)
     foreign static getStructMethodParameterConstant(namespace, struct, method, index)
 
-    // Facility
-    foreign static getFacilityName(namespace, index)
-    foreign static getFacilityComment(namespace, facility)
+    // Interface
+    foreign static getInterfaceName(namespace, index)
+    foreign static getInterfaceComment(namespace, interface)
     // Method
-    foreign static getFacilityMethodName(namespace, facility, index)
-    foreign static getFacilityMethodReturnType(namespace, facility, method)
-    foreign static getFacilityMethodIsStatic(namespace, facility, method)
-    foreign static getFacilityMethodComment(namespace, facility, method)
+    foreign static getInterfaceMethodName(namespace, interface, index)
+    foreign static getInterfaceMethodReturnType(namespace, interface, method)
+    foreign static getInterfaceMethodIsStatic(namespace, interface, method)
+    foreign static getInterfaceMethodComment(namespace, interface, method)
     // Parameter
-    foreign static getFacilityMethodParameterName(namespace, facility, method, index)
-    foreign static getFacilityMethodParameterType(namespace, facility, method, index)
-    foreign static getFacilityMethodParameterConstant(namespace, facility, method, index)
+    foreign static getInterfaceMethodParameterName(namespace, interface, method, index)
+    foreign static getInterfaceMethodParameterType(namespace, interface, method, index)
+    foreign static getInterfaceMethodParameterConstant(namespace, interface, method, index)
 }
 
 class Namespace {
@@ -110,14 +110,14 @@ class Namespace {
     enums { _enums }
     unions { _unions }
     structs { _structs }
-    facilities { _facilities }
+    interfaces { _interfaces }
 
     construct new(namespace) {
         _name = namespace
         _enums = {}
         _unions = {}
         _structs = {}
-        _facilities = {}
+        _interfaces = {}
 
         for (i in 0...Context.numEnums(namespace)) {
             var e = Enum.new(namespace, Context.getEnumName(namespace, i))
@@ -134,9 +134,9 @@ class Namespace {
             _structs[s.name] = s
         }
 
-        for (i in 0...Context.numFacilities(namespace)) {
-            var f = Facility.new(namespace, Context.getFacilityName(namespace, i))
-            _facilities[f.name] = f
+        for (i in 0...Context.numInterfaces(namespace)) {
+            var f = Interface.new(namespace, Context.getInterfaceName(namespace, i))
+            _interfaces[f.name] = f
         }
     }
 }
@@ -327,15 +327,15 @@ class Method {
         }
     }
 
-    construct newFacilityMethod(namespace, facility, method) {
+    construct newInerfaceMethod(namespace, interface, method) {
         _name = method
-        _returnType = Context.getFacilityMethodReturnType(namespace, facility, method)
-        _isStatic = Context.getFacilityMethodIsStatic(namespace, facility, method)
-        _comment = Context.getFacilityMethodComment(namespace, facility, method)
+        _returnType = Context.getInterfaceMethodReturnType(namespace, interface, method)
+        _isStatic = Context.getInterfaceMethodIsStatic(namespace, interface, method)
+        _comment = Context.getInterfaceMethodComment(namespace, interface, method)
         _parameters = {}
 
-        for (i in 0...Context.numFacilityMethodParameters(namespace, facility, method)) {
-            var p = Parameter.newFacilityMethodParameter(namespace, facility, method, i)
+        for (i in 0...Context.numInterfaceMethodParameters(namespace, interface, method)) {
+            var p = Parameter.newInterfaceMethodParameter(namespace, interface, method, i)
             _parameters[p.name] = p
         }
     }
@@ -352,25 +352,25 @@ class Parameter {
         _constant = Context.getStructMethodParameterConstant(namespace, struct, method, index)
     }
 
-    construct newFacilityMethodParameter(namespace, facility, method, index) {
-        _name = Context.getFacilityMethodParameterName(namespace, facility, method, index)
-        _type = Context.getFacilityMethodParameterType(namespace, facility, method, index)
-        _constant = Context.getFacilityMethodParameterConstant(namespace, facility, method, index)
+    construct newInterfaceMethodParameter(namespace, interface, method, index) {
+        _name = Context.getInterfaceMethodParameterName(namespace, interface, method, index)
+        _type = Context.getInterfaceMethodParameterType(namespace, interface, method, index)
+        _constant = Context.getInterfaceMethodParameterConstant(namespace, interface, method, index)
     }
 }
 
-class Facility {
+class Interface {
     name { _name }
     methods { _methods }
     comment { _comment }
 
-    construct new(namespace, facility) {
-        _name = facility
-        _comment = Context.getFacilityComment(namespace, facility)
+    construct new(namespace, interface) {
+        _name = interface
+        _comment = Context.getInterfaceComment(namespace, interface)
         _methods = {}
 
-        for (i in 0...Context.numFacilityMethods(namespace, facility)) {
-            var m = Method.newFacilityMethod(namespace, facility, Context.getFacilityMethodName(namespace, facility, i))
+        for (i in 0...Context.numInterfaceMethods(namespace, interface)) {
+            var m = Method.newInterfaceMethod(namespace, interface, Context.getInterfaceMethodName(namespace, interface, i))
             _methods[m.name] = m
         }
     }
