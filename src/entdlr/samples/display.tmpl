@@ -62,9 +62,9 @@
 ## endfor
 ## endfor
 ## endfor
-## for facility in namespace.facilities
-    {{facility.name}} : facility
-## for method in facility.methods
+## for interface in namespace.interfaces
+    {{interface.name}} : interface
+## for method in interface.methods
 ## if method.isStatic == true
         static {{method.name}} : {{method.returnType}}
 ## endif

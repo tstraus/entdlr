@@ -23,14 +23,14 @@ int main(int argc, char** argv)
             cout <<
             "Usage: entdlr [OPTION]\n" <<
             "  -h, --help           Basic use help (this)\n" <<
-            "  -t, --template=FILE  Template file to use. Default: \"../samples/display.tmpl\"\n" <<
+            "  -t, --template=FILE  Template file to use. Default: \"../samples/dump.wren\"\n" <<
             "  -f, --file=FILE      Parse the specified file. Default: \"../samples/entity.fbs\"\n" <<
             "  -d, --dir=DIRECTORY  Parse all \".fbs\" files in the directory" << endl;
 
             return 0;
         }
 
-        args({ "-t", "--template" }, "../samples/display.tmpl") >> template_name;
+        args({ "-t", "--template" }, "../samples/dump.wren") >> template_name;
         args({ "-f", "--file" }) >> filename;
         args({ "-d", "--dir" }) >> dirname;
 

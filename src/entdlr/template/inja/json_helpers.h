@@ -35,8 +35,8 @@ namespace Entdlr
     void to_json(json& j, const EnumValue& e);
     void from_json(const json& j, EnumValue& e);
 
-    void to_json(json& j, const Facility& f);
-    void from_json(const json& j, Facility& f);
+    void to_json(json& j, const Interface& i);
+    void from_json(const json& j, Interface& i);
 
     void to_json(json& j, const Method& m);
     void from_json(const json& j, Method& m);

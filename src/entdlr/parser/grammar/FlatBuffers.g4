@@ -3,7 +3,7 @@ grammar FlatBuffers ;
 
 // Parser rules
 
-schema : include* ( namespace_decl | type_decl | enum_decl | union_decl | root_decl | file_extension_decl | file_identifier_decl | attribute_decl | rpc_decl | facility_decl | object )* ;
+schema : include* ( namespace_decl | type_decl | enum_decl | union_decl | root_decl | file_extension_decl | file_identifier_decl | attribute_decl | rpc_decl | interface_decl | object )* ;
 
 include : 'include' STRING_CONSTANT ';' ;
 
@@ -25,8 +25,8 @@ rpc_decl : 'rpc_service' IDENT '{' rpc_method+ '}' ;
 
 rpc_method : IDENT '(' IDENT ')' ':' IDENT metadata ';' ;
 
-// overload grpc syntax for facilities
-facility_decl : DOC_COMMENT? 'facility' IDENT '{' method_decl+ '}' ;
+// overload grpc syntax for interfaces
+interface_decl : DOC_COMMENT? 'interface' IDENT '{' method_decl+ '}' ;
 
 method_decl : static_decl? IDENT '(' method_parameters ')' (':' method_return_type)? metadata ';' DOC_COMMENT? ;
 method_parameters : ( method_parameter )? ( ',' method_parameter )* ;

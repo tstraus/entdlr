@@ -47,8 +47,8 @@ public:
   virtual void enterRpc_method(FlatBuffersParser::Rpc_methodContext *ctx) = 0;
   virtual void exitRpc_method(FlatBuffersParser::Rpc_methodContext *ctx) = 0;
 
-  virtual void enterFacility_decl(FlatBuffersParser::Facility_declContext *ctx) = 0;
-  virtual void exitFacility_decl(FlatBuffersParser::Facility_declContext *ctx) = 0;
+  virtual void enterInterface_decl(FlatBuffersParser::Interface_declContext *ctx) = 0;
+  virtual void exitInterface_decl(FlatBuffersParser::Interface_declContext *ctx) = 0;
 
   virtual void enterMethod_decl(FlatBuffersParser::Method_declContext *ctx) = 0;
   virtual void exitMethod_decl(FlatBuffersParser::Method_declContext *ctx) = 0;

@@ -1,6 +1,6 @@
 set (SAMPLES
     ./entity.fbs
-    ./time_facility.fbs
+    ./time_interface.fbs
     ./flatbench.fbs
     ./greeter.fbs
     ./monster.fbs
@@ -14,10 +14,10 @@ set (SAMPLES
     ./c.tmpl
     ./cpp.tmpl
 
-    ./c_mapping.json
-    ./cpp_mapping.json
+    ./c.json
+    ./cpp.json
 
-    ./display.wren
+    ./dump.wren
 )
 
 install (FILES ${SAMPLES} DESTINATION samples)

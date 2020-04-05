@@ -4,7 +4,7 @@
 #include "enum.h"
 #include "union.h"
 #include "struct.h"
-#include "facility.h"
+#include "interface.h"
 #include "token.h"
 
 #include <string>
@@ -18,13 +18,13 @@ namespace Entdlr
         std::vector<Enum> enums;
         std::vector<Union> unions;
         std::vector<Struct> structs;
-        std::vector<Facility> facilities;
+        std::vector<Interface> interfaces;
 
         static Namespace create(const Token& token);
         void add(const Enum& e);
         void add(const Union& u);
         void add(const Struct& s);
-        void add(const Facility& f);
+        void add(const Interface& i);
     };
 };
 

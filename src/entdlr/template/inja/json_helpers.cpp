@@ -20,7 +20,7 @@ namespace Entdlr {
                 {"enums",      n.enums},
                 {"unions",     n.unions},
                 {"structs",    n.structs},
-                {"facilities", n.facilities}
+                {"interfaces", n.interfaces}
         };
     }
 
@@ -32,7 +32,7 @@ namespace Entdlr {
         j.at("enums").get_to(n.enums);
         j.at("unions").get_to(n.unions);
         j.at("structs").get_to(n.structs);
-        j.at("facilities").get_to(n.facilities);
+        j.at("interfaces").get_to(n.interfaces);
     }
 
     void to_json(json& j, const Struct& s) {
@@ -193,26 +193,26 @@ namespace Entdlr {
         j.at("value").get_to(e.value);
     }
 
-    void to_json(json& j, const Facility& f)
+    void to_json(json& j, const Interface& i)
     {
         j = json{
-                {"name",     f.name},
-                {"filename", f.filename},
-                {"line",     f.line},
-                {"column",   f.column},
-                {"methods",  f.methods},
-                {"comment",  f.comment}
+                {"name",     i.name},
+                {"filename", i.filename},
+                {"line",     i.line},
+                {"column",   i.column},
+                {"methods",  i.methods},
+                {"comment",  i.comment}
         };
     }
 
-    void from_json(const json& j, Facility& f)
+    void from_json(const json& j, Interface& i)
     {
-        j.at("name").get_to(f.name);
-        j.at("filename").get_to(f.filename);
-        j.at("line").get_to(f.line);
-        j.at("column").get_to(f.column);
-        j.at("methods").get_to(f.methods);
-        j.at("comment").get_to(f.comment);
+        j.at("name").get_to(i.name);
+        j.at("filename").get_to(i.filename);
+        j.at("line").get_to(i.line);
+        j.at("column").get_to(i.column);
+        j.at("methods").get_to(i.methods);
+        j.at("comment").get_to(i.comment);
     }
 
     void to_json(json& j, const Method& m)

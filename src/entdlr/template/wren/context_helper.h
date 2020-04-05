@@ -28,9 +28,9 @@ namespace Entdlr
         static void numFieldAttributes(WrenVM* vm);
         static void numStructMethods(WrenVM* vm);
         static void numStructMethodParameters(WrenVM* vm);
-        static void numFacilities(WrenVM* vm);
-        static void numFacilityMethods(WrenVM* vm);
-        static void numFacilityMethodParameters(WrenVM* vm);
+        static void numInterfaces(WrenVM* vm);
+        static void numInterfaceMethods(WrenVM* vm);
+        static void numInterfaceMethodParameters(WrenVM* vm);
 
         // Namespace
         static void getNamespaceName(WrenVM* vm);
@@ -91,18 +91,18 @@ namespace Entdlr
         static void getStructMethodParameterType(WrenVM* vm);
         static void getStructMethodParameterConstant(WrenVM* vm);
 
-        // Facility
-        static void getFacilityName(WrenVM* vm);
-        static void getFacilityComment(WrenVM* vm);
+        // Interface
+        static void getInterfaceName(WrenVM* vm);
+        static void getInterfaceComment(WrenVM* vm);
         // Method
-        static void getFacilityMethodName(WrenVM* vm);
-        static void getFacilityMethodReturnType(WrenVM* vm);
-        static void getFacilityMethodIsStatic(WrenVM* vm);
-        static void getFacilityMethodComment(WrenVM* vm);
+        static void getInterfaceMethodName(WrenVM* vm);
+        static void getInterfaceMethodReturnType(WrenVM* vm);
+        static void getInterfaceMethodIsStatic(WrenVM* vm);
+        static void getInterfaceMethodComment(WrenVM* vm);
         // Parameter
-        static void getFacilityMethodParameterName(WrenVM* vm);
-        static void getFacilityMethodParameterType(WrenVM* vm);
-        static void getFacilityMethodParameterConstant(WrenVM* vm);
+        static void getInterfaceMethodParameterName(WrenVM* vm);
+        static void getInterfaceMethodParameterType(WrenVM* vm);
+        static void getInterfaceMethodParameterConstant(WrenVM* vm);
 
     private:
         static std::optional<Namespace> getNamespace(const std::string& _namespace);
@@ -122,12 +122,12 @@ namespace Entdlr
         static std::optional<Attribute> getFieldAttribute(const std::string& _namespace, const std::string& _struct, const std::string& _field, size_t index);
         static std::optional<Method> getStructMethod(const std::string& _namespace, const std::string& _struct, const std::string& _method);
         static std::optional<Method> getStructMethod(const std::string& _namespace, const std::string& _struct, size_t index);
-        static std::optional<Method> getFacilityMethod(const std::string& _namespace, const std::string& _facility, const std::string& _method);
-        static std::optional<Method> getFacilityMethod(const std::string& _namespace, const std::string& _facility, size_t index);
+        static std::optional<Method> getInterfaceMethod(const std::string& _namespace, const std::string& _interface, const std::string& _method);
+        static std::optional<Method> getInterfaceMethod(const std::string& _namespace, const std::string& _interface, size_t index);
         static std::optional<Parameter> getStructParameter(const std::string& _namespace, const std::string& _struct, const std::string& _method, size_t index);
-        static std::optional<Parameter> getFacilityParameter(const std::string& _namespace, const std::string& _facility, const std::string& _method, size_t index);
-        static std::optional<Facility> getFacility(const std::string& _namespace, const std::string& _facility);
-        static std::optional<Facility> getFacility(const std::string& _namespace, size_t index);
+        static std::optional<Parameter> getInterfaceParameter(const std::string& _namespace, const std::string& _interface, const std::string& _method, size_t index);
+        static std::optional<Interface> getInterface(const std::string& _namespace, const std::string& _interface);
+        static std::optional<Interface> getInterface(const std::string& _namespace, size_t index);
     };
 };
 

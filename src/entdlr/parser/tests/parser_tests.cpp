@@ -360,11 +360,11 @@ TEST_SUITE("Parsing")
             CHECK(fields[2].type == "float64");
         }
 
-        SUBCASE("Facilities")
+        SUBCASE("Interfaces")
         {
             std::string input = R"(
-                /// facility comment
-                facility Time
+                /// interface comment
+                interface Time
                 {
                     now_a();
                     now_b(start: uint64);
@@ -376,10 +376,10 @@ TEST_SUITE("Parsing")
             )";
 
             const auto context = Parser::parse(input);
-            const auto& f = context.namespaces[0].facilities[0];
+            const auto& f = context.namespaces[0].interfaces[0];
 
             CHECK(f.name == "Time");
-            CHECK(f.comment == "facility comment");
+            CHECK(f.comment == "interface comment");
             REQUIRE(f.methods.size() == 6);
 
             const auto& ma = f.methods[0];

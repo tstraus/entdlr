@@ -118,12 +118,12 @@ FlatBuffersParser::Rpc_declContext* FlatBuffersParser::SchemaContext::rpc_decl(s
   return getRuleContext<FlatBuffersParser::Rpc_declContext>(i);
 }
 
-std::vector<FlatBuffersParser::Facility_declContext *> FlatBuffersParser::SchemaContext::facility_decl() {
-  return getRuleContexts<FlatBuffersParser::Facility_declContext>();
+std::vector<FlatBuffersParser::Interface_declContext *> FlatBuffersParser::SchemaContext::interface_decl() {
+  return getRuleContexts<FlatBuffersParser::Interface_declContext>();
 }
 
-FlatBuffersParser::Facility_declContext* FlatBuffersParser::SchemaContext::facility_decl(size_t i) {
-  return getRuleContext<FlatBuffersParser::Facility_declContext>(i);
+FlatBuffersParser::Interface_declContext* FlatBuffersParser::SchemaContext::interface_decl(size_t i) {
+  return getRuleContext<FlatBuffersParser::Interface_declContext>(i);
 }
 
 std::vector<FlatBuffersParser::ObjectContext *> FlatBuffersParser::SchemaContext::object() {
@@ -255,7 +255,7 @@ FlatBuffersParser::SchemaContext* FlatBuffersParser::schema() {
 
       case 10: {
         setState(91);
-        facility_decl();
+        interface_decl();
         break;
       }
 
@@ -1126,56 +1126,56 @@ FlatBuffersParser::Rpc_methodContext* FlatBuffersParser::rpc_method() {
   return _localctx;
 }
 
-//----------------- Facility_declContext ------------------------------------------------------------------
+//----------------- Interface_declContext ------------------------------------------------------------------
 
-FlatBuffersParser::Facility_declContext::Facility_declContext(ParserRuleContext *parent, size_t invokingState)
+FlatBuffersParser::Interface_declContext::Interface_declContext(ParserRuleContext *parent, size_t invokingState)
   : ParserRuleContext(parent, invokingState) {
 }
 
-tree::TerminalNode* FlatBuffersParser::Facility_declContext::IDENT() {
+tree::TerminalNode* FlatBuffersParser::Interface_declContext::IDENT() {
   return getToken(FlatBuffersParser::IDENT, 0);
 }
 
-tree::TerminalNode* FlatBuffersParser::Facility_declContext::DOC_COMMENT() {
+tree::TerminalNode* FlatBuffersParser::Interface_declContext::DOC_COMMENT() {
   return getToken(FlatBuffersParser::DOC_COMMENT, 0);
 }
 
-std::vector<FlatBuffersParser::Method_declContext *> FlatBuffersParser::Facility_declContext::method_decl() {
+std::vector<FlatBuffersParser::Method_declContext *> FlatBuffersParser::Interface_declContext::method_decl() {
   return getRuleContexts<FlatBuffersParser::Method_declContext>();
 }
 
-FlatBuffersParser::Method_declContext* FlatBuffersParser::Facility_declContext::method_decl(size_t i) {
+FlatBuffersParser::Method_declContext* FlatBuffersParser::Interface_declContext::method_decl(size_t i) {
   return getRuleContext<FlatBuffersParser::Method_declContext>(i);
 }
 
 
-size_t FlatBuffersParser::Facility_declContext::getRuleIndex() const {
-  return FlatBuffersParser::RuleFacility_decl;
+size_t FlatBuffersParser::Interface_declContext::getRuleIndex() const {
+  return FlatBuffersParser::RuleInterface_decl;
 }
 
-void FlatBuffersParser::Facility_declContext::enterRule(tree::ParseTreeListener *listener) {
+void FlatBuffersParser::Interface_declContext::enterRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
   if (parserListener != nullptr)
-    parserListener->enterFacility_decl(this);
+    parserListener->enterInterface_decl(this);
 }
 
-void FlatBuffersParser::Facility_declContext::exitRule(tree::ParseTreeListener *listener) {
+void FlatBuffersParser::Interface_declContext::exitRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
   if (parserListener != nullptr)
-    parserListener->exitFacility_decl(this);
+    parserListener->exitInterface_decl(this);
 }
 
 
-antlrcpp::Any FlatBuffersParser::Facility_declContext::accept(tree::ParseTreeVisitor *visitor) {
+antlrcpp::Any FlatBuffersParser::Interface_declContext::accept(tree::ParseTreeVisitor *visitor) {
   if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
-    return parserVisitor->visitFacility_decl(this);
+    return parserVisitor->visitInterface_decl(this);
   else
     return visitor->visitChildren(this);
 }
 
-FlatBuffersParser::Facility_declContext* FlatBuffersParser::facility_decl() {
-  Facility_declContext *_localctx = _tracker.createInstance<Facility_declContext>(_ctx, getState());
-  enterRule(_localctx, 22, FlatBuffersParser::RuleFacility_decl);
+FlatBuffersParser::Interface_declContext* FlatBuffersParser::interface_decl() {
+  Interface_declContext *_localctx = _tracker.createInstance<Interface_declContext>(_ctx, getState());
+  enterRule(_localctx, 22, FlatBuffersParser::RuleInterface_decl);
   size_t _la = 0;
 
   auto onExit = finally([=] {
@@ -3187,7 +3187,7 @@ std::vector<uint16_t> FlatBuffersParser::_serializedATN;
 std::vector<std::string> FlatBuffersParser::_ruleNames = {
   "schema", "include", "namespace_decl", "attribute_decl", "type_decl", 
   "enum_decl", "union_decl", "root_decl", "field_decl", "rpc_decl", "rpc_method", 
-  "facility_decl", "method_decl", "method_parameters", "method_parameter", 
+  "interface_decl", "method_decl", "method_parameters", "method_parameter", 
   "mutable_decl", "static_decl", "method_return_type", "method_type", "type", 
   "uniontype_decl", "commasep_uniontype_decl", "enumval_decl", "commasep_enumval_decl", 
   "ident_with_opt_single_value", "commasep_ident_with_opt_single_value", 
@@ -3199,7 +3199,7 @@ std::vector<std::string> FlatBuffersParser::_ruleNames = {
 std::vector<std::string> FlatBuffersParser::_literalNames = {
   "", "'include'", "';'", "'namespace'", "'.'", "'attribute'", "'table'", 
   "'struct'", "'{'", "'}'", "'enum'", "':'", "'union'", "'root_type'", "'='", 
-  "'rpc_service'", "'('", "')'", "'facility'", "','", "'mut'", "'static'", 
+  "'rpc_service'", "'('", "')'", "'interface'", "','", "'mut'", "'static'", 
   "'['", "']'", "'file_extension'", "'file_identifier'"
 };
 

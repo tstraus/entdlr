@@ -1,10 +1,10 @@
-#include "facility.h"
+#include "interface.h"
 
 namespace Entdlr
 {
-    Facility Facility::create(const Token& token, const std::string& comment)
+    Interface Interface::create(const Token& token, const std::string& comment)
     {
-        Facility out;
+        Interface out;
         out.filename = token.filename;
         out.line = token.line;
         out.column = token.column;
@@ -14,7 +14,7 @@ namespace Entdlr
         return out;
     }
 
-    void Facility::add(const Method& method)
+    void Interface::add(const Method& method)
     {
         methods.push_back(method);
     }

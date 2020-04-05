@@ -89,12 +89,12 @@ namespace {{namespace.name}}
 
 ## endfor
 
-## for facility in namespace.facilities
-    /// {{facility.comment}}
-    class {{facility.name}} : public Facility
+## for interface in namespace.interfaces
+    /// {{interface.comment}}
+    class {{interface.name}} : public Interface
     {
     public:
-## for method in facility.methods
+## for method in interface.methods
         /// {{method.comment}}
 ## if method.isStatic == true
         static

@@ -152,17 +152,17 @@ for (nKey in c.namespaces.keys) {
         }
     }
 
-    for (fKey in n.facilities.keys) {
-        var f = n.facilities[fKey]
+    for (iKey in n.interfaces.keys) {
+        var i = n.interfaces[iKey]
 
-        if (f.comment.count > 0) {
-            System.print("    /// " + f.comment)
+        if (i.comment.count > 0) {
+            System.print("    /// " + i.comment)
         }
 
-        System.print("    " + f.name + " : facility")
+        System.print("    " + i.name + " : interface")
 
-        for (mKey in f.methods.keys) {
-            var m = f.methods[mKey]
+        for (mKey in i.methods.keys) {
+            var m = i.methods[mKey]
             System.write("        ")
             if (m.isStatic) {
                 System.write("static ")

@@ -35,7 +35,7 @@ namespace Entdlr
 
         static std::vector<Attribute> parseAttributes(FlatBuffersParser::MetadataContext* metadata, const std::string& filename);
 
-        static std::vector<Facility> parseFacilities(const std::vector<FlatBuffersParser::Facility_declContext*>& facilities, const std::string& filename);
+        static std::vector<Interface> parseInterfaces(const std::vector<FlatBuffersParser::Interface_declContext*>& interfaces, const std::string& filename);
 
         static std::string trimComment(const std::string& comment);
     };
