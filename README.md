@@ -3,6 +3,8 @@
 A tool for defining structures and classes generically and generating implementations by templating. An extended version of the FlatBuffers language is used to create these definitions, which can include namespaces, enums, unions, structs, and facilities. Facilities are useful for defining the pure interface of a library, with the names and signatures of methods. Methods can also be added to structs.
 
 ## Definitions
+Definitions are what `entdlr` parses into a `Context`. They are what defines your structures and interfaces. 
+
 ### Base Types
 |signed ints      |unsigned ints      |floats              |other    |
 | --------------- | ----------------- | ------------------ | ------- |
@@ -81,5 +83,70 @@ struct Scalar
     length : float64; /// I'm the doc string for this field
 
     static new() : Scalar; /// I'm the doc string for this method
+}
+```
+
+## Templates
+Templates are what uses the `Context` to create output. They can be written in a template lanuage similar to Jinja called Inja, with user written functions defined in the scripting language Wren. Templates can also be written entirely in Wren, with Wren's console output becoming the template's output. Inja templates are easier to work with but less flexible than full Wren script templates.
+
+### Inja
+Inja templates use the filename extension `.tmpl`. Working with the `Context` in Inja is based on iterating over it's lists. `{{  }}` pulls values out of the context. `##` is used for creating whole line statements, `{%  %}` for in line statements. `for` and `if` statements are available. Functions can be called inside statements with `function_name(arg1, arg2)`, `upper(_)` is one of several functions built into Inja.
+```jinja
+## for namespace in entdlr.namespaces
+{{ namespace.name }}
+## for struct in namespace.structs
+    {{ struct.name }} : struct
+## for field in struct.fields
+        {{ field.name }} : {{ upper(field.type) }}{% if field.isArray %}[]{% endif %}
+## endfor
+## endfor
+## endfor
+```
+If more capability is required in Inja scripts, you may write additional functions in Wren. Wren functions must be defined in a file next to the template file with the same name, but with the filename extension `.wren`. These scripts must have a class named `Functions`, who's static methods are those that are made available in Inja. Other classes and modules can be used in these methods, but they are not directly exposed to Inja. The value returned from the Wren function is then given to Inja.
+
+```javascript
+// [ ./Example.wren ]
+class Functions {
+    static do_something(what) {
+        return "I did the thing -> " + what
+    }
+}
+```
+```jinja
+{# [ ./Example.tmpl ] #}
+## for namespace in entdlr.namespaces
+{{ do_something(namespace.name) }}
+## endfor
+```
+If
+```c++
+namespace Examples;
+```
+had `Example.tmpl` applied, it would output the following
+```
+I did the thing -> Examples
+```
+
+### Wren
+Wren is a simple object oriented scripting languge that in addition to writing functions for Inja, can be used to create standalone templates. When used in this form, Wren's console output becomes the output of the template. Entdlr's internal `Context` is mirrored into an identical class structure inside of wren, which is made available to the user with the `Context` module.
+```javascript
+import "Context" for Context
+
+var c = Context.get()
+
+for (n in c.namespaces.values) {
+    System.print(n.name)
+
+    for (s in n.structs.values) {
+        System.print("    " + s.name + " : struct")
+
+        for (f in s.fields.values) {
+            System.write("        " + f.name + " : " + f.type)
+            if (f.isArray) {
+                System.write("[]")
+            }
+            System.print()
+        }
+    }
 }
 ```
