@@ -1,86 +1,43 @@
 #include <stdint.h>
 
 ## for namespace in entdlr.namespaces
-namespace {{namespace.name}}
+namespace {{ namespace.name }}
 {
 ## for enum in namespace.enums
-    /// {{enum.comment}}
-    enum class {{enum.name}} : {{enum.type}}
+    /// {{ enum.comment }}
+    enum class {{ enum.name }} : {{ enum.type }}
     {
 ## for e in enum.values
-## if loop.is_last == false
-        {{e.name}} = {{e.value}},
-## endif
-## if loop.is_last == true
-        {{e.name}} = {{e.value}}
-## endif
+        {{ e.name }} = {{ e.value }}{% if loop.is_last == true %},{% endif %}
 ## endfor
     };
 
 ## endfor
 
 ## for union in namespace.unions
-    /// {{union.comment}}
-    union {{union.name}}
+    /// {{ union.comment }}
+    union {{ union.name }}
     {
 ## for t in union.types
-## if t.isArray == false
-## if loop.is_last == false
-        {{t.name}},
-## endif
-## if loop.is_last == true
-        {{t.name}}
-## endif
-## endif
-## if t.isArray == true and t.arraySize > 0
-## if loop.is_last == false
-        {{t.name}}[{{t.arraySize}}],
-## endif
-## if loop.is_last == true
-        {{t.name}}[{{t.arraySize}}]
-## endif
-## endif
+        {{ t.name }}{% if t.isArray == true and t.arraySize > 0 %}[{{ t.arraySize }}]{% endif %}{% if loop.is_last == true %},{% endif %}
 ## endfor
     };
 ## endfor
 
 ## for struct in namespace.structs
-    /// {{struct.comment}}
-    class {{struct.name}}
+    /// {{ struct.comment }}
+    class {{ struct.name }}
     {
     public:
 ## for field in struct.fields
-## if field.isArray == false
-        {{field.type}} {{field.name}}; /// {{field.comment}}
-## endif
-## if field.isArray == true and field.arraySize > 0
-        {{field.type}} {{field.name}}[{{field.arraySize}}]; /// {{field.comment}}
-## endif
+        {{ field.type }} {{ field.name }}{% if field.isArray == true and field.arraySize > 0 %}[{{ field.arraySize }}]{% endif %}; /// {{ field.comment }}
 ## endfor
 
 ## for method in struct.methods
-        /// {{method.comment}}
-## if method.isStatic == true
-        static
-## endif
-        {{method.returnType}} {{method.name}} (
+        /// {{ method.comment }}
+        {% if method.isStatic == true %}static {% endif %}{{ method.returnType }} {{ method.name }} (
 ## for parameter in method.parameters
-## if loop.is_last == false
-## if parameter.constant == true
-            const {{parameter.type}}& {{parameter.name}},
-## endif
-## if parameter.constant == false
-            {{parameter.type}}& {{parameter.name}},
-## endif
-## endif
-## if loop.is_last == true
-## if parameter.constant == true
-            const {{parameter.type}}& {{parameter.name}}
-## endif
-## if parameter.constant == false
-            {{parameter.type}}& {{parameter.name}}
-## endif
-## endif
+            {% if parameter.constant == true %}const {% endif %}{{ parameter.type }}& {{ paramerter.name }}{% if loop.is_last == false %},{% endif %}
 ## endfor
         );
 
@@ -90,33 +47,15 @@ namespace {{namespace.name}}
 ## endfor
 
 ## for interface in namespace.interfaces
-    /// {{interface.comment}}
-    class {{interface.name}} : public Interface
+    /// {{ interface.comment }}
+    class {{ interface.name }} : public Interface
     {
     public:
 ## for method in interface.methods
         /// {{method.comment}}
-## if method.isStatic == true
-        static
-## endif
-        {{method.returnType}} {{method.name}} (
+        {% if method.isStatic == true %}static {% endif %}{{method.returnType}} {{method.name}} (
 ## for parameter in method.parameters
-## if loop.is_last == false
-## if parameter.constant == true
-            const {{parameter.type}}& {{parameter.name}},
-## endif
-## if parameter.constant == false
-            {{parameter.type}}& {{parameter.name}},
-## endif
-## endif
-## if loop.is_last == true
-## if parameter.constant == true
-            const {{parameter.type}}& {{parameter.name}}
-## endif
-## if parameter.constant == false
-            {{parameter.type}}& {{parameter.name}}
-## endif
-## endif
+        {% if paramerter.constant == true %}const {% endif %}{{ paramerter.type }}& {{ parameter.name }}{% if loop.is_last == false %},{% endif %}
 ## endfor
         );
 
