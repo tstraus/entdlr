@@ -98,16 +98,30 @@ namespace Entdlr
         }
     }
 
-    Context Parser::merge(const std::vector<Context> &contexts)
+    Context Parser::merge(const std::vector<Context>& contexts)
     {
         Context output;
+
+        std::unordered_map<std::string, Namespace> m;
 
         for (const auto& context : contexts)
         {
             // add up the namespaces
             for (const auto& n : context.namespaces)
-                output.add(n);
+            {
+                Namespace ns = m[n.name];
+
+                for (const auto& e : n.enums) ns.add(e);
+                for (const auto& u : n.unions) ns.add(u);
+                for (const auto& s : n.structs) ns.add(s);
+                for (const auto& i : n.interfaces) ns.add(i);
+
+                m[n.name] = ns;
+            }
         }
+
+        for (const auto& n : m)
+            output.add(n.second);
 
         return output;
     }
