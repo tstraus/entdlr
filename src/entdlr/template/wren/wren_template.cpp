@@ -23,6 +23,7 @@ namespace Entdlr
         outputBuffer.clear();
 
         // map our foreign methods
+        boundForeignMethods["Context::Context::numIncludes()static"] = ContextHelper::numIncludes;
         boundForeignMethods["Context::Context::numNamespaces()static"] = ContextHelper::numNamespaces;
         boundForeignMethods["Context::Context::numEnums(_)static"] = ContextHelper::numEnums;
         boundForeignMethods["Context::Context::numEnumAttributes(_,_)static"] = ContextHelper::numEnumAttributes;
@@ -40,6 +41,7 @@ namespace Entdlr
         boundForeignMethods["Context::Context::numInterfaceMethods(_,_)static"] = ContextHelper::numInterfaceMethods;
         boundForeignMethods["Context::Context::numInterfaceMethodParameters(_,_,_)static"] = ContextHelper::numInterfaceMethodParameters;
 
+        boundForeignMethods["Context::Context::getIncludeName(_)static"] = ContextHelper::getIncludeName;
         boundForeignMethods["Context::Context::getNamespaceName(_)static"] = ContextHelper::getNamespaceName;
         boundForeignMethods["Context::Context::getEnumName(_,_)static"] = ContextHelper::getEnumName;
         boundForeignMethods["Context::Context::getEnumType(_,_)static"] = ContextHelper::getEnumType;

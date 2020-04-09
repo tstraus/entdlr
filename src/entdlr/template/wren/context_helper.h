@@ -15,6 +15,7 @@ namespace Entdlr
         static void setContext(const Context& c);
 
         // get sizes
+        static void numIncludes(WrenVM* vm);
         static void numNamespaces(WrenVM* vm);
         static void numEnums(WrenVM* vm);
         static void numEnumAttributes(WrenVM* vm);
@@ -31,6 +32,9 @@ namespace Entdlr
         static void numInterfaces(WrenVM* vm);
         static void numInterfaceMethods(WrenVM* vm);
         static void numInterfaceMethodParameters(WrenVM* vm);
+
+        // Include
+        static void getIncludeName(WrenVM* vm);
 
         // Namespace
         static void getNamespaceName(WrenVM* vm);
@@ -105,6 +109,7 @@ namespace Entdlr
         static void getInterfaceMethodParameterConstant(WrenVM* vm);
 
     private:
+        static std::optional<Include> getInclude(const std::string& _include);
         static std::optional<Namespace> getNamespace(const std::string& _namespace);
         static std::optional<Enum> getEnum(const std::string& _namespace, const std::string& _enum);
         static std::optional<Enum> getEnum(const std::string& _namespace, size_t index);
