@@ -50,6 +50,33 @@ namespace Entdlr
                     if (mappings.count(f.type))
                         f.type = mappings[f.type];
                 }
+
+                for (auto& m : s.methods)
+                {
+                    if (mappings.count(m.returnType))
+                        m.returnType = mappings[m.returnType];
+
+                    for (auto& p : m.parameters)
+                    {
+                        if (mappings.count(p.type))
+                            p.type = mappings[p.type];
+                    }
+                }
+            }
+
+            for (auto& i : n.interfaces)
+            {
+                for (auto& m : i.methods)
+                {
+                    if (mappings.count(m.returnType))
+                        m.returnType = mappings[m.returnType];
+
+                    for (auto& p : m.parameters)
+                    {
+                        if (mappings.count(p.type))
+                            p.type = mappings[p.type];
+                    }
+                }
             }
         }
 
