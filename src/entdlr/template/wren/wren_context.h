@@ -3,10 +3,17 @@
 
 const std::string contextSource = R"(
 class Context {
+    includes { _includes }
     namespaces { _namespaces }
 
     construct get() {
+        _includes = {}
         _namespaces = {}
+
+        for (i in 0...Context.numIncludes()) {
+            var inc = Include.new(Context.getIncludeName(i))
+            _includes[inc.name] = inc
+        }
 
         for (i in 0...Context.numNamespaces()) {
             var n = Namespace.new(Context.getNamespaceName(i))
@@ -15,6 +22,7 @@ class Context {
     }
 
     // get sizes
+    foreign static numIncludes()
     foreign static numNamespaces()
     foreign static numEnums(namespace)
     foreign static numEnumAttributes(namespace, enum)
@@ -31,6 +39,9 @@ class Context {
     foreign static numInterfaces(namespace)
     foreign static numInterfaceMethods(namespace, interface)
     foreign static numInterfaceMethodParameters(namespace, interface, method)
+
+    // Include
+    foreign static getIncludeName(index)
 
     // Namespace
     foreign static getNamespaceName(index)
@@ -103,6 +114,14 @@ class Context {
     foreign static getInterfaceMethodParameterName(namespace, interface, method, index)
     foreign static getInterfaceMethodParameterType(namespace, interface, method, index)
     foreign static getInterfaceMethodParameterConstant(namespace, interface, method, index)
+}
+
+class Include {
+    name { _name }
+
+    construct new(inc) {
+        _name = inc
+    }
 }
 
 class Namespace {

@@ -15,7 +15,6 @@ int main(int argc, char** argv)
     {
         std::string template_name = "";
         std::string filename = "";
-        std::string dirname = "";
         std::string output_name = "";
 
         argh::parser args(argv);
@@ -26,32 +25,29 @@ int main(int argc, char** argv)
             "  -h, --help           Basic use help (this)\n" <<
             "  -t, --template=FILE  Template file to use. Default: \"../samples/dump.wren\"\n" <<
             "  -f, --file=FILE      Parse the specified file. Default: \"../samples/entity.fbs\"\n" <<
-            "  -d, --dir=DIRECTORY  Parse all \".fbs\" files in the directory\n" <<
             "  -o, --output=FILE    File to put template output in. Default: prints to STDOUT" <<
             endl;
 
             return 0;
         }
 
-        args({ "-t", "--template" }, "../samples/dump.wren") >> template_name;
+        //args({ "-t", "--template" }, "../samples/dump.wren") >> template_name;
+        args({ "-t", "--template" }, "../samples/display.tmpl") >> template_name;
         args({ "-f", "--file" }) >> filename;
-        args({ "-d", "--dir" }) >> dirname;
         args({ "-o", "--output" }) >> output_name;
 
-        if (filename.empty() && dirname.empty())
+        if (filename.empty())
             filename = "../samples/entity.fbs";
 
         Entdlr::Context context;
         if (!filename.empty())
             context = Entdlr::Parser::parseFile(filename);
-        if (!dirname.empty())
-            context = Entdlr::Parser::parseDir(dirname);
         
         Entdlr::TemplateRouter t;
         const auto output = t.applyTemplate(context, template_name);
 
         if (output_name.empty()) // no output file given, print it
-            cout << "output: " << output << endl;
+            cout << output << endl;
 
         else
         {

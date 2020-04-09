@@ -11,6 +11,9 @@ namespace Entdlr
     void to_json(json& j, const Context& c);
     void from_json(const json& j, Context& c);
 
+    void to_json(json& j, const Include& i);
+    void from_json(const json& j, Include& i);
+
     void to_json(json& j, const Namespace& n);
     void from_json(const json& j, Namespace& n);
 

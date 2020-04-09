@@ -3,12 +3,30 @@
 namespace Entdlr {
     void to_json(json& j, const Context& c) {
         j = json{
+                {"includes",   c.includes},
                 {"namespaces", c.namespaces}
         };
     }
 
     void from_json(const json& j, Context& c) {
+        j.at("includes").get_to(c.includes);
         j.at("namespaces").get_to(c.namespaces);
+    }
+
+    void to_json(json& j, const Include& i) {
+        j = json{
+                {"name",       i.name},
+                {"filename",   i.filename},
+                {"line",       i.line},
+                {"column",     i.column}
+        };
+    }
+
+    void from_json(const json& j, Include& i) {
+        j.at("name").get_to(i.name);
+        j.at("filename").get_to(i.filename);
+        j.at("line").get_to(i.line);
+        j.at("column").get_to(i.column);
     }
 
     void to_json(json& j, const Namespace& n) {

@@ -12,6 +12,11 @@ namespace Entdlr
         context = c;
     }
 
+    void ContextHelper::numIncludes(WrenVM* vm)
+    {
+        wrenSetSlotDouble(vm, 0, context.includes.size());
+    }
+
     void ContextHelper::numNamespaces(WrenVM* vm)
     {
         wrenSetSlotDouble(vm, 0, context.namespaces.size());
@@ -194,6 +199,17 @@ namespace Entdlr
             output = m->parameters.size();
 
         wrenSetSlotDouble(vm, 0, output);
+    }
+
+    void ContextHelper::getIncludeName(WrenVM* vm)
+    {
+        size_t index = wrenGetSlotDouble(vm, 1);
+
+        std::string output = "";
+        if (context.includes.size() > index)
+            output = context.includes[index].name;
+
+        wrenSetSlotString(vm, 0, output.c_str());
     }
 
     void ContextHelper::getNamespaceName(WrenVM* vm)
@@ -896,6 +912,17 @@ namespace Entdlr
             output = p->constant;
 
         wrenSetSlotBool(vm, 0, output);
+    }
+
+    std::optional<Include> ContextHelper::getInclude(const std::string& _include)
+    {
+        for (const auto& i : context.includes)
+        {
+            if (i.name == _include)
+                return i;
+        }
+
+        return {};
     }
 
     std::optional<Namespace> ContextHelper::getNamespace(const std::string& _namespace)

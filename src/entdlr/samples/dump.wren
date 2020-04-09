@@ -2,6 +2,11 @@ import "Context" for Context
 
 var c = Context.get()
 
+for (iKey in c.includes.keys) {
+    var i = c.includes[iKey]
+    System.print("include " + i.name)
+}
+
 for (nKey in c.namespaces.keys) {
     var n = c.namespaces[nKey]
     System.print(n.name)
