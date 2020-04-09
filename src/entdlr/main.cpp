@@ -20,19 +20,18 @@ int main(int argc, char** argv)
         argh::parser args(argv);
         if (args[{ "-h", "--help" }])
         {
-            cout <<
-            "Usage: entdlr [OPTION]\n" <<
-            "  -h, --help           Basic use help (this)\n" <<
-            "  -t, --template=FILE  Template file to use. Default: \"../samples/dump.wren\"\n" <<
-            "  -f, --file=FILE      Parse the specified file. Default: \"../samples/entity.fbs\"\n" <<
-            "  -o, --output=FILE    File to put template output in. Default: prints to STDOUT" <<
-            endl;
+            cout
+            << "Usage: entdlr [OPTION]\n"
+            << "  -h, --help           Basic use help (this)\n"
+            << "  -t, --template=FILE  Template file to use. Default: \"../samples/dump.wren\"\n"
+            << "  -f, --file=FILE      Parse the specified file. Default: \"../samples/entity.fbs\"\n"
+            << "  -o, --output=FILE    File to put template output in. Default: prints to STDOUT"
+            << endl;
 
             return 0;
         }
 
-        //args({ "-t", "--template" }, "../samples/dump.wren") >> template_name;
-        args({ "-t", "--template" }, "../samples/display.tmpl") >> template_name;
+        args({ "-t", "--template" }, "../samples/dump.wren") >> template_name;
         args({ "-f", "--file" }) >> filename;
         args({ "-o", "--output" }) >> output_name;
 

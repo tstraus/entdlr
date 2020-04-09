@@ -67,7 +67,7 @@ namespace Entdlr
             // get the includes in the file
             auto incs = parseIncludes(schema->include(), filename);
             for (const auto& i : incs)
-                cout << "include : " << i.name << endl;
+                context.add(i);
 
             // get the namespace in the file
             auto ns = parseNamespace(schema->namespace_decl(), filename);
@@ -131,23 +131,25 @@ namespace Entdlr
         return output;
     }
 
-    std::vector<Token> Parser::parseIncludes(const std::vector<FlatBuffersParser::IncludeContext*> incs, const std::string& filename)
+    std::vector<Include> Parser::parseIncludes(const std::vector<FlatBuffersParser::IncludeContext*> incs, const std::string& filename)
     {
-        std::vector<Token> output;
+        std::vector<Include> output;
 
         for (const auto& inc : incs)
         {
-            Token i;
-            i.line = inc->getStart()->getLine();
-            i.column = inc->getStart()->getCharPositionInLine();
-            i.filename = filename;
- 
             std::string name = inc->STRING_CONSTANT()->getSymbol()->getText();
             name = name.substr(1, name.size() - 6); // strip quotes and .fbs off
 
-            i.name = name;
-
-            output.push_back(i);
+            output.push_back(
+                Include::create(
+                    Token{
+                        name,
+                        filename,
+                        inc->getStart()->getLine(),
+                        inc->getStart()->getCharPositionInLine()
+                    }
+                )
+            );
         }
 
         return output;
