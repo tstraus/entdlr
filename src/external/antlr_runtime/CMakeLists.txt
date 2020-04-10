@@ -39,8 +39,9 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
   set(disabled_compile_warnings "/wd4251")
 else()
   set(disabled_compile_warnings "-Wno-overloaded-virtual")
+  target_compile_options(antlr4_shared PUBLIC "-Wno-attributes")
+  target_compile_options(antlr4_static PUBLIC "-Wno-attributes")
 endif()
-
 
 if("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
   set(disabled_compile_warnings "${disabled_compile_warnings} -Wno-dollar-in-identifier-extension -Wno-four-char-constants")
