@@ -108,7 +108,7 @@ namespace Entdlr
         std::string functionName = name;
         functionName.erase(std::remove(functionName.begin(), functionName.end(), '\"'), functionName.end());
         functionName += "(";
-        for (int i = 0; i < numArgs; i++)
+        for (unsigned int i = 0; i < numArgs; i++)
         {
             functionName += "_";
             if (i != numArgs - 1) functionName += ",";
@@ -121,7 +121,7 @@ namespace Entdlr
         WrenHandle* variable = wrenGetSlotHandle(vm, 0); // an instance of the class
         WrenHandle* handle = wrenMakeCallHandle(vm, functionName.c_str()); // method signature
 
-        wrenEnsureSlots(vm, args.size() + 1); // make sure we have enough slots for the arguments
+        wrenEnsureSlots(vm, (int)args.size() + 1); // make sure we have enough slots for the arguments
 
         // put inja's arguments into wren's argument slots
         for (int i = 0; i < args.size(); i++)
