@@ -14,6 +14,7 @@ set (HEADERS
 )
 
 set (SOURCE
+    token.cpp
     include.cpp
     attribute.cpp
     enum.cpp

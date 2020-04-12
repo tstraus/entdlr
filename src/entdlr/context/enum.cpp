@@ -9,6 +9,7 @@ namespace Entdlr
     EnumValue EnumValue::create(const Token& token, const int64_t& value)
     {
         EnumValue out;
+        out.token = TokenType::EnumValue;
         out.filename = token.filename;
         out.line = token.line;
         out.column = token.column;
@@ -21,6 +22,7 @@ namespace Entdlr
     Enum Enum::create(const Token& token, const std::string& type, const std::vector<Attribute>& attributes, const std::string& comment)
     {
         Enum out;
+        out.token = TokenType::Enum;
         out.filename = token.filename;
         out.line = token.line;
         out.column = token.column;

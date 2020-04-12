@@ -5,6 +5,7 @@ namespace Entdlr
     Field Field::create(const Token& token, const std::string& type, const bool& isArray, const uint32_t& arraySize, const std::vector<Attribute>& attributes, const std::string& comment)
     {
         Field out;
+        out.token = TokenType::Field;
         out.filename = token.filename;
         out.line = token.line;
         out.column = token.column;
@@ -21,6 +22,7 @@ namespace Entdlr
     Struct Struct::create(const Token& token, const std::vector<Attribute>& attributes, const std::string& comment)
     {
         Struct out;
+        out.token = TokenType::Struct;
         out.filename = token.filename;
         out.line = token.line;
         out.column = token.column;

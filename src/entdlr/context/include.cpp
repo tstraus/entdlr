@@ -9,6 +9,7 @@ namespace Entdlr
     Include Include::create(const Token& token)
     {
         Include out;
+        out.token = TokenType::Include;
         out.filename = token.filename;
         out.line = token.line;
         out.column = token.column;
