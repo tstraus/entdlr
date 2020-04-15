@@ -1,5 +1,6 @@
 set (SAMPLES
     ./entity.fbs
+    ./measurements.fbs
     ./time_interface.fbs
     ./flatbench.fbs
     ./greeter.fbs

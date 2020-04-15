@@ -17,4 +17,9 @@ namespace Entdlr
 
         return out;
     }
+
+    void Include::add(const Namespace& n)
+    {
+        namespaces.push_back(n);
+    }
 };

@@ -138,18 +138,26 @@ namespace Entdlr
         for (const auto& inc : incs)
         {
             std::string name = inc->STRING_CONSTANT()->getSymbol()->getText();
-            name = name.substr(1, name.size() - 6); // strip quotes and .fbs off
+            std::string includeName = name.substr(1, name.size() - 6); // strip quotes and .fbs off
 
-            output.push_back(
-                Include::create(
-                    Token::create(
-                        name,
-                        filename,
-                        inc->getStart()->getLine(),
-                        inc->getStart()->getCharPositionInLine()
-                    )
+            std::string includeDir = std::filesystem::path(filename).parent_path().string();
+            if (includeDir == "")
+                includeDir = ".";
+            std::string includeFilename = includeDir + "/" + name.substr(1, name.size() - 2); // strip quotes off and add the dir
+
+            auto i = Include::create(
+                Token::create(
+                    includeName,
+                    filename,
+                    inc->getStart()->getLine(),
+                    inc->getStart()->getCharPositionInLine()
                 )
             );
+
+            const auto c = parseFile(includeFilename);
+            i.namespaces = c.namespaces;
+
+            output.push_back(i);
         }
 
         return output;

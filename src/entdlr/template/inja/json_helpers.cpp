@@ -19,7 +19,8 @@ namespace Entdlr {
                 {"name",       i.name},
                 {"filename",   i.filename},
                 {"line",       i.line},
-                {"column",     i.column}
+                {"column",     i.column},
+                {"namespaces", i.namespaces}
         };
     }
 
@@ -29,6 +30,7 @@ namespace Entdlr {
         j.at("filename").get_to(i.filename);
         j.at("line").get_to(i.line);
         j.at("column").get_to(i.column);
+        j.at("namespaces").get_to(i.namespaces);
     }
 
     void to_json(json& j, const Namespace& n) {

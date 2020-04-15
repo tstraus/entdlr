@@ -31,7 +31,7 @@ int main(int argc, char** argv)
             return 0;
         }
 
-        args({ "-t", "--template" }, "../samples/dump.wren") >> template_name;
+        args({ "-t", "--template" }, "../samples/display.tmpl") >> template_name;
         args({ "-f", "--file" }) >> filename;
         args({ "-o", "--output" }) >> output_name;
 
