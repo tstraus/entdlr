@@ -87,6 +87,35 @@ namespace Entdlr
         //cout << tmpl.str() << endl;
 
         inja::Environment env;
+        env.add_callback("getTokenType", 1,
+            [this, context](inja::Arguments& args)
+            {
+                std::string type = *args[0];
+
+                for (const auto& n : context.namespaces)
+                {
+                    if (n.name == type) return "namespace";
+                    for (const auto& e : n.enums) if (e.name == type) return "enum";
+                    for (const auto& u : n.unions) if (u.name == type) return "union";
+                    for (const auto& s : n.structs) if (s.name == type) return "struct";
+                    for (const auto& i : n.interfaces) if (i.name == type) return "interface";
+                }
+
+                for (const auto& i : context.includes)
+                {
+                    for (const auto& n : i.namespaces)
+                    {
+                        if (n.name == type) return "namespace";
+                        for (const auto& e : n.enums) if (e.name == type) return "enum";
+                        for (const auto& u : n.unions) if (u.name == type) return "union";
+                        for (const auto& s : n.structs) if (s.name == type) return "struct";
+                        for (const auto& i : n.interfaces) if (i.name == type) return "interface";
+                    }
+                }
+
+                return "unknown";
+            }
+        );
         env.set_fallback
         (
             [this](const std::string& name, const unsigned int numArgs, const inja::Arguments& args)
