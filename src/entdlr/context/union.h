@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <string>
 #include <vector>
-#include <optional>
+#include <unordered_map>
 
 #include "token.h"
 #include "attribute.h"
@@ -24,10 +24,10 @@ namespace Entdlr
     {
     public:
         std::vector<UnionType> types;
-        std::vector<Attribute> attributes;
+        std::unordered_map<std::string, Attribute> attributes;
         std::string comment;
 
-        static Union create(const Token& token, const std::vector<Attribute>& attributes = {}, const std::string& comment = "");
+        static Union create(const Token& token, const std::unordered_map<std::string, Attribute>& attributes = {}, const std::string& comment = "");
         void add(const UnionType& type);
     };
 };

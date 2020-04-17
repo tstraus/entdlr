@@ -209,7 +209,7 @@ namespace Entdlr
                 filename, en->getStart()->getLine(),
                 en->getStart()->getCharPositionInLine()
             );
-            std::vector<Attribute> attributes = parseAttributes(en->metadata(), filename);
+            std::unordered_map<std::string, Attribute> attributes = parseAttributes(en->metadata(), filename);
 
             if (en->DOC_COMMENT())
                 comment = trimComment(en->DOC_COMMENT()->getSymbol()->getText());
@@ -401,7 +401,7 @@ namespace Entdlr
         std::string type = "";
         bool isArray = false;
         uint32_t arraySize = 0;
-        std::vector<Attribute> attributes;
+        std::unordered_map<std::string, Attribute> attributes;
         std::string comment = "";
 
         if (field->DOC_COMMENT())
@@ -556,9 +556,9 @@ namespace Entdlr
         return output;
     }
 
-    std::vector<Attribute> Parser::parseAttributes(FlatBuffersParser::MetadataContext* metadata, const std::string& filename)
+    std::unordered_map<std::string, Attribute> Parser::parseAttributes(FlatBuffersParser::MetadataContext* metadata, const std::string& filename)
     {
-        std::vector<Attribute> attributes;
+        std::unordered_map<std::string, Attribute> attributes;
 
         // check for metadata
         if (metadata && metadata->commasep_ident_with_opt_single_value() && metadata->commasep_ident_with_opt_single_value())
@@ -567,16 +567,15 @@ namespace Entdlr
             {
                 if (attribute->single_value() && attribute->single_value()->STRING_CONSTANT())
                 {
-                    attributes.push_back(
-                        Attribute::create(
-                            Token::create(
-                                attribute->IDENT()->getSymbol()->getText(),
-                                filename, attribute->getStart()->getLine(),
-                                attribute->getStart()->getCharPositionInLine()
-                            ),
-                            attribute->single_value()->STRING_CONSTANT()->getSymbol()->getText()
-                        )
+                    auto a = Attribute::create(
+                        Token::create(
+                            attribute->IDENT()->getSymbol()->getText(),
+                            filename, attribute->getStart()->getLine(),
+                            attribute->getStart()->getCharPositionInLine()
+                        ),
+                        attribute->single_value()->STRING_CONSTANT()->getSymbol()->getText()
                     );
+                    attributes[a.name] = a;
                 }
 
                 else if (attribute->single_value() && attribute->single_value()->scalar())
@@ -584,72 +583,67 @@ namespace Entdlr
                     const auto& scalar = attribute->single_value()->scalar();
                     if (scalar->INTEGER_CONSTANT())
                     {
-                        attributes.push_back(
-                            Attribute::create(
-                                Token::create(
-                                    attribute->IDENT()->getSymbol()->getText(),
-                                    filename, attribute->getStart()->getLine(),
-                                    attribute->getStart()->getCharPositionInLine()
-                                ),
-                                std::stod(scalar->INTEGER_CONSTANT()->getSymbol()->getText())
-                            )
+                        auto a = Attribute::create(
+                            Token::create(
+                                attribute->IDENT()->getSymbol()->getText(),
+                                filename, attribute->getStart()->getLine(),
+                                attribute->getStart()->getCharPositionInLine()
+                            ),
+                            std::stod(scalar->INTEGER_CONSTANT()->getSymbol()->getText())
                         );
+                        attributes[a.name] = a;
                     }
 
                     else if (scalar->HEX_INTEGER_CONSTANT())
                     {
-                        attributes.push_back(
-                            Attribute::create(
-                                Token::create(
-                                    attribute->IDENT()->getSymbol()->getText(),
-                                    filename, attribute->getStart()->getLine(),
-                                    attribute->getStart()->getCharPositionInLine()
-                                ),
-                                std::stod(scalar->HEX_INTEGER_CONSTANT()->getSymbol()->getText())
-                            )
+                        auto a = Attribute::create(
+                            Token::create(
+                                attribute->IDENT()->getSymbol()->getText(),
+                                filename, attribute->getStart()->getLine(),
+                                attribute->getStart()->getCharPositionInLine()
+                            ),
+                            std::stod(scalar->HEX_INTEGER_CONSTANT()->getSymbol()->getText())
                         );
+                        attributes[a.name] = a;
                     }
 
                     else if (scalar->FLOAT_CONSTANT())
                     {
-                        attributes.push_back(
-                            Attribute::create(
-                                Token::create(
-                                    attribute->IDENT()->getSymbol()->getText(),
-                                    filename, attribute->getStart()->getLine(),
-                                    attribute->getStart()->getCharPositionInLine()
-                                ),
-                                std::stod(scalar->FLOAT_CONSTANT()->getSymbol()->getText())
-                            )
+                        auto a = Attribute::create(
+                            Token::create(
+                                attribute->IDENT()->getSymbol()->getText(),
+                                filename, attribute->getStart()->getLine(),
+                                attribute->getStart()->getCharPositionInLine()
+                            ),
+                            std::stod(scalar->FLOAT_CONSTANT()->getSymbol()->getText())
                         );
+                        attributes[a.name] = a;
                     }
 
                     else if (scalar->IDENT())
                     {
-                        attributes.push_back(
-                            Attribute::create(
-                                Token::create(
-                                    attribute->IDENT()->getSymbol()->getText(),
-                                    filename, attribute->getStart()->getLine(),
-                                    attribute->getStart()->getCharPositionInLine()
-                                ),
-                                std::stod(scalar->IDENT()->getSymbol()->getText())
-                            )
+                        auto a = Attribute::create(
+                            Token::create(
+                                attribute->IDENT()->getSymbol()->getText(),
+                                filename, attribute->getStart()->getLine(),
+                                attribute->getStart()->getCharPositionInLine()
+                            ),
+                            std::stod(scalar->IDENT()->getSymbol()->getText())
                         );
+                        attributes[a.name] = a;
                     }
                 }
 
                 else
                 {
-                    attributes.push_back(
-                        Attribute::create(
-                            Token::create(
-                                attribute->IDENT()->getSymbol()->getText(),
-                                filename, attribute->getStart()->getLine(),
-                                attribute->getStart()->getCharPositionInLine()
-                            )
+                    auto a = Attribute::create(
+                        Token::create(
+                            attribute->IDENT()->getSymbol()->getText(),
+                            filename, attribute->getStart()->getLine(),
+                            attribute->getStart()->getCharPositionInLine()
                         )
                     );
+                    attributes[a.name] = a;
                 }
             }
         }

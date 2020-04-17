@@ -45,10 +45,10 @@ TEST_SUITE("Parsing")
             REQUIRE(s.attributes.size() == 1);
 
             const auto& attributes = s.attributes;
-            CHECK(attributes[0].token == TokenType::Attribute);
-            CHECK(attributes[0].name == "correlated");
-            CHECK(attributes[0].isNumber == false);
-            CHECK(attributes[0].isString == false);
+            CHECK(attributes.begin()->second.token == TokenType::Attribute);
+            CHECK(attributes.begin()->second.name == "correlated");
+            CHECK(attributes.begin()->second.isNumber == false);
+            CHECK(attributes.begin()->second.isString == false);
 
             const auto& fields = s.fields;
             CHECK(fields[0].token == TokenType::Field);
@@ -300,8 +300,8 @@ TEST_SUITE("Parsing")
             CHECK(f[2].isArray == true);
             CHECK(f[2].arraySize == 2);
             REQUIRE(f[2].attributes.size() == 1);
-            CHECK(f[2].attributes[0].name == "max_length");
-            CHECK(f[2].attributes[0].number == 10);
+            CHECK(f[2].attributes.begin()->second.name == "max_length");
+            CHECK(f[2].attributes.begin()->second.number == 10);
         }
     }
 

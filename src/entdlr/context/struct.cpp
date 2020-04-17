@@ -2,7 +2,7 @@
 
 namespace Entdlr
 {
-    Field Field::create(const Token& token, const std::string& type, const bool& isArray, const uint32_t& arraySize, const std::vector<Attribute>& attributes, const std::string& comment)
+    Field Field::create(const Token& token, const std::string& type, const bool& isArray, const uint32_t& arraySize, const std::unordered_map<std::string, Attribute>& attributes, const std::string& comment)
     {
         Field out;
         out.token = TokenType::Field;
@@ -19,7 +19,7 @@ namespace Entdlr
         return out;
     }
 
-    Struct Struct::create(const Token& token, const std::vector<Attribute>& attributes, const std::string& comment)
+    Struct Struct::create(const Token& token, const std::unordered_map<std::string, Attribute>& attributes, const std::string& comment)
     {
         Struct out;
         out.token = TokenType::Struct;

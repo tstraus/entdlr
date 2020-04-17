@@ -42,7 +42,7 @@ include {{include.name}}
 ## if field.isArray == true and field.arraySize > 0
         {{field.name}} : {{field.type}}[{{field.arraySize}}] /// {{field.comment}}
 ## endif
-## for attribute in field.attributes
+## for name, attribute in field.attributes
 ## if attribute.isString == false and attribute.isNumber == false
             {{attribute.name}}
 ## endif

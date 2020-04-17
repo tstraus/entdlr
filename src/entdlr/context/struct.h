@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <unordered_map>
 
 #include "token.h"
 #include "attribute.h"
@@ -16,10 +17,10 @@ namespace Entdlr
         std::string type;
         bool isArray;
         uint32_t arraySize;
-        std::vector<Attribute> attributes;
+        std::unordered_map<std::string, Attribute> attributes;
         std::string comment;
 
-        static Field create(const Token& token, const std::string& type, const bool& isArray, const uint32_t& arraySize, const std::vector<Attribute>& attributes = {}, const std::string& comment = "");
+        static Field create(const Token& token, const std::string& type, const bool& isArray, const uint32_t& arraySize, const std::unordered_map<std::string, Attribute>& attributes = {}, const std::string& comment = "");
     };
 
     class Struct : public Token
@@ -27,10 +28,10 @@ namespace Entdlr
     public:
         std::vector<Field> fields;
         std::vector<Method> methods;
-        std::vector<Attribute> attributes;
+        std::unordered_map<std::string, Attribute> attributes;
         std::string comment;
 
-        static Struct create(const Token& token, const std::vector<Attribute>& attributes = {}, const std::string& comment = "");
+        static Struct create(const Token& token, const std::unordered_map<std::string, Attribute>& attributes = {}, const std::string& comment = "");
         void add(const Field& field);
         void add(const Method& method);
     };

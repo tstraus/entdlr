@@ -1062,8 +1062,12 @@ namespace Entdlr
     {
         if (auto e = getEnum(_namespace, _enum))
         {
-            if (e->attributes.size() > index)
-                return e->attributes[index];
+            std::vector<Attribute> a;
+            for (const auto& att : e->attributes)
+                a.push_back(att.second);
+
+            if (a.size() > index)
+                return a[index];
         }
 
         return {};
@@ -1073,8 +1077,12 @@ namespace Entdlr
     {
         if (auto u = getUnion(_namespace, _union))
         {
-            if (u->attributes.size() > index)
-                return u->attributes[index];
+            std::vector<Attribute> a;
+            for (const auto& att : u->attributes)
+                a.push_back(att.second);
+
+            if (a.size() > index)
+                return a[index];
         }
 
         return {};
@@ -1084,8 +1092,12 @@ namespace Entdlr
     {
         if (auto s = getStruct(_namespace, _struct))
         {
-            if (s->attributes.size() > index)
-                return s->attributes[index];
+            std::vector<Attribute> a;
+            for (const auto& att : s->attributes)
+                a.push_back(att.second);
+
+            if (a.size() > index)
+                return a[index];
         }
 
         return {};
@@ -1095,8 +1107,12 @@ namespace Entdlr
     {
         if (auto f = getField(_namespace, _struct, _field))
         {
-            if (f->attributes.size() > index)
-                return f->attributes[index];
+            std::vector<Attribute> a;
+            for (const auto& att : f->attributes)
+                a.push_back(att.second);
+
+            if (a.size() > index)
+                return a[index];
         }
 
         return {};
