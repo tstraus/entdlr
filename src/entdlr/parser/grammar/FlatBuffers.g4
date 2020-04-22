@@ -28,7 +28,7 @@ rpc_method : IDENT '(' IDENT ')' ':' IDENT metadata ';' ;
 // overload grpc syntax for interfaces
 interface_decl : DOC_COMMENT? 'interface' IDENT '{' method_decl+ '}' ;
 
-method_decl : static_decl? IDENT '(' method_parameters ')' (':' method_return_type)? metadata ';' DOC_COMMENT? ;
+method_decl : ( static_decl | mutable_decl )? IDENT '(' method_parameters ')' (':' method_return_type)? metadata ';' DOC_COMMENT? ;
 method_parameters : ( method_parameter )? ( ',' method_parameter )* ;
 method_parameter : mutable_decl? IDENT ':' method_type ;
 mutable_decl : 'mut' ;

@@ -1,5 +1,5 @@
 
-// Generated from FlatBuffers.g4 by ANTLR 4.7.2
+// Generated from FlatBuffers.g4 by ANTLR 4.8
 
 #pragma once
 
@@ -320,6 +320,7 @@ public:
     Method_parametersContext *method_parameters();
     MetadataContext *metadata();
     Static_declContext *static_decl();
+    Mutable_declContext *mutable_decl();
     Method_return_typeContext *method_return_type();
     antlr4::tree::TerminalNode *DOC_COMMENT();
 

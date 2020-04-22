@@ -265,6 +265,7 @@ namespace Entdlr {
                 {"column",     m.column},
                 {"returnType", m.returnType},
                 {"isStatic",   m.isStatic},
+                {"constant",   m.constant},
                 {"parameters", m.parameters},
                 {"comment",    m.comment}
         };
@@ -279,6 +280,7 @@ namespace Entdlr {
         j.at("column").get_to(m.column);
         j.at("returnType").get_to(m.returnType);
         j.at("isStatic").get_to(m.isStatic);
+        j.at("constant").get_to(m.constant);
         j.at("parameters").get_to(m.parameters);
         j.at("comment").get_to(m.comment);
     }

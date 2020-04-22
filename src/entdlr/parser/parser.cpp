@@ -476,6 +476,7 @@ namespace Entdlr
     {
         std::string returnType = "";
         bool isStatic = false;
+        bool isConstant = true;
         std::string comment = "";
 
         if (method->DOC_COMMENT())
@@ -484,6 +485,9 @@ namespace Entdlr
 
         if (method->static_decl())
             isStatic = true;
+
+        if (method->mutable_decl())
+            isConstant = false;
 
         if (method->method_return_type() && method->method_return_type()->method_type())
         {
@@ -512,7 +516,7 @@ namespace Entdlr
                 filename, method->getStart()->getLine(),
                 method->getStart()->getCharPositionInLine()
             ),
-            returnType, isStatic, comment
+            returnType, isStatic, isConstant, comment
         );
 
         for (const auto& p : method->method_parameters()->method_parameter())

@@ -15,7 +15,7 @@ TEST_SUITE("Parsing")
         SUBCASE("Struct")
         {
             std::string input = R"(
-                include "test/Measurement.fbs"
+                include "test/Measurement.fbs";
 
                 /// struct comment
                 struct Position (correlated)
@@ -310,6 +310,7 @@ TEST_SUITE("Parsing")
         SUBCASE("Structs")
         {
             std::string input = R"(
+                /// other struct comment
                 struct Position
                 {
                     x : float64;
@@ -322,6 +323,8 @@ TEST_SUITE("Parsing")
                     elTo(mut otherPos: Position) : angle;
                     between(a: Position, mut b: Position) : bool;
                     static create(lat: angle, lon: angle, alt: length) : Position;
+
+                    mut multiply(other: float64);
                 }
             )";
 
@@ -330,13 +333,15 @@ TEST_SUITE("Parsing")
 
             CHECK(s.token == TokenType::Struct);
             CHECK(s.name == "Position");
-            REQUIRE(s.methods.size() == 6);
+            CHECK(s.comment == "other struct comment");
+            REQUIRE(s.methods.size() == 7);
 
             const auto& m1 = s.methods[0];
             CHECK(m1.token == TokenType::Method);
             CHECK(m1.name == "normalize");
             CHECK(m1.returnType == "void");
             CHECK(m1.isStatic == false);
+            CHECK(m1.constant == true);
             CHECK(m1.parameters.size() == 0);
             CHECK(m1.comment == "method comment");
 
@@ -345,6 +350,7 @@ TEST_SUITE("Parsing")
             CHECK(m2.name == "valid");
             CHECK(m2.returnType == "bool");
             CHECK(m2.isStatic == false);
+            CHECK(m2.constant == true);
             REQUIRE(m2.parameters.size() == 0);
 
             const auto& m3 = s.methods[2];
@@ -352,6 +358,7 @@ TEST_SUITE("Parsing")
             CHECK(m3.name == "azTo");
             CHECK(m3.returnType == "angle");
             CHECK(m3.isStatic == false);
+            CHECK(m3.constant == true);
             REQUIRE(m3.parameters.size() == 1);
             CHECK(m3.parameters[0].token == TokenType::Parameter);
             CHECK(m3.parameters[0].name == "otherPos");
@@ -363,6 +370,7 @@ TEST_SUITE("Parsing")
             CHECK(m4.name == "elTo");
             CHECK(m4.returnType == "angle");
             CHECK(m4.isStatic == false);
+            CHECK(m4.constant == true);
             REQUIRE(m4.parameters.size() == 1);
             CHECK(m4.parameters[0].token == TokenType::Parameter);
             CHECK(m4.parameters[0].name == "otherPos");
@@ -374,6 +382,7 @@ TEST_SUITE("Parsing")
             CHECK(m5.name == "between");
             CHECK(m5.returnType == "bool");
             CHECK(m5.isStatic == false);
+            CHECK(m5.constant == true);
             REQUIRE(m5.parameters.size() == 2);
             CHECK(m5.parameters[0].token == TokenType::Parameter);
             CHECK(m5.parameters[0].name == "a");
@@ -389,6 +398,7 @@ TEST_SUITE("Parsing")
             CHECK(m6.name == "create");
             CHECK(m6.returnType == "Position");
             CHECK(m6.isStatic == true);
+            CHECK(m6.constant == true);
             REQUIRE(m6.parameters.size() == 3);
             CHECK(m6.parameters[0].token == TokenType::Parameter);
             CHECK(m6.parameters[0].name == "lat");
@@ -402,6 +412,18 @@ TEST_SUITE("Parsing")
             CHECK(m6.parameters[2].name == "alt");
             CHECK(m6.parameters[2].type == "length");
             CHECK(m6.parameters[2].constant == true);
+
+            const auto& m7 = s.methods[6];
+            CHECK(m7.token == TokenType::Method);
+            CHECK(m7.name == "multiply");
+            CHECK(m7.returnType == "void");
+            CHECK(m7.isStatic == false);
+            CHECK(m7.constant == false);
+            REQUIRE(m7.parameters.size() == 1);
+            CHECK(m7.parameters[0].token == TokenType::Parameter);
+            CHECK(m7.parameters[0].name == "other");
+            CHECK(m7.parameters[0].type == "float64");
+            CHECK(m7.parameters[0].constant == true);
 
             REQUIRE(s.fields.size() == 3);
 
