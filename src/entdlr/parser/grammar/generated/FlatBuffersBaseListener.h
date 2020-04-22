@@ -61,17 +61,20 @@ public:
   virtual void enterMethod_parameter(FlatBuffersParser::Method_parameterContext * /*ctx*/) override { }
   virtual void exitMethod_parameter(FlatBuffersParser::Method_parameterContext * /*ctx*/) override { }
 
+  virtual void enterMethod_return_type(FlatBuffersParser::Method_return_typeContext * /*ctx*/) override { }
+  virtual void exitMethod_return_type(FlatBuffersParser::Method_return_typeContext * /*ctx*/) override { }
+
+  virtual void enterMethod_type(FlatBuffersParser::Method_typeContext * /*ctx*/) override { }
+  virtual void exitMethod_type(FlatBuffersParser::Method_typeContext * /*ctx*/) override { }
+
   virtual void enterMutable_decl(FlatBuffersParser::Mutable_declContext * /*ctx*/) override { }
   virtual void exitMutable_decl(FlatBuffersParser::Mutable_declContext * /*ctx*/) override { }
 
   virtual void enterStatic_decl(FlatBuffersParser::Static_declContext * /*ctx*/) override { }
   virtual void exitStatic_decl(FlatBuffersParser::Static_declContext * /*ctx*/) override { }
 
-  virtual void enterMethod_return_type(FlatBuffersParser::Method_return_typeContext * /*ctx*/) override { }
-  virtual void exitMethod_return_type(FlatBuffersParser::Method_return_typeContext * /*ctx*/) override { }
-
-  virtual void enterMethod_type(FlatBuffersParser::Method_typeContext * /*ctx*/) override { }
-  virtual void exitMethod_type(FlatBuffersParser::Method_typeContext * /*ctx*/) override { }
+  virtual void enterReference_decl(FlatBuffersParser::Reference_declContext * /*ctx*/) override { }
+  virtual void exitReference_decl(FlatBuffersParser::Reference_declContext * /*ctx*/) override { }
 
   virtual void enterType(FlatBuffersParser::TypeContext * /*ctx*/) override { }
   virtual void exitType(FlatBuffersParser::TypeContext * /*ctx*/) override { }

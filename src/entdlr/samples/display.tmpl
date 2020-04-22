@@ -64,12 +64,7 @@ include {{include.name}}
         {{method.name}} : {{method.returnType}}
 ## endif
 ## for parameter in method.parameters
-## if parameter.constant == true
-            {{parameter.name}} : {{parameter.type}}
-## endif
-## if parameter.constant == false
-            {{parameter.name}} : mutable {{parameter.type}}
-## endif
+            {{parameter.name}} : {% if parameter.reference == true %}reference {% endif %}{% if parameter.constant == false %}mutable {% endif %}{{parameter.type}}
 ## endfor
 ## endfor
 ## endfor

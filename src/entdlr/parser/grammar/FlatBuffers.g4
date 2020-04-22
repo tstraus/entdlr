@@ -30,11 +30,12 @@ interface_decl : DOC_COMMENT? 'interface' IDENT '{' method_decl+ '}' ;
 
 method_decl : ( static_decl | mutable_decl )? IDENT '(' method_parameters ')' (':' method_return_type)? metadata ';' DOC_COMMENT? ;
 method_parameters : ( method_parameter )? ( ',' method_parameter )* ;
-method_parameter : mutable_decl? IDENT ':' method_type ;
+method_parameter : IDENT ':' reference_decl? mutable_decl? method_type ;
+method_return_type : method_type ;
+method_type : reference_decl? ( BASE_TYPE_NAME | ns_ident ) ;
 mutable_decl : 'mut' ;
 static_decl : 'static' ;
-method_return_type : method_type ;
-method_type : BASE_TYPE_NAME | ns_ident ;
+reference_decl : 'ref' ;
 
 // fixed original grammar: allow namespaces for IDENTs
 // add fixed size arrays TSS

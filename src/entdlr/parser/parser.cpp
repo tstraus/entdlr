@@ -475,6 +475,7 @@ namespace Entdlr
     Method Parser::parseMethod(FlatBuffersParser::Method_declContext* method, const std::string& filename)
     {
         std::string returnType = "";
+        bool returnIsReference = false;
         bool isStatic = false;
         bool isConstant = true;
         std::string comment = "";
@@ -491,13 +492,18 @@ namespace Entdlr
 
         if (method->method_return_type() && method->method_return_type()->method_type())
         {
-            if (method->method_return_type()->method_type()->BASE_TYPE_NAME())
-                returnType = method->method_return_type()->method_type()->BASE_TYPE_NAME()->getSymbol()->getText();
+            const auto& rt = method->method_return_type()->method_type();
 
-            else if (method->method_return_type()->method_type()->ns_ident())
+            if (rt->reference_decl())
+                returnIsReference = true;
+
+            if (rt->BASE_TYPE_NAME())
+                returnType = rt->BASE_TYPE_NAME()->getSymbol()->getText();
+
+            else if (rt->ns_ident())
             {
                 bool afterFirst = false;
-                for (const auto& segment : method->method_return_type()->method_type()->ns_ident()->IDENT())
+                for (const auto& segment : rt->ns_ident()->IDENT())
                 { // get the namespace separated by "::"
                     if (afterFirst)
                         returnType += "::";
@@ -516,13 +522,14 @@ namespace Entdlr
                 filename, method->getStart()->getLine(),
                 method->getStart()->getCharPositionInLine()
             ),
-            returnType, isStatic, isConstant, comment
+            returnType, returnIsReference, isStatic, isConstant, comment
         );
 
         for (const auto& p : method->method_parameters()->method_parameter())
         {
             std::string t = "";
             bool constant = true;
+            bool reference = false;
 
             if (p->method_type()->BASE_TYPE_NAME())
             {
@@ -545,6 +552,9 @@ namespace Entdlr
             if (p->mutable_decl())
                 constant = false;
 
+            if (p->reference_decl())
+                reference = true;
+
             output.add(
                 Parameter::create(
                     Token::create(
@@ -552,7 +562,7 @@ namespace Entdlr
                         filename, p->getStart()->getLine(),
                         p->getStart()->getCharPositionInLine()
                     ),
-                    t, constant
+                    t, constant, reference
                 )
             );
         }

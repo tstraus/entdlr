@@ -13,20 +13,22 @@ namespace Entdlr
     public:
         std::string type;
         bool constant;
+        bool reference;
 
-        static Parameter create(const Token& token, const std::string& type, const bool constant = true);
+        static Parameter create(const Token& token, const std::string& type, const bool constant = true, const bool reference = false);
     };
 
     class Method : public Token
     {
     public:
         std::string returnType;
+        bool returnIsReference;
         std::vector<Parameter> parameters;
         bool isStatic;
         bool constant;
         std::string comment;
 
-        static Method create(const Token& token, const std::string& returnType, const bool& isStatic = false, const bool& constant = false, const std::string& comment = "");
+        static Method create(const Token& token, const std::string& returnType, const bool returnIsReference = false, const bool isStatic = false, const bool constant = false, const std::string& comment = "");
         void add(const Parameter& parameter);
     };
 };

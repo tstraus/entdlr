@@ -320,10 +320,9 @@ TEST_SUITE("Parsing")
                     normalize(); /// method comment
                     valid() : bool;
                     azTo(otherPos: Position) : angle;
-                    elTo(mut otherPos: Position) : angle;
-                    between(a: Position, mut b: Position) : bool;
-                    static create(lat: angle, lon: angle, alt: length) : Position;
-
+                    elTo(otherPos: mut Position) : angle;
+                    between(a: ref Position, b: mut Position) : bool;
+                    static create(lat: mut angle, lon: ref angle, alt: ref mut length) : ref Position;
                     mut multiply(other: float64);
                 }
             )";
@@ -364,6 +363,7 @@ TEST_SUITE("Parsing")
             CHECK(m3.parameters[0].name == "otherPos");
             CHECK(m3.parameters[0].type == "Position");
             CHECK(m3.parameters[0].constant == true);
+            CHECK(m3.parameters[0].reference == false);
 
             const auto& m4 = s.methods[3];
             CHECK(m4.token == TokenType::Method);
@@ -376,6 +376,7 @@ TEST_SUITE("Parsing")
             CHECK(m4.parameters[0].name == "otherPos");
             CHECK(m4.parameters[0].type == "Position");
             CHECK(m4.parameters[0].constant == false);
+            CHECK(m4.parameters[0].reference == false);
 
             const auto& m5 = s.methods[4];
             CHECK(m5.token == TokenType::Method);
@@ -388,35 +389,42 @@ TEST_SUITE("Parsing")
             CHECK(m5.parameters[0].name == "a");
             CHECK(m5.parameters[0].type == "Position");
             CHECK(m5.parameters[0].constant == true);
+            CHECK(m5.parameters[0].reference == true);
             CHECK(m5.parameters[1].token == TokenType::Parameter);
             CHECK(m5.parameters[1].name == "b");
             CHECK(m5.parameters[1].type == "Position");
             CHECK(m5.parameters[1].constant == false);
+            CHECK(m5.parameters[1].reference == false);
 
             const auto& m6 = s.methods[5];
             CHECK(m6.token == TokenType::Method);
             CHECK(m6.name == "create");
             CHECK(m6.returnType == "Position");
+            CHECK(m6.returnIsReference == true);
             CHECK(m6.isStatic == true);
             CHECK(m6.constant == true);
             REQUIRE(m6.parameters.size() == 3);
             CHECK(m6.parameters[0].token == TokenType::Parameter);
             CHECK(m6.parameters[0].name == "lat");
             CHECK(m6.parameters[0].type == "angle");
-            CHECK(m6.parameters[0].constant == true);
+            CHECK(m6.parameters[0].constant == false);
+            CHECK(m6.parameters[0].reference == false);
             CHECK(m6.parameters[1].token == TokenType::Parameter);
             CHECK(m6.parameters[1].name == "lon");
             CHECK(m6.parameters[1].type == "angle");
             CHECK(m6.parameters[1].constant == true);
+            CHECK(m6.parameters[1].reference == true);
             CHECK(m6.parameters[2].token == TokenType::Parameter);
             CHECK(m6.parameters[2].name == "alt");
             CHECK(m6.parameters[2].type == "length");
-            CHECK(m6.parameters[2].constant == true);
+            CHECK(m6.parameters[2].constant == false);
+            CHECK(m6.parameters[2].reference == true);
 
             const auto& m7 = s.methods[6];
             CHECK(m7.token == TokenType::Method);
             CHECK(m7.name == "multiply");
             CHECK(m7.returnType == "void");
+            CHECK(m7.returnIsReference == false);
             CHECK(m7.isStatic == false);
             CHECK(m7.constant == false);
             REQUIRE(m7.parameters.size() == 1);
@@ -424,6 +432,7 @@ TEST_SUITE("Parsing")
             CHECK(m7.parameters[0].name == "other");
             CHECK(m7.parameters[0].type == "float64");
             CHECK(m7.parameters[0].constant == true);
+            CHECK(m7.parameters[0].reference == false);
 
             REQUIRE(s.fields.size() == 3);
 
@@ -448,8 +457,8 @@ TEST_SUITE("Parsing")
                     now_a();
                     now_b(start: uint64);
                     now_0() : time;
-                    now_1(mut start: uint64) : time; /// method comment
-                    now_2(start: int32, mut end: uint16) : time;
+                    now_1(start: mut uint64) : time; /// method comment
+                    now_2(start: int32, end: mut uint16) : time;
                     static create(lat: angle, lon: angle, alt: length) : Position;
                 }
             )";
