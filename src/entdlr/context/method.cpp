@@ -2,7 +2,7 @@
 
 namespace Entdlr
 {
-    Parameter Parameter::create(const Token& token, const std::string& type, const bool constant)
+    Parameter Parameter::create(const Token& token, const std::string& type, const bool constant, const bool reference)
     {
         Parameter out;
         out.token = TokenType::Parameter;
@@ -12,11 +12,12 @@ namespace Entdlr
         out.name = token.name;
         out.type = type;
         out.constant = constant;
+        out.reference = reference;
 
         return out;
     }
 
-    Method Method::create(const Token& token, const std::string& returnType, const bool& isStatic, const std::string& comment)
+    Method Method::create(const Token& token, const std::string& returnType, const bool returnIsReference, const bool isStatic, const bool constant, const std::string& comment)
     {
         Method out;
         out.token = TokenType::Method;
@@ -25,7 +26,9 @@ namespace Entdlr
         out.column = token.column;
         out.name = token.name;
         out.returnType = returnType;
+        out.returnIsReference = returnIsReference;
         out.isStatic = isStatic;
+        out.constant = constant;
         out.comment = comment;
 
         return out;

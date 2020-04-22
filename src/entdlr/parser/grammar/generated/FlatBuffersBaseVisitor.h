@@ -1,5 +1,5 @@
 
-// Generated from FlatBuffers.g4 by ANTLR 4.7.2
+// Generated from FlatBuffers.g4 by ANTLR 4.8
 
 #pragma once
 
@@ -75,6 +75,14 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitMethod_return_type(FlatBuffersParser::Method_return_typeContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitMethod_type(FlatBuffersParser::Method_typeContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitMutable_decl(FlatBuffersParser::Mutable_declContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -83,11 +91,7 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitMethod_return_type(FlatBuffersParser::Method_return_typeContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitMethod_type(FlatBuffersParser::Method_typeContext *ctx) override {
+  virtual antlrcpp::Any visitReference_decl(FlatBuffersParser::Reference_declContext *ctx) override {
     return visitChildren(ctx);
   }
 

@@ -88,12 +88,15 @@ namespace Entdlr
         // Method
         static void getStructMethodName(WrenVM* vm);
         static void getStructMethodReturnType(WrenVM* vm);
+        static void getStructMethodReturnIsReference(WrenVM* vm);
         static void getStructMethodIsStatic(WrenVM* vm);
+        static void getStructMethodConstant(WrenVM* vm);
         static void getStructMethodComment(WrenVM* vm);
         // Parameter
         static void getStructMethodParameterName(WrenVM* vm);
         static void getStructMethodParameterType(WrenVM* vm);
         static void getStructMethodParameterConstant(WrenVM* vm);
+        static void getStructMethodParameterReference(WrenVM* vm);
 
         // Interface
         static void getInterfaceName(WrenVM* vm);
@@ -101,12 +104,15 @@ namespace Entdlr
         // Method
         static void getInterfaceMethodName(WrenVM* vm);
         static void getInterfaceMethodReturnType(WrenVM* vm);
+        static void getInterfaceMethodReturnIsReference(WrenVM* vm);
         static void getInterfaceMethodIsStatic(WrenVM* vm);
+        static void getInterfaceMethodConstant(WrenVM* vm);
         static void getInterfaceMethodComment(WrenVM* vm);
         // Parameter
         static void getInterfaceMethodParameterName(WrenVM* vm);
         static void getInterfaceMethodParameterType(WrenVM* vm);
         static void getInterfaceMethodParameterConstant(WrenVM* vm);
+        static void getInterfaceMethodParameterReference(WrenVM* vm);
 
     private:
         static std::optional<Include> getInclude(const std::string& _include);

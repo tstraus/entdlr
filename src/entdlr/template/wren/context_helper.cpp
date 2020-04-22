@@ -728,6 +728,19 @@ namespace Entdlr
         wrenSetSlotString(vm, 0, output.c_str());
     }
 
+    void ContextHelper::getStructMethodReturnIsReference(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _struct = wrenGetSlotString(vm, 2);
+        std::string _method = wrenGetSlotString(vm, 3);
+
+        bool output = false;
+        if (auto m = getStructMethod(_namespace, _struct, _method))
+            output = m->returnIsReference;
+
+        wrenSetSlotBool(vm, 0, output);
+    }
+
     void ContextHelper::getStructMethodIsStatic(WrenVM* vm)
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
@@ -737,6 +750,19 @@ namespace Entdlr
         bool output = false;
         if (auto m = getStructMethod(_namespace, _struct, _method))
             output = m->isStatic;
+
+        wrenSetSlotBool(vm, 0, output);
+    }
+
+    void ContextHelper::getStructMethodConstant(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _struct = wrenGetSlotString(vm, 2);
+        std::string _method = wrenGetSlotString(vm, 3);
+
+        bool output = false;
+        if (auto m = getStructMethod(_namespace, _struct, _method))
+            output = m->constant;
 
         wrenSetSlotBool(vm, 0, output);
     }
@@ -796,6 +822,20 @@ namespace Entdlr
         wrenSetSlotBool(vm, 0, output);
     }
 
+    void ContextHelper::getStructMethodParameterReference(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _struct = wrenGetSlotString(vm, 2);
+        std::string _method = wrenGetSlotString(vm, 3);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 4);
+
+        bool output = false;
+        if (auto p = getStructParameter(_namespace, _struct, _method, index))
+            output = p->reference;
+
+        wrenSetSlotBool(vm, 0, output);
+    }
+
     void ContextHelper::getInterfaceName(WrenVM* vm)
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
@@ -846,6 +886,19 @@ namespace Entdlr
         wrenSetSlotString(vm, 0, output.c_str());
     }
 
+    void ContextHelper::getInterfaceMethodReturnIsReference(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _interface = wrenGetSlotString(vm, 2);
+        std::string _method = wrenGetSlotString(vm, 3);
+
+        bool output = false;
+        if (auto m = getInterfaceMethod(_namespace, _interface, _method))
+            output = m->returnIsReference;
+
+        wrenSetSlotBool(vm, 0, output);
+    }
+
     void ContextHelper::getInterfaceMethodIsStatic(WrenVM* vm)
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
@@ -855,6 +908,19 @@ namespace Entdlr
         bool output = false;
         if (auto m = getInterfaceMethod(_namespace, _interface, _method))
             output = m->isStatic;
+
+        wrenSetSlotBool(vm, 0, output);
+    }
+
+    void ContextHelper::getInterfaceMethodConstant(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _interface = wrenGetSlotString(vm, 2);
+        std::string _method = wrenGetSlotString(vm, 3);
+
+        bool output = false;
+        if (auto m = getInterfaceMethod(_namespace, _interface, _method))
+            output = m->constant;
 
         wrenSetSlotBool(vm, 0, output);
     }
@@ -910,6 +976,20 @@ namespace Entdlr
         bool output = false;
         if (auto p = getInterfaceParameter(_namespace, _interface, _method, index))
             output = p->constant;
+
+        wrenSetSlotBool(vm, 0, output);
+    }
+
+    void ContextHelper::getInterfaceMethodParameterReference(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _interface = wrenGetSlotString(vm, 2);
+        std::string _method = wrenGetSlotString(vm, 3);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 4);
+
+        bool output = false;
+        if (auto p = getInterfaceParameter(_namespace, _interface, _method, index))
+            output = p->reference;
 
         wrenSetSlotBool(vm, 0, output);
     }

@@ -264,7 +264,9 @@ namespace Entdlr {
                 {"line",       m.line},
                 {"column",     m.column},
                 {"returnType", m.returnType},
+                {"returnIsReference", m.returnIsReference},
                 {"isStatic",   m.isStatic},
+                {"constant",   m.constant},
                 {"parameters", m.parameters},
                 {"comment",    m.comment}
         };
@@ -278,7 +280,9 @@ namespace Entdlr {
         j.at("line").get_to(m.line);
         j.at("column").get_to(m.column);
         j.at("returnType").get_to(m.returnType);
+        j.at("returnIsReference").get_to(m.returnIsReference);
         j.at("isStatic").get_to(m.isStatic);
+        j.at("constant").get_to(m.constant);
         j.at("parameters").get_to(m.parameters);
         j.at("comment").get_to(m.comment);
     }
@@ -292,7 +296,8 @@ namespace Entdlr {
                 {"line",     p.line},
                 {"column",   p.column},
                 {"type",     p.type},
-                {"constant", p.constant}
+                {"constant", p.constant},
+                {"reference", p.reference}
         };
     }
 
@@ -305,5 +310,6 @@ namespace Entdlr {
         j.at("column").get_to(p.column);
         j.at("type").get_to(p.type);
         j.at("constant").get_to(p.constant);
+        j.at("reference").get_to(p.reference);
     }
 }
