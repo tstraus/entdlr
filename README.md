@@ -51,8 +51,10 @@ struct Vec3 // declare a struct named Vec3
     z : float32;
 
     static new() : Vec3; // a static method that returns a new Vec3
-    static fromString(str : string) : Vec3; // arguemnts are assumed to be constant
-    cross(mut other : Vec3) : float32; // unless the mut keyword is provided
+    static fromString(str : string) : Vec3; // parameters are assumed to be constant
+    cross(other : mut Vec3) : float32; // unless the mut keyword is provided
+    dot(other : ref Vec3) : ref float32; // the ref keyword can be used to mark the parameter as a reference or pointer
+    mut add(other : ref mut Vec3); // mut can also be used to convey that the method modifies the instance
 }
 ```
 
