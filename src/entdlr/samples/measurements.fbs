@@ -1,0 +1,6 @@
+namespace measurements;
+
+struct TestMeasurement
+{
+    length : float64;
+}

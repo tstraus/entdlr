@@ -64,6 +64,11 @@ namespace Entdlr
 
             Context context;
 
+            // get the includes in the file
+            auto incs = parseIncludes(schema->include(), filename);
+            for (const auto& i : incs)
+                context.add(i);
+
             // get the namespace in the file
             auto ns = parseNamespace(schema->namespace_decl(), filename);
 
@@ -98,15 +103,61 @@ namespace Entdlr
         }
     }
 
-    Context Parser::merge(const std::vector<Context> &contexts)
+    Context Parser::merge(const std::vector<Context>& contexts)
     {
         Context output;
+
+        std::unordered_map<std::string, Namespace> m;
 
         for (const auto& context : contexts)
         {
             // add up the namespaces
             for (const auto& n : context.namespaces)
-                output.add(n);
+            {
+                Namespace ns = m[n.name];
+
+                for (const auto& e : n.enums) ns.add(e);
+                for (const auto& u : n.unions) ns.add(u);
+                for (const auto& s : n.structs) ns.add(s);
+                for (const auto& i : n.interfaces) ns.add(i);
+
+                m[n.name] = ns;
+            }
+        }
+
+        for (const auto& n : m)
+            output.add(n.second);
+
+        return output;
+    }
+
+    std::vector<Include> Parser::parseIncludes(const std::vector<FlatBuffersParser::IncludeContext*> incs, const std::string& filename)
+    {
+        std::vector<Include> output;
+
+        for (const auto& inc : incs)
+        {
+            std::string name = inc->STRING_CONSTANT()->getSymbol()->getText();
+            std::string includeName = name.substr(1, name.size() - 6); // strip quotes and .fbs off
+
+            std::string includeDir = std::filesystem::path(filename).parent_path().string();
+            if (includeDir == "")
+                includeDir = ".";
+            std::string includeFilename = includeDir + "/" + name.substr(1, name.size() - 2); // strip quotes off and add the dir
+
+            auto i = Include::create(
+                Token::create(
+                    includeName,
+                    filename,
+                    inc->getStart()->getLine(),
+                    inc->getStart()->getCharPositionInLine()
+                )
+            );
+
+            const auto c = parseFile(includeFilename);
+            i.namespaces = c.namespaces;
+
+            output.push_back(i);
         }
 
         return output;
@@ -117,7 +168,7 @@ namespace Entdlr
         std::string output = "";
 
         if (namespaces.size() == 0) // global namespace
-            return Namespace::create(Token{output, filename, 0, 0});
+            return Namespace::create(Token::create(output, filename, 0, 0));
 
         if (namespaces.size() == 1)
         {
@@ -136,7 +187,13 @@ namespace Entdlr
         else if (namespaces.size() > 1)
             throw std::runtime_error(std::to_string(namespaces[1]->getStart()->getLine()) + ", " + std::to_string(namespaces[1]->getStart()->getCharPositionInLine()) + ": Multiple namespaces in file");
 
-        return Namespace::create(Token{output, filename, namespaces[0]->getStart()->getLine(), namespaces[0]->getStart()->getCharPositionInLine()});
+        return Namespace::create(
+            Token::create(
+                output, filename,
+                namespaces[0]->getStart()->getLine(),
+                namespaces[0]->getStart()->getCharPositionInLine()
+            )
+        );
     }
 
     std::vector<Enum> Parser::parseEnums(const std::vector<FlatBuffersParser::Enum_declContext*>& enums, const std::string& filename)
@@ -147,8 +204,12 @@ namespace Entdlr
         {
             Enum e;
             std::string comment = "";
-            Token t = { en->IDENT()->getSymbol()->getText(), filename, en->getStart()->getLine(), en->getStart()->getCharPositionInLine() };
-            std::vector<Attribute> attributes = parseAttributes(en->metadata(), filename);
+            auto t = Token::create(
+                en->IDENT()->getSymbol()->getText(),
+                filename, en->getStart()->getLine(),
+                en->getStart()->getCharPositionInLine()
+            );
+            std::unordered_map<std::string, Attribute> attributes = parseAttributes(en->metadata(), filename);
 
             if (en->DOC_COMMENT())
                 comment = trimComment(en->DOC_COMMENT()->getSymbol()->getText());
@@ -168,10 +229,27 @@ namespace Entdlr
             {
                 const auto& valueName = v->ns_ident()->IDENT()[0]->getSymbol()->getText();
                 if (v->integer_const() && v->integer_const()->INTEGER_CONSTANT())
-                    e.add(Token{valueName, filename, v->getStart()->getLine(), v->getStart()->getCharPositionInLine()},
-                        std::stoll(v->integer_const()->INTEGER_CONSTANT()->getSymbol()->getText()));
+                {
+                    e.add(
+                        Token::create(
+                            valueName, filename,
+                            v->getStart()->getLine(),
+                            v->getStart()->getCharPositionInLine()
+                        ),
+                        std::stoll(v->integer_const()->INTEGER_CONSTANT()->getSymbol()->getText())
+                    );
+                }
 
-                else e.add(Token{valueName, filename, v->getStart()->getLine(), v->getStart()->getCharPositionInLine()}, {});
+                else
+                {
+                    e.add(
+                        Token::create(
+                            valueName, filename,
+                            v->getStart()->getLine(),
+                            v->getStart()->getCharPositionInLine()
+                        ), {}
+                    );
+                }
             }
 
             e.comment = comment;
@@ -188,7 +266,13 @@ namespace Entdlr
 
         for (const auto& un : unions)
         {
-            auto u = Union::create(Token{un->IDENT()->getSymbol()->getText(), filename, un->getStart()->getLine(), un->getStart()->getCharPositionInLine()}); // make a new union with the name
+            auto u = Union::create(
+                Token::create(
+                    un->IDENT()->getSymbol()->getText(),
+                    filename, un->getStart()->getLine(),
+                    un->getStart()->getCharPositionInLine()
+                )
+            ); // make a new union with the name
             u.attributes = parseAttributes(un->metadata(), filename);
 
             if (un->DOC_COMMENT())
@@ -254,7 +338,17 @@ namespace Entdlr
                         arraySize = std::stoul(t->type()->integer_const()->INTEGER_CONSTANT()->getSymbol()->getText());
                 }
 
-                u.add(UnionType::create(Token{type, filename, t->getStart()->getLine(), t->getStart()->getCharPositionInLine()}, isArray, arraySize));
+                u.add(
+                    UnionType::create(
+                        Token::create(
+                            type, filename,
+                            t->getStart()->getLine(),
+                            t->getStart()->getCharPositionInLine()
+                        ),
+                        isArray,
+                        arraySize
+                    )
+                );
             }
 
             output.push_back(u);
@@ -269,7 +363,13 @@ namespace Entdlr
 
         for (const auto& st : structs)
         {
-            auto s = Struct::create(Token{st->IDENT()->getSymbol()->getText(), filename, st->getStart()->getLine(), st->getStart()->getCharPositionInLine()}); // make a new struct with the name
+            auto s = Struct::create(
+                Token::create(
+                    st->IDENT()->getSymbol()->getText(),
+                    filename, st->getStart()->getLine(),
+                    st->getStart()->getCharPositionInLine()
+                )
+            ); // make a new struct with the name
 
             if (st->DOC_COMMENT())
                 s.comment = trimComment(st->DOC_COMMENT()->getSymbol()->getText());
@@ -301,7 +401,7 @@ namespace Entdlr
         std::string type = "";
         bool isArray = false;
         uint32_t arraySize = 0;
-        std::vector<Attribute> attributes;
+        std::unordered_map<std::string, Attribute> attributes;
         std::string comment = "";
 
         if (field->DOC_COMMENT())
@@ -362,13 +462,22 @@ namespace Entdlr
 
         attributes = parseAttributes(field->metadata(), filename);
 
-        return Field::create(Token{name, filename, field->getStart()->getLine(), field->getStart()->getCharPositionInLine()}, type, isArray, arraySize, attributes, comment);
+        return Field::create(
+            Token::create(
+                name, filename,
+                field->getStart()->getLine(),
+                field->getStart()->getCharPositionInLine()
+            ),
+            type, isArray, arraySize, attributes, comment
+        );
     }
 
     Method Parser::parseMethod(FlatBuffersParser::Method_declContext* method, const std::string& filename)
     {
         std::string returnType = "";
+        bool returnIsReference = false;
         bool isStatic = false;
+        bool isConstant = true;
         std::string comment = "";
 
         if (method->DOC_COMMENT())
@@ -378,15 +487,23 @@ namespace Entdlr
         if (method->static_decl())
             isStatic = true;
 
+        if (method->mutable_decl())
+            isConstant = false;
+
         if (method->method_return_type() && method->method_return_type()->method_type())
         {
-            if (method->method_return_type()->method_type()->BASE_TYPE_NAME())
-                returnType = method->method_return_type()->method_type()->BASE_TYPE_NAME()->getSymbol()->getText();
+            const auto& rt = method->method_return_type()->method_type();
 
-            else if (method->method_return_type()->method_type()->ns_ident())
+            if (rt->reference_decl())
+                returnIsReference = true;
+
+            if (rt->BASE_TYPE_NAME())
+                returnType = rt->BASE_TYPE_NAME()->getSymbol()->getText();
+
+            else if (rt->ns_ident())
             {
                 bool afterFirst = false;
-                for (const auto& segment : method->method_return_type()->method_type()->ns_ident()->IDENT())
+                for (const auto& segment : rt->ns_ident()->IDENT())
                 { // get the namespace separated by "::"
                     if (afterFirst)
                         returnType += "::";
@@ -399,13 +516,20 @@ namespace Entdlr
 
         else returnType = "void";
 
-        auto output = Method::create(Token{method->IDENT()->getSymbol()->getText(), filename, method->getStart()->getLine(), method->getStart()->getCharPositionInLine()},
-                returnType, isStatic, comment);
+        auto output = Method::create(
+            Token::create(
+                method->IDENT()->getSymbol()->getText(),
+                filename, method->getStart()->getLine(),
+                method->getStart()->getCharPositionInLine()
+            ),
+            returnType, returnIsReference, isStatic, isConstant, comment
+        );
 
         for (const auto& p : method->method_parameters()->method_parameter())
         {
             std::string t = "";
             bool constant = true;
+            bool reference = false;
 
             if (p->method_type()->BASE_TYPE_NAME())
             {
@@ -428,15 +552,27 @@ namespace Entdlr
             if (p->mutable_decl())
                 constant = false;
 
-            output.add(Parameter::create(Token{p->IDENT()->getSymbol()->getText(), filename, p->getStart()->getLine(), p->getStart()->getCharPositionInLine()}, t, constant));
+            if (p->reference_decl())
+                reference = true;
+
+            output.add(
+                Parameter::create(
+                    Token::create(
+                        p->IDENT()->getSymbol()->getText(),
+                        filename, p->getStart()->getLine(),
+                        p->getStart()->getCharPositionInLine()
+                    ),
+                    t, constant, reference
+                )
+            );
         }
 
         return output;
     }
 
-    std::vector<Attribute> Parser::parseAttributes(FlatBuffersParser::MetadataContext* metadata, const std::string& filename)
+    std::unordered_map<std::string, Attribute> Parser::parseAttributes(FlatBuffersParser::MetadataContext* metadata, const std::string& filename)
     {
-        std::vector<Attribute> attributes;
+        std::unordered_map<std::string, Attribute> attributes;
 
         // check for metadata
         if (metadata && metadata->commasep_ident_with_opt_single_value() && metadata->commasep_ident_with_opt_single_value())
@@ -445,10 +581,15 @@ namespace Entdlr
             {
                 if (attribute->single_value() && attribute->single_value()->STRING_CONSTANT())
                 {
-                    attributes.push_back(Attribute::create(
-                        Token{ attribute->IDENT()->getSymbol()->getText(), filename, attribute->getStart()->getLine(), attribute->getStart()->getCharPositionInLine() },
+                    auto a = Attribute::create(
+                        Token::create(
+                            attribute->IDENT()->getSymbol()->getText(),
+                            filename, attribute->getStart()->getLine(),
+                            attribute->getStart()->getCharPositionInLine()
+                        ),
                         attribute->single_value()->STRING_CONSTANT()->getSymbol()->getText()
-                    ));
+                    );
+                    attributes[a.name] = a;
                 }
 
                 else if (attribute->single_value() && attribute->single_value()->scalar())
@@ -456,42 +597,67 @@ namespace Entdlr
                     const auto& scalar = attribute->single_value()->scalar();
                     if (scalar->INTEGER_CONSTANT())
                     {
-                        attributes.push_back(Attribute::create(
-                            Token{ attribute->IDENT()->getSymbol()->getText(), filename, attribute->getStart()->getLine(), attribute->getStart()->getCharPositionInLine() },
+                        auto a = Attribute::create(
+                            Token::create(
+                                attribute->IDENT()->getSymbol()->getText(),
+                                filename, attribute->getStart()->getLine(),
+                                attribute->getStart()->getCharPositionInLine()
+                            ),
                             std::stod(scalar->INTEGER_CONSTANT()->getSymbol()->getText())
-                        ));
+                        );
+                        attributes[a.name] = a;
                     }
 
                     else if (scalar->HEX_INTEGER_CONSTANT())
                     {
-                        attributes.push_back(Attribute::create(
-                            Token{ attribute->IDENT()->getSymbol()->getText(), filename, attribute->getStart()->getLine(), attribute->getStart()->getCharPositionInLine() },
+                        auto a = Attribute::create(
+                            Token::create(
+                                attribute->IDENT()->getSymbol()->getText(),
+                                filename, attribute->getStart()->getLine(),
+                                attribute->getStart()->getCharPositionInLine()
+                            ),
                             std::stod(scalar->HEX_INTEGER_CONSTANT()->getSymbol()->getText())
-                        ));
+                        );
+                        attributes[a.name] = a;
                     }
 
                     else if (scalar->FLOAT_CONSTANT())
                     {
-                        attributes.push_back(Attribute::create(
-                            Token{ attribute->IDENT()->getSymbol()->getText(), filename, attribute->getStart()->getLine(), attribute->getStart()->getCharPositionInLine() },
+                        auto a = Attribute::create(
+                            Token::create(
+                                attribute->IDENT()->getSymbol()->getText(),
+                                filename, attribute->getStart()->getLine(),
+                                attribute->getStart()->getCharPositionInLine()
+                            ),
                             std::stod(scalar->FLOAT_CONSTANT()->getSymbol()->getText())
-                        ));
+                        );
+                        attributes[a.name] = a;
                     }
 
                     else if (scalar->IDENT())
                     {
-                        attributes.push_back(Attribute::create(
-                            Token{ attribute->IDENT()->getSymbol()->getText(), filename, attribute->getStart()->getLine(), attribute->getStart()->getCharPositionInLine() },
+                        auto a = Attribute::create(
+                            Token::create(
+                                attribute->IDENT()->getSymbol()->getText(),
+                                filename, attribute->getStart()->getLine(),
+                                attribute->getStart()->getCharPositionInLine()
+                            ),
                             std::stod(scalar->IDENT()->getSymbol()->getText())
-                        ));
+                        );
+                        attributes[a.name] = a;
                     }
                 }
 
                 else
                 {
-                    attributes.push_back(Attribute::create(
-                        Token{ attribute->IDENT()->getSymbol()->getText(), filename, attribute->getStart()->getLine(), attribute->getStart()->getCharPositionInLine() })
+                    auto a = Attribute::create(
+                        Token::create(
+                            attribute->IDENT()->getSymbol()->getText(),
+                            filename, attribute->getStart()->getLine(),
+                            attribute->getStart()->getCharPositionInLine()
+                        )
                     );
+                    attributes[a.name] = a;
                 }
             }
         }
@@ -505,7 +671,13 @@ namespace Entdlr
 
         for (const auto& interface : interfaces)
         {
-            auto f = Interface::create(Token{interface->IDENT()->getSymbol()->getText(), filename, interface->getStart()->getLine(), interface->getStart()->getCharPositionInLine()});
+            auto f = Interface::create(
+                Token::create(
+                    interface->IDENT()->getSymbol()->getText(),
+                    filename, interface->getStart()->getLine(),
+                    interface->getStart()->getCharPositionInLine()
+                )
+            );
 
             if (interface->DOC_COMMENT())
                 f.comment = trimComment(interface->DOC_COMMENT()->getSymbol()->getText());

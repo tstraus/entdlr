@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <string>
 #include <vector>
+#include <unordered_map>
 #include <optional>
 
 #include "token.h"
@@ -24,10 +25,10 @@ namespace Entdlr
     public:
         std::string type;
         std::vector<EnumValue> values;
-        std::vector<Attribute> attributes;
+        std::unordered_map<std::string,Attribute> attributes;
         std::string comment;
 
-        static Enum create(const Token& token, const std::string& type = "int32", const std::vector<Attribute>& attributes = {}, const std::string& comment = "");
+        static Enum create(const Token& token, const std::string& type = "int32", const std::unordered_map<std::string, Attribute>& attributes = {}, const std::string& comment = "");
         void add(const Token& token, const std::optional<int64_t> value);
 
     private:

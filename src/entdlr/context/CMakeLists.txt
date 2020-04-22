@@ -2,6 +2,7 @@ project (entdlr_context)
 
 set (HEADERS
     token.h
+    include.h
     attribute.h
     enum.h
     union.h
@@ -13,6 +14,8 @@ set (HEADERS
 )
 
 set (SOURCE
+    token.cpp
+    include.cpp
     attribute.cpp
     enum.cpp
     union.cpp

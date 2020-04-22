@@ -2,6 +2,11 @@ import "Context" for Context
 
 var c = Context.get()
 
+for (iKey in c.includes.keys) {
+    var i = c.includes[iKey]
+    System.print("include " + i.name)
+}
+
 for (nKey in c.namespaces.keys) {
     var n = c.namespaces[nKey]
     System.print(n.name)
@@ -144,6 +149,9 @@ for (nKey in c.namespaces.keys) {
             for (pKey in m.parameters.keys) {
                 var p = m.parameters[pKey]
                 System.write("            " + p.name + " : ")
+                if (p.reference) {
+                    System.write("reference ")
+                }
                 if (!p.constant) {
                     System.write("mutable ")
                 }

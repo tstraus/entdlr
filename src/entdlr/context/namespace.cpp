@@ -5,6 +5,7 @@ namespace Entdlr
     Namespace Namespace::create(const Token& token)
     {
         Namespace out;
+        out.token = TokenType::Namespace;
         out.filename = token.filename;
         out.line = token.line;
         out.column = token.column;

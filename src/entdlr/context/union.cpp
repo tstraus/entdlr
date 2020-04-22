@@ -9,6 +9,7 @@ namespace Entdlr
     UnionType UnionType::create(const Token& token, const bool& isArray, const uint32_t& arraySize)
     {
         UnionType out;
+        out.token = TokenType::UnionType;
         out.filename = token.filename;
         out.line = token.line;
         out.column = token.column;
@@ -19,9 +20,10 @@ namespace Entdlr
         return out;
     }
 
-    Union Union::create(const Token& token, const std::vector<Attribute>& attributes, const std::string& comment)
+    Union Union::create(const Token& token, const std::unordered_map<std::string, Attribute>& attributes, const std::string& comment)
     {
         Union out;
+        out.token = TokenType::Union;
         out.filename = token.filename;
         out.line = token.line;
         out.column = token.column;

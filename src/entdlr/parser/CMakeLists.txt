@@ -22,6 +22,12 @@ target_link_libraries (${PROJECT_NAME}
     PUBLIC entdlr::flat_buffer_parser
 )
 
+if (UNIX)
+    target_link_libraries (${PROJECT_NAME}
+        PUBLIC stdc++fs
+    )
+endif ()
+
 install (TARGETS ${PROJECT_NAME} DESTINATION lib)
 install (FILES ${HEADERS} DESTINATION include/entdlr/parser)
 

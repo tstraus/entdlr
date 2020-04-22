@@ -15,6 +15,7 @@ namespace Entdlr
         static void setContext(const Context& c);
 
         // get sizes
+        static void numIncludes(WrenVM* vm);
         static void numNamespaces(WrenVM* vm);
         static void numEnums(WrenVM* vm);
         static void numEnumAttributes(WrenVM* vm);
@@ -31,6 +32,9 @@ namespace Entdlr
         static void numInterfaces(WrenVM* vm);
         static void numInterfaceMethods(WrenVM* vm);
         static void numInterfaceMethodParameters(WrenVM* vm);
+
+        // Include
+        static void getIncludeName(WrenVM* vm);
 
         // Namespace
         static void getNamespaceName(WrenVM* vm);
@@ -84,12 +88,15 @@ namespace Entdlr
         // Method
         static void getStructMethodName(WrenVM* vm);
         static void getStructMethodReturnType(WrenVM* vm);
+        static void getStructMethodReturnIsReference(WrenVM* vm);
         static void getStructMethodIsStatic(WrenVM* vm);
+        static void getStructMethodConstant(WrenVM* vm);
         static void getStructMethodComment(WrenVM* vm);
         // Parameter
         static void getStructMethodParameterName(WrenVM* vm);
         static void getStructMethodParameterType(WrenVM* vm);
         static void getStructMethodParameterConstant(WrenVM* vm);
+        static void getStructMethodParameterReference(WrenVM* vm);
 
         // Interface
         static void getInterfaceName(WrenVM* vm);
@@ -97,14 +104,18 @@ namespace Entdlr
         // Method
         static void getInterfaceMethodName(WrenVM* vm);
         static void getInterfaceMethodReturnType(WrenVM* vm);
+        static void getInterfaceMethodReturnIsReference(WrenVM* vm);
         static void getInterfaceMethodIsStatic(WrenVM* vm);
+        static void getInterfaceMethodConstant(WrenVM* vm);
         static void getInterfaceMethodComment(WrenVM* vm);
         // Parameter
         static void getInterfaceMethodParameterName(WrenVM* vm);
         static void getInterfaceMethodParameterType(WrenVM* vm);
         static void getInterfaceMethodParameterConstant(WrenVM* vm);
+        static void getInterfaceMethodParameterReference(WrenVM* vm);
 
     private:
+        static std::optional<Include> getInclude(const std::string& _include);
         static std::optional<Namespace> getNamespace(const std::string& _namespace);
         static std::optional<Enum> getEnum(const std::string& _namespace, const std::string& _enum);
         static std::optional<Enum> getEnum(const std::string& _namespace, size_t index);

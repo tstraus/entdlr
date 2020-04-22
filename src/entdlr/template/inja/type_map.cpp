@@ -27,28 +27,68 @@ namespace Entdlr
         auto output = context;
 
         for (auto& n : output.namespaces)
+            n = applyMapping(n);
+
+        for (auto& i : output.includes)
         {
-            for (auto& e : n.enums)
+            for (auto& n : i.namespaces)
+                n = applyMapping(n);
+        }
+
+        return output;
+    }
+
+    Namespace TypeMap::applyMapping(const Namespace& n)
+    {
+        auto output = n;
+
+        for (auto& e : output.enums)
+        {
+            if (mappings.count(e.type))
+                e.type = mappings[e.type];
+        }
+
+        for (auto& u : output.unions)
+        {
+            for (auto& t : u.types)
             {
-                if (mappings.count(e.type))
-                    e.type = mappings[e.type];
+                if (mappings.count(t.name))
+                    t.name = mappings[t.name];
+            }
+        }
+
+        for (auto& s : output.structs)
+        {
+            for (auto& f : s.fields)
+            {
+                if (mappings.count(f.type))
+                    f.type = mappings[f.type];
             }
 
-            for (auto& u : n.unions)
+            for (auto& m : s.methods)
             {
-                for (auto& t : u.types)
+                if (mappings.count(m.returnType))
+                    m.returnType = mappings[m.returnType];
+
+                for (auto& p : m.parameters)
                 {
-                    if (mappings.count(t.name))
-                        t.name = mappings[t.name];
+                    if (mappings.count(p.type))
+                        p.type = mappings[p.type];
                 }
             }
+        }
 
-            for (auto& s : n.structs)
+        for (auto& i : output.interfaces)
+        {
+            for (auto& m : i.methods)
             {
-                for (auto& f : s.fields)
+                if (mappings.count(m.returnType))
+                    m.returnType = mappings[m.returnType];
+
+                for (auto& p : m.parameters)
                 {
-                    if (mappings.count(f.type))
-                        f.type = mappings[f.type];
+                    if (mappings.count(p.type))
+                        p.type = mappings[p.type];
                 }
             }
         }

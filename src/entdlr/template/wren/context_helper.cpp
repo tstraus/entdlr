@@ -12,9 +12,14 @@ namespace Entdlr
         context = c;
     }
 
+    void ContextHelper::numIncludes(WrenVM* vm)
+    {
+        wrenSetSlotDouble(vm, 0, (double)context.includes.size());
+    }
+
     void ContextHelper::numNamespaces(WrenVM* vm)
     {
-        wrenSetSlotDouble(vm, 0, context.namespaces.size());
+        wrenSetSlotDouble(vm, 0, (double)context.namespaces.size());
     }
 
     void ContextHelper::numEnums(WrenVM* vm)
@@ -25,7 +30,7 @@ namespace Entdlr
         if (auto n = getNamespace(_namespace))
             output = n->enums.size();
 
-        wrenSetSlotDouble(vm, 0, output);
+        wrenSetSlotDouble(vm, 0, (double)output);
     }
 
     void ContextHelper::numEnumValues(WrenVM* vm)
@@ -37,7 +42,7 @@ namespace Entdlr
         if (auto e = getEnum(_namespace, _enum))
             output = e->values.size();
 
-        wrenSetSlotDouble(vm, 0, output);
+        wrenSetSlotDouble(vm, 0, (double)output);
     }
 
     void ContextHelper::numUnions(WrenVM* vm)
@@ -48,7 +53,7 @@ namespace Entdlr
         if (auto n = getNamespace(_namespace))
             output = n->unions.size();
 
-        wrenSetSlotDouble(vm, 0, output);
+        wrenSetSlotDouble(vm, 0, (double)output);
     }
 
     void ContextHelper::numUnionTypes(WrenVM* vm)
@@ -60,7 +65,7 @@ namespace Entdlr
         if (auto u = getUnion(_namespace, _union))
             output = u->types.size();
 
-        wrenSetSlotDouble(vm, 0, output);
+        wrenSetSlotDouble(vm, 0, (double)output);
     }
 
     void ContextHelper::numStructs(WrenVM* vm)
@@ -71,7 +76,7 @@ namespace Entdlr
         if (auto n = getNamespace(_namespace))
             output = n->structs.size();
 
-        wrenSetSlotDouble(vm, 0, output);
+        wrenSetSlotDouble(vm, 0, (double)output);
     }
 
     void ContextHelper::numFields(WrenVM* vm)
@@ -83,7 +88,7 @@ namespace Entdlr
         if (auto s = getStruct(_namespace, _struct))
             output = s->fields.size();
 
-        wrenSetSlotDouble(vm, 0, output);
+        wrenSetSlotDouble(vm, 0, (double)output);
     }
 
     void ContextHelper::numEnumAttributes(WrenVM* vm)
@@ -95,7 +100,7 @@ namespace Entdlr
         if (auto e = getEnum(_namespace, _enum))
             output = e->attributes.size();
 
-        wrenSetSlotDouble(vm, 0, output);
+        wrenSetSlotDouble(vm, 0, (double)output);
     }
 
     void ContextHelper::numUnionAttributes(WrenVM* vm)
@@ -107,7 +112,7 @@ namespace Entdlr
         if (auto u = getUnion(_namespace, _union))
             output = u->attributes.size();
 
-        wrenSetSlotDouble(vm, 0, output);
+        wrenSetSlotDouble(vm, 0, (double)output);
     }
 
     void ContextHelper::numStructAttributes(WrenVM* vm)
@@ -119,7 +124,7 @@ namespace Entdlr
         if (auto s = getStruct(_namespace, _struct))
             output = s->attributes.size();
 
-        wrenSetSlotDouble(vm, 0, output);
+        wrenSetSlotDouble(vm, 0, (double)output);
     }
 
     void ContextHelper::numFieldAttributes(WrenVM* vm)
@@ -132,7 +137,7 @@ namespace Entdlr
         if (auto f = getField(_namespace, _struct, _field))
             output = f->attributes.size();
 
-        wrenSetSlotDouble(vm, 0, output);
+        wrenSetSlotDouble(vm, 0, (double)output);
     }
 
     void ContextHelper::numStructMethods(WrenVM* vm)
@@ -144,7 +149,7 @@ namespace Entdlr
         if (auto s = getStruct(_namespace, _struct))
             output = s->methods.size();
 
-        wrenSetSlotDouble(vm, 0, output);
+        wrenSetSlotDouble(vm, 0, (double)output);
     }
 
     void ContextHelper::numStructMethodParameters(WrenVM* vm)
@@ -157,7 +162,7 @@ namespace Entdlr
         if (auto m = getStructMethod(_namespace, _struct, _method))
             output = m->parameters.size();
 
-        wrenSetSlotDouble(vm, 0, output);
+        wrenSetSlotDouble(vm, 0, (double)output);
     }
 
     void ContextHelper::numInterfaces(WrenVM* vm)
@@ -168,7 +173,7 @@ namespace Entdlr
         if (auto n = getNamespace(_namespace))
             output = n->interfaces.size();
 
-        wrenSetSlotDouble(vm, 0, output);
+        wrenSetSlotDouble(vm, 0, (double)output);
     }
 
     void ContextHelper::numInterfaceMethods(WrenVM* vm)
@@ -180,7 +185,7 @@ namespace Entdlr
         if (auto f = getInterface(_namespace, _interface))
             output = f->methods.size();
 
-        wrenSetSlotDouble(vm, 0, output);
+        wrenSetSlotDouble(vm, 0, (double)output);
     }
 
     void ContextHelper::numInterfaceMethodParameters(WrenVM* vm)
@@ -193,12 +198,23 @@ namespace Entdlr
         if (auto m = getInterfaceMethod(_namespace, _interface, _method))
             output = m->parameters.size();
 
-        wrenSetSlotDouble(vm, 0, output);
+        wrenSetSlotDouble(vm, 0, (double)output);
+    }
+
+    void ContextHelper::getIncludeName(WrenVM* vm)
+    {
+        size_t index = (size_t)wrenGetSlotDouble(vm, 1);
+
+        std::string output = "";
+        if (context.includes.size() > index)
+            output = context.includes[index].name;
+
+        wrenSetSlotString(vm, 0, output.c_str());
     }
 
     void ContextHelper::getNamespaceName(WrenVM* vm)
     {
-        size_t index = wrenGetSlotDouble(vm, 1);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 1);
 
         std::string output = "";
         if (context.namespaces.size() > index)
@@ -210,7 +226,7 @@ namespace Entdlr
     void ContextHelper::getEnumName(WrenVM* vm)
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
-        size_t index = wrenGetSlotDouble(vm, 2);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 2);
 
         std::string output = "";
         if (auto e = getEnum(_namespace, index))
@@ -247,7 +263,7 @@ namespace Entdlr
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _enum = wrenGetSlotString(vm, 2);
-        size_t index = wrenGetSlotDouble(vm, 3);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 3);
 
         std::string output = "";
         if (auto a = getEnumAttribute(_namespace, _enum, index))
@@ -260,7 +276,7 @@ namespace Entdlr
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _enum = wrenGetSlotString(vm, 2);
-        size_t index = wrenGetSlotDouble(vm, 3);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 3);
 
         bool output = false;
         if (auto a = getEnumAttribute(_namespace, _enum, index))
@@ -273,7 +289,7 @@ namespace Entdlr
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _enum = wrenGetSlotString(vm, 2);
-        size_t index = wrenGetSlotDouble(vm, 3);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 3);
 
         std::string output = "";
         if (auto a = getEnumAttribute(_namespace, _enum, index))
@@ -286,7 +302,7 @@ namespace Entdlr
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _enum = wrenGetSlotString(vm, 2);
-        size_t index = wrenGetSlotDouble(vm, 3);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 3);
 
         bool output = false;
         if (auto a = getEnumAttribute(_namespace, _enum, index))
@@ -299,7 +315,7 @@ namespace Entdlr
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _enum = wrenGetSlotString(vm, 2);
-        size_t index = wrenGetSlotDouble(vm, 3);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 3);
 
         double output = 0.0;
         if (auto a = getEnumAttribute(_namespace, _enum, index))
@@ -312,7 +328,7 @@ namespace Entdlr
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _enum = wrenGetSlotString(vm, 2);
-        size_t index = wrenGetSlotDouble(vm, 3);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 3);
 
         std::string output = "";
         if (auto v = getEnumValue(_namespace, _enum, index))
@@ -325,19 +341,19 @@ namespace Entdlr
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _enum = wrenGetSlotString(vm, 2);
-        size_t index = wrenGetSlotDouble(vm, 3);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 3);
 
         int64_t output = 0;
         if (auto v = getEnumValue(_namespace, _enum, index))
             output = v->value;
 
-        wrenSetSlotDouble(vm, 0, output);
+        wrenSetSlotDouble(vm, 0, (double)output);
     }
 
     void ContextHelper::getUnionName(WrenVM* vm)
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
-        size_t index = wrenGetSlotDouble(vm, 2);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 2);
 
         std::string output = "";
         if (auto u = getUnion(_namespace, index))
@@ -362,7 +378,7 @@ namespace Entdlr
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _union = wrenGetSlotString(vm, 2);
-        size_t index = wrenGetSlotDouble(vm, 3);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 3);
 
         std::string output = "";
         if (auto a = getUnionAttribute(_namespace, _union, index))
@@ -375,7 +391,7 @@ namespace Entdlr
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _union = wrenGetSlotString(vm, 2);
-        size_t index = wrenGetSlotDouble(vm, 3);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 3);
 
         bool output = false;
         if (auto a = getUnionAttribute(_namespace, _union, index))
@@ -388,7 +404,7 @@ namespace Entdlr
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _union = wrenGetSlotString(vm, 2);
-        size_t index = wrenGetSlotDouble(vm, 3);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 3);
 
         std::string output = "";
         if (auto a = getUnionAttribute(_namespace, _union, index))
@@ -401,7 +417,7 @@ namespace Entdlr
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _union = wrenGetSlotString(vm, 2);
-        size_t index = wrenGetSlotDouble(vm, 3);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 3);
 
         bool output = false;
         if (auto a = getUnionAttribute(_namespace, _union, index))
@@ -414,7 +430,7 @@ namespace Entdlr
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _union = wrenGetSlotString(vm, 2);
-        size_t index = wrenGetSlotDouble(vm, 3);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 3);
 
         double output = 0.0;
         if (auto a = getUnionAttribute(_namespace, _union, index))
@@ -427,7 +443,7 @@ namespace Entdlr
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _union = wrenGetSlotString(vm, 2);
-        size_t index = wrenGetSlotDouble(vm, 3);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 3);
 
         std::string output = "";
         if (auto t = getUnionType(_namespace, _union, index))
@@ -440,7 +456,7 @@ namespace Entdlr
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _union = wrenGetSlotString(vm, 2);
-        size_t index = wrenGetSlotDouble(vm, 3);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 3);
 
         bool output = false;
         if (auto t = getUnionType(_namespace, _union, index))
@@ -453,19 +469,19 @@ namespace Entdlr
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _union = wrenGetSlotString(vm, 2);
-        size_t index = wrenGetSlotDouble(vm, 3);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 3);
 
         size_t output = 0;
         if (auto t = getUnionType(_namespace, _union, index))
             output = t->arraySize;
 
-        wrenSetSlotDouble(vm, 0, output);
+        wrenSetSlotDouble(vm, 0, (double)output);
     }
 
     void ContextHelper::getStructName(WrenVM* vm)
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
-        size_t index = wrenGetSlotDouble(vm, 2);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 2);
 
         std::string output = "";
         if (auto s = getStruct(_namespace, index))
@@ -490,7 +506,7 @@ namespace Entdlr
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _struct = wrenGetSlotString(vm, 2);
-        size_t index = wrenGetSlotDouble(vm, 3);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 3);
 
         std::string output = "";
         if (auto a = getStructAttribute(_namespace, _struct, index))
@@ -503,7 +519,7 @@ namespace Entdlr
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _struct = wrenGetSlotString(vm, 2);
-        size_t index = wrenGetSlotDouble(vm, 3);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 3);
 
         bool output = false;
         if (auto a = getStructAttribute(_namespace, _struct, index))
@@ -516,7 +532,7 @@ namespace Entdlr
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _struct = wrenGetSlotString(vm, 2);
-        size_t index = wrenGetSlotDouble(vm, 3);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 3);
 
         std::string output = "";
         if (auto a = getStructAttribute(_namespace, _struct, index))
@@ -529,7 +545,7 @@ namespace Entdlr
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _struct = wrenGetSlotString(vm, 2);
-        size_t index = wrenGetSlotDouble(vm, 3);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 3);
 
         bool output = false;
         if (auto a = getStructAttribute(_namespace, _struct, index))
@@ -542,7 +558,7 @@ namespace Entdlr
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _struct = wrenGetSlotString(vm, 2);
-        size_t index = wrenGetSlotDouble(vm, 3);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 3);
 
         double output = 0.0;
         if (auto a = getStructAttribute(_namespace, _struct, index))
@@ -555,7 +571,7 @@ namespace Entdlr
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _struct = wrenGetSlotString(vm, 2);
-        size_t index = wrenGetSlotDouble(vm, 3);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 3);
 
         std::string output = "";
         if (auto f = getField(_namespace, _struct, index))
@@ -568,7 +584,7 @@ namespace Entdlr
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _struct = wrenGetSlotString(vm, 2);
-        size_t index = wrenGetSlotDouble(vm, 3);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 3);
 
         std::string output = "";
         if (auto f = getField(_namespace, _struct, index))
@@ -581,7 +597,7 @@ namespace Entdlr
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _struct = wrenGetSlotString(vm, 2);
-        size_t index = wrenGetSlotDouble(vm, 3);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 3);
 
         bool output = false;
         if (auto f = getField(_namespace, _struct, index))
@@ -594,20 +610,20 @@ namespace Entdlr
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _struct = wrenGetSlotString(vm, 2);
-        size_t index = wrenGetSlotDouble(vm, 3);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 3);
 
         size_t output = 0;
         if (auto f = getField(_namespace, _struct, index))
             output = f->arraySize;
 
-        wrenSetSlotDouble(vm, 0, output);
+        wrenSetSlotDouble(vm, 0, (double)output);
     }
 
     void ContextHelper::getFieldComment(WrenVM* vm)
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _struct = wrenGetSlotString(vm, 2);
-        size_t index = wrenGetSlotDouble(vm, 3);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 3);
 
         std::string output = "";
         if (auto f = getField(_namespace, _struct, index))
@@ -621,7 +637,7 @@ namespace Entdlr
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _struct = wrenGetSlotString(vm, 2);
         std::string _field = wrenGetSlotString(vm, 3);
-        size_t index = wrenGetSlotDouble(vm, 4);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 4);
 
         std::string output = "";
         if (auto a = getFieldAttribute(_namespace, _struct, _field, index))
@@ -635,7 +651,7 @@ namespace Entdlr
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _struct = wrenGetSlotString(vm, 2);
         std::string _field = wrenGetSlotString(vm, 3);
-        size_t index = wrenGetSlotDouble(vm, 4);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 4);
 
         bool output = false;
         if (auto a = getFieldAttribute(_namespace, _struct, _field, index))
@@ -649,7 +665,7 @@ namespace Entdlr
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _struct = wrenGetSlotString(vm, 2);
         std::string _field = wrenGetSlotString(vm, 3);
-        size_t index = wrenGetSlotDouble(vm, 4);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 4);
 
         std::string output = "";
         if (auto a = getFieldAttribute(_namespace, _struct, _field, index))
@@ -663,7 +679,7 @@ namespace Entdlr
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _struct = wrenGetSlotString(vm, 2);
         std::string _field = wrenGetSlotString(vm, 3);
-        size_t index = wrenGetSlotDouble(vm, 4);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 4);
 
         bool output = false;
         if (auto a = getFieldAttribute(_namespace, _struct, _field, index))
@@ -677,7 +693,7 @@ namespace Entdlr
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _struct = wrenGetSlotString(vm, 2);
         std::string _field = wrenGetSlotString(vm, 3);
-        size_t index = wrenGetSlotDouble(vm, 4);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 4);
 
         double output = 0.0;
         if (auto a = getFieldAttribute(_namespace, _struct, _field, index))
@@ -690,7 +706,7 @@ namespace Entdlr
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _struct = wrenGetSlotString(vm, 2);
-        size_t index = wrenGetSlotDouble(vm, 3);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 3);
 
         std::string output = "";
         if (auto m = getStructMethod(_namespace, _struct, index))
@@ -712,6 +728,19 @@ namespace Entdlr
         wrenSetSlotString(vm, 0, output.c_str());
     }
 
+    void ContextHelper::getStructMethodReturnIsReference(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _struct = wrenGetSlotString(vm, 2);
+        std::string _method = wrenGetSlotString(vm, 3);
+
+        bool output = false;
+        if (auto m = getStructMethod(_namespace, _struct, _method))
+            output = m->returnIsReference;
+
+        wrenSetSlotBool(vm, 0, output);
+    }
+
     void ContextHelper::getStructMethodIsStatic(WrenVM* vm)
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
@@ -721,6 +750,19 @@ namespace Entdlr
         bool output = false;
         if (auto m = getStructMethod(_namespace, _struct, _method))
             output = m->isStatic;
+
+        wrenSetSlotBool(vm, 0, output);
+    }
+
+    void ContextHelper::getStructMethodConstant(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _struct = wrenGetSlotString(vm, 2);
+        std::string _method = wrenGetSlotString(vm, 3);
+
+        bool output = false;
+        if (auto m = getStructMethod(_namespace, _struct, _method))
+            output = m->constant;
 
         wrenSetSlotBool(vm, 0, output);
     }
@@ -743,7 +785,7 @@ namespace Entdlr
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _struct = wrenGetSlotString(vm, 2);
         std::string _method = wrenGetSlotString(vm, 3);
-        size_t index = wrenGetSlotDouble(vm, 4);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 4);
 
         std::string output = "";
         if (auto p = getStructParameter(_namespace, _struct, _method, index))
@@ -757,7 +799,7 @@ namespace Entdlr
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _struct = wrenGetSlotString(vm, 2);
         std::string _method = wrenGetSlotString(vm, 3);
-        size_t index = wrenGetSlotDouble(vm, 4);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 4);
 
         std::string output = "";
         if (auto p = getStructParameter(_namespace, _struct, _method, index))
@@ -771,7 +813,7 @@ namespace Entdlr
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _struct = wrenGetSlotString(vm, 2);
         std::string _method = wrenGetSlotString(vm, 3);
-        size_t index = wrenGetSlotDouble(vm, 4);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 4);
 
         bool output = false;
         if (auto p = getStructParameter(_namespace, _struct, _method, index))
@@ -780,10 +822,24 @@ namespace Entdlr
         wrenSetSlotBool(vm, 0, output);
     }
 
+    void ContextHelper::getStructMethodParameterReference(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _struct = wrenGetSlotString(vm, 2);
+        std::string _method = wrenGetSlotString(vm, 3);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 4);
+
+        bool output = false;
+        if (auto p = getStructParameter(_namespace, _struct, _method, index))
+            output = p->reference;
+
+        wrenSetSlotBool(vm, 0, output);
+    }
+
     void ContextHelper::getInterfaceName(WrenVM* vm)
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
-        size_t index = wrenGetSlotDouble(vm, 2);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 2);
 
         std::string output = "";
         if (auto f = getInterface(_namespace, index))
@@ -808,7 +864,7 @@ namespace Entdlr
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _interface = wrenGetSlotString(vm, 2);
-        size_t index = wrenGetSlotDouble(vm, 3);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 3);
 
         std::string output = "";
         if (auto m = getInterfaceMethod(_namespace, _interface, index))
@@ -830,6 +886,19 @@ namespace Entdlr
         wrenSetSlotString(vm, 0, output.c_str());
     }
 
+    void ContextHelper::getInterfaceMethodReturnIsReference(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _interface = wrenGetSlotString(vm, 2);
+        std::string _method = wrenGetSlotString(vm, 3);
+
+        bool output = false;
+        if (auto m = getInterfaceMethod(_namespace, _interface, _method))
+            output = m->returnIsReference;
+
+        wrenSetSlotBool(vm, 0, output);
+    }
+
     void ContextHelper::getInterfaceMethodIsStatic(WrenVM* vm)
     {
         std::string _namespace = wrenGetSlotString(vm, 1);
@@ -839,6 +908,19 @@ namespace Entdlr
         bool output = false;
         if (auto m = getInterfaceMethod(_namespace, _interface, _method))
             output = m->isStatic;
+
+        wrenSetSlotBool(vm, 0, output);
+    }
+
+    void ContextHelper::getInterfaceMethodConstant(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _interface = wrenGetSlotString(vm, 2);
+        std::string _method = wrenGetSlotString(vm, 3);
+
+        bool output = false;
+        if (auto m = getInterfaceMethod(_namespace, _interface, _method))
+            output = m->constant;
 
         wrenSetSlotBool(vm, 0, output);
     }
@@ -861,7 +943,7 @@ namespace Entdlr
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _interface = wrenGetSlotString(vm, 2);
         std::string _method = wrenGetSlotString(vm, 3);
-        size_t index = wrenGetSlotDouble(vm, 4);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 4);
 
         std::string output = "";
         if (auto p = getInterfaceParameter(_namespace, _interface, _method, index))
@@ -875,7 +957,7 @@ namespace Entdlr
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _interface = wrenGetSlotString(vm, 2);
         std::string _method = wrenGetSlotString(vm, 3);
-        size_t index = wrenGetSlotDouble(vm, 4);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 4);
 
         std::string output = "";
         if (auto p = getInterfaceParameter(_namespace, _interface, _method, index))
@@ -889,13 +971,38 @@ namespace Entdlr
         std::string _namespace = wrenGetSlotString(vm, 1);
         std::string _interface = wrenGetSlotString(vm, 2);
         std::string _method = wrenGetSlotString(vm, 3);
-        size_t index = wrenGetSlotDouble(vm, 4);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 4);
 
         bool output = false;
         if (auto p = getInterfaceParameter(_namespace, _interface, _method, index))
             output = p->constant;
 
         wrenSetSlotBool(vm, 0, output);
+    }
+
+    void ContextHelper::getInterfaceMethodParameterReference(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _interface = wrenGetSlotString(vm, 2);
+        std::string _method = wrenGetSlotString(vm, 3);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 4);
+
+        bool output = false;
+        if (auto p = getInterfaceParameter(_namespace, _interface, _method, index))
+            output = p->reference;
+
+        wrenSetSlotBool(vm, 0, output);
+    }
+
+    std::optional<Include> ContextHelper::getInclude(const std::string& _include)
+    {
+        for (const auto& i : context.includes)
+        {
+            if (i.name == _include)
+                return i;
+        }
+
+        return {};
     }
 
     std::optional<Namespace> ContextHelper::getNamespace(const std::string& _namespace)
@@ -1035,8 +1142,12 @@ namespace Entdlr
     {
         if (auto e = getEnum(_namespace, _enum))
         {
-            if (e->attributes.size() > index)
-                return e->attributes[index];
+            std::vector<Attribute> a;
+            for (const auto& att : e->attributes)
+                a.push_back(att.second);
+
+            if (a.size() > index)
+                return a[index];
         }
 
         return {};
@@ -1046,8 +1157,12 @@ namespace Entdlr
     {
         if (auto u = getUnion(_namespace, _union))
         {
-            if (u->attributes.size() > index)
-                return u->attributes[index];
+            std::vector<Attribute> a;
+            for (const auto& att : u->attributes)
+                a.push_back(att.second);
+
+            if (a.size() > index)
+                return a[index];
         }
 
         return {};
@@ -1057,8 +1172,12 @@ namespace Entdlr
     {
         if (auto s = getStruct(_namespace, _struct))
         {
-            if (s->attributes.size() > index)
-                return s->attributes[index];
+            std::vector<Attribute> a;
+            for (const auto& att : s->attributes)
+                a.push_back(att.second);
+
+            if (a.size() > index)
+                return a[index];
         }
 
         return {};
@@ -1068,8 +1187,12 @@ namespace Entdlr
     {
         if (auto f = getField(_namespace, _struct, _field))
         {
-            if (f->attributes.size() > index)
-                return f->attributes[index];
+            std::vector<Attribute> a;
+            for (const auto& att : f->attributes)
+                a.push_back(att.second);
+
+            if (a.size() > index)
+                return a[index];
         }
 
         return {};

@@ -21,6 +21,8 @@ namespace Entdlr
         std::optional<std::string> getType(const std::string& key);
 
     private:
+        Namespace applyMapping(const Namespace& n);
+
         std::map<std::string, std::string> mappings;
     };
 };

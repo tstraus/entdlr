@@ -87,6 +87,35 @@ namespace Entdlr
         //cout << tmpl.str() << endl;
 
         inja::Environment env;
+        env.add_callback("getTokenType", 1,
+            [this, context](inja::Arguments& args)
+            {
+                std::string type = *args[0];
+
+                for (const auto& n : context.namespaces)
+                {
+                    if (n.name == type) return "namespace";
+                    for (const auto& e : n.enums) if (e.name == type) return "enum";
+                    for (const auto& u : n.unions) if (u.name == type) return "union";
+                    for (const auto& s : n.structs) if (s.name == type) return "struct";
+                    for (const auto& i : n.interfaces) if (i.name == type) return "interface";
+                }
+
+                for (const auto& i : context.includes)
+                {
+                    for (const auto& n : i.namespaces)
+                    {
+                        if (n.name == type) return "namespace";
+                        for (const auto& e : n.enums) if (e.name == type) return "enum";
+                        for (const auto& u : n.unions) if (u.name == type) return "union";
+                        for (const auto& s : n.structs) if (s.name == type) return "struct";
+                        for (const auto& i : n.interfaces) if (i.name == type) return "interface";
+                    }
+                }
+
+                return "unknown";
+            }
+        );
         env.set_fallback
         (
             [this](const std::string& name, const unsigned int numArgs, const inja::Arguments& args)
@@ -108,7 +137,7 @@ namespace Entdlr
         std::string functionName = name;
         functionName.erase(std::remove(functionName.begin(), functionName.end(), '\"'), functionName.end());
         functionName += "(";
-        for (int i = 0; i < numArgs; i++)
+        for (unsigned int i = 0; i < numArgs; i++)
         {
             functionName += "_";
             if (i != numArgs - 1) functionName += ",";
@@ -121,7 +150,7 @@ namespace Entdlr
         WrenHandle* variable = wrenGetSlotHandle(vm, 0); // an instance of the class
         WrenHandle* handle = wrenMakeCallHandle(vm, functionName.c_str()); // method signature
 
-        wrenEnsureSlots(vm, args.size() + 1); // make sure we have enough slots for the arguments
+        wrenEnsureSlots(vm, (int)args.size() + 1); // make sure we have enough slots for the arguments
 
         // put inja's arguments into wren's argument slots
         for (int i = 0; i < args.size(); i++)

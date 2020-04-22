@@ -12,7 +12,7 @@ fi
 
 cd build
 
-if [ -e /usr/bin/ninja ]; then
+if [[ -e /usr/bin/ninja || -e /usr/bin/ninja-build ]]; then
     cmake -G Ninja -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX:PATH=dist ..
 else
     cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX:PATH=dist ..

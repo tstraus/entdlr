@@ -36,11 +36,15 @@ elseif(APPLE)
 endif()
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-  set(disabled_compile_warnings "/wd4251")
+  target_compile_options(antlr4_shared PUBLIC "/wd4251" "/wd4996" "/wd4217")
+  target_compile_options(antlr4_static PUBLIC "/wd4251" "/wd4996" "/wd4217")
+  target_link_options(antlr4_shared PUBLIC "/ignore:4217")
+  target_link_options(antlr4_static PUBLIC "/ignore:4217")
 else()
   set(disabled_compile_warnings "-Wno-overloaded-virtual")
+  target_compile_options(antlr4_shared PUBLIC "-Wno-attributes")
+  target_compile_options(antlr4_static PUBLIC "-Wno-attributes")
 endif()
-
 
 if("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
   set(disabled_compile_warnings "${disabled_compile_warnings} -Wno-dollar-in-identifier-extension -Wno-four-char-constants")

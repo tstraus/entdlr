@@ -1,12 +1,21 @@
+## for include in entdlr.includes
+include {{include.name}}
+## for namespace in include.namespaces
+    {{namespace.name}}
+## endfor
+## endfor
+
 ## for namespace in entdlr.namespaces
 {{namespace.name}}
 ## for enum in namespace.enums
+    /// enum : {{enum.comment}}
     {{enum.name}} : enum ({{enum.type}})
 ## for e in enum.values
         {{e.name}} = {{e.value}}
 ## endfor
 ## endfor
 ## for union in namespace.unions
+    /// union : {{union.comment}}
     {{union.name}} : union
 ## for t in union.types
 ## if t.isArray == false
@@ -21,18 +30,19 @@
 ## endfor
 ## endfor
 ## for struct in namespace.structs
+    /// struct : {{struct.comment}}
     {{struct.name}} : struct
 ## for field in struct.fields
 ## if field.isArray == false
-        {{field.name}} : {{field.type}}
+        {{field.name}} : {{field.type}} /// {{field.comment}}
 ## endif
 ## if field.isArray == true and field.arraySize == 0
-        {{field.name}} : {{field.type}}[]
+        {{field.name}} : {{field.type}}[] /// {{field.comment}}
 ## endif
 ## if field.isArray == true and field.arraySize > 0
-        {{field.name}} : {{field.type}}[{{field.arraySize}}]
+        {{field.name}} : {{field.type}}[{{field.arraySize}}] /// {{field.comment}}
 ## endif
-## for attribute in field.attributes
+## for name, attribute in field.attributes
 ## if attribute.isString == false and attribute.isNumber == false
             {{attribute.name}}
 ## endif
@@ -46,6 +56,7 @@
 ## endfor
 
 ## for method in struct.methods
+        /// method : {{method.comment}}
 ## if method.isStatic == true
         static {{method.name}} : {{method.returnType}}
 ## endif
@@ -53,18 +64,15 @@
         {{method.name}} : {{method.returnType}}
 ## endif
 ## for parameter in method.parameters
-## if parameter.constant == true
-            {{parameter.name}} : {{parameter.type}}
-## endif
-## if parameter.constant == false
-            {{parameter.name}} : mutable {{parameter.type}}
-## endif
+            {{parameter.name}} : {% if parameter.reference == true %}reference {% endif %}{% if parameter.constant == false %}mutable {% endif %}{{parameter.type}}
 ## endfor
 ## endfor
 ## endfor
 ## for interface in namespace.interfaces
+    /// interface : {{interface.comment}}
     {{interface.name}} : interface
 ## for method in interface.methods
+        /// method : {{method.comment}}
 ## if method.isStatic == true
         static {{method.name}} : {{method.returnType}}
 ## endif

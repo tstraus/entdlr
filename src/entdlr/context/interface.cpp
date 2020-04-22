@@ -5,6 +5,7 @@ namespace Entdlr
     Interface Interface::create(const Token& token, const std::string& comment)
     {
         Interface out;
+        out.token = TokenType::Interface;
         out.filename = token.filename;
         out.line = token.line;
         out.column = token.column;

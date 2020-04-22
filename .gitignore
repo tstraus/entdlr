@@ -1,6 +1,7 @@
 *.swp
 *.swo
 
+.clangd/
 .vs/
 .vscode/
 .idea/

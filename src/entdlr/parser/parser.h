@@ -21,6 +21,8 @@ namespace Entdlr
         static Context merge(const std::vector<Context>& contexts);
 
     private:
+        static std::vector<Include> parseIncludes(const std::vector<FlatBuffersParser::IncludeContext*> incs, const std::string& filename);
+
         static Namespace parseNamespace(const std::vector<FlatBuffersParser::Namespace_declContext*>& namespaces, const std::string& filename);
 
         static std::vector<Enum> parseEnums(const std::vector<FlatBuffersParser::Enum_declContext*>& enums, const std::string& filename);
@@ -33,7 +35,7 @@ namespace Entdlr
 
         static Method parseMethod(FlatBuffersParser::Method_declContext* method, const std::string& filename);
 
-        static std::vector<Attribute> parseAttributes(FlatBuffersParser::MetadataContext* metadata, const std::string& filename);
+        static std::unordered_map<std::string, Attribute> parseAttributes(FlatBuffersParser::MetadataContext* metadata, const std::string& filename);
 
         static std::vector<Interface> parseInterfaces(const std::vector<FlatBuffersParser::Interface_declContext*>& interfaces, const std::string& filename);
 
