@@ -82,20 +82,26 @@ namespace Entdlr
         boundForeignMethods["Context::Context::getFieldAttributeNumber(_,_,_,_)static"] = ContextHelper::getFieldAttributeNumber;
         boundForeignMethods["Context::Context::getStructMethodName(_,_,_)static"] = ContextHelper::getStructMethodName;
         boundForeignMethods["Context::Context::getStructMethodReturnType(_,_,_)static"] = ContextHelper::getStructMethodReturnType;
+        boundForeignMethods["Context::Context::getStructMethodReturnIsReference(_,_,_)static"] = ContextHelper::getStructMethodReturnIsReference;
         boundForeignMethods["Context::Context::getStructMethodIsStatic(_,_,_)static"] = ContextHelper::getStructMethodIsStatic;
+        boundForeignMethods["Context::Context::getStructMethodConstant(_,_,_)static"] = ContextHelper::getStructMethodConstant;
         boundForeignMethods["Context::Context::getStructMethodComment(_,_,_)static"] = ContextHelper::getStructMethodComment;
         boundForeignMethods["Context::Context::getStructMethodParameterName(_,_,_,_)static"] = ContextHelper::getStructMethodParameterName;
         boundForeignMethods["Context::Context::getStructMethodParameterType(_,_,_,_)static"] = ContextHelper::getStructMethodParameterType;
         boundForeignMethods["Context::Context::getStructMethodParameterConstant(_,_,_,_)static"] = ContextHelper::getStructMethodParameterConstant;
+        boundForeignMethods["Context::Context::getStructMethodParameterReference(_,_,_,_)static"] = ContextHelper::getStructMethodParameterReference;
         boundForeignMethods["Context::Context::getInterfaceName(_,_)static"] = ContextHelper::getInterfaceName;
         boundForeignMethods["Context::Context::getInterfaceComment(_,_)static"] = ContextHelper::getInterfaceComment;
         boundForeignMethods["Context::Context::getInterfaceMethodName(_,_,_)static"] = ContextHelper::getInterfaceMethodName;
         boundForeignMethods["Context::Context::getInterfaceMethodReturnType(_,_,_)static"] = ContextHelper::getInterfaceMethodReturnType;
+        boundForeignMethods["Context::Context::getInterfaceMethodReturnIsReference(_,_,_)static"] = ContextHelper::getInterfaceMethodReturnIsReference;
         boundForeignMethods["Context::Context::getInterfaceMethodIsStatic(_,_,_)static"] = ContextHelper::getInterfaceMethodIsStatic;
+        boundForeignMethods["Context::Context::getInterfaceMethodConstant(_,_,_)static"] = ContextHelper::getInterfaceMethodConstant;
         boundForeignMethods["Context::Context::getInterfaceMethodComment(_,_,_)static"] = ContextHelper::getInterfaceMethodComment;
         boundForeignMethods["Context::Context::getInterfaceMethodParameterName(_,_,_,_)static"] = ContextHelper::getInterfaceMethodParameterName;
         boundForeignMethods["Context::Context::getInterfaceMethodParameterType(_,_,_,_)static"] = ContextHelper::getInterfaceMethodParameterType;
         boundForeignMethods["Context::Context::getInterfaceMethodParameterConstant(_,_,_,_)static"] = ContextHelper::getInterfaceMethodParameterConstant;
+        boundForeignMethods["Context::Context::getInterfaceMethodParameterReference(_,_,_,_)static"] = ContextHelper::getInterfaceMethodParameterReference;
 
         WrenConfiguration config;
         wrenInitConfiguration(&config);

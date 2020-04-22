@@ -95,12 +95,15 @@ class Context {
     // Method
     foreign static getStructMethodName(namespace, struct, index)
     foreign static getStructMethodReturnType(namespace, struct, method)
+    foreign static getStructMethodReturnIsReference(namespace, struct, method)
     foreign static getStructMethodIsStatic(namespace, struct, method)
+    foreign static getStructMethodConstant(namespace, struct, method)
     foreign static getStructMethodComment(namespace, struct, method)
     // Parameter
     foreign static getStructMethodParameterName(namespace, struct, method, index)
     foreign static getStructMethodParameterType(namespace, struct, method, index)
     foreign static getStructMethodParameterConstant(namespace, struct, method, index)
+    foreign static getStructMethodParameterReference(namespace, struct, method, index)
 
     // Interface
     foreign static getInterfaceName(namespace, index)
@@ -108,12 +111,15 @@ class Context {
     // Method
     foreign static getInterfaceMethodName(namespace, interface, index)
     foreign static getInterfaceMethodReturnType(namespace, interface, method)
+    foreign static getInterfaceMethodReturnIsReference(namespace, interface, method)
     foreign static getInterfaceMethodIsStatic(namespace, interface, method)
+    foreign static getInterfaceMethodConstant(namespace, interface, method)
     foreign static getInterfaceMethodComment(namespace, interface, method)
     // Parameter
     foreign static getInterfaceMethodParameterName(namespace, interface, method, index)
     foreign static getInterfaceMethodParameterType(namespace, interface, method, index)
     foreign static getInterfaceMethodParameterConstant(namespace, interface, method, index)
+    foreign static getInterfaceMethodParameterReference(namespace, interface, method, index)
 }
 
 class Include {
@@ -329,14 +335,18 @@ class Attribute {
 class Method {
     name { _name }
     returnType { _returnType }
+    returnIsReference { _returnIsReference }
     parameters { _parameters }
     isStatic { _isStatic }
+    constant { _constant }
     comment { _comment }
 
     construct newStructMethod(namespace, struct, method) {
         _name = method
         _returnType = Context.getStructMethodReturnType(namespace, struct, method)
+        _returnIsReference = Context.getStructMethodReturnIsReference(namespace, struct, method)
         _isStatic = Context.getStructMethodIsStatic(namespace, struct, method)
+        _constant = Context.getStructMethodConstant(namespace, struct, method)
         _comment = Context.getStructMethodComment(namespace, struct, method)
         _parameters = {}
 
@@ -349,7 +359,9 @@ class Method {
     construct newInerfaceMethod(namespace, interface, method) {
         _name = method
         _returnType = Context.getInterfaceMethodReturnType(namespace, interface, method)
+        _returnIsReference = Context.getInterfaceMethodReturnIsReference(namespace, interface, method)
         _isStatic = Context.getInterfaceMethodIsStatic(namespace, interface, method)
+        _constant = Context.getInterfaceMethodConstant(namespace, interface, method)
         _comment = Context.getInterfaceMethodComment(namespace, interface, method)
         _parameters = {}
 
@@ -364,17 +376,20 @@ class Parameter {
     name { _name }
     type { _type }
     constant { _constant }
+    reference { _reference }
 
     construct newStructMethodParameter(namespace, struct, method, index) {
         _name = Context.getStructMethodParameterName(namespace, struct, method, index)
         _type = Context.getStructMethodParameterType(namespace, struct, method, index)
         _constant = Context.getStructMethodParameterConstant(namespace, struct, method, index)
+        _reference = Context.getStructMethodParameterReference(namespace, struct, method, index)
     }
 
     construct newInterfaceMethodParameter(namespace, interface, method, index) {
         _name = Context.getInterfaceMethodParameterName(namespace, interface, method, index)
         _type = Context.getInterfaceMethodParameterType(namespace, interface, method, index)
         _constant = Context.getInterfaceMethodParameterConstant(namespace, interface, method, index)
+        _reference = Context.getInterfaceMethodParameterReference(namespace, interface, method, index)
     }
 }
 

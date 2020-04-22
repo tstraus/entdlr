@@ -149,6 +149,9 @@ for (nKey in c.namespaces.keys) {
             for (pKey in m.parameters.keys) {
                 var p = m.parameters[pKey]
                 System.write("            " + p.name + " : ")
+                if (p.reference) {
+                    System.write("reference ")
+                }
                 if (!p.constant) {
                     System.write("mutable ")
                 }
