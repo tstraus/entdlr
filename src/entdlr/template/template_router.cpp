@@ -2,7 +2,7 @@
 #include "json_helpers.h"
 #include "type_map.h"
 
-#include <filesystem>
+#include <experimental/filesystem>
 #include <iostream>
 
 #include "inja_template.h"
@@ -20,7 +20,7 @@ namespace Entdlr
 
     std::string TemplateRouter::applyTemplate(const Context& context, const std::string& template_name)
     {
-        auto path = std::filesystem::path(template_name);
+        auto path = std::experimental::filesystem::path(template_name);
         auto extension = path.extension().string();
 
         if (templates.count(extension))

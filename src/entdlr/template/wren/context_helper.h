@@ -4,7 +4,8 @@
 #include "context.h"
 #include "wren.hpp"
 
-#include <optional>
+#include "optional.hpp"
+using nonstd::optional;
 
 namespace Entdlr
 {
@@ -115,30 +116,30 @@ namespace Entdlr
         static void getInterfaceMethodParameterReference(WrenVM* vm);
 
     private:
-        static std::optional<Include> getInclude(const std::string& _include);
-        static std::optional<Namespace> getNamespace(const std::string& _namespace);
-        static std::optional<Enum> getEnum(const std::string& _namespace, const std::string& _enum);
-        static std::optional<Enum> getEnum(const std::string& _namespace, size_t index);
-        static std::optional<EnumValue> getEnumValue(const std::string& _namespace, const std::string& _enum, size_t index);
-        static std::optional<Union> getUnion(const std::string& _namespace, const std::string& _union);
-        static std::optional<Union> getUnion(const std::string& _namespace, size_t index);
-        static std::optional<UnionType> getUnionType(const std::string& _namespace, const std::string& _union, size_t index);
-        static std::optional<Struct> getStruct(const std::string& _namespace, const std::string& _struct);
-        static std::optional<Struct> getStruct(const std::string& _namespace, size_t index);
-        static std::optional<Field> getField(const std::string& _namespace, const std::string& _struct, const std::string& _field);
-        static std::optional<Field> getField(const std::string& _namespace, const std::string& _struct, size_t index);
-        static std::optional<Attribute> getEnumAttribute(const std::string& _namespace, const std::string& _enum, size_t index);
-        static std::optional<Attribute> getUnionAttribute(const std::string& _namespace, const std::string& _union, size_t index);
-        static std::optional<Attribute> getStructAttribute(const std::string& _namespace, const std::string& _struct, size_t index);
-        static std::optional<Attribute> getFieldAttribute(const std::string& _namespace, const std::string& _struct, const std::string& _field, size_t index);
-        static std::optional<Method> getStructMethod(const std::string& _namespace, const std::string& _struct, const std::string& _method);
-        static std::optional<Method> getStructMethod(const std::string& _namespace, const std::string& _struct, size_t index);
-        static std::optional<Method> getInterfaceMethod(const std::string& _namespace, const std::string& _interface, const std::string& _method);
-        static std::optional<Method> getInterfaceMethod(const std::string& _namespace, const std::string& _interface, size_t index);
-        static std::optional<Parameter> getStructParameter(const std::string& _namespace, const std::string& _struct, const std::string& _method, size_t index);
-        static std::optional<Parameter> getInterfaceParameter(const std::string& _namespace, const std::string& _interface, const std::string& _method, size_t index);
-        static std::optional<Interface> getInterface(const std::string& _namespace, const std::string& _interface);
-        static std::optional<Interface> getInterface(const std::string& _namespace, size_t index);
+        static optional<Include> getInclude(const std::string& _include);
+        static optional<Namespace> getNamespace(const std::string& _namespace);
+        static optional<Enum> getEnum(const std::string& _namespace, const std::string& _enum);
+        static optional<Enum> getEnum(const std::string& _namespace, size_t index);
+        static optional<EnumValue> getEnumValue(const std::string& _namespace, const std::string& _enum, size_t index);
+        static optional<Union> getUnion(const std::string& _namespace, const std::string& _union);
+        static optional<Union> getUnion(const std::string& _namespace, size_t index);
+        static optional<UnionType> getUnionType(const std::string& _namespace, const std::string& _union, size_t index);
+        static optional<Struct> getStruct(const std::string& _namespace, const std::string& _struct);
+        static optional<Struct> getStruct(const std::string& _namespace, size_t index);
+        static optional<Field> getField(const std::string& _namespace, const std::string& _struct, const std::string& _field);
+        static optional<Field> getField(const std::string& _namespace, const std::string& _struct, size_t index);
+        static optional<Attribute> getEnumAttribute(const std::string& _namespace, const std::string& _enum, size_t index);
+        static optional<Attribute> getUnionAttribute(const std::string& _namespace, const std::string& _union, size_t index);
+        static optional<Attribute> getStructAttribute(const std::string& _namespace, const std::string& _struct, size_t index);
+        static optional<Attribute> getFieldAttribute(const std::string& _namespace, const std::string& _struct, const std::string& _field, size_t index);
+        static optional<Method> getStructMethod(const std::string& _namespace, const std::string& _struct, const std::string& _method);
+        static optional<Method> getStructMethod(const std::string& _namespace, const std::string& _struct, size_t index);
+        static optional<Method> getInterfaceMethod(const std::string& _namespace, const std::string& _interface, const std::string& _method);
+        static optional<Method> getInterfaceMethod(const std::string& _namespace, const std::string& _interface, size_t index);
+        static optional<Parameter> getStructParameter(const std::string& _namespace, const std::string& _struct, const std::string& _method, size_t index);
+        static optional<Parameter> getInterfaceParameter(const std::string& _namespace, const std::string& _interface, const std::string& _method, size_t index);
+        static optional<Interface> getInterface(const std::string& _namespace, const std::string& _interface);
+        static optional<Interface> getInterface(const std::string& _namespace, size_t index);
     };
 };
 
