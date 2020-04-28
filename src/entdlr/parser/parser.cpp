@@ -1,8 +1,15 @@
 #include "parser.h"
 
 #include <iostream>
-#include <experimental/filesystem>
 #include <stdexcept>
+
+#ifdef __cpp_lib_filesystem
+#include <filesystem>
+namespace fs = std::filesystem;
+#else
+#include <experimental/filesystem>
+namespace fs = std::experimental::filesystem;
+#endif
 
 using std::cout; using std::endl;
 
@@ -12,14 +19,14 @@ namespace Entdlr
     {
         std::vector<Context> contexts;
 
-        if (std::experimental::filesystem::exists(dirname) && std::experimental::filesystem::is_directory(dirname))
+        if (fs::exists(dirname) && fs::is_directory(dirname))
         {
-            std::experimental::filesystem::recursive_directory_iterator it(dirname);
-            std::experimental::filesystem::recursive_directory_iterator end;
+            fs::recursive_directory_iterator it(dirname);
+            fs::recursive_directory_iterator end;
 
             while (it != end)
             {
-                if (std::experimental::filesystem::is_regular_file(*it) && it->path().extension() == ".fbs")
+                if (fs::is_regular_file(*it) && it->path().extension() == ".fbs")
                     contexts.push_back(parseFile(it->path().string()));
 
                 it++;
@@ -140,7 +147,7 @@ namespace Entdlr
             std::string name = inc->STRING_CONSTANT()->getSymbol()->getText();
             std::string includeName = name.substr(1, name.size() - 6); // strip quotes and .fbs off
 
-            std::string includeDir = std::experimental::filesystem::path(filename).parent_path().string();
+            std::string includeDir = fs::path(filename).parent_path().string();
             if (includeDir == "")
                 includeDir = ".";
             std::string includeFilename = includeDir + "/" + name.substr(1, name.size() - 2); // strip quotes off and add the dir

@@ -2,8 +2,15 @@
 #include "json_helpers.h"
 #include "type_map.h"
 
-#include <experimental/filesystem>
 #include <iostream>
+
+#ifdef __cpp_lib_filesystem
+#include <filesystem>
+namespace fs = std::filesystem;
+#else
+#include <experimental/filesystem>
+namespace fs = std::experimental::filesystem;
+#endif
 
 #include "inja_template.h"
 #include "wren_template.h"
@@ -20,7 +27,7 @@ namespace Entdlr
 
     std::string TemplateRouter::applyTemplate(const Context& context, const std::string& template_name)
     {
-        auto path = std::experimental::filesystem::path(template_name);
+        auto path = fs::path(template_name);
         auto extension = path.extension().string();
 
         if (templates.count(extension))
