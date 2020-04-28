@@ -2,6 +2,7 @@
 
 #include <iostream>
 using std::cout; using std::endl;
+using nonstd::optional;
 
 namespace Entdlr
 {
@@ -994,7 +995,7 @@ namespace Entdlr
         wrenSetSlotBool(vm, 0, output);
     }
 
-    std::optional<Include> ContextHelper::getInclude(const std::string& _include)
+    optional<Include> ContextHelper::getInclude(const std::string& _include)
     {
         for (const auto& i : context.includes)
         {
@@ -1005,7 +1006,7 @@ namespace Entdlr
         return {};
     }
 
-    std::optional<Namespace> ContextHelper::getNamespace(const std::string& _namespace)
+    optional<Namespace> ContextHelper::getNamespace(const std::string& _namespace)
     {
         for (const auto& n : context.namespaces)
         {
@@ -1016,7 +1017,7 @@ namespace Entdlr
         return {};
     }
 
-    std::optional<Enum> ContextHelper::getEnum(const std::string& _namespace, const std::string& _enum)
+    optional<Enum> ContextHelper::getEnum(const std::string& _namespace, const std::string& _enum)
     {
         if (auto n = getNamespace(_namespace))
         {
@@ -1030,7 +1031,7 @@ namespace Entdlr
         return {};
     }
 
-    std::optional<Enum> ContextHelper::getEnum(const std::string& _namespace, size_t index)
+    optional<Enum> ContextHelper::getEnum(const std::string& _namespace, size_t index)
     {
         if (auto n = getNamespace(_namespace))
         {
@@ -1041,7 +1042,7 @@ namespace Entdlr
         return {};
     }
 
-    std::optional<EnumValue> ContextHelper::getEnumValue(const std::string& _namespace, const std::string& _enum, size_t index)
+    optional<EnumValue> ContextHelper::getEnumValue(const std::string& _namespace, const std::string& _enum, size_t index)
     {
         if (auto e = getEnum(_namespace, _enum))
         {
@@ -1052,7 +1053,7 @@ namespace Entdlr
         return {};
     }
 
-    std::optional<Union> ContextHelper::getUnion(const std::string& _namespace, const std::string& _union)
+    optional<Union> ContextHelper::getUnion(const std::string& _namespace, const std::string& _union)
     {
         if (auto n = getNamespace(_namespace))
         {
@@ -1066,7 +1067,7 @@ namespace Entdlr
         return {};
     }
 
-    std::optional<Union> ContextHelper::getUnion(const std::string& _namespace, size_t index)
+    optional<Union> ContextHelper::getUnion(const std::string& _namespace, size_t index)
     {
         if (auto n = getNamespace(_namespace))
         {
@@ -1077,7 +1078,7 @@ namespace Entdlr
         return {};
     }
 
-    std::optional<UnionType> ContextHelper::getUnionType(const std::string& _namespace, const std::string& _union, size_t index)
+    optional<UnionType> ContextHelper::getUnionType(const std::string& _namespace, const std::string& _union, size_t index)
     {
         if (auto u = getUnion(_namespace, _union))
         {
@@ -1088,7 +1089,7 @@ namespace Entdlr
         return {};
     }
 
-    std::optional<Struct> ContextHelper::getStruct(const std::string& _namespace, const std::string& _struct)
+    optional<Struct> ContextHelper::getStruct(const std::string& _namespace, const std::string& _struct)
     {
         if (auto n = getNamespace(_namespace))
         {
@@ -1102,7 +1103,7 @@ namespace Entdlr
         return {};
     }
 
-    std::optional<Struct> ContextHelper::getStruct(const std::string& _namespace, size_t index)
+    optional<Struct> ContextHelper::getStruct(const std::string& _namespace, size_t index)
     {
         if (auto n = getNamespace(_namespace))
         {
@@ -1113,7 +1114,7 @@ namespace Entdlr
         return {};
     }
 
-    std::optional<Field> ContextHelper::getField(const std::string& _namespace, const std::string& _struct, const std::string& _field)
+    optional<Field> ContextHelper::getField(const std::string& _namespace, const std::string& _struct, const std::string& _field)
     {
         if (auto s = getStruct(_namespace, _struct))
         {
@@ -1127,7 +1128,7 @@ namespace Entdlr
         return {};
     }
 
-    std::optional<Field> ContextHelper::getField(const std::string& _namespace, const std::string& _struct, size_t index)
+    optional<Field> ContextHelper::getField(const std::string& _namespace, const std::string& _struct, size_t index)
     {
         if (auto s = getStruct(_namespace, _struct))
         {
@@ -1138,7 +1139,7 @@ namespace Entdlr
         return {};
     }
 
-    std::optional<Attribute> ContextHelper::getEnumAttribute(const std::string& _namespace, const std::string& _enum, size_t index)
+    optional<Attribute> ContextHelper::getEnumAttribute(const std::string& _namespace, const std::string& _enum, size_t index)
     {
         if (auto e = getEnum(_namespace, _enum))
         {
@@ -1153,7 +1154,7 @@ namespace Entdlr
         return {};
     }
 
-    std::optional<Attribute> ContextHelper::getUnionAttribute(const std::string& _namespace, const std::string& _union, size_t index)
+    optional<Attribute> ContextHelper::getUnionAttribute(const std::string& _namespace, const std::string& _union, size_t index)
     {
         if (auto u = getUnion(_namespace, _union))
         {
@@ -1168,7 +1169,7 @@ namespace Entdlr
         return {};
     }
 
-    std::optional<Attribute> ContextHelper::getStructAttribute(const std::string& _namespace, const std::string& _struct, size_t index)
+    optional<Attribute> ContextHelper::getStructAttribute(const std::string& _namespace, const std::string& _struct, size_t index)
     {
         if (auto s = getStruct(_namespace, _struct))
         {
@@ -1183,7 +1184,7 @@ namespace Entdlr
         return {};
     }
 
-    std::optional<Attribute> ContextHelper::getFieldAttribute(const std::string& _namespace, const std::string& _struct, const std::string& _field, size_t index)
+    optional<Attribute> ContextHelper::getFieldAttribute(const std::string& _namespace, const std::string& _struct, const std::string& _field, size_t index)
     {
         if (auto f = getField(_namespace, _struct, _field))
         {
@@ -1198,7 +1199,7 @@ namespace Entdlr
         return {};
     }
 
-    std::optional<Method> ContextHelper::getStructMethod(const std::string& _namespace, const std::string& _struct, const std::string& _method)
+    optional<Method> ContextHelper::getStructMethod(const std::string& _namespace, const std::string& _struct, const std::string& _method)
     {
         if (auto s = getStruct(_namespace, _struct))
         {
@@ -1212,7 +1213,7 @@ namespace Entdlr
         return {};
     }
 
-    std::optional<Method> ContextHelper::getStructMethod(const std::string& _namespace, const std::string& _struct, size_t index)
+    optional<Method> ContextHelper::getStructMethod(const std::string& _namespace, const std::string& _struct, size_t index)
     {
         if (auto s = getStruct(_namespace, _struct))
         {
@@ -1222,7 +1223,7 @@ namespace Entdlr
 
         return {};
     }
-    std::optional<Method> ContextHelper::getInterfaceMethod(const std::string& _namespace, const std::string& _interface, const std::string& _method)
+    optional<Method> ContextHelper::getInterfaceMethod(const std::string& _namespace, const std::string& _interface, const std::string& _method)
     {
         if (auto f = getInterface(_namespace, _interface))
         {
@@ -1236,7 +1237,7 @@ namespace Entdlr
         return {};
     }
 
-    std::optional<Method> ContextHelper::getInterfaceMethod(const std::string& _namespace, const std::string& _interface, size_t index)
+    optional<Method> ContextHelper::getInterfaceMethod(const std::string& _namespace, const std::string& _interface, size_t index)
     {
         if (auto f = getInterface(_namespace, _interface))
         {
@@ -1247,7 +1248,7 @@ namespace Entdlr
         return {};
     }
 
-    std::optional<Parameter> ContextHelper::getStructParameter(const std::string& _namespace, const std::string& _struct, const std::string& _method, size_t index)
+    optional<Parameter> ContextHelper::getStructParameter(const std::string& _namespace, const std::string& _struct, const std::string& _method, size_t index)
     {
         if (auto m = getStructMethod(_namespace, _struct, _method))
         {
@@ -1258,7 +1259,7 @@ namespace Entdlr
         return {};
     }
 
-    std::optional<Parameter> ContextHelper::getInterfaceParameter(const std::string& _namespace, const std::string& _interface, const std::string& _method, size_t index)
+    optional<Parameter> ContextHelper::getInterfaceParameter(const std::string& _namespace, const std::string& _interface, const std::string& _method, size_t index)
     {
         if (auto m = getInterfaceMethod(_namespace, _interface, _method))
         {
@@ -1269,7 +1270,7 @@ namespace Entdlr
         return {};
     }
 
-    std::optional<Interface> ContextHelper::getInterface(const std::string& _namespace, const std::string& _interface)
+    optional<Interface> ContextHelper::getInterface(const std::string& _namespace, const std::string& _interface)
     {
         if (auto n = getNamespace(_namespace))
         {
@@ -1283,7 +1284,7 @@ namespace Entdlr
         return {};
     }
 
-    std::optional<Interface> ContextHelper::getInterface(const std::string& _namespace, size_t index)
+    optional<Interface> ContextHelper::getInterface(const std::string& _namespace, size_t index)
     {
         if (auto n = getNamespace(_namespace))
         {

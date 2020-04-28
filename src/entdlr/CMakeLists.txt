@@ -2,6 +2,8 @@ set (CMAKE_DEBUG_POSTFIX d)
 set (CMAKE_RELWITHDEBINFO_POSTFIX rd)
 set (CMAKE_MINSIZEREL_POSTFIX rm)
 
+include_directories(.)
+
 add_subdirectory (parser)
 add_subdirectory (context)
 add_subdirectory (template)

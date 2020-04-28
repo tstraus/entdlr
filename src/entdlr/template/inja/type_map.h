@@ -3,7 +3,8 @@
 
 #include <string>
 #include <map>
-#include <optional>
+#include "optional.hpp"
+using nonstd::optional;
 
 #include "context.h"
 
@@ -18,7 +19,7 @@ namespace Entdlr
 
         Context applyMapping(const Context& context);
 
-        std::optional<std::string> getType(const std::string& key);
+        optional<std::string> getType(const std::string& key);
 
     private:
         Namespace applyMapping(const Namespace& n);

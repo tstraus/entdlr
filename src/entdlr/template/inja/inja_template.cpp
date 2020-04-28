@@ -2,7 +2,7 @@
 #include "json_helpers.h"
 #include "type_map.h"
 
-#include <filesystem>
+#include <experimental/filesystem>
 #include <iostream>
 #include <algorithm>
 
@@ -22,7 +22,7 @@ namespace Entdlr
     std::string InjaTemplate::applyTemplate(const Context& context, const std::string& template_name)
     {
         // save the location for loading other scripts
-        scriptDir = std::filesystem::path(template_name).parent_path().string();
+        scriptDir = std::experimental::filesystem::path(template_name).parent_path().string();
         if (scriptDir == "")
             scriptDir = "./";
 
@@ -44,7 +44,7 @@ namespace Entdlr
         {
             // check for a json type map file
             std::string typeMapFilename = template_name.substr(0, template_name.size() - templateExtension.size()) + ".json";
-            if (std::filesystem::exists(typeMapFilename))
+            if (std::experimental::filesystem::exists(typeMapFilename))
             {
                 TypeMap typeMap(typeMapFilename);
                 c = typeMap.applyMapping(context);
@@ -52,7 +52,7 @@ namespace Entdlr
 
             // check for a wren file with functions in it
             std::string functionsFilename = template_name.substr(0, template_name.size() - templateExtension.size()) + ".wren";
-            if (std::filesystem::exists(functionsFilename))
+            if (std::experimental::filesystem::exists(functionsFilename))
             {
                 // open and read the script
                 std::ifstream functionsFile(functionsFilename);
