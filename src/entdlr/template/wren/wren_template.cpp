@@ -3,7 +3,6 @@
 #include "wren_context.h"
 
 #include <unordered_map>
-#include <filesystem>
 #include <iostream>
 #include <fstream>
 #include <sstream>

@@ -5,7 +5,9 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
-#include <optional>
+
+#include "optional.hpp"
+using nonstd::optional;
 
 #include "token.h"
 #include "attribute.h"
@@ -29,7 +31,7 @@ namespace Entdlr
         std::string comment;
 
         static Enum create(const Token& token, const std::string& type = "int32", const std::unordered_map<std::string, Attribute>& attributes = {}, const std::string& comment = "");
-        void add(const Token& token, const std::optional<int64_t> value);
+        void add(const Token& token, const optional<int64_t> value);
 
     private:
         int64_t nextValue;

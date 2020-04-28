@@ -3,6 +3,7 @@
 #include <iostream>
 
 using std::cout; using std::endl;
+using nonstd::optional;
 
 namespace Entdlr
 {
@@ -35,7 +36,7 @@ namespace Entdlr
         return out;
     }
 
-    void Enum::add(const Token& token, const std::optional<int64_t> value)
+    void Enum::add(const Token& token, const optional<int64_t> value)
     {
         if (token.name != "")
         {

@@ -5,6 +5,7 @@
 #include <fstream>
 
 using json = nlohmann::json;
+using nonstd::optional;
 
 namespace Entdlr
 {
@@ -96,7 +97,7 @@ namespace Entdlr
         return output;
     }
 
-    std::optional<std::string> TypeMap::getType(const std::string& key)
+    optional<std::string> TypeMap::getType(const std::string& key)
     {
         if (mappings.count(key))
             return mappings[key];
