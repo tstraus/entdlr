@@ -235,7 +235,7 @@ namespace Entdlr
             for (const auto& v : en->commasep_enumval_decl()->enumval_decl())
             {
                 const auto& valueName = v->ns_ident()->IDENT()[0]->getSymbol()->getText();
-                if (v->integer_const() && v->integer_const()->INTEGER_CONSTANT())
+                if (v->integer_const())
                 {
                     e.add(
                         Token::create(
@@ -243,7 +243,9 @@ namespace Entdlr
                             v->getStart()->getLine(),
                             v->getStart()->getCharPositionInLine()
                         ),
-                        std::stoll(v->integer_const()->INTEGER_CONSTANT()->getSymbol()->getText())
+                        v->integer_const()->INTEGER_CONSTANT() ?
+                        std::stoll(v->integer_const()->INTEGER_CONSTANT()->getSymbol()->getText()) :
+                        std::stoll(v->integer_const()->HEX_INTEGER_CONSTANT()->getSymbol()->getText(), 0, 16)
                     );
                 }
 
