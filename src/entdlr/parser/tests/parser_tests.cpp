@@ -74,6 +74,7 @@ TEST_SUITE("Parsing")
                     Unknown,
                     Blue,
                     Red = 10,
+                    Green = 0x0F,
                     Other
                 }
             )";
@@ -91,7 +92,7 @@ TEST_SUITE("Parsing")
             CHECK(e.name == "Force");
             CHECK(e.type == "uint8");
             CHECK(e.comment == "enum comment");
-            REQUIRE(e.values.size() == 4);
+            REQUIRE(e.values.size() == 5);
 
             const auto& values = e.values;
             CHECK(values[0].token == TokenType::EnumValue);
@@ -104,8 +105,11 @@ TEST_SUITE("Parsing")
             CHECK(values[2].name == "Red");
             CHECK(values[2].value == 10);
             CHECK(values[3].token == TokenType::EnumValue);
-            CHECK(values[3].name == "Other");
-            CHECK(values[3].value == 11);
+            CHECK(values[3].name == "Green");
+            CHECK(values[3].value == 15);
+            CHECK(values[4].token == TokenType::EnumValue);
+            CHECK(values[4].name == "Other");
+            CHECK(values[4].value == 16);
         }
 
         SUBCASE("Unions")
