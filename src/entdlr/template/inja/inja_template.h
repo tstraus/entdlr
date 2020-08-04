@@ -18,7 +18,7 @@ namespace Entdlr
         std::string applyString(const Context& context, const std::string& tmpl, const std::string& functions = "");
 
     private:
-        std::string checkWren(const std::string& name, const unsigned int numArgs, const inja::Arguments& args);
+        nlohmann::json checkWren(const std::string& name, const unsigned int numArgs, const inja::Arguments& args);
 
         static void error(WrenVM* vm, WrenErrorType type, const char* module_name, int line, const char* message);
         static void print(WrenVM* vm, const char* text);

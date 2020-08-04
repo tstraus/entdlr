@@ -1771,7 +1771,7 @@ class FunctionStorage {
     data.function = function;
   }
 
-  void set_fallback(std::function<std::string(const std::string&, const unsigned int, const Arguments&)> fallback) {
+  void set_fallback(std::function<json(const std::string&, const unsigned int, const Arguments&)> fallback) {
     m_fallback = fallback;
   }
 
@@ -1789,7 +1789,7 @@ class FunctionStorage {
     return nullptr;
   }
 
-  std::function<std::string(const std::string&, const unsigned int, const Arguments&)> m_fallback;
+  std::function<json(const std::string&, const unsigned int, const Arguments&)> m_fallback;
 
 private:
   struct FunctionData {
@@ -3652,7 +3652,7 @@ class Environment {
     m_callbacks.add_callback(name, numArgs, callback);
   }
 
-  void set_fallback(std::function<std::string(const std::string&, const unsigned int, const Arguments&)> fallback)
+  void set_fallback(std::function<json(const std::string&, const unsigned int, const Arguments&)> fallback)
   {
       m_callbacks.set_fallback(fallback);
   }
