@@ -79,7 +79,7 @@ class Functions {
 
             const auto output = t.applyString(context, inputTemplate, inputScript);
 
-            cout << output << endl;
+            CHECK(output == "did string");
         }
 
         SUBCASE("ReturnNumber")
@@ -95,7 +95,7 @@ class Functions {
 
             const auto output = t.applyString(context, inputTemplate, inputScript);
 
-            cout << output << endl;
+            CHECK(output == "did number");
         }
 
         SUBCASE("ReturnBool")
@@ -111,7 +111,6 @@ class Functions {
 
             const auto output = t.applyString(context, inputTemplate, inputScript);
 
-            cout << output << endl;
             CHECK(output == "did bool");
         }
     }
