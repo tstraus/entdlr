@@ -65,5 +65,54 @@ class Functions {
 
             CHECK(output == "I did the thing inside module -> WrenFunction\nERROR: (11, 22)\n");
         }
+
+        SUBCASE("ReturnString")
+        {
+            std::string inputTemplate = R"({% if do_string() == "strstrstr" %}did string{% endif %})";
+            std::string inputScript = R"(
+class Functions {
+    static do_string() {
+        return "strstrstr"
+    }
+}
+)";
+
+            const auto output = t.applyString(context, inputTemplate, inputScript);
+
+            cout << output << endl;
+        }
+
+        SUBCASE("ReturnNumber")
+        {
+            std::string inputTemplate = R"({% if do_number() > 1.0 %}did number{% endif %})";
+            std::string inputScript = R"(
+class Functions {
+    static do_number() {
+        return 1.234
+    }
+}
+)";
+
+            const auto output = t.applyString(context, inputTemplate, inputScript);
+
+            cout << output << endl;
+        }
+
+        SUBCASE("ReturnBool")
+        {
+            std::string inputTemplate = R"({% if do_bool() %}did bool{% endif %})";
+            std::string inputScript = R"(
+class Functions {
+    static do_bool() {
+        return true
+    }
+}
+)";
+
+            const auto output = t.applyString(context, inputTemplate, inputScript);
+
+            cout << output << endl;
+            CHECK(output == "did bool");
+        }
     }
 }

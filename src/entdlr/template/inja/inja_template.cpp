@@ -138,7 +138,7 @@ namespace Entdlr
         return output;
     }
 
-    std::string InjaTemplate::checkWren(const std::string& name, const unsigned int numArgs, const inja::Arguments& args)
+    nlohmann::json InjaTemplate::checkWren(const std::string& name, const unsigned int numArgs, const inja::Arguments& args)
     {
         // get a wren compatible function name
         std::string functionName = name;
@@ -191,17 +191,18 @@ namespace Entdlr
         if (executeResult != WrenInterpretResult::WREN_RESULT_SUCCESS)
             return "";
 
+        nlohmann::json returnValue;
+
         // figure out what the script method returned and turn it into a string
         const auto returnType = wrenGetSlotType(vm, 0);
-        std::string returnValue = "";
         switch (returnType)
         {
         case WrenType::WREN_TYPE_BOOL:
-            returnValue = wrenGetSlotBool(vm, 0) ? "true" : "false";
+            returnValue = wrenGetSlotBool(vm, 0);
             break;
 
         case WrenType::WREN_TYPE_NUM:
-            returnValue = std::to_string(wrenGetSlotDouble(vm, 0));
+            returnValue = wrenGetSlotDouble(vm, 0);
             break;
 
         case WrenType::WREN_TYPE_STRING:
