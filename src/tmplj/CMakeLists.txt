@@ -4,22 +4,14 @@ set (CMAKE_MINSIZEREL_POSTFIX rm)
 
 include_directories(.)
 
-add_subdirectory (parser)
-add_subdirectory (context)
-add_subdirectory (template)
-add_subdirectory (samples)
-
-project (entdlr)
+project (tmplj)
 
 add_executable (${PROJECT_NAME}
     main.cpp
 )
 
 target_link_libraries (${PROJECT_NAME}
-    PUBLIC entdlr::parser
     PUBLIC entdlr::template
 )
 
 install (TARGETS ${PROJECT_NAME} DESTINATION bin)
-install (FILES ${HEADERS} DESTINATION include/entdlr)
-install (FILES entdlr.cmake DESTINATION cmake)

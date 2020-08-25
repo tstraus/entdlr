@@ -6,7 +6,7 @@
 #include <vector>
 #include <unordered_map>
 
-#include "optional.hpp"
+#include "util/optional.hpp"
 using nonstd::optional;
 
 #include "token.h"

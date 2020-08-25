@@ -17,6 +17,8 @@ namespace Entdlr
 
         std::string applyString(const Context& context, const std::string& tmpl, const std::string& functions = "");
 
+        std::string applyJson(const nlohmann::json& j, const std::string& tmpl, const std::string& functions = "");
+
     private:
         nlohmann::json checkWren(const std::string& name, const unsigned int numArgs, const inja::Arguments& args);
 
@@ -25,6 +27,8 @@ namespace Entdlr
         static char* loadModule(WrenVM* vm, const char* name);
 
         WrenVM* vm;
+
+        Context context;
     };
 };
 

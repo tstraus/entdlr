@@ -3,8 +3,8 @@
 #include "parser.h"
 #include "template_router.h"
 
-#include "argh.h"
-#include "rang.hpp"
+#include "util/argh.h"
+#include "util/rang.hpp"
 
 using std::cout; using std::endl;
 using namespace rang;

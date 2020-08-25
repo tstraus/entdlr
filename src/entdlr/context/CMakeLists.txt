@@ -26,7 +26,13 @@ set (SOURCE
     context.cpp
 )
 
-add_library (${PROJECT_NAME} STATIC ${HEADERS} ${SOURCE})
+set (UTIL
+    util/argh.h
+    util/optional.hpp
+    util/rang.hpp
+)
+
+add_library (${PROJECT_NAME} STATIC ${HEADERS} ${SOURCE} ${UTIL})
 add_library (entdlr::context ALIAS ${PROJECT_NAME})
 
 target_include_directories (${PROJECT_NAME}
@@ -35,3 +41,4 @@ target_include_directories (${PROJECT_NAME}
 
 install (TARGETS ${PROJECT_NAME} DESTINATION lib)
 install (FILES ${HEADERS} DESTINATION include/entdlr/context)
+install (FILES ${UTIL} DESTINATION include/entdlr/context/util)
