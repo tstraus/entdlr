@@ -4,7 +4,7 @@
 #include "context.h"
 #include "wren.hpp"
 
-#include "optional.hpp"
+#include "util/optional.hpp"
 using nonstd::optional;
 
 namespace Entdlr

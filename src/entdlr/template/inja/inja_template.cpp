@@ -74,6 +74,16 @@ namespace Entdlr
 
     std::string InjaTemplate::applyString(const Context& context, const std::string& tmpl, const std::string& functions)
     {
+        json j;
+        j["entdlr"] = context;
+
+        this->context = context;
+
+        return applyJson(j, tmpl, functions);
+    }
+
+    std::string InjaTemplate::applyJson(const nlohmann::json& j, const std::string& tmpl, const std::string& functions)
+    {
         // set up wren first
         WrenConfiguration config;
         wrenInitConfiguration(&config);
@@ -87,15 +97,12 @@ namespace Entdlr
         if (loadResult != WrenInterpretResult::WREN_RESULT_SUCCESS)
             return "";
 
-        json j;
-        j["entdlr"] = context;
-
         //cout << j.dump(true) << endl;
         //cout << tmpl.str() << endl;
 
         inja::Environment env;
         env.add_callback("getTokenType", 1,
-            [this, context](inja::Arguments& args)
+            [this](inja::Arguments& args)
             {
                 std::string type = *args[0];
 
