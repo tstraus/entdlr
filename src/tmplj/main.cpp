@@ -28,7 +28,7 @@ int main(int argc, char** argv)
         if (args[{ "-h", "--help" }])
         {
             cout
-            << "Usage: entdlr [OPTION]\n"
+            << "Usage: tmplj [OPTION]\n"
             << "  -h, --help           Basic use help (this)\n"
             << "  -t, --template=FILE  Template file to use\n"
             << "  -f, --file=FILE      Parse the specified file\n"
