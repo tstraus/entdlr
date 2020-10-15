@@ -200,6 +200,22 @@ TEST_SUITE("Parsing")
                     Red = 10,
                     Other
                 }
+
+                enum Mode1
+                {
+                    Off,
+                    Search,
+                    Track,
+                    Other
+                }
+
+                enum Mode2
+                {
+                    Off = -1,
+                    Search,
+                    Track,
+                    Other = 20000
+                }
             )";
 
             const auto context = Parser::parse(input);
@@ -208,7 +224,7 @@ TEST_SUITE("Parsing")
             const auto& n = context.namespaces[0];
             CHECK(n.token == TokenType::Namespace);
             CHECK(n.name == "grid");
-            REQUIRE(n.enums.size() == 1);
+            REQUIRE(n.enums.size() == 3);
 
             const auto& e = n.enums[0];
             CHECK(e.token == TokenType::Enum);
@@ -229,6 +245,14 @@ TEST_SUITE("Parsing")
             CHECK(values[3].token == TokenType::EnumValue);
             CHECK(values[3].name == "Other");
             CHECK(values[3].value == 11);
+
+            const auto& m1 = n.enums[1];
+            CHECK(m1.name == "Mode1");
+            CHECK(m1.type == "uint8");
+
+            const auto& m2 = n.enums[2];
+            CHECK(m2.name == "Mode2");
+            CHECK(m2.type == "int16");
         }
 
         SUBCASE("Unions")

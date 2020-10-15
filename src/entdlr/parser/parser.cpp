@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <limits>
 
 #ifdef __cpp_lib_filesystem
 #include <filesystem>
@@ -222,6 +223,8 @@ namespace Entdlr
                 comment = trimComment(en->DOC_COMMENT()->getSymbol()->getText());
                 //cout << "enum -> " << en->DOC_COMMENT()->getSymbol()->getText() << endl;
 
+            bool unspecifiedType = false;
+
             if (en->type())
             {
                 if (en->type()->BASE_TYPE_NAME())
@@ -229,7 +232,11 @@ namespace Entdlr
                 else throw std::runtime_error(std::to_string(en->type()->getStart()->getLine()) + ", " + std::to_string(en->type()->getStart()->getCharPositionInLine()) + ": enums can only be primitive types");
             }
 
-            else e = Enum::create(t, "int32", attributes);
+            else
+            {
+                unspecifiedType = true;
+                e = Enum::create(t, "int32", attributes);
+            }
 
             // get enum values
             for (const auto& v : en->commasep_enumval_decl()->enumval_decl())
@@ -260,6 +267,9 @@ namespace Entdlr
                     );
                 }
             }
+
+            if (unspecifiedType)
+                determineEnumType(e);
 
             e.comment = comment;
 
@@ -712,5 +722,51 @@ namespace Entdlr
             output = output.substr(1, output.size()); // chop off leading whitespace
 
         return output;
+    }
+
+    void Parser::determineEnumType(Enum& e)
+    {
+        int64_t min = 0;
+        uint64_t max = 0;
+
+        // determine the highest and lowest values
+        for (const auto& v : e.values)
+        {
+            const auto& value = v.value;
+            if (value < min)
+                min = value;
+            else if (value > max)
+                max = value;
+        }
+
+        // can it be unsigned?
+        if (min >= 0)
+        {
+            if (max <= std::numeric_limits<uint8_t>::max())
+                e.type = "uint8";
+            else if (max <= std::numeric_limits<uint16_t>::max())
+                e.type = "uint16";
+            else if (max <= std::numeric_limits<uint32_t>::max())
+                e.type = "uint32";
+            else if (max <= std::numeric_limits<uint64_t>::max())
+                e.type = "uint64";
+            else
+                throw std::runtime_error(std::to_string(e.line) + ", " + std::to_string(e.column) + ": enum " + e.name + " cannot be represented by a uint64, check its values");
+        }
+
+        // signed
+        else
+        {
+            if (std::numeric_limits<int8_t>::min() <= min && max <= std::numeric_limits<int8_t>::max())
+                e.type = "int8";
+            else if (std::numeric_limits<int16_t>::min() <= min && max <= std::numeric_limits<int16_t>::max())
+                e.type = "int16";
+            else if (std::numeric_limits<int32_t>::min() <= min && max <= std::numeric_limits<int32_t>::max())
+                e.type = "int32";
+            else if (std::numeric_limits<int64_t>::min() <= min && max <= std::numeric_limits<int64_t>::max())
+                e.type = "int64";
+            else
+                throw std::runtime_error(std::to_string(e.line) + ", " + std::to_string(e.column) + ": enum " + e.name + " cannot be represented by a int64, check its values");
+        }
     }
 }
