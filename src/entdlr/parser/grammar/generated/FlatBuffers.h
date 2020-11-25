@@ -1,5 +1,5 @@
 
-// Generated from FlatBuffersParser.g4 by ANTLR 4.7.2
+// Generated from FlatBuffers.g4 by ANTLR 4.7.2
 
 #pragma once
 
@@ -9,7 +9,7 @@
 
 
 
-class  FlatBuffersParser : public antlr4::Parser {
+class  FlatBuffers : public antlr4::Parser {
 public:
   enum {
     INCLUDE = 1, NAMESPACE = 2, ATTRIBUTE = 3, TABLE = 4, STRUCT = 5, ENUM = 6, 
@@ -38,8 +38,8 @@ public:
     RuleNs_ident = 37, RuleInteger_const = 38
   };
 
-  FlatBuffersParser(antlr4::TokenStream *input);
-  ~FlatBuffersParser();
+  FlatBuffers(antlr4::TokenStream *input);
+  ~FlatBuffers();
 
   virtual std::string getGrammarFileName() const override;
   virtual const antlr4::atn::ATN& getATN() const override { return _atn; };

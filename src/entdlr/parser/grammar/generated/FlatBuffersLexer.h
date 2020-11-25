@@ -1,5 +1,5 @@
 
-// Generated from FlatBuffers.g4 by ANTLR 4.8
+// Generated from FlatBuffersLexer.g4 by ANTLR 4.7.2
 
 #pragma once
 
@@ -12,13 +12,19 @@
 class  FlatBuffersLexer : public antlr4::Lexer {
 public:
   enum {
-    T__0 = 1, T__1 = 2, T__2 = 3, T__3 = 4, T__4 = 5, T__5 = 6, T__6 = 7, 
-    T__7 = 8, T__8 = 9, T__9 = 10, T__10 = 11, T__11 = 12, T__12 = 13, T__13 = 14, 
-    T__14 = 15, T__15 = 16, T__16 = 17, T__17 = 18, T__18 = 19, T__19 = 20, 
-    T__20 = 21, T__21 = 22, T__22 = 23, T__23 = 24, T__24 = 25, T__25 = 26, 
-    STRING_CONSTANT = 27, BASE_TYPE_NAME = 28, IDENT = 29, HEX_INTEGER_CONSTANT = 30, 
-    INTEGER_CONSTANT = 31, FLOAT_CONSTANT = 32, BLOCK_COMMENT = 33, DOC_COMMENT = 34, 
-    COMMENT = 35, WHITESPACE = 36
+    INCLUDE = 1, NAMESPACE = 2, ATTRIBUTE = 3, TABLE = 4, STRUCT = 5, ENUM = 6, 
+    UNION = 7, INTERFACE = 8, MUTABLE = 9, STATIC = 10, REFERENCE = 11, 
+    ROOT_TYPE = 12, RPC_SERVICE = 13, FILE_EXTENSION = 14, FILE_IDENTIFIER = 15, 
+    STRING_CONSTANT = 16, BASE_TYPE_NAME = 17, IDENT = 18, HEX_INTEGER_CONSTANT = 19, 
+    INTEGER_CONSTANT = 20, FLOAT_CONSTANT = 21, BLOCK_DOC_COMMENT = 22, 
+    BLOCK_COMMENT = 23, DOC_COMMENT = 24, COMMENT = 25, SEMICOLON = 26, 
+    COLON = 27, PERIOD = 28, COMMA = 29, EQUAL = 30, OPEN_BRACE = 31, CLOSE_BRACE = 32, 
+    OPEN_BRACKET = 33, CLOSE_BRACKET = 34, OPEN_PAREN = 35, CLOSE_PAREN = 36, 
+    WHITESPACE = 37
+  };
+
+  enum {
+    DOCUMENTATION = 2
   };
 
   FlatBuffersLexer(antlr4::CharStream *input);

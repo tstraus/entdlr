@@ -1,9 +1,9 @@
 
-// Generated from FlatBuffers.g4 by ANTLR 4.8
+// Generated from FlatBuffersParser.g4 by ANTLR 4.7.2
 
 
-#include "FlatBuffersListener.h"
-#include "FlatBuffersVisitor.h"
+#include "FlatBuffersParserListener.h"
+#include "FlatBuffersParserVisitor.h"
 
 #include "FlatBuffersParser.h"
 
@@ -20,7 +20,7 @@ FlatBuffersParser::~FlatBuffersParser() {
 }
 
 std::string FlatBuffersParser::getGrammarFileName() const {
-  return "FlatBuffers.g4";
+  return "FlatBuffersParser.g4";
 }
 
 const std::vector<std::string>& FlatBuffersParser::getRuleNames() const {
@@ -140,20 +140,20 @@ size_t FlatBuffersParser::SchemaContext::getRuleIndex() const {
 }
 
 void FlatBuffersParser::SchemaContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterSchema(this);
 }
 
 void FlatBuffersParser::SchemaContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitSchema(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::SchemaContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitSchema(this);
   else
     return visitor->visitChildren(this);
@@ -172,7 +172,7 @@ FlatBuffersParser::SchemaContext* FlatBuffersParser::schema() {
     setState(81);
     _errHandler->sync(this);
     _la = _input->LA(1);
-    while (_la == FlatBuffersParser::T__0) {
+    while (_la == FlatBuffersParser::INCLUDE) {
       setState(78);
       include();
       setState(83);
@@ -183,19 +183,19 @@ FlatBuffersParser::SchemaContext* FlatBuffersParser::schema() {
     _errHandler->sync(this);
     _la = _input->LA(1);
     while ((((_la & ~ 0x3fULL) == 0) &&
-      ((1ULL << _la) & ((1ULL << FlatBuffersParser::T__2)
-      | (1ULL << FlatBuffersParser::T__4)
-      | (1ULL << FlatBuffersParser::T__5)
-      | (1ULL << FlatBuffersParser::T__6)
-      | (1ULL << FlatBuffersParser::T__7)
-      | (1ULL << FlatBuffersParser::T__9)
-      | (1ULL << FlatBuffersParser::T__11)
-      | (1ULL << FlatBuffersParser::T__12)
-      | (1ULL << FlatBuffersParser::T__14)
-      | (1ULL << FlatBuffersParser::T__17)
-      | (1ULL << FlatBuffersParser::T__24)
-      | (1ULL << FlatBuffersParser::T__25)
-      | (1ULL << FlatBuffersParser::DOC_COMMENT))) != 0)) {
+      ((1ULL << _la) & ((1ULL << FlatBuffersParser::NAMESPACE)
+      | (1ULL << FlatBuffersParser::ATTRIBUTE)
+      | (1ULL << FlatBuffersParser::TABLE)
+      | (1ULL << FlatBuffersParser::STRUCT)
+      | (1ULL << FlatBuffersParser::ENUM)
+      | (1ULL << FlatBuffersParser::UNION)
+      | (1ULL << FlatBuffersParser::INTERFACE)
+      | (1ULL << FlatBuffersParser::ROOT_TYPE)
+      | (1ULL << FlatBuffersParser::RPC_SERVICE)
+      | (1ULL << FlatBuffersParser::FILE_EXTENSION)
+      | (1ULL << FlatBuffersParser::FILE_IDENTIFIER)
+      | (1ULL << FlatBuffersParser::DOC_COMMENT)
+      | (1ULL << FlatBuffersParser::OPEN_BRACE))) != 0)) {
       setState(95);
       _errHandler->sync(this);
       switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 1, _ctx)) {
@@ -287,8 +287,16 @@ FlatBuffersParser::IncludeContext::IncludeContext(ParserRuleContext *parent, siz
   : ParserRuleContext(parent, invokingState) {
 }
 
+tree::TerminalNode* FlatBuffersParser::IncludeContext::INCLUDE() {
+  return getToken(FlatBuffersParser::INCLUDE, 0);
+}
+
 tree::TerminalNode* FlatBuffersParser::IncludeContext::STRING_CONSTANT() {
   return getToken(FlatBuffersParser::STRING_CONSTANT, 0);
+}
+
+tree::TerminalNode* FlatBuffersParser::IncludeContext::SEMICOLON() {
+  return getToken(FlatBuffersParser::SEMICOLON, 0);
 }
 
 
@@ -297,20 +305,20 @@ size_t FlatBuffersParser::IncludeContext::getRuleIndex() const {
 }
 
 void FlatBuffersParser::IncludeContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterInclude(this);
 }
 
 void FlatBuffersParser::IncludeContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitInclude(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::IncludeContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitInclude(this);
   else
     return visitor->visitChildren(this);
@@ -326,11 +334,11 @@ FlatBuffersParser::IncludeContext* FlatBuffersParser::include() {
   try {
     enterOuterAlt(_localctx, 1);
     setState(100);
-    match(FlatBuffersParser::T__0);
+    match(FlatBuffersParser::INCLUDE);
     setState(101);
     match(FlatBuffersParser::STRING_CONSTANT);
     setState(102);
-    match(FlatBuffersParser::T__1);
+    match(FlatBuffersParser::SEMICOLON);
    
   }
   catch (RecognitionException &e) {
@@ -348,6 +356,10 @@ FlatBuffersParser::Namespace_declContext::Namespace_declContext(ParserRuleContex
   : ParserRuleContext(parent, invokingState) {
 }
 
+tree::TerminalNode* FlatBuffersParser::Namespace_declContext::NAMESPACE() {
+  return getToken(FlatBuffersParser::NAMESPACE, 0);
+}
+
 std::vector<tree::TerminalNode *> FlatBuffersParser::Namespace_declContext::IDENT() {
   return getTokens(FlatBuffersParser::IDENT);
 }
@@ -356,26 +368,38 @@ tree::TerminalNode* FlatBuffersParser::Namespace_declContext::IDENT(size_t i) {
   return getToken(FlatBuffersParser::IDENT, i);
 }
 
+tree::TerminalNode* FlatBuffersParser::Namespace_declContext::SEMICOLON() {
+  return getToken(FlatBuffersParser::SEMICOLON, 0);
+}
+
+std::vector<tree::TerminalNode *> FlatBuffersParser::Namespace_declContext::PERIOD() {
+  return getTokens(FlatBuffersParser::PERIOD);
+}
+
+tree::TerminalNode* FlatBuffersParser::Namespace_declContext::PERIOD(size_t i) {
+  return getToken(FlatBuffersParser::PERIOD, i);
+}
+
 
 size_t FlatBuffersParser::Namespace_declContext::getRuleIndex() const {
   return FlatBuffersParser::RuleNamespace_decl;
 }
 
 void FlatBuffersParser::Namespace_declContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterNamespace_decl(this);
 }
 
 void FlatBuffersParser::Namespace_declContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitNamespace_decl(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::Namespace_declContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitNamespace_decl(this);
   else
     return visitor->visitChildren(this);
@@ -392,15 +416,15 @@ FlatBuffersParser::Namespace_declContext* FlatBuffersParser::namespace_decl() {
   try {
     enterOuterAlt(_localctx, 1);
     setState(104);
-    match(FlatBuffersParser::T__2);
+    match(FlatBuffersParser::NAMESPACE);
     setState(105);
     match(FlatBuffersParser::IDENT);
     setState(110);
     _errHandler->sync(this);
     _la = _input->LA(1);
-    while (_la == FlatBuffersParser::T__3) {
+    while (_la == FlatBuffersParser::PERIOD) {
       setState(106);
-      match(FlatBuffersParser::T__3);
+      match(FlatBuffersParser::PERIOD);
       setState(107);
       match(FlatBuffersParser::IDENT);
       setState(112);
@@ -408,7 +432,7 @@ FlatBuffersParser::Namespace_declContext* FlatBuffersParser::namespace_decl() {
       _la = _input->LA(1);
     }
     setState(113);
-    match(FlatBuffersParser::T__1);
+    match(FlatBuffersParser::SEMICOLON);
    
   }
   catch (RecognitionException &e) {
@@ -426,8 +450,16 @@ FlatBuffersParser::Attribute_declContext::Attribute_declContext(ParserRuleContex
   : ParserRuleContext(parent, invokingState) {
 }
 
+tree::TerminalNode* FlatBuffersParser::Attribute_declContext::ATTRIBUTE() {
+  return getToken(FlatBuffersParser::ATTRIBUTE, 0);
+}
+
 tree::TerminalNode* FlatBuffersParser::Attribute_declContext::STRING_CONSTANT() {
   return getToken(FlatBuffersParser::STRING_CONSTANT, 0);
+}
+
+tree::TerminalNode* FlatBuffersParser::Attribute_declContext::SEMICOLON() {
+  return getToken(FlatBuffersParser::SEMICOLON, 0);
 }
 
 
@@ -436,20 +468,20 @@ size_t FlatBuffersParser::Attribute_declContext::getRuleIndex() const {
 }
 
 void FlatBuffersParser::Attribute_declContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterAttribute_decl(this);
 }
 
 void FlatBuffersParser::Attribute_declContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitAttribute_decl(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::Attribute_declContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitAttribute_decl(this);
   else
     return visitor->visitChildren(this);
@@ -465,11 +497,11 @@ FlatBuffersParser::Attribute_declContext* FlatBuffersParser::attribute_decl() {
   try {
     enterOuterAlt(_localctx, 1);
     setState(115);
-    match(FlatBuffersParser::T__4);
+    match(FlatBuffersParser::ATTRIBUTE);
     setState(116);
     match(FlatBuffersParser::STRING_CONSTANT);
     setState(117);
-    match(FlatBuffersParser::T__1);
+    match(FlatBuffersParser::SEMICOLON);
    
   }
   catch (RecognitionException &e) {
@@ -493,6 +525,22 @@ tree::TerminalNode* FlatBuffersParser::Type_declContext::IDENT() {
 
 FlatBuffersParser::MetadataContext* FlatBuffersParser::Type_declContext::metadata() {
   return getRuleContext<FlatBuffersParser::MetadataContext>(0);
+}
+
+tree::TerminalNode* FlatBuffersParser::Type_declContext::OPEN_BRACE() {
+  return getToken(FlatBuffersParser::OPEN_BRACE, 0);
+}
+
+tree::TerminalNode* FlatBuffersParser::Type_declContext::CLOSE_BRACE() {
+  return getToken(FlatBuffersParser::CLOSE_BRACE, 0);
+}
+
+tree::TerminalNode* FlatBuffersParser::Type_declContext::TABLE() {
+  return getToken(FlatBuffersParser::TABLE, 0);
+}
+
+tree::TerminalNode* FlatBuffersParser::Type_declContext::STRUCT() {
+  return getToken(FlatBuffersParser::STRUCT, 0);
 }
 
 tree::TerminalNode* FlatBuffersParser::Type_declContext::DOC_COMMENT() {
@@ -521,20 +569,20 @@ size_t FlatBuffersParser::Type_declContext::getRuleIndex() const {
 }
 
 void FlatBuffersParser::Type_declContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterType_decl(this);
 }
 
 void FlatBuffersParser::Type_declContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitType_decl(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::Type_declContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitType_decl(this);
   else
     return visitor->visitChildren(this);
@@ -560,9 +608,9 @@ FlatBuffersParser::Type_declContext* FlatBuffersParser::type_decl() {
     }
     setState(122);
     _la = _input->LA(1);
-    if (!(_la == FlatBuffersParser::T__5
+    if (!(_la == FlatBuffersParser::TABLE
 
-    || _la == FlatBuffersParser::T__6)) {
+    || _la == FlatBuffersParser::STRUCT)) {
     _errHandler->recoverInline(this);
     }
     else {
@@ -574,13 +622,13 @@ FlatBuffersParser::Type_declContext* FlatBuffersParser::type_decl() {
     setState(124);
     metadata();
     setState(125);
-    match(FlatBuffersParser::T__7);
+    match(FlatBuffersParser::OPEN_BRACE);
     setState(130);
     _errHandler->sync(this);
     _la = _input->LA(1);
     while ((((_la & ~ 0x3fULL) == 0) &&
-      ((1ULL << _la) & ((1ULL << FlatBuffersParser::T__19)
-      | (1ULL << FlatBuffersParser::T__20)
+      ((1ULL << _la) & ((1ULL << FlatBuffersParser::MUTABLE)
+      | (1ULL << FlatBuffersParser::STATIC)
       | (1ULL << FlatBuffersParser::IDENT))) != 0)) {
       setState(128);
       _errHandler->sync(this);
@@ -603,7 +651,7 @@ FlatBuffersParser::Type_declContext* FlatBuffersParser::type_decl() {
       _la = _input->LA(1);
     }
     setState(133);
-    match(FlatBuffersParser::T__8);
+    match(FlatBuffersParser::CLOSE_BRACE);
    
   }
   catch (RecognitionException &e) {
@@ -621,6 +669,10 @@ FlatBuffersParser::Enum_declContext::Enum_declContext(ParserRuleContext *parent,
   : ParserRuleContext(parent, invokingState) {
 }
 
+tree::TerminalNode* FlatBuffersParser::Enum_declContext::ENUM() {
+  return getToken(FlatBuffersParser::ENUM, 0);
+}
+
 tree::TerminalNode* FlatBuffersParser::Enum_declContext::IDENT() {
   return getToken(FlatBuffersParser::IDENT, 0);
 }
@@ -629,12 +681,24 @@ FlatBuffersParser::MetadataContext* FlatBuffersParser::Enum_declContext::metadat
   return getRuleContext<FlatBuffersParser::MetadataContext>(0);
 }
 
+tree::TerminalNode* FlatBuffersParser::Enum_declContext::OPEN_BRACE() {
+  return getToken(FlatBuffersParser::OPEN_BRACE, 0);
+}
+
 FlatBuffersParser::Commasep_enumval_declContext* FlatBuffersParser::Enum_declContext::commasep_enumval_decl() {
   return getRuleContext<FlatBuffersParser::Commasep_enumval_declContext>(0);
 }
 
+tree::TerminalNode* FlatBuffersParser::Enum_declContext::CLOSE_BRACE() {
+  return getToken(FlatBuffersParser::CLOSE_BRACE, 0);
+}
+
 tree::TerminalNode* FlatBuffersParser::Enum_declContext::DOC_COMMENT() {
   return getToken(FlatBuffersParser::DOC_COMMENT, 0);
+}
+
+tree::TerminalNode* FlatBuffersParser::Enum_declContext::COLON() {
+  return getToken(FlatBuffersParser::COLON, 0);
 }
 
 FlatBuffersParser::TypeContext* FlatBuffersParser::Enum_declContext::type() {
@@ -647,20 +711,20 @@ size_t FlatBuffersParser::Enum_declContext::getRuleIndex() const {
 }
 
 void FlatBuffersParser::Enum_declContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterEnum_decl(this);
 }
 
 void FlatBuffersParser::Enum_declContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitEnum_decl(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::Enum_declContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitEnum_decl(this);
   else
     return visitor->visitChildren(this);
@@ -685,27 +749,27 @@ FlatBuffersParser::Enum_declContext* FlatBuffersParser::enum_decl() {
       match(FlatBuffersParser::DOC_COMMENT);
     }
     setState(138);
-    match(FlatBuffersParser::T__9);
+    match(FlatBuffersParser::ENUM);
     setState(139);
     match(FlatBuffersParser::IDENT);
     setState(142);
     _errHandler->sync(this);
 
     _la = _input->LA(1);
-    if (_la == FlatBuffersParser::T__10) {
+    if (_la == FlatBuffersParser::COLON) {
       setState(140);
-      match(FlatBuffersParser::T__10);
+      match(FlatBuffersParser::COLON);
       setState(141);
       type();
     }
     setState(144);
     metadata();
     setState(145);
-    match(FlatBuffersParser::T__7);
+    match(FlatBuffersParser::OPEN_BRACE);
     setState(146);
     commasep_enumval_decl();
     setState(147);
-    match(FlatBuffersParser::T__8);
+    match(FlatBuffersParser::CLOSE_BRACE);
    
   }
   catch (RecognitionException &e) {
@@ -723,6 +787,10 @@ FlatBuffersParser::Union_declContext::Union_declContext(ParserRuleContext *paren
   : ParserRuleContext(parent, invokingState) {
 }
 
+tree::TerminalNode* FlatBuffersParser::Union_declContext::UNION() {
+  return getToken(FlatBuffersParser::UNION, 0);
+}
+
 tree::TerminalNode* FlatBuffersParser::Union_declContext::IDENT() {
   return getToken(FlatBuffersParser::IDENT, 0);
 }
@@ -731,8 +799,16 @@ FlatBuffersParser::MetadataContext* FlatBuffersParser::Union_declContext::metada
   return getRuleContext<FlatBuffersParser::MetadataContext>(0);
 }
 
+tree::TerminalNode* FlatBuffersParser::Union_declContext::OPEN_BRACE() {
+  return getToken(FlatBuffersParser::OPEN_BRACE, 0);
+}
+
 FlatBuffersParser::Commasep_uniontype_declContext* FlatBuffersParser::Union_declContext::commasep_uniontype_decl() {
   return getRuleContext<FlatBuffersParser::Commasep_uniontype_declContext>(0);
+}
+
+tree::TerminalNode* FlatBuffersParser::Union_declContext::CLOSE_BRACE() {
+  return getToken(FlatBuffersParser::CLOSE_BRACE, 0);
 }
 
 tree::TerminalNode* FlatBuffersParser::Union_declContext::DOC_COMMENT() {
@@ -745,20 +821,20 @@ size_t FlatBuffersParser::Union_declContext::getRuleIndex() const {
 }
 
 void FlatBuffersParser::Union_declContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterUnion_decl(this);
 }
 
 void FlatBuffersParser::Union_declContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitUnion_decl(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::Union_declContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitUnion_decl(this);
   else
     return visitor->visitChildren(this);
@@ -783,17 +859,17 @@ FlatBuffersParser::Union_declContext* FlatBuffersParser::union_decl() {
       match(FlatBuffersParser::DOC_COMMENT);
     }
     setState(152);
-    match(FlatBuffersParser::T__11);
+    match(FlatBuffersParser::UNION);
     setState(153);
     match(FlatBuffersParser::IDENT);
     setState(154);
     metadata();
     setState(155);
-    match(FlatBuffersParser::T__7);
+    match(FlatBuffersParser::OPEN_BRACE);
     setState(156);
     commasep_uniontype_decl();
     setState(157);
-    match(FlatBuffersParser::T__8);
+    match(FlatBuffersParser::CLOSE_BRACE);
    
   }
   catch (RecognitionException &e) {
@@ -811,8 +887,16 @@ FlatBuffersParser::Root_declContext::Root_declContext(ParserRuleContext *parent,
   : ParserRuleContext(parent, invokingState) {
 }
 
+tree::TerminalNode* FlatBuffersParser::Root_declContext::ROOT_TYPE() {
+  return getToken(FlatBuffersParser::ROOT_TYPE, 0);
+}
+
 tree::TerminalNode* FlatBuffersParser::Root_declContext::IDENT() {
   return getToken(FlatBuffersParser::IDENT, 0);
+}
+
+tree::TerminalNode* FlatBuffersParser::Root_declContext::SEMICOLON() {
+  return getToken(FlatBuffersParser::SEMICOLON, 0);
 }
 
 
@@ -821,20 +905,20 @@ size_t FlatBuffersParser::Root_declContext::getRuleIndex() const {
 }
 
 void FlatBuffersParser::Root_declContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterRoot_decl(this);
 }
 
 void FlatBuffersParser::Root_declContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitRoot_decl(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::Root_declContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitRoot_decl(this);
   else
     return visitor->visitChildren(this);
@@ -850,11 +934,11 @@ FlatBuffersParser::Root_declContext* FlatBuffersParser::root_decl() {
   try {
     enterOuterAlt(_localctx, 1);
     setState(159);
-    match(FlatBuffersParser::T__12);
+    match(FlatBuffersParser::ROOT_TYPE);
     setState(160);
     match(FlatBuffersParser::IDENT);
     setState(161);
-    match(FlatBuffersParser::T__1);
+    match(FlatBuffersParser::SEMICOLON);
    
   }
   catch (RecognitionException &e) {
@@ -876,12 +960,24 @@ tree::TerminalNode* FlatBuffersParser::Field_declContext::IDENT() {
   return getToken(FlatBuffersParser::IDENT, 0);
 }
 
+tree::TerminalNode* FlatBuffersParser::Field_declContext::COLON() {
+  return getToken(FlatBuffersParser::COLON, 0);
+}
+
 FlatBuffersParser::TypeContext* FlatBuffersParser::Field_declContext::type() {
   return getRuleContext<FlatBuffersParser::TypeContext>(0);
 }
 
 FlatBuffersParser::MetadataContext* FlatBuffersParser::Field_declContext::metadata() {
   return getRuleContext<FlatBuffersParser::MetadataContext>(0);
+}
+
+tree::TerminalNode* FlatBuffersParser::Field_declContext::SEMICOLON() {
+  return getToken(FlatBuffersParser::SEMICOLON, 0);
+}
+
+tree::TerminalNode* FlatBuffersParser::Field_declContext::EQUAL() {
+  return getToken(FlatBuffersParser::EQUAL, 0);
 }
 
 FlatBuffersParser::ScalarContext* FlatBuffersParser::Field_declContext::scalar() {
@@ -898,20 +994,20 @@ size_t FlatBuffersParser::Field_declContext::getRuleIndex() const {
 }
 
 void FlatBuffersParser::Field_declContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterField_decl(this);
 }
 
 void FlatBuffersParser::Field_declContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitField_decl(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::Field_declContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitField_decl(this);
   else
     return visitor->visitChildren(this);
@@ -930,23 +1026,23 @@ FlatBuffersParser::Field_declContext* FlatBuffersParser::field_decl() {
     setState(163);
     match(FlatBuffersParser::IDENT);
     setState(164);
-    match(FlatBuffersParser::T__10);
+    match(FlatBuffersParser::COLON);
     setState(165);
     type();
     setState(168);
     _errHandler->sync(this);
 
     _la = _input->LA(1);
-    if (_la == FlatBuffersParser::T__13) {
+    if (_la == FlatBuffersParser::EQUAL) {
       setState(166);
-      match(FlatBuffersParser::T__13);
+      match(FlatBuffersParser::EQUAL);
       setState(167);
       scalar();
     }
     setState(170);
     metadata();
     setState(171);
-    match(FlatBuffersParser::T__1);
+    match(FlatBuffersParser::SEMICOLON);
     setState(173);
     _errHandler->sync(this);
 
@@ -972,8 +1068,20 @@ FlatBuffersParser::Rpc_declContext::Rpc_declContext(ParserRuleContext *parent, s
   : ParserRuleContext(parent, invokingState) {
 }
 
+tree::TerminalNode* FlatBuffersParser::Rpc_declContext::RPC_SERVICE() {
+  return getToken(FlatBuffersParser::RPC_SERVICE, 0);
+}
+
 tree::TerminalNode* FlatBuffersParser::Rpc_declContext::IDENT() {
   return getToken(FlatBuffersParser::IDENT, 0);
+}
+
+tree::TerminalNode* FlatBuffersParser::Rpc_declContext::OPEN_BRACE() {
+  return getToken(FlatBuffersParser::OPEN_BRACE, 0);
+}
+
+tree::TerminalNode* FlatBuffersParser::Rpc_declContext::CLOSE_BRACE() {
+  return getToken(FlatBuffersParser::CLOSE_BRACE, 0);
 }
 
 std::vector<FlatBuffersParser::Rpc_methodContext *> FlatBuffersParser::Rpc_declContext::rpc_method() {
@@ -990,20 +1098,20 @@ size_t FlatBuffersParser::Rpc_declContext::getRuleIndex() const {
 }
 
 void FlatBuffersParser::Rpc_declContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterRpc_decl(this);
 }
 
 void FlatBuffersParser::Rpc_declContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitRpc_decl(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::Rpc_declContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitRpc_decl(this);
   else
     return visitor->visitChildren(this);
@@ -1020,11 +1128,11 @@ FlatBuffersParser::Rpc_declContext* FlatBuffersParser::rpc_decl() {
   try {
     enterOuterAlt(_localctx, 1);
     setState(175);
-    match(FlatBuffersParser::T__14);
+    match(FlatBuffersParser::RPC_SERVICE);
     setState(176);
     match(FlatBuffersParser::IDENT);
     setState(177);
-    match(FlatBuffersParser::T__7);
+    match(FlatBuffersParser::OPEN_BRACE);
     setState(179); 
     _errHandler->sync(this);
     _la = _input->LA(1);
@@ -1036,7 +1144,7 @@ FlatBuffersParser::Rpc_declContext* FlatBuffersParser::rpc_decl() {
       _la = _input->LA(1);
     } while (_la == FlatBuffersParser::IDENT);
     setState(183);
-    match(FlatBuffersParser::T__8);
+    match(FlatBuffersParser::CLOSE_BRACE);
    
   }
   catch (RecognitionException &e) {
@@ -1062,8 +1170,24 @@ tree::TerminalNode* FlatBuffersParser::Rpc_methodContext::IDENT(size_t i) {
   return getToken(FlatBuffersParser::IDENT, i);
 }
 
+tree::TerminalNode* FlatBuffersParser::Rpc_methodContext::OPEN_PAREN() {
+  return getToken(FlatBuffersParser::OPEN_PAREN, 0);
+}
+
+tree::TerminalNode* FlatBuffersParser::Rpc_methodContext::CLOSE_PAREN() {
+  return getToken(FlatBuffersParser::CLOSE_PAREN, 0);
+}
+
+tree::TerminalNode* FlatBuffersParser::Rpc_methodContext::COLON() {
+  return getToken(FlatBuffersParser::COLON, 0);
+}
+
 FlatBuffersParser::MetadataContext* FlatBuffersParser::Rpc_methodContext::metadata() {
   return getRuleContext<FlatBuffersParser::MetadataContext>(0);
+}
+
+tree::TerminalNode* FlatBuffersParser::Rpc_methodContext::SEMICOLON() {
+  return getToken(FlatBuffersParser::SEMICOLON, 0);
 }
 
 
@@ -1072,20 +1196,20 @@ size_t FlatBuffersParser::Rpc_methodContext::getRuleIndex() const {
 }
 
 void FlatBuffersParser::Rpc_methodContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterRpc_method(this);
 }
 
 void FlatBuffersParser::Rpc_methodContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitRpc_method(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::Rpc_methodContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitRpc_method(this);
   else
     return visitor->visitChildren(this);
@@ -1103,19 +1227,19 @@ FlatBuffersParser::Rpc_methodContext* FlatBuffersParser::rpc_method() {
     setState(185);
     match(FlatBuffersParser::IDENT);
     setState(186);
-    match(FlatBuffersParser::T__15);
+    match(FlatBuffersParser::OPEN_PAREN);
     setState(187);
     match(FlatBuffersParser::IDENT);
     setState(188);
-    match(FlatBuffersParser::T__16);
+    match(FlatBuffersParser::CLOSE_PAREN);
     setState(189);
-    match(FlatBuffersParser::T__10);
+    match(FlatBuffersParser::COLON);
     setState(190);
     match(FlatBuffersParser::IDENT);
     setState(191);
     metadata();
     setState(192);
-    match(FlatBuffersParser::T__1);
+    match(FlatBuffersParser::SEMICOLON);
    
   }
   catch (RecognitionException &e) {
@@ -1133,8 +1257,20 @@ FlatBuffersParser::Interface_declContext::Interface_declContext(ParserRuleContex
   : ParserRuleContext(parent, invokingState) {
 }
 
+tree::TerminalNode* FlatBuffersParser::Interface_declContext::INTERFACE() {
+  return getToken(FlatBuffersParser::INTERFACE, 0);
+}
+
 tree::TerminalNode* FlatBuffersParser::Interface_declContext::IDENT() {
   return getToken(FlatBuffersParser::IDENT, 0);
+}
+
+tree::TerminalNode* FlatBuffersParser::Interface_declContext::OPEN_BRACE() {
+  return getToken(FlatBuffersParser::OPEN_BRACE, 0);
+}
+
+tree::TerminalNode* FlatBuffersParser::Interface_declContext::CLOSE_BRACE() {
+  return getToken(FlatBuffersParser::CLOSE_BRACE, 0);
 }
 
 tree::TerminalNode* FlatBuffersParser::Interface_declContext::DOC_COMMENT() {
@@ -1155,20 +1291,20 @@ size_t FlatBuffersParser::Interface_declContext::getRuleIndex() const {
 }
 
 void FlatBuffersParser::Interface_declContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterInterface_decl(this);
 }
 
 void FlatBuffersParser::Interface_declContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitInterface_decl(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::Interface_declContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitInterface_decl(this);
   else
     return visitor->visitChildren(this);
@@ -1193,11 +1329,11 @@ FlatBuffersParser::Interface_declContext* FlatBuffersParser::interface_decl() {
       match(FlatBuffersParser::DOC_COMMENT);
     }
     setState(197);
-    match(FlatBuffersParser::T__17);
+    match(FlatBuffersParser::INTERFACE);
     setState(198);
     match(FlatBuffersParser::IDENT);
     setState(199);
-    match(FlatBuffersParser::T__7);
+    match(FlatBuffersParser::OPEN_BRACE);
     setState(201); 
     _errHandler->sync(this);
     _la = _input->LA(1);
@@ -1208,11 +1344,11 @@ FlatBuffersParser::Interface_declContext* FlatBuffersParser::interface_decl() {
       _errHandler->sync(this);
       _la = _input->LA(1);
     } while ((((_la & ~ 0x3fULL) == 0) &&
-      ((1ULL << _la) & ((1ULL << FlatBuffersParser::T__19)
-      | (1ULL << FlatBuffersParser::T__20)
+      ((1ULL << _la) & ((1ULL << FlatBuffersParser::MUTABLE)
+      | (1ULL << FlatBuffersParser::STATIC)
       | (1ULL << FlatBuffersParser::IDENT))) != 0));
     setState(205);
-    match(FlatBuffersParser::T__8);
+    match(FlatBuffersParser::CLOSE_BRACE);
    
   }
   catch (RecognitionException &e) {
@@ -1234,12 +1370,24 @@ tree::TerminalNode* FlatBuffersParser::Method_declContext::IDENT() {
   return getToken(FlatBuffersParser::IDENT, 0);
 }
 
+tree::TerminalNode* FlatBuffersParser::Method_declContext::OPEN_PAREN() {
+  return getToken(FlatBuffersParser::OPEN_PAREN, 0);
+}
+
 FlatBuffersParser::Method_parametersContext* FlatBuffersParser::Method_declContext::method_parameters() {
   return getRuleContext<FlatBuffersParser::Method_parametersContext>(0);
 }
 
+tree::TerminalNode* FlatBuffersParser::Method_declContext::CLOSE_PAREN() {
+  return getToken(FlatBuffersParser::CLOSE_PAREN, 0);
+}
+
 FlatBuffersParser::MetadataContext* FlatBuffersParser::Method_declContext::metadata() {
   return getRuleContext<FlatBuffersParser::MetadataContext>(0);
+}
+
+tree::TerminalNode* FlatBuffersParser::Method_declContext::SEMICOLON() {
+  return getToken(FlatBuffersParser::SEMICOLON, 0);
 }
 
 FlatBuffersParser::Static_declContext* FlatBuffersParser::Method_declContext::static_decl() {
@@ -1248,6 +1396,10 @@ FlatBuffersParser::Static_declContext* FlatBuffersParser::Method_declContext::st
 
 FlatBuffersParser::Mutable_declContext* FlatBuffersParser::Method_declContext::mutable_decl() {
   return getRuleContext<FlatBuffersParser::Mutable_declContext>(0);
+}
+
+tree::TerminalNode* FlatBuffersParser::Method_declContext::COLON() {
+  return getToken(FlatBuffersParser::COLON, 0);
 }
 
 FlatBuffersParser::Method_return_typeContext* FlatBuffersParser::Method_declContext::method_return_type() {
@@ -1264,20 +1416,20 @@ size_t FlatBuffersParser::Method_declContext::getRuleIndex() const {
 }
 
 void FlatBuffersParser::Method_declContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterMethod_decl(this);
 }
 
 void FlatBuffersParser::Method_declContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitMethod_decl(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::Method_declContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitMethod_decl(this);
   else
     return visitor->visitChildren(this);
@@ -1296,13 +1448,13 @@ FlatBuffersParser::Method_declContext* FlatBuffersParser::method_decl() {
     setState(209);
     _errHandler->sync(this);
     switch (_input->LA(1)) {
-      case FlatBuffersParser::T__20: {
+      case FlatBuffersParser::STATIC: {
         setState(207);
         static_decl();
         break;
       }
 
-      case FlatBuffersParser::T__19: {
+      case FlatBuffersParser::MUTABLE: {
         setState(208);
         mutable_decl();
         break;
@@ -1318,25 +1470,25 @@ FlatBuffersParser::Method_declContext* FlatBuffersParser::method_decl() {
     setState(211);
     match(FlatBuffersParser::IDENT);
     setState(212);
-    match(FlatBuffersParser::T__15);
+    match(FlatBuffersParser::OPEN_PAREN);
     setState(213);
     method_parameters();
     setState(214);
-    match(FlatBuffersParser::T__16);
+    match(FlatBuffersParser::CLOSE_PAREN);
     setState(217);
     _errHandler->sync(this);
 
     _la = _input->LA(1);
-    if (_la == FlatBuffersParser::T__10) {
+    if (_la == FlatBuffersParser::COLON) {
       setState(215);
-      match(FlatBuffersParser::T__10);
+      match(FlatBuffersParser::COLON);
       setState(216);
       method_return_type();
     }
     setState(219);
     metadata();
     setState(220);
-    match(FlatBuffersParser::T__1);
+    match(FlatBuffersParser::SEMICOLON);
     setState(222);
     _errHandler->sync(this);
 
@@ -1370,26 +1522,34 @@ FlatBuffersParser::Method_parameterContext* FlatBuffersParser::Method_parameters
   return getRuleContext<FlatBuffersParser::Method_parameterContext>(i);
 }
 
+std::vector<tree::TerminalNode *> FlatBuffersParser::Method_parametersContext::COMMA() {
+  return getTokens(FlatBuffersParser::COMMA);
+}
+
+tree::TerminalNode* FlatBuffersParser::Method_parametersContext::COMMA(size_t i) {
+  return getToken(FlatBuffersParser::COMMA, i);
+}
+
 
 size_t FlatBuffersParser::Method_parametersContext::getRuleIndex() const {
   return FlatBuffersParser::RuleMethod_parameters;
 }
 
 void FlatBuffersParser::Method_parametersContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterMethod_parameters(this);
 }
 
 void FlatBuffersParser::Method_parametersContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitMethod_parameters(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::Method_parametersContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitMethod_parameters(this);
   else
     return visitor->visitChildren(this);
@@ -1416,9 +1576,9 @@ FlatBuffersParser::Method_parametersContext* FlatBuffersParser::method_parameter
     setState(231);
     _errHandler->sync(this);
     _la = _input->LA(1);
-    while (_la == FlatBuffersParser::T__18) {
+    while (_la == FlatBuffersParser::COMMA) {
       setState(227);
-      match(FlatBuffersParser::T__18);
+      match(FlatBuffersParser::COMMA);
       setState(228);
       method_parameter();
       setState(233);
@@ -1446,6 +1606,10 @@ tree::TerminalNode* FlatBuffersParser::Method_parameterContext::IDENT() {
   return getToken(FlatBuffersParser::IDENT, 0);
 }
 
+tree::TerminalNode* FlatBuffersParser::Method_parameterContext::COLON() {
+  return getToken(FlatBuffersParser::COLON, 0);
+}
+
 FlatBuffersParser::Method_typeContext* FlatBuffersParser::Method_parameterContext::method_type() {
   return getRuleContext<FlatBuffersParser::Method_typeContext>(0);
 }
@@ -1464,20 +1628,20 @@ size_t FlatBuffersParser::Method_parameterContext::getRuleIndex() const {
 }
 
 void FlatBuffersParser::Method_parameterContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterMethod_parameter(this);
 }
 
 void FlatBuffersParser::Method_parameterContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitMethod_parameter(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::Method_parameterContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitMethod_parameter(this);
   else
     return visitor->visitChildren(this);
@@ -1496,7 +1660,7 @@ FlatBuffersParser::Method_parameterContext* FlatBuffersParser::method_parameter(
     setState(234);
     match(FlatBuffersParser::IDENT);
     setState(235);
-    match(FlatBuffersParser::T__10);
+    match(FlatBuffersParser::COLON);
     setState(237);
     _errHandler->sync(this);
 
@@ -1512,7 +1676,7 @@ FlatBuffersParser::Method_parameterContext* FlatBuffersParser::method_parameter(
     _errHandler->sync(this);
 
     _la = _input->LA(1);
-    if (_la == FlatBuffersParser::T__19) {
+    if (_la == FlatBuffersParser::MUTABLE) {
       setState(239);
       mutable_decl();
     }
@@ -1545,20 +1709,20 @@ size_t FlatBuffersParser::Method_return_typeContext::getRuleIndex() const {
 }
 
 void FlatBuffersParser::Method_return_typeContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterMethod_return_type(this);
 }
 
 void FlatBuffersParser::Method_return_typeContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitMethod_return_type(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::Method_return_typeContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitMethod_return_type(this);
   else
     return visitor->visitChildren(this);
@@ -1610,20 +1774,20 @@ size_t FlatBuffersParser::Method_typeContext::getRuleIndex() const {
 }
 
 void FlatBuffersParser::Method_typeContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterMethod_type(this);
 }
 
 void FlatBuffersParser::Method_typeContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitMethod_type(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::Method_typeContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitMethod_type(this);
   else
     return visitor->visitChildren(this);
@@ -1643,7 +1807,7 @@ FlatBuffersParser::Method_typeContext* FlatBuffersParser::method_type() {
     _errHandler->sync(this);
 
     _la = _input->LA(1);
-    if (_la == FlatBuffersParser::T__21) {
+    if (_la == FlatBuffersParser::REFERENCE) {
       setState(246);
       reference_decl();
     }
@@ -1682,26 +1846,30 @@ FlatBuffersParser::Mutable_declContext::Mutable_declContext(ParserRuleContext *p
   : ParserRuleContext(parent, invokingState) {
 }
 
+tree::TerminalNode* FlatBuffersParser::Mutable_declContext::MUTABLE() {
+  return getToken(FlatBuffersParser::MUTABLE, 0);
+}
+
 
 size_t FlatBuffersParser::Mutable_declContext::getRuleIndex() const {
   return FlatBuffersParser::RuleMutable_decl;
 }
 
 void FlatBuffersParser::Mutable_declContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterMutable_decl(this);
 }
 
 void FlatBuffersParser::Mutable_declContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitMutable_decl(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::Mutable_declContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitMutable_decl(this);
   else
     return visitor->visitChildren(this);
@@ -1717,7 +1885,7 @@ FlatBuffersParser::Mutable_declContext* FlatBuffersParser::mutable_decl() {
   try {
     enterOuterAlt(_localctx, 1);
     setState(253);
-    match(FlatBuffersParser::T__19);
+    match(FlatBuffersParser::MUTABLE);
    
   }
   catch (RecognitionException &e) {
@@ -1735,26 +1903,30 @@ FlatBuffersParser::Static_declContext::Static_declContext(ParserRuleContext *par
   : ParserRuleContext(parent, invokingState) {
 }
 
+tree::TerminalNode* FlatBuffersParser::Static_declContext::STATIC() {
+  return getToken(FlatBuffersParser::STATIC, 0);
+}
+
 
 size_t FlatBuffersParser::Static_declContext::getRuleIndex() const {
   return FlatBuffersParser::RuleStatic_decl;
 }
 
 void FlatBuffersParser::Static_declContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterStatic_decl(this);
 }
 
 void FlatBuffersParser::Static_declContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitStatic_decl(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::Static_declContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitStatic_decl(this);
   else
     return visitor->visitChildren(this);
@@ -1770,7 +1942,7 @@ FlatBuffersParser::Static_declContext* FlatBuffersParser::static_decl() {
   try {
     enterOuterAlt(_localctx, 1);
     setState(255);
-    match(FlatBuffersParser::T__20);
+    match(FlatBuffersParser::STATIC);
    
   }
   catch (RecognitionException &e) {
@@ -1788,26 +1960,30 @@ FlatBuffersParser::Reference_declContext::Reference_declContext(ParserRuleContex
   : ParserRuleContext(parent, invokingState) {
 }
 
+tree::TerminalNode* FlatBuffersParser::Reference_declContext::REFERENCE() {
+  return getToken(FlatBuffersParser::REFERENCE, 0);
+}
+
 
 size_t FlatBuffersParser::Reference_declContext::getRuleIndex() const {
   return FlatBuffersParser::RuleReference_decl;
 }
 
 void FlatBuffersParser::Reference_declContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterReference_decl(this);
 }
 
 void FlatBuffersParser::Reference_declContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitReference_decl(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::Reference_declContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitReference_decl(this);
   else
     return visitor->visitChildren(this);
@@ -1823,7 +1999,7 @@ FlatBuffersParser::Reference_declContext* FlatBuffersParser::reference_decl() {
   try {
     enterOuterAlt(_localctx, 1);
     setState(257);
-    match(FlatBuffersParser::T__21);
+    match(FlatBuffersParser::REFERENCE);
    
   }
   catch (RecognitionException &e) {
@@ -1841,8 +2017,20 @@ FlatBuffersParser::TypeContext::TypeContext(ParserRuleContext *parent, size_t in
   : ParserRuleContext(parent, invokingState) {
 }
 
+tree::TerminalNode* FlatBuffersParser::TypeContext::OPEN_BRACKET() {
+  return getToken(FlatBuffersParser::OPEN_BRACKET, 0);
+}
+
 FlatBuffersParser::TypeContext* FlatBuffersParser::TypeContext::type() {
   return getRuleContext<FlatBuffersParser::TypeContext>(0);
+}
+
+tree::TerminalNode* FlatBuffersParser::TypeContext::CLOSE_BRACKET() {
+  return getToken(FlatBuffersParser::CLOSE_BRACKET, 0);
+}
+
+tree::TerminalNode* FlatBuffersParser::TypeContext::COLON() {
+  return getToken(FlatBuffersParser::COLON, 0);
 }
 
 FlatBuffersParser::Integer_constContext* FlatBuffersParser::TypeContext::integer_const() {
@@ -1863,20 +2051,20 @@ size_t FlatBuffersParser::TypeContext::getRuleIndex() const {
 }
 
 void FlatBuffersParser::TypeContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterType(this);
 }
 
 void FlatBuffersParser::TypeContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitType(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::TypeContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitType(this);
   else
     return visitor->visitChildren(this);
@@ -1894,24 +2082,24 @@ FlatBuffersParser::TypeContext* FlatBuffersParser::type() {
     setState(269);
     _errHandler->sync(this);
     switch (_input->LA(1)) {
-      case FlatBuffersParser::T__22: {
+      case FlatBuffersParser::OPEN_BRACKET: {
         enterOuterAlt(_localctx, 1);
         setState(259);
-        match(FlatBuffersParser::T__22);
+        match(FlatBuffersParser::OPEN_BRACKET);
         setState(260);
         type();
         setState(263);
         _errHandler->sync(this);
 
         _la = _input->LA(1);
-        if (_la == FlatBuffersParser::T__10) {
+        if (_la == FlatBuffersParser::COLON) {
           setState(261);
-          match(FlatBuffersParser::T__10);
+          match(FlatBuffersParser::COLON);
           setState(262);
           integer_const();
         }
         setState(265);
-        match(FlatBuffersParser::T__23);
+        match(FlatBuffersParser::CLOSE_BRACKET);
         break;
       }
 
@@ -1959,20 +2147,20 @@ size_t FlatBuffersParser::Uniontype_declContext::getRuleIndex() const {
 }
 
 void FlatBuffersParser::Uniontype_declContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterUniontype_decl(this);
 }
 
 void FlatBuffersParser::Uniontype_declContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitUniontype_decl(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::Uniontype_declContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitUniontype_decl(this);
   else
     return visitor->visitChildren(this);
@@ -2014,26 +2202,34 @@ FlatBuffersParser::Uniontype_declContext* FlatBuffersParser::Commasep_uniontype_
   return getRuleContext<FlatBuffersParser::Uniontype_declContext>(i);
 }
 
+std::vector<tree::TerminalNode *> FlatBuffersParser::Commasep_uniontype_declContext::COMMA() {
+  return getTokens(FlatBuffersParser::COMMA);
+}
+
+tree::TerminalNode* FlatBuffersParser::Commasep_uniontype_declContext::COMMA(size_t i) {
+  return getToken(FlatBuffersParser::COMMA, i);
+}
+
 
 size_t FlatBuffersParser::Commasep_uniontype_declContext::getRuleIndex() const {
   return FlatBuffersParser::RuleCommasep_uniontype_decl;
 }
 
 void FlatBuffersParser::Commasep_uniontype_declContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterCommasep_uniontype_decl(this);
 }
 
 void FlatBuffersParser::Commasep_uniontype_declContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitCommasep_uniontype_decl(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::Commasep_uniontype_declContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitCommasep_uniontype_decl(this);
   else
     return visitor->visitChildren(this);
@@ -2058,7 +2254,7 @@ FlatBuffersParser::Commasep_uniontype_declContext* FlatBuffersParser::commasep_u
     while (alt != 2 && alt != atn::ATN::INVALID_ALT_NUMBER) {
       if (alt == 1) {
         setState(274);
-        match(FlatBuffersParser::T__18);
+        match(FlatBuffersParser::COMMA);
         setState(275);
         uniontype_decl(); 
       }
@@ -2070,9 +2266,9 @@ FlatBuffersParser::Commasep_uniontype_declContext* FlatBuffersParser::commasep_u
     _errHandler->sync(this);
 
     _la = _input->LA(1);
-    if (_la == FlatBuffersParser::T__18) {
+    if (_la == FlatBuffersParser::COMMA) {
       setState(281);
-      match(FlatBuffersParser::T__18);
+      match(FlatBuffersParser::COMMA);
     }
    
   }
@@ -2095,6 +2291,10 @@ FlatBuffersParser::Ns_identContext* FlatBuffersParser::Enumval_declContext::ns_i
   return getRuleContext<FlatBuffersParser::Ns_identContext>(0);
 }
 
+tree::TerminalNode* FlatBuffersParser::Enumval_declContext::EQUAL() {
+  return getToken(FlatBuffersParser::EQUAL, 0);
+}
+
 FlatBuffersParser::Integer_constContext* FlatBuffersParser::Enumval_declContext::integer_const() {
   return getRuleContext<FlatBuffersParser::Integer_constContext>(0);
 }
@@ -2105,20 +2305,20 @@ size_t FlatBuffersParser::Enumval_declContext::getRuleIndex() const {
 }
 
 void FlatBuffersParser::Enumval_declContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterEnumval_decl(this);
 }
 
 void FlatBuffersParser::Enumval_declContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitEnumval_decl(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::Enumval_declContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitEnumval_decl(this);
   else
     return visitor->visitChildren(this);
@@ -2140,9 +2340,9 @@ FlatBuffersParser::Enumval_declContext* FlatBuffersParser::enumval_decl() {
     _errHandler->sync(this);
 
     _la = _input->LA(1);
-    if (_la == FlatBuffersParser::T__13) {
+    if (_la == FlatBuffersParser::EQUAL) {
       setState(285);
-      match(FlatBuffersParser::T__13);
+      match(FlatBuffersParser::EQUAL);
       setState(286);
       integer_const();
     }
@@ -2171,26 +2371,34 @@ FlatBuffersParser::Enumval_declContext* FlatBuffersParser::Commasep_enumval_decl
   return getRuleContext<FlatBuffersParser::Enumval_declContext>(i);
 }
 
+std::vector<tree::TerminalNode *> FlatBuffersParser::Commasep_enumval_declContext::COMMA() {
+  return getTokens(FlatBuffersParser::COMMA);
+}
+
+tree::TerminalNode* FlatBuffersParser::Commasep_enumval_declContext::COMMA(size_t i) {
+  return getToken(FlatBuffersParser::COMMA, i);
+}
+
 
 size_t FlatBuffersParser::Commasep_enumval_declContext::getRuleIndex() const {
   return FlatBuffersParser::RuleCommasep_enumval_decl;
 }
 
 void FlatBuffersParser::Commasep_enumval_declContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterCommasep_enumval_decl(this);
 }
 
 void FlatBuffersParser::Commasep_enumval_declContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitCommasep_enumval_decl(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::Commasep_enumval_declContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitCommasep_enumval_decl(this);
   else
     return visitor->visitChildren(this);
@@ -2215,7 +2423,7 @@ FlatBuffersParser::Commasep_enumval_declContext* FlatBuffersParser::commasep_enu
     while (alt != 2 && alt != atn::ATN::INVALID_ALT_NUMBER) {
       if (alt == 1) {
         setState(290);
-        match(FlatBuffersParser::T__18);
+        match(FlatBuffersParser::COMMA);
         setState(291);
         enumval_decl(); 
       }
@@ -2227,9 +2435,9 @@ FlatBuffersParser::Commasep_enumval_declContext* FlatBuffersParser::commasep_enu
     _errHandler->sync(this);
 
     _la = _input->LA(1);
-    if (_la == FlatBuffersParser::T__18) {
+    if (_la == FlatBuffersParser::COMMA) {
       setState(297);
-      match(FlatBuffersParser::T__18);
+      match(FlatBuffersParser::COMMA);
     }
    
   }
@@ -2252,6 +2460,10 @@ tree::TerminalNode* FlatBuffersParser::Ident_with_opt_single_valueContext::IDENT
   return getToken(FlatBuffersParser::IDENT, 0);
 }
 
+tree::TerminalNode* FlatBuffersParser::Ident_with_opt_single_valueContext::COLON() {
+  return getToken(FlatBuffersParser::COLON, 0);
+}
+
 FlatBuffersParser::Single_valueContext* FlatBuffersParser::Ident_with_opt_single_valueContext::single_value() {
   return getRuleContext<FlatBuffersParser::Single_valueContext>(0);
 }
@@ -2262,20 +2474,20 @@ size_t FlatBuffersParser::Ident_with_opt_single_valueContext::getRuleIndex() con
 }
 
 void FlatBuffersParser::Ident_with_opt_single_valueContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterIdent_with_opt_single_value(this);
 }
 
 void FlatBuffersParser::Ident_with_opt_single_valueContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitIdent_with_opt_single_value(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::Ident_with_opt_single_valueContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitIdent_with_opt_single_value(this);
   else
     return visitor->visitChildren(this);
@@ -2297,9 +2509,9 @@ FlatBuffersParser::Ident_with_opt_single_valueContext* FlatBuffersParser::ident_
     _errHandler->sync(this);
 
     _la = _input->LA(1);
-    if (_la == FlatBuffersParser::T__10) {
+    if (_la == FlatBuffersParser::COLON) {
       setState(301);
-      match(FlatBuffersParser::T__10);
+      match(FlatBuffersParser::COLON);
       setState(302);
       single_value();
     }
@@ -2328,26 +2540,34 @@ FlatBuffersParser::Ident_with_opt_single_valueContext* FlatBuffersParser::Commas
   return getRuleContext<FlatBuffersParser::Ident_with_opt_single_valueContext>(i);
 }
 
+std::vector<tree::TerminalNode *> FlatBuffersParser::Commasep_ident_with_opt_single_valueContext::COMMA() {
+  return getTokens(FlatBuffersParser::COMMA);
+}
+
+tree::TerminalNode* FlatBuffersParser::Commasep_ident_with_opt_single_valueContext::COMMA(size_t i) {
+  return getToken(FlatBuffersParser::COMMA, i);
+}
+
 
 size_t FlatBuffersParser::Commasep_ident_with_opt_single_valueContext::getRuleIndex() const {
   return FlatBuffersParser::RuleCommasep_ident_with_opt_single_value;
 }
 
 void FlatBuffersParser::Commasep_ident_with_opt_single_valueContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterCommasep_ident_with_opt_single_value(this);
 }
 
 void FlatBuffersParser::Commasep_ident_with_opt_single_valueContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitCommasep_ident_with_opt_single_value(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::Commasep_ident_with_opt_single_valueContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitCommasep_ident_with_opt_single_value(this);
   else
     return visitor->visitChildren(this);
@@ -2368,9 +2588,9 @@ FlatBuffersParser::Commasep_ident_with_opt_single_valueContext* FlatBuffersParse
     setState(310);
     _errHandler->sync(this);
     _la = _input->LA(1);
-    while (_la == FlatBuffersParser::T__18) {
+    while (_la == FlatBuffersParser::COMMA) {
       setState(306);
-      match(FlatBuffersParser::T__18);
+      match(FlatBuffersParser::COMMA);
       setState(307);
       ident_with_opt_single_value();
       setState(312);
@@ -2394,8 +2614,16 @@ FlatBuffersParser::MetadataContext::MetadataContext(ParserRuleContext *parent, s
   : ParserRuleContext(parent, invokingState) {
 }
 
+tree::TerminalNode* FlatBuffersParser::MetadataContext::OPEN_PAREN() {
+  return getToken(FlatBuffersParser::OPEN_PAREN, 0);
+}
+
 FlatBuffersParser::Commasep_ident_with_opt_single_valueContext* FlatBuffersParser::MetadataContext::commasep_ident_with_opt_single_value() {
   return getRuleContext<FlatBuffersParser::Commasep_ident_with_opt_single_valueContext>(0);
+}
+
+tree::TerminalNode* FlatBuffersParser::MetadataContext::CLOSE_PAREN() {
+  return getToken(FlatBuffersParser::CLOSE_PAREN, 0);
 }
 
 
@@ -2404,20 +2632,20 @@ size_t FlatBuffersParser::MetadataContext::getRuleIndex() const {
 }
 
 void FlatBuffersParser::MetadataContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterMetadata(this);
 }
 
 void FlatBuffersParser::MetadataContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitMetadata(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::MetadataContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitMetadata(this);
   else
     return visitor->visitChildren(this);
@@ -2437,13 +2665,13 @@ FlatBuffersParser::MetadataContext* FlatBuffersParser::metadata() {
     _errHandler->sync(this);
 
     _la = _input->LA(1);
-    if (_la == FlatBuffersParser::T__15) {
+    if (_la == FlatBuffersParser::OPEN_PAREN) {
       setState(313);
-      match(FlatBuffersParser::T__15);
+      match(FlatBuffersParser::OPEN_PAREN);
       setState(314);
       commasep_ident_with_opt_single_value();
       setState(315);
-      match(FlatBuffersParser::T__16);
+      match(FlatBuffersParser::CLOSE_PAREN);
     }
    
   }
@@ -2484,20 +2712,20 @@ size_t FlatBuffersParser::ScalarContext::getRuleIndex() const {
 }
 
 void FlatBuffersParser::ScalarContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterScalar(this);
 }
 
 void FlatBuffersParser::ScalarContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitScalar(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::ScalarContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitScalar(this);
   else
     return visitor->visitChildren(this);
@@ -2543,8 +2771,16 @@ FlatBuffersParser::ObjectContext::ObjectContext(ParserRuleContext *parent, size_
   : ParserRuleContext(parent, invokingState) {
 }
 
+tree::TerminalNode* FlatBuffersParser::ObjectContext::OPEN_BRACE() {
+  return getToken(FlatBuffersParser::OPEN_BRACE, 0);
+}
+
 FlatBuffersParser::Commasep_ident_with_valueContext* FlatBuffersParser::ObjectContext::commasep_ident_with_value() {
   return getRuleContext<FlatBuffersParser::Commasep_ident_with_valueContext>(0);
+}
+
+tree::TerminalNode* FlatBuffersParser::ObjectContext::CLOSE_BRACE() {
+  return getToken(FlatBuffersParser::CLOSE_BRACE, 0);
 }
 
 
@@ -2553,20 +2789,20 @@ size_t FlatBuffersParser::ObjectContext::getRuleIndex() const {
 }
 
 void FlatBuffersParser::ObjectContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterObject(this);
 }
 
 void FlatBuffersParser::ObjectContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitObject(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::ObjectContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitObject(this);
   else
     return visitor->visitChildren(this);
@@ -2582,11 +2818,11 @@ FlatBuffersParser::ObjectContext* FlatBuffersParser::object() {
   try {
     enterOuterAlt(_localctx, 1);
     setState(321);
-    match(FlatBuffersParser::T__7);
+    match(FlatBuffersParser::OPEN_BRACE);
     setState(322);
     commasep_ident_with_value();
     setState(323);
-    match(FlatBuffersParser::T__8);
+    match(FlatBuffersParser::CLOSE_BRACE);
    
   }
   catch (RecognitionException &e) {
@@ -2608,6 +2844,10 @@ tree::TerminalNode* FlatBuffersParser::Ident_with_valueContext::IDENT() {
   return getToken(FlatBuffersParser::IDENT, 0);
 }
 
+tree::TerminalNode* FlatBuffersParser::Ident_with_valueContext::COLON() {
+  return getToken(FlatBuffersParser::COLON, 0);
+}
+
 FlatBuffersParser::ValueContext* FlatBuffersParser::Ident_with_valueContext::value() {
   return getRuleContext<FlatBuffersParser::ValueContext>(0);
 }
@@ -2618,20 +2858,20 @@ size_t FlatBuffersParser::Ident_with_valueContext::getRuleIndex() const {
 }
 
 void FlatBuffersParser::Ident_with_valueContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterIdent_with_value(this);
 }
 
 void FlatBuffersParser::Ident_with_valueContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitIdent_with_value(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::Ident_with_valueContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitIdent_with_value(this);
   else
     return visitor->visitChildren(this);
@@ -2649,7 +2889,7 @@ FlatBuffersParser::Ident_with_valueContext* FlatBuffersParser::ident_with_value(
     setState(325);
     match(FlatBuffersParser::IDENT);
     setState(326);
-    match(FlatBuffersParser::T__10);
+    match(FlatBuffersParser::COLON);
     setState(327);
     value();
    
@@ -2677,26 +2917,34 @@ FlatBuffersParser::Ident_with_valueContext* FlatBuffersParser::Commasep_ident_wi
   return getRuleContext<FlatBuffersParser::Ident_with_valueContext>(i);
 }
 
+std::vector<tree::TerminalNode *> FlatBuffersParser::Commasep_ident_with_valueContext::COMMA() {
+  return getTokens(FlatBuffersParser::COMMA);
+}
+
+tree::TerminalNode* FlatBuffersParser::Commasep_ident_with_valueContext::COMMA(size_t i) {
+  return getToken(FlatBuffersParser::COMMA, i);
+}
+
 
 size_t FlatBuffersParser::Commasep_ident_with_valueContext::getRuleIndex() const {
   return FlatBuffersParser::RuleCommasep_ident_with_value;
 }
 
 void FlatBuffersParser::Commasep_ident_with_valueContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterCommasep_ident_with_value(this);
 }
 
 void FlatBuffersParser::Commasep_ident_with_valueContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitCommasep_ident_with_value(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::Commasep_ident_with_valueContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitCommasep_ident_with_value(this);
   else
     return visitor->visitChildren(this);
@@ -2721,7 +2969,7 @@ FlatBuffersParser::Commasep_ident_with_valueContext* FlatBuffersParser::commasep
     while (alt != 2 && alt != atn::ATN::INVALID_ALT_NUMBER) {
       if (alt == 1) {
         setState(330);
-        match(FlatBuffersParser::T__18);
+        match(FlatBuffersParser::COMMA);
         setState(331);
         ident_with_value(); 
       }
@@ -2733,9 +2981,9 @@ FlatBuffersParser::Commasep_ident_with_valueContext* FlatBuffersParser::commasep
     _errHandler->sync(this);
 
     _la = _input->LA(1);
-    if (_la == FlatBuffersParser::T__18) {
+    if (_la == FlatBuffersParser::COMMA) {
       setState(337);
-      match(FlatBuffersParser::T__18);
+      match(FlatBuffersParser::COMMA);
     }
    
   }
@@ -2768,20 +3016,20 @@ size_t FlatBuffersParser::Single_valueContext::getRuleIndex() const {
 }
 
 void FlatBuffersParser::Single_valueContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterSingle_value(this);
 }
 
 void FlatBuffersParser::Single_valueContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitSingle_value(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::Single_valueContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitSingle_value(this);
   else
     return visitor->visitChildren(this);
@@ -2843,8 +3091,16 @@ FlatBuffersParser::ObjectContext* FlatBuffersParser::ValueContext::object() {
   return getRuleContext<FlatBuffersParser::ObjectContext>(0);
 }
 
+tree::TerminalNode* FlatBuffersParser::ValueContext::OPEN_BRACKET() {
+  return getToken(FlatBuffersParser::OPEN_BRACKET, 0);
+}
+
 FlatBuffersParser::Commasep_valueContext* FlatBuffersParser::ValueContext::commasep_value() {
   return getRuleContext<FlatBuffersParser::Commasep_valueContext>(0);
+}
+
+tree::TerminalNode* FlatBuffersParser::ValueContext::CLOSE_BRACKET() {
+  return getToken(FlatBuffersParser::CLOSE_BRACKET, 0);
 }
 
 
@@ -2853,20 +3109,20 @@ size_t FlatBuffersParser::ValueContext::getRuleIndex() const {
 }
 
 void FlatBuffersParser::ValueContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterValue(this);
 }
 
 void FlatBuffersParser::ValueContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitValue(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::ValueContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitValue(this);
   else
     return visitor->visitChildren(this);
@@ -2894,21 +3150,21 @@ FlatBuffersParser::ValueContext* FlatBuffersParser::value() {
         break;
       }
 
-      case FlatBuffersParser::T__7: {
+      case FlatBuffersParser::OPEN_BRACE: {
         enterOuterAlt(_localctx, 2);
         setState(345);
         object();
         break;
       }
 
-      case FlatBuffersParser::T__22: {
+      case FlatBuffersParser::OPEN_BRACKET: {
         enterOuterAlt(_localctx, 3);
         setState(346);
-        match(FlatBuffersParser::T__22);
+        match(FlatBuffersParser::OPEN_BRACKET);
         setState(347);
         commasep_value();
         setState(348);
-        match(FlatBuffersParser::T__23);
+        match(FlatBuffersParser::CLOSE_BRACKET);
         break;
       }
 
@@ -2940,26 +3196,34 @@ FlatBuffersParser::ValueContext* FlatBuffersParser::Commasep_valueContext::value
   return getRuleContext<FlatBuffersParser::ValueContext>(i);
 }
 
+std::vector<tree::TerminalNode *> FlatBuffersParser::Commasep_valueContext::COMMA() {
+  return getTokens(FlatBuffersParser::COMMA);
+}
+
+tree::TerminalNode* FlatBuffersParser::Commasep_valueContext::COMMA(size_t i) {
+  return getToken(FlatBuffersParser::COMMA, i);
+}
+
 
 size_t FlatBuffersParser::Commasep_valueContext::getRuleIndex() const {
   return FlatBuffersParser::RuleCommasep_value;
 }
 
 void FlatBuffersParser::Commasep_valueContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterCommasep_value(this);
 }
 
 void FlatBuffersParser::Commasep_valueContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitCommasep_value(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::Commasep_valueContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitCommasep_value(this);
   else
     return visitor->visitChildren(this);
@@ -2984,7 +3248,7 @@ FlatBuffersParser::Commasep_valueContext* FlatBuffersParser::commasep_value() {
     while (alt != 2 && alt != atn::ATN::INVALID_ALT_NUMBER) {
       if (alt == 1) {
         setState(353);
-        match(FlatBuffersParser::T__18);
+        match(FlatBuffersParser::COMMA);
         setState(354);
         value(); 
       }
@@ -2996,9 +3260,9 @@ FlatBuffersParser::Commasep_valueContext* FlatBuffersParser::commasep_value() {
     _errHandler->sync(this);
 
     _la = _input->LA(1);
-    if (_la == FlatBuffersParser::T__18) {
+    if (_la == FlatBuffersParser::COMMA) {
       setState(360);
-      match(FlatBuffersParser::T__18);
+      match(FlatBuffersParser::COMMA);
     }
    
   }
@@ -3017,6 +3281,10 @@ FlatBuffersParser::File_extension_declContext::File_extension_declContext(Parser
   : ParserRuleContext(parent, invokingState) {
 }
 
+tree::TerminalNode* FlatBuffersParser::File_extension_declContext::FILE_EXTENSION() {
+  return getToken(FlatBuffersParser::FILE_EXTENSION, 0);
+}
+
 tree::TerminalNode* FlatBuffersParser::File_extension_declContext::STRING_CONSTANT() {
   return getToken(FlatBuffersParser::STRING_CONSTANT, 0);
 }
@@ -3027,20 +3295,20 @@ size_t FlatBuffersParser::File_extension_declContext::getRuleIndex() const {
 }
 
 void FlatBuffersParser::File_extension_declContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterFile_extension_decl(this);
 }
 
 void FlatBuffersParser::File_extension_declContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitFile_extension_decl(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::File_extension_declContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitFile_extension_decl(this);
   else
     return visitor->visitChildren(this);
@@ -3056,7 +3324,7 @@ FlatBuffersParser::File_extension_declContext* FlatBuffersParser::file_extension
   try {
     enterOuterAlt(_localctx, 1);
     setState(363);
-    match(FlatBuffersParser::T__24);
+    match(FlatBuffersParser::FILE_EXTENSION);
     setState(364);
     match(FlatBuffersParser::STRING_CONSTANT);
    
@@ -3076,6 +3344,10 @@ FlatBuffersParser::File_identifier_declContext::File_identifier_declContext(Pars
   : ParserRuleContext(parent, invokingState) {
 }
 
+tree::TerminalNode* FlatBuffersParser::File_identifier_declContext::FILE_IDENTIFIER() {
+  return getToken(FlatBuffersParser::FILE_IDENTIFIER, 0);
+}
+
 tree::TerminalNode* FlatBuffersParser::File_identifier_declContext::STRING_CONSTANT() {
   return getToken(FlatBuffersParser::STRING_CONSTANT, 0);
 }
@@ -3086,20 +3358,20 @@ size_t FlatBuffersParser::File_identifier_declContext::getRuleIndex() const {
 }
 
 void FlatBuffersParser::File_identifier_declContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterFile_identifier_decl(this);
 }
 
 void FlatBuffersParser::File_identifier_declContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitFile_identifier_decl(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::File_identifier_declContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitFile_identifier_decl(this);
   else
     return visitor->visitChildren(this);
@@ -3115,7 +3387,7 @@ FlatBuffersParser::File_identifier_declContext* FlatBuffersParser::file_identifi
   try {
     enterOuterAlt(_localctx, 1);
     setState(366);
-    match(FlatBuffersParser::T__25);
+    match(FlatBuffersParser::FILE_IDENTIFIER);
     setState(367);
     match(FlatBuffersParser::STRING_CONSTANT);
    
@@ -3143,26 +3415,34 @@ tree::TerminalNode* FlatBuffersParser::Ns_identContext::IDENT(size_t i) {
   return getToken(FlatBuffersParser::IDENT, i);
 }
 
+std::vector<tree::TerminalNode *> FlatBuffersParser::Ns_identContext::PERIOD() {
+  return getTokens(FlatBuffersParser::PERIOD);
+}
+
+tree::TerminalNode* FlatBuffersParser::Ns_identContext::PERIOD(size_t i) {
+  return getToken(FlatBuffersParser::PERIOD, i);
+}
+
 
 size_t FlatBuffersParser::Ns_identContext::getRuleIndex() const {
   return FlatBuffersParser::RuleNs_ident;
 }
 
 void FlatBuffersParser::Ns_identContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterNs_ident(this);
 }
 
 void FlatBuffersParser::Ns_identContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitNs_ident(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::Ns_identContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitNs_ident(this);
   else
     return visitor->visitChildren(this);
@@ -3183,9 +3463,9 @@ FlatBuffersParser::Ns_identContext* FlatBuffersParser::ns_ident() {
     setState(374);
     _errHandler->sync(this);
     _la = _input->LA(1);
-    while (_la == FlatBuffersParser::T__3) {
+    while (_la == FlatBuffersParser::PERIOD) {
       setState(370);
-      match(FlatBuffersParser::T__3);
+      match(FlatBuffersParser::PERIOD);
       setState(371);
       match(FlatBuffersParser::IDENT);
       setState(376);
@@ -3223,20 +3503,20 @@ size_t FlatBuffersParser::Integer_constContext::getRuleIndex() const {
 }
 
 void FlatBuffersParser::Integer_constContext::enterRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->enterInteger_const(this);
 }
 
 void FlatBuffersParser::Integer_constContext::exitRule(tree::ParseTreeListener *listener) {
-  auto parserListener = dynamic_cast<FlatBuffersListener *>(listener);
+  auto parserListener = dynamic_cast<FlatBuffersParserListener *>(listener);
   if (parserListener != nullptr)
     parserListener->exitInteger_const(this);
 }
 
 
 antlrcpp::Any FlatBuffersParser::Integer_constContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlatBuffersVisitor*>(visitor))
+  if (auto parserVisitor = dynamic_cast<FlatBuffersParserVisitor*>(visitor))
     return parserVisitor->visitInteger_const(this);
   else
     return visitor->visitChildren(this);
@@ -3295,17 +3575,21 @@ std::vector<std::string> FlatBuffersParser::_ruleNames = {
 };
 
 std::vector<std::string> FlatBuffersParser::_literalNames = {
-  "", "'include'", "';'", "'namespace'", "'.'", "'attribute'", "'table'", 
-  "'struct'", "'{'", "'}'", "'enum'", "':'", "'union'", "'root_type'", "'='", 
-  "'rpc_service'", "'('", "')'", "'interface'", "','", "'mut'", "'static'", 
-  "'ref'", "'['", "']'", "'file_extension'", "'file_identifier'"
+  "", "'include'", "'namespace'", "'attribute'", "'table'", "'struct'", 
+  "'enum'", "'union'", "'interface'", "'mut'", "'static'", "'ref'", "'root_type'", 
+  "'rpc_service'", "'file_extension'", "'file_indentifier'", "", "", "", 
+  "", "", "", "", "", "", "", "';'", "':'", "'.'", "','", "'='", "'{'", 
+  "'}'", "'['", "']'", "'('", "')'"
 };
 
 std::vector<std::string> FlatBuffersParser::_symbolicNames = {
-  "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", 
-  "", "", "", "", "", "", "", "", "", "STRING_CONSTANT", "BASE_TYPE_NAME", 
+  "", "INCLUDE", "NAMESPACE", "ATTRIBUTE", "TABLE", "STRUCT", "ENUM", "UNION", 
+  "INTERFACE", "MUTABLE", "STATIC", "REFERENCE", "ROOT_TYPE", "RPC_SERVICE", 
+  "FILE_EXTENSION", "FILE_IDENTIFIER", "STRING_CONSTANT", "BASE_TYPE_NAME", 
   "IDENT", "HEX_INTEGER_CONSTANT", "INTEGER_CONSTANT", "FLOAT_CONSTANT", 
-  "BLOCK_COMMENT", "DOC_COMMENT", "COMMENT", "WHITESPACE"
+  "BLOCK_DOC_COMMENT", "BLOCK_COMMENT", "DOC_COMMENT", "COMMENT", "SEMICOLON", 
+  "COLON", "PERIOD", "COMMA", "EQUAL", "OPEN_BRACE", "CLOSE_BRACE", "OPEN_BRACKET", 
+  "CLOSE_BRACKET", "OPEN_PAREN", "CLOSE_PAREN", "WHITESPACE"
 };
 
 dfa::Vocabulary FlatBuffersParser::_vocabulary(_literalNames, _symbolicNames);
@@ -3328,7 +3612,7 @@ FlatBuffersParser::Initializer::Initializer() {
 
   _serializedATN = {
     0x3, 0x608b, 0xa72a, 0x8133, 0xb9ed, 0x417c, 0x3be7, 0x7786, 0x5964, 
-    0x3, 0x26, 0x17e, 0x4, 0x2, 0x9, 0x2, 0x4, 0x3, 0x9, 0x3, 0x4, 0x4, 
+    0x3, 0x27, 0x17e, 0x4, 0x2, 0x9, 0x2, 0x4, 0x3, 0x9, 0x3, 0x4, 0x4, 
     0x9, 0x4, 0x4, 0x5, 0x9, 0x5, 0x4, 0x6, 0x9, 0x6, 0x4, 0x7, 0x9, 0x7, 
     0x4, 0x8, 0x9, 0x8, 0x4, 0x9, 0x9, 0x9, 0x4, 0xa, 0x9, 0xa, 0x4, 0xb, 
     0x9, 0xb, 0x4, 0xc, 0x9, 0xc, 0x4, 0xd, 0x9, 0xd, 0x4, 0xe, 0x9, 0xe, 
@@ -3392,8 +3676,8 @@ FlatBuffersParser::Initializer::Initializer() {
     0x3, 0x28, 0x2, 0x2, 0x29, 0x2, 0x4, 0x6, 0x8, 0xa, 0xc, 0xe, 0x10, 
     0x12, 0x14, 0x16, 0x18, 0x1a, 0x1c, 0x1e, 0x20, 0x22, 0x24, 0x26, 0x28, 
     0x2a, 0x2c, 0x2e, 0x30, 0x32, 0x34, 0x36, 0x38, 0x3a, 0x3c, 0x3e, 0x40, 
-    0x42, 0x44, 0x46, 0x48, 0x4a, 0x4c, 0x4e, 0x2, 0x5, 0x3, 0x2, 0x8, 0x9, 
-    0x3, 0x2, 0x1f, 0x22, 0x3, 0x2, 0x20, 0x21, 0x2, 0x18b, 0x2, 0x53, 0x3, 
+    0x42, 0x44, 0x46, 0x48, 0x4a, 0x4c, 0x4e, 0x2, 0x5, 0x3, 0x2, 0x6, 0x7, 
+    0x3, 0x2, 0x14, 0x17, 0x3, 0x2, 0x15, 0x16, 0x2, 0x18b, 0x2, 0x53, 0x3, 
     0x2, 0x2, 0x2, 0x4, 0x66, 0x3, 0x2, 0x2, 0x2, 0x6, 0x6a, 0x3, 0x2, 0x2, 
     0x2, 0x8, 0x75, 0x3, 0x2, 0x2, 0x2, 0xa, 0x7a, 0x3, 0x2, 0x2, 0x2, 0xc, 
     0x8a, 0x3, 0x2, 0x2, 0x2, 0xe, 0x98, 0x3, 0x2, 0x2, 0x2, 0x10, 0xa1, 
@@ -3428,77 +3712,77 @@ FlatBuffersParser::Initializer::Initializer() {
     0x62, 0x65, 0x3, 0x2, 0x2, 0x2, 0x63, 0x61, 0x3, 0x2, 0x2, 0x2, 0x63, 
     0x64, 0x3, 0x2, 0x2, 0x2, 0x64, 0x3, 0x3, 0x2, 0x2, 0x2, 0x65, 0x63, 
     0x3, 0x2, 0x2, 0x2, 0x66, 0x67, 0x7, 0x3, 0x2, 0x2, 0x67, 0x68, 0x7, 
-    0x1d, 0x2, 0x2, 0x68, 0x69, 0x7, 0x4, 0x2, 0x2, 0x69, 0x5, 0x3, 0x2, 
-    0x2, 0x2, 0x6a, 0x6b, 0x7, 0x5, 0x2, 0x2, 0x6b, 0x70, 0x7, 0x1f, 0x2, 
-    0x2, 0x6c, 0x6d, 0x7, 0x6, 0x2, 0x2, 0x6d, 0x6f, 0x7, 0x1f, 0x2, 0x2, 
+    0x12, 0x2, 0x2, 0x68, 0x69, 0x7, 0x1c, 0x2, 0x2, 0x69, 0x5, 0x3, 0x2, 
+    0x2, 0x2, 0x6a, 0x6b, 0x7, 0x4, 0x2, 0x2, 0x6b, 0x70, 0x7, 0x14, 0x2, 
+    0x2, 0x6c, 0x6d, 0x7, 0x1e, 0x2, 0x2, 0x6d, 0x6f, 0x7, 0x14, 0x2, 0x2, 
     0x6e, 0x6c, 0x3, 0x2, 0x2, 0x2, 0x6f, 0x72, 0x3, 0x2, 0x2, 0x2, 0x70, 
     0x6e, 0x3, 0x2, 0x2, 0x2, 0x70, 0x71, 0x3, 0x2, 0x2, 0x2, 0x71, 0x73, 
     0x3, 0x2, 0x2, 0x2, 0x72, 0x70, 0x3, 0x2, 0x2, 0x2, 0x73, 0x74, 0x7, 
-    0x4, 0x2, 0x2, 0x74, 0x7, 0x3, 0x2, 0x2, 0x2, 0x75, 0x76, 0x7, 0x7, 
-    0x2, 0x2, 0x76, 0x77, 0x7, 0x1d, 0x2, 0x2, 0x77, 0x78, 0x7, 0x4, 0x2, 
-    0x2, 0x78, 0x9, 0x3, 0x2, 0x2, 0x2, 0x79, 0x7b, 0x7, 0x24, 0x2, 0x2, 
+    0x1c, 0x2, 0x2, 0x74, 0x7, 0x3, 0x2, 0x2, 0x2, 0x75, 0x76, 0x7, 0x5, 
+    0x2, 0x2, 0x76, 0x77, 0x7, 0x12, 0x2, 0x2, 0x77, 0x78, 0x7, 0x1c, 0x2, 
+    0x2, 0x78, 0x9, 0x3, 0x2, 0x2, 0x2, 0x79, 0x7b, 0x7, 0x1a, 0x2, 0x2, 
     0x7a, 0x79, 0x3, 0x2, 0x2, 0x2, 0x7a, 0x7b, 0x3, 0x2, 0x2, 0x2, 0x7b, 
     0x7c, 0x3, 0x2, 0x2, 0x2, 0x7c, 0x7d, 0x9, 0x2, 0x2, 0x2, 0x7d, 0x7e, 
-    0x7, 0x1f, 0x2, 0x2, 0x7e, 0x7f, 0x5, 0x38, 0x1d, 0x2, 0x7f, 0x84, 0x7, 
-    0xa, 0x2, 0x2, 0x80, 0x83, 0x5, 0x12, 0xa, 0x2, 0x81, 0x83, 0x5, 0x1a, 
+    0x7, 0x14, 0x2, 0x2, 0x7e, 0x7f, 0x5, 0x38, 0x1d, 0x2, 0x7f, 0x84, 0x7, 
+    0x21, 0x2, 0x2, 0x80, 0x83, 0x5, 0x12, 0xa, 0x2, 0x81, 0x83, 0x5, 0x1a, 
     0xe, 0x2, 0x82, 0x80, 0x3, 0x2, 0x2, 0x2, 0x82, 0x81, 0x3, 0x2, 0x2, 
     0x2, 0x83, 0x86, 0x3, 0x2, 0x2, 0x2, 0x84, 0x82, 0x3, 0x2, 0x2, 0x2, 
     0x84, 0x85, 0x3, 0x2, 0x2, 0x2, 0x85, 0x87, 0x3, 0x2, 0x2, 0x2, 0x86, 
-    0x84, 0x3, 0x2, 0x2, 0x2, 0x87, 0x88, 0x7, 0xb, 0x2, 0x2, 0x88, 0xb, 
-    0x3, 0x2, 0x2, 0x2, 0x89, 0x8b, 0x7, 0x24, 0x2, 0x2, 0x8a, 0x89, 0x3, 
+    0x84, 0x3, 0x2, 0x2, 0x2, 0x87, 0x88, 0x7, 0x22, 0x2, 0x2, 0x88, 0xb, 
+    0x3, 0x2, 0x2, 0x2, 0x89, 0x8b, 0x7, 0x1a, 0x2, 0x2, 0x8a, 0x89, 0x3, 
     0x2, 0x2, 0x2, 0x8a, 0x8b, 0x3, 0x2, 0x2, 0x2, 0x8b, 0x8c, 0x3, 0x2, 
-    0x2, 0x2, 0x8c, 0x8d, 0x7, 0xc, 0x2, 0x2, 0x8d, 0x90, 0x7, 0x1f, 0x2, 
-    0x2, 0x8e, 0x8f, 0x7, 0xd, 0x2, 0x2, 0x8f, 0x91, 0x5, 0x2a, 0x16, 0x2, 
+    0x2, 0x2, 0x8c, 0x8d, 0x7, 0x8, 0x2, 0x2, 0x8d, 0x90, 0x7, 0x14, 0x2, 
+    0x2, 0x8e, 0x8f, 0x7, 0x1d, 0x2, 0x2, 0x8f, 0x91, 0x5, 0x2a, 0x16, 0x2, 
     0x90, 0x8e, 0x3, 0x2, 0x2, 0x2, 0x90, 0x91, 0x3, 0x2, 0x2, 0x2, 0x91, 
     0x92, 0x3, 0x2, 0x2, 0x2, 0x92, 0x93, 0x5, 0x38, 0x1d, 0x2, 0x93, 0x94, 
-    0x7, 0xa, 0x2, 0x2, 0x94, 0x95, 0x5, 0x32, 0x1a, 0x2, 0x95, 0x96, 0x7, 
-    0xb, 0x2, 0x2, 0x96, 0xd, 0x3, 0x2, 0x2, 0x2, 0x97, 0x99, 0x7, 0x24, 
+    0x7, 0x21, 0x2, 0x2, 0x94, 0x95, 0x5, 0x32, 0x1a, 0x2, 0x95, 0x96, 0x7, 
+    0x22, 0x2, 0x2, 0x96, 0xd, 0x3, 0x2, 0x2, 0x2, 0x97, 0x99, 0x7, 0x1a, 
     0x2, 0x2, 0x98, 0x97, 0x3, 0x2, 0x2, 0x2, 0x98, 0x99, 0x3, 0x2, 0x2, 
-    0x2, 0x99, 0x9a, 0x3, 0x2, 0x2, 0x2, 0x9a, 0x9b, 0x7, 0xe, 0x2, 0x2, 
-    0x9b, 0x9c, 0x7, 0x1f, 0x2, 0x2, 0x9c, 0x9d, 0x5, 0x38, 0x1d, 0x2, 0x9d, 
-    0x9e, 0x7, 0xa, 0x2, 0x2, 0x9e, 0x9f, 0x5, 0x2e, 0x18, 0x2, 0x9f, 0xa0, 
-    0x7, 0xb, 0x2, 0x2, 0xa0, 0xf, 0x3, 0x2, 0x2, 0x2, 0xa1, 0xa2, 0x7, 
-    0xf, 0x2, 0x2, 0xa2, 0xa3, 0x7, 0x1f, 0x2, 0x2, 0xa3, 0xa4, 0x7, 0x4, 
-    0x2, 0x2, 0xa4, 0x11, 0x3, 0x2, 0x2, 0x2, 0xa5, 0xa6, 0x7, 0x1f, 0x2, 
-    0x2, 0xa6, 0xa7, 0x7, 0xd, 0x2, 0x2, 0xa7, 0xaa, 0x5, 0x2a, 0x16, 0x2, 
-    0xa8, 0xa9, 0x7, 0x10, 0x2, 0x2, 0xa9, 0xab, 0x5, 0x3a, 0x1e, 0x2, 0xaa, 
+    0x2, 0x99, 0x9a, 0x3, 0x2, 0x2, 0x2, 0x9a, 0x9b, 0x7, 0x9, 0x2, 0x2, 
+    0x9b, 0x9c, 0x7, 0x14, 0x2, 0x2, 0x9c, 0x9d, 0x5, 0x38, 0x1d, 0x2, 0x9d, 
+    0x9e, 0x7, 0x21, 0x2, 0x2, 0x9e, 0x9f, 0x5, 0x2e, 0x18, 0x2, 0x9f, 0xa0, 
+    0x7, 0x22, 0x2, 0x2, 0xa0, 0xf, 0x3, 0x2, 0x2, 0x2, 0xa1, 0xa2, 0x7, 
+    0xe, 0x2, 0x2, 0xa2, 0xa3, 0x7, 0x14, 0x2, 0x2, 0xa3, 0xa4, 0x7, 0x1c, 
+    0x2, 0x2, 0xa4, 0x11, 0x3, 0x2, 0x2, 0x2, 0xa5, 0xa6, 0x7, 0x14, 0x2, 
+    0x2, 0xa6, 0xa7, 0x7, 0x1d, 0x2, 0x2, 0xa7, 0xaa, 0x5, 0x2a, 0x16, 0x2, 
+    0xa8, 0xa9, 0x7, 0x20, 0x2, 0x2, 0xa9, 0xab, 0x5, 0x3a, 0x1e, 0x2, 0xaa, 
     0xa8, 0x3, 0x2, 0x2, 0x2, 0xaa, 0xab, 0x3, 0x2, 0x2, 0x2, 0xab, 0xac, 
     0x3, 0x2, 0x2, 0x2, 0xac, 0xad, 0x5, 0x38, 0x1d, 0x2, 0xad, 0xaf, 0x7, 
-    0x4, 0x2, 0x2, 0xae, 0xb0, 0x7, 0x24, 0x2, 0x2, 0xaf, 0xae, 0x3, 0x2, 
+    0x1c, 0x2, 0x2, 0xae, 0xb0, 0x7, 0x1a, 0x2, 0x2, 0xaf, 0xae, 0x3, 0x2, 
     0x2, 0x2, 0xaf, 0xb0, 0x3, 0x2, 0x2, 0x2, 0xb0, 0x13, 0x3, 0x2, 0x2, 
-    0x2, 0xb1, 0xb2, 0x7, 0x11, 0x2, 0x2, 0xb2, 0xb3, 0x7, 0x1f, 0x2, 0x2, 
-    0xb3, 0xb5, 0x7, 0xa, 0x2, 0x2, 0xb4, 0xb6, 0x5, 0x16, 0xc, 0x2, 0xb5, 
+    0x2, 0xb1, 0xb2, 0x7, 0xf, 0x2, 0x2, 0xb2, 0xb3, 0x7, 0x14, 0x2, 0x2, 
+    0xb3, 0xb5, 0x7, 0x21, 0x2, 0x2, 0xb4, 0xb6, 0x5, 0x16, 0xc, 0x2, 0xb5, 
     0xb4, 0x3, 0x2, 0x2, 0x2, 0xb6, 0xb7, 0x3, 0x2, 0x2, 0x2, 0xb7, 0xb5, 
     0x3, 0x2, 0x2, 0x2, 0xb7, 0xb8, 0x3, 0x2, 0x2, 0x2, 0xb8, 0xb9, 0x3, 
-    0x2, 0x2, 0x2, 0xb9, 0xba, 0x7, 0xb, 0x2, 0x2, 0xba, 0x15, 0x3, 0x2, 
-    0x2, 0x2, 0xbb, 0xbc, 0x7, 0x1f, 0x2, 0x2, 0xbc, 0xbd, 0x7, 0x12, 0x2, 
-    0x2, 0xbd, 0xbe, 0x7, 0x1f, 0x2, 0x2, 0xbe, 0xbf, 0x7, 0x13, 0x2, 0x2, 
-    0xbf, 0xc0, 0x7, 0xd, 0x2, 0x2, 0xc0, 0xc1, 0x7, 0x1f, 0x2, 0x2, 0xc1, 
-    0xc2, 0x5, 0x38, 0x1d, 0x2, 0xc2, 0xc3, 0x7, 0x4, 0x2, 0x2, 0xc3, 0x17, 
-    0x3, 0x2, 0x2, 0x2, 0xc4, 0xc6, 0x7, 0x24, 0x2, 0x2, 0xc5, 0xc4, 0x3, 
+    0x2, 0x2, 0x2, 0xb9, 0xba, 0x7, 0x22, 0x2, 0x2, 0xba, 0x15, 0x3, 0x2, 
+    0x2, 0x2, 0xbb, 0xbc, 0x7, 0x14, 0x2, 0x2, 0xbc, 0xbd, 0x7, 0x25, 0x2, 
+    0x2, 0xbd, 0xbe, 0x7, 0x14, 0x2, 0x2, 0xbe, 0xbf, 0x7, 0x26, 0x2, 0x2, 
+    0xbf, 0xc0, 0x7, 0x1d, 0x2, 0x2, 0xc0, 0xc1, 0x7, 0x14, 0x2, 0x2, 0xc1, 
+    0xc2, 0x5, 0x38, 0x1d, 0x2, 0xc2, 0xc3, 0x7, 0x1c, 0x2, 0x2, 0xc3, 0x17, 
+    0x3, 0x2, 0x2, 0x2, 0xc4, 0xc6, 0x7, 0x1a, 0x2, 0x2, 0xc5, 0xc4, 0x3, 
     0x2, 0x2, 0x2, 0xc5, 0xc6, 0x3, 0x2, 0x2, 0x2, 0xc6, 0xc7, 0x3, 0x2, 
-    0x2, 0x2, 0xc7, 0xc8, 0x7, 0x14, 0x2, 0x2, 0xc8, 0xc9, 0x7, 0x1f, 0x2, 
-    0x2, 0xc9, 0xcb, 0x7, 0xa, 0x2, 0x2, 0xca, 0xcc, 0x5, 0x1a, 0xe, 0x2, 
+    0x2, 0x2, 0xc7, 0xc8, 0x7, 0xa, 0x2, 0x2, 0xc8, 0xc9, 0x7, 0x14, 0x2, 
+    0x2, 0xc9, 0xcb, 0x7, 0x21, 0x2, 0x2, 0xca, 0xcc, 0x5, 0x1a, 0xe, 0x2, 
     0xcb, 0xca, 0x3, 0x2, 0x2, 0x2, 0xcc, 0xcd, 0x3, 0x2, 0x2, 0x2, 0xcd, 
     0xcb, 0x3, 0x2, 0x2, 0x2, 0xcd, 0xce, 0x3, 0x2, 0x2, 0x2, 0xce, 0xcf, 
-    0x3, 0x2, 0x2, 0x2, 0xcf, 0xd0, 0x7, 0xb, 0x2, 0x2, 0xd0, 0x19, 0x3, 
+    0x3, 0x2, 0x2, 0x2, 0xcf, 0xd0, 0x7, 0x22, 0x2, 0x2, 0xd0, 0x19, 0x3, 
     0x2, 0x2, 0x2, 0xd1, 0xd4, 0x5, 0x26, 0x14, 0x2, 0xd2, 0xd4, 0x5, 0x24, 
     0x13, 0x2, 0xd3, 0xd1, 0x3, 0x2, 0x2, 0x2, 0xd3, 0xd2, 0x3, 0x2, 0x2, 
     0x2, 0xd3, 0xd4, 0x3, 0x2, 0x2, 0x2, 0xd4, 0xd5, 0x3, 0x2, 0x2, 0x2, 
-    0xd5, 0xd6, 0x7, 0x1f, 0x2, 0x2, 0xd6, 0xd7, 0x7, 0x12, 0x2, 0x2, 0xd7, 
-    0xd8, 0x5, 0x1c, 0xf, 0x2, 0xd8, 0xdb, 0x7, 0x13, 0x2, 0x2, 0xd9, 0xda, 
-    0x7, 0xd, 0x2, 0x2, 0xda, 0xdc, 0x5, 0x20, 0x11, 0x2, 0xdb, 0xd9, 0x3, 
+    0xd5, 0xd6, 0x7, 0x14, 0x2, 0x2, 0xd6, 0xd7, 0x7, 0x25, 0x2, 0x2, 0xd7, 
+    0xd8, 0x5, 0x1c, 0xf, 0x2, 0xd8, 0xdb, 0x7, 0x26, 0x2, 0x2, 0xd9, 0xda, 
+    0x7, 0x1d, 0x2, 0x2, 0xda, 0xdc, 0x5, 0x20, 0x11, 0x2, 0xdb, 0xd9, 0x3, 
     0x2, 0x2, 0x2, 0xdb, 0xdc, 0x3, 0x2, 0x2, 0x2, 0xdc, 0xdd, 0x3, 0x2, 
-    0x2, 0x2, 0xdd, 0xde, 0x5, 0x38, 0x1d, 0x2, 0xde, 0xe0, 0x7, 0x4, 0x2, 
-    0x2, 0xdf, 0xe1, 0x7, 0x24, 0x2, 0x2, 0xe0, 0xdf, 0x3, 0x2, 0x2, 0x2, 
+    0x2, 0x2, 0xdd, 0xde, 0x5, 0x38, 0x1d, 0x2, 0xde, 0xe0, 0x7, 0x1c, 0x2, 
+    0x2, 0xdf, 0xe1, 0x7, 0x1a, 0x2, 0x2, 0xe0, 0xdf, 0x3, 0x2, 0x2, 0x2, 
     0xe0, 0xe1, 0x3, 0x2, 0x2, 0x2, 0xe1, 0x1b, 0x3, 0x2, 0x2, 0x2, 0xe2, 
     0xe4, 0x5, 0x1e, 0x10, 0x2, 0xe3, 0xe2, 0x3, 0x2, 0x2, 0x2, 0xe3, 0xe4, 
     0x3, 0x2, 0x2, 0x2, 0xe4, 0xe9, 0x3, 0x2, 0x2, 0x2, 0xe5, 0xe6, 0x7, 
-    0x15, 0x2, 0x2, 0xe6, 0xe8, 0x5, 0x1e, 0x10, 0x2, 0xe7, 0xe5, 0x3, 0x2, 
+    0x1f, 0x2, 0x2, 0xe6, 0xe8, 0x5, 0x1e, 0x10, 0x2, 0xe7, 0xe5, 0x3, 0x2, 
     0x2, 0x2, 0xe8, 0xeb, 0x3, 0x2, 0x2, 0x2, 0xe9, 0xe7, 0x3, 0x2, 0x2, 
     0x2, 0xe9, 0xea, 0x3, 0x2, 0x2, 0x2, 0xea, 0x1d, 0x3, 0x2, 0x2, 0x2, 
-    0xeb, 0xe9, 0x3, 0x2, 0x2, 0x2, 0xec, 0xed, 0x7, 0x1f, 0x2, 0x2, 0xed, 
-    0xef, 0x7, 0xd, 0x2, 0x2, 0xee, 0xf0, 0x5, 0x28, 0x15, 0x2, 0xef, 0xee, 
+    0xeb, 0xe9, 0x3, 0x2, 0x2, 0x2, 0xec, 0xed, 0x7, 0x14, 0x2, 0x2, 0xed, 
+    0xef, 0x7, 0x1d, 0x2, 0x2, 0xee, 0xf0, 0x5, 0x28, 0x15, 0x2, 0xef, 0xee, 
     0x3, 0x2, 0x2, 0x2, 0xef, 0xf0, 0x3, 0x2, 0x2, 0x2, 0xf0, 0xf2, 0x3, 
     0x2, 0x2, 0x2, 0xf1, 0xf3, 0x5, 0x24, 0x13, 0x2, 0xf2, 0xf1, 0x3, 0x2, 
     0x2, 0x2, 0xf2, 0xf3, 0x3, 0x2, 0x2, 0x2, 0xf3, 0xf4, 0x3, 0x2, 0x2, 
@@ -3506,76 +3790,76 @@ FlatBuffersParser::Initializer::Initializer() {
     0xf6, 0xf7, 0x5, 0x22, 0x12, 0x2, 0xf7, 0x21, 0x3, 0x2, 0x2, 0x2, 0xf8, 
     0xfa, 0x5, 0x28, 0x15, 0x2, 0xf9, 0xf8, 0x3, 0x2, 0x2, 0x2, 0xf9, 0xfa, 
     0x3, 0x2, 0x2, 0x2, 0xfa, 0xfd, 0x3, 0x2, 0x2, 0x2, 0xfb, 0xfe, 0x7, 
-    0x1e, 0x2, 0x2, 0xfc, 0xfe, 0x5, 0x4c, 0x27, 0x2, 0xfd, 0xfb, 0x3, 0x2, 
+    0x13, 0x2, 0x2, 0xfc, 0xfe, 0x5, 0x4c, 0x27, 0x2, 0xfd, 0xfb, 0x3, 0x2, 
     0x2, 0x2, 0xfd, 0xfc, 0x3, 0x2, 0x2, 0x2, 0xfe, 0x23, 0x3, 0x2, 0x2, 
-    0x2, 0xff, 0x100, 0x7, 0x16, 0x2, 0x2, 0x100, 0x25, 0x3, 0x2, 0x2, 0x2, 
-    0x101, 0x102, 0x7, 0x17, 0x2, 0x2, 0x102, 0x27, 0x3, 0x2, 0x2, 0x2, 
-    0x103, 0x104, 0x7, 0x18, 0x2, 0x2, 0x104, 0x29, 0x3, 0x2, 0x2, 0x2, 
-    0x105, 0x106, 0x7, 0x19, 0x2, 0x2, 0x106, 0x109, 0x5, 0x2a, 0x16, 0x2, 
-    0x107, 0x108, 0x7, 0xd, 0x2, 0x2, 0x108, 0x10a, 0x5, 0x4e, 0x28, 0x2, 
-    0x109, 0x107, 0x3, 0x2, 0x2, 0x2, 0x109, 0x10a, 0x3, 0x2, 0x2, 0x2, 
-    0x10a, 0x10b, 0x3, 0x2, 0x2, 0x2, 0x10b, 0x10c, 0x7, 0x1a, 0x2, 0x2, 
-    0x10c, 0x110, 0x3, 0x2, 0x2, 0x2, 0x10d, 0x110, 0x7, 0x1e, 0x2, 0x2, 
-    0x10e, 0x110, 0x5, 0x4c, 0x27, 0x2, 0x10f, 0x105, 0x3, 0x2, 0x2, 0x2, 
-    0x10f, 0x10d, 0x3, 0x2, 0x2, 0x2, 0x10f, 0x10e, 0x3, 0x2, 0x2, 0x2, 
-    0x110, 0x2b, 0x3, 0x2, 0x2, 0x2, 0x111, 0x112, 0x5, 0x2a, 0x16, 0x2, 
-    0x112, 0x2d, 0x3, 0x2, 0x2, 0x2, 0x113, 0x118, 0x5, 0x2c, 0x17, 0x2, 
-    0x114, 0x115, 0x7, 0x15, 0x2, 0x2, 0x115, 0x117, 0x5, 0x2c, 0x17, 0x2, 
-    0x116, 0x114, 0x3, 0x2, 0x2, 0x2, 0x117, 0x11a, 0x3, 0x2, 0x2, 0x2, 
-    0x118, 0x116, 0x3, 0x2, 0x2, 0x2, 0x118, 0x119, 0x3, 0x2, 0x2, 0x2, 
-    0x119, 0x11c, 0x3, 0x2, 0x2, 0x2, 0x11a, 0x118, 0x3, 0x2, 0x2, 0x2, 
-    0x11b, 0x11d, 0x7, 0x15, 0x2, 0x2, 0x11c, 0x11b, 0x3, 0x2, 0x2, 0x2, 
-    0x11c, 0x11d, 0x3, 0x2, 0x2, 0x2, 0x11d, 0x2f, 0x3, 0x2, 0x2, 0x2, 0x11e, 
-    0x121, 0x5, 0x4c, 0x27, 0x2, 0x11f, 0x120, 0x7, 0x10, 0x2, 0x2, 0x120, 
-    0x122, 0x5, 0x4e, 0x28, 0x2, 0x121, 0x11f, 0x3, 0x2, 0x2, 0x2, 0x121, 
-    0x122, 0x3, 0x2, 0x2, 0x2, 0x122, 0x31, 0x3, 0x2, 0x2, 0x2, 0x123, 0x128, 
-    0x5, 0x30, 0x19, 0x2, 0x124, 0x125, 0x7, 0x15, 0x2, 0x2, 0x125, 0x127, 
-    0x5, 0x30, 0x19, 0x2, 0x126, 0x124, 0x3, 0x2, 0x2, 0x2, 0x127, 0x12a, 
-    0x3, 0x2, 0x2, 0x2, 0x128, 0x126, 0x3, 0x2, 0x2, 0x2, 0x128, 0x129, 
-    0x3, 0x2, 0x2, 0x2, 0x129, 0x12c, 0x3, 0x2, 0x2, 0x2, 0x12a, 0x128, 
-    0x3, 0x2, 0x2, 0x2, 0x12b, 0x12d, 0x7, 0x15, 0x2, 0x2, 0x12c, 0x12b, 
-    0x3, 0x2, 0x2, 0x2, 0x12c, 0x12d, 0x3, 0x2, 0x2, 0x2, 0x12d, 0x33, 0x3, 
-    0x2, 0x2, 0x2, 0x12e, 0x131, 0x7, 0x1f, 0x2, 0x2, 0x12f, 0x130, 0x7, 
-    0xd, 0x2, 0x2, 0x130, 0x132, 0x5, 0x42, 0x22, 0x2, 0x131, 0x12f, 0x3, 
-    0x2, 0x2, 0x2, 0x131, 0x132, 0x3, 0x2, 0x2, 0x2, 0x132, 0x35, 0x3, 0x2, 
-    0x2, 0x2, 0x133, 0x138, 0x5, 0x34, 0x1b, 0x2, 0x134, 0x135, 0x7, 0x15, 
-    0x2, 0x2, 0x135, 0x137, 0x5, 0x34, 0x1b, 0x2, 0x136, 0x134, 0x3, 0x2, 
-    0x2, 0x2, 0x137, 0x13a, 0x3, 0x2, 0x2, 0x2, 0x138, 0x136, 0x3, 0x2, 
-    0x2, 0x2, 0x138, 0x139, 0x3, 0x2, 0x2, 0x2, 0x139, 0x37, 0x3, 0x2, 0x2, 
-    0x2, 0x13a, 0x138, 0x3, 0x2, 0x2, 0x2, 0x13b, 0x13c, 0x7, 0x12, 0x2, 
-    0x2, 0x13c, 0x13d, 0x5, 0x36, 0x1c, 0x2, 0x13d, 0x13e, 0x7, 0x13, 0x2, 
-    0x2, 0x13e, 0x140, 0x3, 0x2, 0x2, 0x2, 0x13f, 0x13b, 0x3, 0x2, 0x2, 
-    0x2, 0x13f, 0x140, 0x3, 0x2, 0x2, 0x2, 0x140, 0x39, 0x3, 0x2, 0x2, 0x2, 
-    0x141, 0x142, 0x9, 0x3, 0x2, 0x2, 0x142, 0x3b, 0x3, 0x2, 0x2, 0x2, 0x143, 
-    0x144, 0x7, 0xa, 0x2, 0x2, 0x144, 0x145, 0x5, 0x40, 0x21, 0x2, 0x145, 
-    0x146, 0x7, 0xb, 0x2, 0x2, 0x146, 0x3d, 0x3, 0x2, 0x2, 0x2, 0x147, 0x148, 
-    0x7, 0x1f, 0x2, 0x2, 0x148, 0x149, 0x7, 0xd, 0x2, 0x2, 0x149, 0x14a, 
-    0x5, 0x44, 0x23, 0x2, 0x14a, 0x3f, 0x3, 0x2, 0x2, 0x2, 0x14b, 0x150, 
-    0x5, 0x3e, 0x20, 0x2, 0x14c, 0x14d, 0x7, 0x15, 0x2, 0x2, 0x14d, 0x14f, 
-    0x5, 0x3e, 0x20, 0x2, 0x14e, 0x14c, 0x3, 0x2, 0x2, 0x2, 0x14f, 0x152, 
-    0x3, 0x2, 0x2, 0x2, 0x150, 0x14e, 0x3, 0x2, 0x2, 0x2, 0x150, 0x151, 
-    0x3, 0x2, 0x2, 0x2, 0x151, 0x154, 0x3, 0x2, 0x2, 0x2, 0x152, 0x150, 
-    0x3, 0x2, 0x2, 0x2, 0x153, 0x155, 0x7, 0x15, 0x2, 0x2, 0x154, 0x153, 
-    0x3, 0x2, 0x2, 0x2, 0x154, 0x155, 0x3, 0x2, 0x2, 0x2, 0x155, 0x41, 0x3, 
-    0x2, 0x2, 0x2, 0x156, 0x159, 0x5, 0x3a, 0x1e, 0x2, 0x157, 0x159, 0x7, 
-    0x1d, 0x2, 0x2, 0x158, 0x156, 0x3, 0x2, 0x2, 0x2, 0x158, 0x157, 0x3, 
-    0x2, 0x2, 0x2, 0x159, 0x43, 0x3, 0x2, 0x2, 0x2, 0x15a, 0x161, 0x5, 0x42, 
-    0x22, 0x2, 0x15b, 0x161, 0x5, 0x3c, 0x1f, 0x2, 0x15c, 0x15d, 0x7, 0x19, 
-    0x2, 0x2, 0x15d, 0x15e, 0x5, 0x46, 0x24, 0x2, 0x15e, 0x15f, 0x7, 0x1a, 
+    0x2, 0xff, 0x100, 0x7, 0xb, 0x2, 0x2, 0x100, 0x25, 0x3, 0x2, 0x2, 0x2, 
+    0x101, 0x102, 0x7, 0xc, 0x2, 0x2, 0x102, 0x27, 0x3, 0x2, 0x2, 0x2, 0x103, 
+    0x104, 0x7, 0xd, 0x2, 0x2, 0x104, 0x29, 0x3, 0x2, 0x2, 0x2, 0x105, 0x106, 
+    0x7, 0x23, 0x2, 0x2, 0x106, 0x109, 0x5, 0x2a, 0x16, 0x2, 0x107, 0x108, 
+    0x7, 0x1d, 0x2, 0x2, 0x108, 0x10a, 0x5, 0x4e, 0x28, 0x2, 0x109, 0x107, 
+    0x3, 0x2, 0x2, 0x2, 0x109, 0x10a, 0x3, 0x2, 0x2, 0x2, 0x10a, 0x10b, 
+    0x3, 0x2, 0x2, 0x2, 0x10b, 0x10c, 0x7, 0x24, 0x2, 0x2, 0x10c, 0x110, 
+    0x3, 0x2, 0x2, 0x2, 0x10d, 0x110, 0x7, 0x13, 0x2, 0x2, 0x10e, 0x110, 
+    0x5, 0x4c, 0x27, 0x2, 0x10f, 0x105, 0x3, 0x2, 0x2, 0x2, 0x10f, 0x10d, 
+    0x3, 0x2, 0x2, 0x2, 0x10f, 0x10e, 0x3, 0x2, 0x2, 0x2, 0x110, 0x2b, 0x3, 
+    0x2, 0x2, 0x2, 0x111, 0x112, 0x5, 0x2a, 0x16, 0x2, 0x112, 0x2d, 0x3, 
+    0x2, 0x2, 0x2, 0x113, 0x118, 0x5, 0x2c, 0x17, 0x2, 0x114, 0x115, 0x7, 
+    0x1f, 0x2, 0x2, 0x115, 0x117, 0x5, 0x2c, 0x17, 0x2, 0x116, 0x114, 0x3, 
+    0x2, 0x2, 0x2, 0x117, 0x11a, 0x3, 0x2, 0x2, 0x2, 0x118, 0x116, 0x3, 
+    0x2, 0x2, 0x2, 0x118, 0x119, 0x3, 0x2, 0x2, 0x2, 0x119, 0x11c, 0x3, 
+    0x2, 0x2, 0x2, 0x11a, 0x118, 0x3, 0x2, 0x2, 0x2, 0x11b, 0x11d, 0x7, 
+    0x1f, 0x2, 0x2, 0x11c, 0x11b, 0x3, 0x2, 0x2, 0x2, 0x11c, 0x11d, 0x3, 
+    0x2, 0x2, 0x2, 0x11d, 0x2f, 0x3, 0x2, 0x2, 0x2, 0x11e, 0x121, 0x5, 0x4c, 
+    0x27, 0x2, 0x11f, 0x120, 0x7, 0x20, 0x2, 0x2, 0x120, 0x122, 0x5, 0x4e, 
+    0x28, 0x2, 0x121, 0x11f, 0x3, 0x2, 0x2, 0x2, 0x121, 0x122, 0x3, 0x2, 
+    0x2, 0x2, 0x122, 0x31, 0x3, 0x2, 0x2, 0x2, 0x123, 0x128, 0x5, 0x30, 
+    0x19, 0x2, 0x124, 0x125, 0x7, 0x1f, 0x2, 0x2, 0x125, 0x127, 0x5, 0x30, 
+    0x19, 0x2, 0x126, 0x124, 0x3, 0x2, 0x2, 0x2, 0x127, 0x12a, 0x3, 0x2, 
+    0x2, 0x2, 0x128, 0x126, 0x3, 0x2, 0x2, 0x2, 0x128, 0x129, 0x3, 0x2, 
+    0x2, 0x2, 0x129, 0x12c, 0x3, 0x2, 0x2, 0x2, 0x12a, 0x128, 0x3, 0x2, 
+    0x2, 0x2, 0x12b, 0x12d, 0x7, 0x1f, 0x2, 0x2, 0x12c, 0x12b, 0x3, 0x2, 
+    0x2, 0x2, 0x12c, 0x12d, 0x3, 0x2, 0x2, 0x2, 0x12d, 0x33, 0x3, 0x2, 0x2, 
+    0x2, 0x12e, 0x131, 0x7, 0x14, 0x2, 0x2, 0x12f, 0x130, 0x7, 0x1d, 0x2, 
+    0x2, 0x130, 0x132, 0x5, 0x42, 0x22, 0x2, 0x131, 0x12f, 0x3, 0x2, 0x2, 
+    0x2, 0x131, 0x132, 0x3, 0x2, 0x2, 0x2, 0x132, 0x35, 0x3, 0x2, 0x2, 0x2, 
+    0x133, 0x138, 0x5, 0x34, 0x1b, 0x2, 0x134, 0x135, 0x7, 0x1f, 0x2, 0x2, 
+    0x135, 0x137, 0x5, 0x34, 0x1b, 0x2, 0x136, 0x134, 0x3, 0x2, 0x2, 0x2, 
+    0x137, 0x13a, 0x3, 0x2, 0x2, 0x2, 0x138, 0x136, 0x3, 0x2, 0x2, 0x2, 
+    0x138, 0x139, 0x3, 0x2, 0x2, 0x2, 0x139, 0x37, 0x3, 0x2, 0x2, 0x2, 0x13a, 
+    0x138, 0x3, 0x2, 0x2, 0x2, 0x13b, 0x13c, 0x7, 0x25, 0x2, 0x2, 0x13c, 
+    0x13d, 0x5, 0x36, 0x1c, 0x2, 0x13d, 0x13e, 0x7, 0x26, 0x2, 0x2, 0x13e, 
+    0x140, 0x3, 0x2, 0x2, 0x2, 0x13f, 0x13b, 0x3, 0x2, 0x2, 0x2, 0x13f, 
+    0x140, 0x3, 0x2, 0x2, 0x2, 0x140, 0x39, 0x3, 0x2, 0x2, 0x2, 0x141, 0x142, 
+    0x9, 0x3, 0x2, 0x2, 0x142, 0x3b, 0x3, 0x2, 0x2, 0x2, 0x143, 0x144, 0x7, 
+    0x21, 0x2, 0x2, 0x144, 0x145, 0x5, 0x40, 0x21, 0x2, 0x145, 0x146, 0x7, 
+    0x22, 0x2, 0x2, 0x146, 0x3d, 0x3, 0x2, 0x2, 0x2, 0x147, 0x148, 0x7, 
+    0x14, 0x2, 0x2, 0x148, 0x149, 0x7, 0x1d, 0x2, 0x2, 0x149, 0x14a, 0x5, 
+    0x44, 0x23, 0x2, 0x14a, 0x3f, 0x3, 0x2, 0x2, 0x2, 0x14b, 0x150, 0x5, 
+    0x3e, 0x20, 0x2, 0x14c, 0x14d, 0x7, 0x1f, 0x2, 0x2, 0x14d, 0x14f, 0x5, 
+    0x3e, 0x20, 0x2, 0x14e, 0x14c, 0x3, 0x2, 0x2, 0x2, 0x14f, 0x152, 0x3, 
+    0x2, 0x2, 0x2, 0x150, 0x14e, 0x3, 0x2, 0x2, 0x2, 0x150, 0x151, 0x3, 
+    0x2, 0x2, 0x2, 0x151, 0x154, 0x3, 0x2, 0x2, 0x2, 0x152, 0x150, 0x3, 
+    0x2, 0x2, 0x2, 0x153, 0x155, 0x7, 0x1f, 0x2, 0x2, 0x154, 0x153, 0x3, 
+    0x2, 0x2, 0x2, 0x154, 0x155, 0x3, 0x2, 0x2, 0x2, 0x155, 0x41, 0x3, 0x2, 
+    0x2, 0x2, 0x156, 0x159, 0x5, 0x3a, 0x1e, 0x2, 0x157, 0x159, 0x7, 0x12, 
+    0x2, 0x2, 0x158, 0x156, 0x3, 0x2, 0x2, 0x2, 0x158, 0x157, 0x3, 0x2, 
+    0x2, 0x2, 0x159, 0x43, 0x3, 0x2, 0x2, 0x2, 0x15a, 0x161, 0x5, 0x42, 
+    0x22, 0x2, 0x15b, 0x161, 0x5, 0x3c, 0x1f, 0x2, 0x15c, 0x15d, 0x7, 0x23, 
+    0x2, 0x2, 0x15d, 0x15e, 0x5, 0x46, 0x24, 0x2, 0x15e, 0x15f, 0x7, 0x24, 
     0x2, 0x2, 0x15f, 0x161, 0x3, 0x2, 0x2, 0x2, 0x160, 0x15a, 0x3, 0x2, 
     0x2, 0x2, 0x160, 0x15b, 0x3, 0x2, 0x2, 0x2, 0x160, 0x15c, 0x3, 0x2, 
     0x2, 0x2, 0x161, 0x45, 0x3, 0x2, 0x2, 0x2, 0x162, 0x167, 0x5, 0x44, 
-    0x23, 0x2, 0x163, 0x164, 0x7, 0x15, 0x2, 0x2, 0x164, 0x166, 0x5, 0x44, 
+    0x23, 0x2, 0x163, 0x164, 0x7, 0x1f, 0x2, 0x2, 0x164, 0x166, 0x5, 0x44, 
     0x23, 0x2, 0x165, 0x163, 0x3, 0x2, 0x2, 0x2, 0x166, 0x169, 0x3, 0x2, 
     0x2, 0x2, 0x167, 0x165, 0x3, 0x2, 0x2, 0x2, 0x167, 0x168, 0x3, 0x2, 
     0x2, 0x2, 0x168, 0x16b, 0x3, 0x2, 0x2, 0x2, 0x169, 0x167, 0x3, 0x2, 
-    0x2, 0x2, 0x16a, 0x16c, 0x7, 0x15, 0x2, 0x2, 0x16b, 0x16a, 0x3, 0x2, 
+    0x2, 0x2, 0x16a, 0x16c, 0x7, 0x1f, 0x2, 0x2, 0x16b, 0x16a, 0x3, 0x2, 
     0x2, 0x2, 0x16b, 0x16c, 0x3, 0x2, 0x2, 0x2, 0x16c, 0x47, 0x3, 0x2, 0x2, 
-    0x2, 0x16d, 0x16e, 0x7, 0x1b, 0x2, 0x2, 0x16e, 0x16f, 0x7, 0x1d, 0x2, 
-    0x2, 0x16f, 0x49, 0x3, 0x2, 0x2, 0x2, 0x170, 0x171, 0x7, 0x1c, 0x2, 
-    0x2, 0x171, 0x172, 0x7, 0x1d, 0x2, 0x2, 0x172, 0x4b, 0x3, 0x2, 0x2, 
-    0x2, 0x173, 0x178, 0x7, 0x1f, 0x2, 0x2, 0x174, 0x175, 0x7, 0x6, 0x2, 
-    0x2, 0x175, 0x177, 0x7, 0x1f, 0x2, 0x2, 0x176, 0x174, 0x3, 0x2, 0x2, 
+    0x2, 0x16d, 0x16e, 0x7, 0x10, 0x2, 0x2, 0x16e, 0x16f, 0x7, 0x12, 0x2, 
+    0x2, 0x16f, 0x49, 0x3, 0x2, 0x2, 0x2, 0x170, 0x171, 0x7, 0x11, 0x2, 
+    0x2, 0x171, 0x172, 0x7, 0x12, 0x2, 0x2, 0x172, 0x4b, 0x3, 0x2, 0x2, 
+    0x2, 0x173, 0x178, 0x7, 0x14, 0x2, 0x2, 0x174, 0x175, 0x7, 0x1e, 0x2, 
+    0x2, 0x175, 0x177, 0x7, 0x14, 0x2, 0x2, 0x176, 0x174, 0x3, 0x2, 0x2, 
     0x2, 0x177, 0x17a, 0x3, 0x2, 0x2, 0x2, 0x178, 0x176, 0x3, 0x2, 0x2, 
     0x2, 0x178, 0x179, 0x3, 0x2, 0x2, 0x2, 0x179, 0x4d, 0x3, 0x2, 0x2, 0x2, 
     0x17a, 0x178, 0x3, 0x2, 0x2, 0x2, 0x17b, 0x17c, 0x9, 0x4, 0x2, 0x2, 
