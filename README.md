@@ -159,6 +159,6 @@ for (n in c.namespaces.values) {
 ```
 
 ## Links
-[FlatBuffers](https://google.github.io/flatbuffers/flatbuffers_guide_writing_schema.html)
-[Inja](https://wren.io/syntax.html)
-[Wren](https://pantor.github.io/inja/)
+* [FlatBuffers](https://google.github.io/flatbuffers/flatbuffers_guide_writing_schema.html)
+* [Inja](https://wren.io/syntax.html)
+* [Wren](https://pantor.github.io/inja/)
