@@ -1,5 +1,5 @@
 lexer grammar FlatBuffersLexer;
-channels { DOCUMENTATION }
+//channels { DOCUMENTATION }
 
 // Lexer rules
 
@@ -33,8 +33,8 @@ INTEGER_CONSTANT : [-+]? [0-9]+ | 'true' | 'false' ;
 
 FLOAT_CONSTANT : '-'? [0-9]+ '.' [0-9]+ (('e'|'E') ('+'|'-')? [0-9]+ )? ;
 
-BLOCK_DOC_COMMENT : '/**' .*? '*/' -> channel(DOCUMENTATION);
-BLOCK_COMMENT:	'/*' .*? '*/' -> channel(HIDDEN);
+//BLOCK_DOC_COMMENT : '/**' .*? '*/' -> channel(DOCUMENTATION);
+BLOCK_COMMENT:	'/*' .*? '*/';// -> channel(HIDDEN);
 DOC_COMMENT : '///' ~[\r\n]* ;//-> channel(DOCUMENTATION);
 // fixed original grammar: allow line comments
 COMMENT : '//' ~[\r\n]* -> channel(HIDDEN);

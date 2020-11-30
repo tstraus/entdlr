@@ -34,6 +34,12 @@ union DisEntityTypeUnion (note:"I like this one")
     [uint32 : 2]
 }
 
+/** 
+ * Hey I'm the description.
+ * And on and on
+ * @title OMG some documentation
+ * @return so much awesomeness
+ */
 struct Position
 {
     x : length;

@@ -11,6 +11,7 @@ using nonstd::optional;
 
 #include "token.h"
 #include "attribute.h"
+#include "documentation.h"
 
 namespace Entdlr
 {
@@ -29,8 +30,10 @@ namespace Entdlr
         std::vector<EnumValue> values;
         std::unordered_map<std::string,Attribute> attributes;
         std::string comment;
+        Documentation documentation;
 
-        static Enum create(const Token& token, const std::string& type = "int32", const std::unordered_map<std::string, Attribute>& attributes = {}, const std::string& comment = "");
+        static Enum create(const Token& token, const std::string& type = "int32", const std::unordered_map<std::string, Attribute>& attributes = {},
+            const std::string& comment = "", const Documentation& documentation = {});
         void add(const Token& token, const optional<int64_t> value);
 
     private:

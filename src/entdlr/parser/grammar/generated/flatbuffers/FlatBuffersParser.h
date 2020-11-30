@@ -1,5 +1,5 @@
 
-// Generated from FlatBuffers.g4 by ANTLR 4.7.2
+// Generated from FlatBuffersParser.g4 by ANTLR 4.7.2
 
 #pragma once
 
@@ -9,18 +9,17 @@
 
 
 
-class  FlatBuffers : public antlr4::Parser {
+class  FlatBuffersParser : public antlr4::Parser {
 public:
   enum {
     INCLUDE = 1, NAMESPACE = 2, ATTRIBUTE = 3, TABLE = 4, STRUCT = 5, ENUM = 6, 
     UNION = 7, INTERFACE = 8, MUTABLE = 9, STATIC = 10, REFERENCE = 11, 
     ROOT_TYPE = 12, RPC_SERVICE = 13, FILE_EXTENSION = 14, FILE_IDENTIFIER = 15, 
     STRING_CONSTANT = 16, BASE_TYPE_NAME = 17, IDENT = 18, HEX_INTEGER_CONSTANT = 19, 
-    INTEGER_CONSTANT = 20, FLOAT_CONSTANT = 21, BLOCK_DOC_COMMENT = 22, 
-    BLOCK_COMMENT = 23, DOC_COMMENT = 24, COMMENT = 25, SEMICOLON = 26, 
-    COLON = 27, PERIOD = 28, COMMA = 29, EQUAL = 30, OPEN_BRACE = 31, CLOSE_BRACE = 32, 
-    OPEN_BRACKET = 33, CLOSE_BRACKET = 34, OPEN_PAREN = 35, CLOSE_PAREN = 36, 
-    WHITESPACE = 37
+    INTEGER_CONSTANT = 20, FLOAT_CONSTANT = 21, BLOCK_COMMENT = 22, DOC_COMMENT = 23, 
+    COMMENT = 24, SEMICOLON = 25, COLON = 26, PERIOD = 27, COMMA = 28, EQUAL = 29, 
+    OPEN_BRACE = 30, CLOSE_BRACE = 31, OPEN_BRACKET = 32, CLOSE_BRACKET = 33, 
+    OPEN_PAREN = 34, CLOSE_PAREN = 35, WHITESPACE = 36
   };
 
   enum {
@@ -38,8 +37,8 @@ public:
     RuleNs_ident = 37, RuleInteger_const = 38
   };
 
-  FlatBuffers(antlr4::TokenStream *input);
-  ~FlatBuffers();
+  FlatBuffersParser(antlr4::TokenStream *input);
+  ~FlatBuffersParser();
 
   virtual std::string getGrammarFileName() const override;
   virtual const antlr4::atn::ATN& getATN() const override { return _atn; };
@@ -116,6 +115,8 @@ public:
     Interface_declContext* interface_decl(size_t i);
     std::vector<ObjectContext *> object();
     ObjectContext* object(size_t i);
+    std::vector<antlr4::tree::TerminalNode *> BLOCK_COMMENT();
+    antlr4::tree::TerminalNode* BLOCK_COMMENT(size_t i);
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
@@ -190,6 +191,7 @@ public:
     antlr4::tree::TerminalNode *CLOSE_BRACE();
     antlr4::tree::TerminalNode *TABLE();
     antlr4::tree::TerminalNode *STRUCT();
+    antlr4::tree::TerminalNode *BLOCK_COMMENT();
     antlr4::tree::TerminalNode *DOC_COMMENT();
     std::vector<Field_declContext *> field_decl();
     Field_declContext* field_decl(size_t i);
@@ -215,6 +217,7 @@ public:
     antlr4::tree::TerminalNode *OPEN_BRACE();
     Commasep_enumval_declContext *commasep_enumval_decl();
     antlr4::tree::TerminalNode *CLOSE_BRACE();
+    antlr4::tree::TerminalNode *BLOCK_COMMENT();
     antlr4::tree::TerminalNode *DOC_COMMENT();
     antlr4::tree::TerminalNode *COLON();
     TypeContext *type();
@@ -238,6 +241,7 @@ public:
     antlr4::tree::TerminalNode *OPEN_BRACE();
     Commasep_uniontype_declContext *commasep_uniontype_decl();
     antlr4::tree::TerminalNode *CLOSE_BRACE();
+    antlr4::tree::TerminalNode *BLOCK_COMMENT();
     antlr4::tree::TerminalNode *DOC_COMMENT();
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
@@ -275,6 +279,7 @@ public:
     TypeContext *type();
     MetadataContext *metadata();
     antlr4::tree::TerminalNode *SEMICOLON();
+    antlr4::tree::TerminalNode *BLOCK_COMMENT();
     antlr4::tree::TerminalNode *EQUAL();
     ScalarContext *scalar();
     antlr4::tree::TerminalNode *DOC_COMMENT();
@@ -337,6 +342,7 @@ public:
     antlr4::tree::TerminalNode *IDENT();
     antlr4::tree::TerminalNode *OPEN_BRACE();
     antlr4::tree::TerminalNode *CLOSE_BRACE();
+    antlr4::tree::TerminalNode *BLOCK_COMMENT();
     antlr4::tree::TerminalNode *DOC_COMMENT();
     std::vector<Method_declContext *> method_decl();
     Method_declContext* method_decl(size_t i);
@@ -360,6 +366,7 @@ public:
     antlr4::tree::TerminalNode *CLOSE_PAREN();
     MetadataContext *metadata();
     antlr4::tree::TerminalNode *SEMICOLON();
+    antlr4::tree::TerminalNode *BLOCK_COMMENT();
     Static_declContext *static_decl();
     Mutable_declContext *mutable_decl();
     antlr4::tree::TerminalNode *COLON();

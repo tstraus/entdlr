@@ -3,7 +3,7 @@ options { tokenVocab = FlatBuffersLexer; }
 
 // Parser rules
 
-schema : include* ( namespace_decl | type_decl | enum_decl | union_decl | root_decl | file_extension_decl | file_identifier_decl | attribute_decl | rpc_decl | interface_decl | object )* ;
+schema : include* ( namespace_decl | type_decl | enum_decl | union_decl | root_decl | file_extension_decl | file_identifier_decl | attribute_decl | rpc_decl | interface_decl | object | BLOCK_COMMENT)* ;
 
 include : INCLUDE STRING_CONSTANT SEMICOLON ;
 
@@ -11,24 +11,24 @@ namespace_decl : NAMESPACE IDENT ( PERIOD IDENT )* SEMICOLON ;
 
 attribute_decl : ATTRIBUTE STRING_CONSTANT SEMICOLON ;
 
-type_decl : DOC_COMMENT? ( TABLE | STRUCT ) IDENT metadata OPEN_BRACE ( field_decl | method_decl )* CLOSE_BRACE ;
+type_decl : BLOCK_COMMENT? DOC_COMMENT? ( TABLE | STRUCT ) IDENT metadata OPEN_BRACE ( field_decl | method_decl )* CLOSE_BRACE ;
 
-enum_decl : DOC_COMMENT? ENUM IDENT ( COLON type )? metadata OPEN_BRACE commasep_enumval_decl CLOSE_BRACE ;
+enum_decl : BLOCK_COMMENT? DOC_COMMENT? ENUM IDENT ( COLON type )? metadata OPEN_BRACE commasep_enumval_decl CLOSE_BRACE ;
 
-union_decl : DOC_COMMENT? UNION IDENT metadata OPEN_BRACE commasep_uniontype_decl CLOSE_BRACE ;
+union_decl : BLOCK_COMMENT? DOC_COMMENT? UNION IDENT metadata OPEN_BRACE commasep_uniontype_decl CLOSE_BRACE ;
 
 root_decl : ROOT_TYPE IDENT SEMICOLON ;
 
-field_decl : IDENT COLON type ( EQUAL scalar )? metadata SEMICOLON DOC_COMMENT? ;
+field_decl : BLOCK_COMMENT? IDENT COLON type ( EQUAL scalar )? metadata SEMICOLON DOC_COMMENT? ;
 
 rpc_decl : RPC_SERVICE IDENT OPEN_BRACE rpc_method+ CLOSE_BRACE ;
 
 rpc_method : IDENT OPEN_PAREN IDENT CLOSE_PAREN COLON IDENT metadata SEMICOLON ;
 
 // overload grpc syntax for interfaces
-interface_decl : DOC_COMMENT? INTERFACE IDENT OPEN_BRACE method_decl+ CLOSE_BRACE ;
+interface_decl : BLOCK_COMMENT? DOC_COMMENT? INTERFACE IDENT OPEN_BRACE method_decl+ CLOSE_BRACE ;
 
-method_decl : ( static_decl | mutable_decl )? IDENT OPEN_PAREN method_parameters CLOSE_PAREN (COLON method_return_type)? metadata SEMICOLON DOC_COMMENT? ;
+method_decl : BLOCK_COMMENT? ( static_decl | mutable_decl )? IDENT OPEN_PAREN method_parameters CLOSE_PAREN (COLON method_return_type)? metadata SEMICOLON DOC_COMMENT? ;
 method_parameters : ( method_parameter )? ( COMMA method_parameter )* ;
 method_parameter : IDENT COLON reference_decl? mutable_decl? method_type ;
 method_return_type : method_type ;

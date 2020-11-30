@@ -1,5 +1,5 @@
 
-// Generated from FlatBuffersLexer.g4 by ANTLR 4.7.2
+// Generated from JavadocLexer.g4 by ANTLR 4.7.2
 
 #pragma once
 
@@ -9,26 +9,16 @@
 
 
 
-class  FlatBuffersLexer : public antlr4::Lexer {
+class  JavadocLexer : public antlr4::Lexer {
 public:
   enum {
-    INCLUDE = 1, NAMESPACE = 2, ATTRIBUTE = 3, TABLE = 4, STRUCT = 5, ENUM = 6, 
-    UNION = 7, INTERFACE = 8, MUTABLE = 9, STATIC = 10, REFERENCE = 11, 
-    ROOT_TYPE = 12, RPC_SERVICE = 13, FILE_EXTENSION = 14, FILE_IDENTIFIER = 15, 
-    STRING_CONSTANT = 16, BASE_TYPE_NAME = 17, IDENT = 18, HEX_INTEGER_CONSTANT = 19, 
-    INTEGER_CONSTANT = 20, FLOAT_CONSTANT = 21, BLOCK_DOC_COMMENT = 22, 
-    BLOCK_COMMENT = 23, DOC_COMMENT = 24, COMMENT = 25, SEMICOLON = 26, 
-    COLON = 27, PERIOD = 28, COMMA = 29, EQUAL = 30, OPEN_BRACE = 31, CLOSE_BRACE = 32, 
-    OPEN_BRACKET = 33, CLOSE_BRACKET = 34, OPEN_PAREN = 35, CLOSE_PAREN = 36, 
-    WHITESPACE = 37
+    NAME = 1, NEWLINE = 2, SPACE = 3, TEXT_CONTENT = 4, AT = 5, STAR = 6, 
+    SLASH = 7, JAVADOC_START = 8, JAVADOC_END = 9, INLINE_TAG_START = 10, 
+    BRACE_OPEN = 11, BRACE_CLOSE = 12
   };
 
-  enum {
-    DOCUMENTATION = 2
-  };
-
-  FlatBuffersLexer(antlr4::CharStream *input);
-  ~FlatBuffersLexer();
+  JavadocLexer(antlr4::CharStream *input);
+  ~JavadocLexer();
 
   virtual std::string getGrammarFileName() const override;
   virtual const std::vector<std::string>& getRuleNames() const override;
@@ -40,6 +30,8 @@ public:
 
   virtual const std::vector<uint16_t> getSerializedATN() const override;
   virtual const antlr4::atn::ATN& getATN() const override;
+
+  virtual bool sempred(antlr4::RuleContext *_localctx, size_t ruleIndex, size_t predicateIndex) override;
 
 private:
   static std::vector<antlr4::dfa::DFA> _decisionToDFA;
@@ -59,6 +51,7 @@ private:
   // Individual action functions triggered by action() above.
 
   // Individual semantic predicate functions triggered by sempred() above.
+  bool NEWLINESempred(antlr4::RuleContext *_localctx, size_t predicateIndex);
 
   struct Initializer {
     Initializer();

@@ -9,6 +9,8 @@ namespace Entdlr
     enum class TokenType
     {
         Unknown,
+        Tag,
+        Documentation,
         Include,
         Attribute,
         EnumValue,

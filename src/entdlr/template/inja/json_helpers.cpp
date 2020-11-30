@@ -13,6 +13,52 @@ namespace Entdlr {
         j.at("namespaces").get_to(c.namespaces);
     }
 
+    void to_json(json& j, const Documentation& d)
+    {
+        j = json{
+            {"token",       d.token},
+            {"name",        d.name},
+            {"filename",    d.filename},
+            {"line",        d.line},
+            {"column",      d.column},
+            {"description", d.description},
+            {"tags",        d.tags}
+        };
+    }
+
+    void from_json(const json& j, Documentation& d)
+    {
+        j.at("token").get_to(d.token);
+        j.at("name").get_to(d.name);
+        j.at("filename").get_to(d.filename);
+        j.at("line").get_to(d.line);
+        j.at("column").get_to(d.column);
+        j.at("description").get_to(d.description);
+        j.at("tags").get_to(d.tags);
+    }
+
+    void to_json(json& j, const Tag& t)
+    {
+        j = json{
+            {"token",    t.token},
+            {"name",     t.name},
+            {"filename", t.filename},
+            {"line",     t.line},
+            {"column",   t.column},
+            {"content",  t.content}
+        };
+    }
+
+    void from_json(const json& j, Tag& t)
+    {
+        j.at("token").get_to(t.token);
+        j.at("name").get_to(t.name);
+        j.at("filename").get_to(t.filename);
+        j.at("line").get_to(t.line);
+        j.at("column").get_to(t.column);
+        j.at("content").get_to(t.content);
+    }
+
     void to_json(json& j, const Include& i) {
         j = json{
                 {"token",      i.token},
@@ -61,15 +107,16 @@ namespace Entdlr {
 
     void to_json(json& j, const Struct& s) {
         j = json{
-                {"token",      s.token},
-                {"name",       s.name},
-                {"filename",   s.filename},
-                {"line",       s.line},
-                {"column",     s.column},
-                {"fields",     s.fields},
-                {"methods",    s.methods},
-                {"attributes", s.attributes},
-                {"comment",    s.comment}
+                {"token",         s.token},
+                {"name",          s.name},
+                {"filename",      s.filename},
+                {"line",          s.line},
+                {"column",        s.column},
+                {"fields",        s.fields},
+                {"methods",       s.methods},
+                {"attributes",    s.attributes},
+                {"comment",       s.comment},
+                {"documentation", s.documentation}
         };
     }
 
@@ -83,20 +130,22 @@ namespace Entdlr {
         j.at("methods").get_to(s.methods);
         j.at("attributes").get_to(s.attributes);
         j.at("comment").get_to(s.comment);
+        j.at("documentation").get_to(s.documentation);
     }
 
     void to_json(json& j, const Field& f) {
         j = json{
-                {"token",      f.token},
-                {"name",       f.name},
-                {"filename",   f.filename},
-                {"line",       f.line},
-                {"column",     f.column},
-                {"type",       f.type},
-                {"isArray",    f.isArray},
-                {"arraySize",  f.arraySize},
-                {"attributes", f.attributes},
-                {"comment",    f.comment}
+                {"token",         f.token},
+                {"name",          f.name},
+                {"filename",      f.filename},
+                {"line",          f.line},
+                {"column",        f.column},
+                {"type",          f.type},
+                {"isArray",       f.isArray},
+                {"arraySize",     f.arraySize},
+                {"attributes",    f.attributes},
+                {"comment",       f.comment},
+                {"documentation", f.documentation}
         };
     }
 
@@ -111,6 +160,7 @@ namespace Entdlr {
         j.at("arraySize").get_to(f.arraySize);
         j.at("attributes").get_to(f.attributes);
         j.at("comment").get_to(f.comment);
+        j.at("documentation").get_to(f.documentation);
     }
 
     void to_json(json& j, const Attribute& a) {
@@ -141,14 +191,15 @@ namespace Entdlr {
 
     void to_json(json& j, const Union& u) {
         j = json{
-                {"token",      u.token},
-                {"name",       u.name},
-                {"filename",   u.filename},
-                {"line",       u.line},
-                {"column",     u.column},
-                {"types",      u.types},
-                {"attributes", u.attributes},
-                {"comment",    u.comment}
+                {"token",         u.token},
+                {"name",          u.name},
+                {"filename",      u.filename},
+                {"line",          u.line},
+                {"column",        u.column},
+                {"types",         u.types},
+                {"attributes",    u.attributes},
+                {"comment",       u.comment},
+                {"documentation", u.documentation}
         };
     }
 
@@ -161,6 +212,7 @@ namespace Entdlr {
         j.at("types").get_to(u.types);
         j.at("attributes").get_to(u.attributes);
         j.at("comment").get_to(u.comment);
+        j.at("documentation").get_to(u.documentation);
     }
 
     void to_json(json& j, const UnionType& t) {
@@ -187,15 +239,16 @@ namespace Entdlr {
 
     void to_json(json& j, const Enum& e) {
         j = json{
-                {"token",        e.token},
-                {"name",         e.name},
-                {"type",         e.type},
-                {"filename",     e.filename},
-                {"line",         e.line},
-                {"column",       e.column},
-                {"values",       e.values},
-                {"attributes",   e.attributes},
-                {"comment",      e.comment}
+                {"token",         e.token},
+                {"name",          e.name},
+                {"type",          e.type},
+                {"filename",      e.filename},
+                {"line",          e.line},
+                {"column",        e.column},
+                {"values",        e.values},
+                {"attributes",    e.attributes},
+                {"comment",       e.comment},
+                {"documentation", e.documentation}
         };
     }
 
@@ -209,6 +262,7 @@ namespace Entdlr {
         j.at("values").get_to(e.values);
         j.at("attributes").get_to(e.attributes);
         j.at("comment").get_to(e.comment);
+        j.at("documentation").get_to(e.documentation);
     }
 
     void to_json(json& j, const EnumValue& e) {
@@ -234,13 +288,14 @@ namespace Entdlr {
     void to_json(json& j, const Interface& i)
     {
         j = json{
-                {"token",    i.token},
-                {"name",     i.name},
-                {"filename", i.filename},
-                {"line",     i.line},
-                {"column",   i.column},
-                {"methods",  i.methods},
-                {"comment",  i.comment}
+                {"token",         i.token},
+                {"name",          i.name},
+                {"filename",      i.filename},
+                {"line",          i.line},
+                {"column",        i.column},
+                {"methods",       i.methods},
+                {"comment",       i.comment},
+                {"documentation", i.documentation}
         };
     }
 
@@ -253,22 +308,24 @@ namespace Entdlr {
         j.at("column").get_to(i.column);
         j.at("methods").get_to(i.methods);
         j.at("comment").get_to(i.comment);
+        j.at("documentation").get_to(i.documentation);
     }
 
     void to_json(json& j, const Method& m)
     {
         j = json{
-                {"token",      m.token},
-                {"name",       m.name},
-                {"filename",   m.filename},
-                {"line",       m.line},
-                {"column",     m.column},
-                {"returnType", m.returnType},
+                {"token",             m.token},
+                {"name",              m.name},
+                {"filename",          m.filename},
+                {"line",              m.line},
+                {"column",            m.column},
+                {"returnType",        m.returnType},
                 {"returnIsReference", m.returnIsReference},
-                {"isStatic",   m.isStatic},
-                {"constant",   m.constant},
-                {"parameters", m.parameters},
-                {"comment",    m.comment}
+                {"isStatic",          m.isStatic},
+                {"constant",          m.constant},
+                {"parameters",        m.parameters},
+                {"comment",           m.comment},
+                {"documentation",     m.documentation}
         };
     }
 
@@ -285,6 +342,7 @@ namespace Entdlr {
         j.at("constant").get_to(m.constant);
         j.at("parameters").get_to(m.parameters);
         j.at("comment").get_to(m.comment);
+        j.at("documentation").get_to(m.documentation);
     }
 
     void to_json(json& j, const Parameter& p)

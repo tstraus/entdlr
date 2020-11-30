@@ -39,6 +39,8 @@ namespace Entdlr
 
         static std::vector<Interface> parseInterfaces(const std::vector<FlatBuffersParser::Interface_declContext*>& interfaces, const std::string& filename);
 
+        static nonstd::optional<Documentation> parseDocumentation(const std::string& comment);
+
         static std::string trimComment(const std::string& comment);
 
         static void determineEnumType(Enum& e);
