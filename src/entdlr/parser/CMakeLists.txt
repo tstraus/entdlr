@@ -19,7 +19,8 @@ target_include_directories (${PROJECT_NAME}
 
 target_link_libraries (${PROJECT_NAME}
     PUBLIC entdlr::context
-    PUBLIC entdlr::flat_buffer_parser
+    PUBLIC entdlr::flatbuffer_parser
+    PUBLIC entdlr::javadoc_parser
 )
 
 if (UNIX)

@@ -130,6 +130,15 @@ namespace Entdlr
                 return "unknown";
             }
         );
+        env.add_callback("abort", 1,
+            [this](inja::Arguments&  args)
+            {
+                std::string reason = *args[0];
+                throw std::runtime_error(std::string("Template Called Abort -> ") + reason);
+
+                return "";
+            }
+        );
         env.set_fallback
         (
             [this](const std::string& name, const unsigned int numArgs, const inja::Arguments& args)

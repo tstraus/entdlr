@@ -20,7 +20,7 @@ namespace Entdlr
         return out;
     }
 
-    Union Union::create(const Token& token, const std::unordered_map<std::string, Attribute>& attributes, const std::string& comment)
+    Union Union::create(const Token& token, const std::unordered_map<std::string, Attribute>& attributes, const std::string& comment, const Documentation& documentation)
     {
         Union out;
         out.token = TokenType::Union;
@@ -30,6 +30,7 @@ namespace Entdlr
         out.name = token.name;
         out.attributes = attributes;
         out.comment = comment;
+        out.documentation = documentation;
 
         return out;
     }

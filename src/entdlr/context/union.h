@@ -8,6 +8,7 @@
 
 #include "token.h"
 #include "attribute.h"
+#include "documentation.h"
 
 namespace Entdlr
 {
@@ -26,8 +27,10 @@ namespace Entdlr
         std::vector<UnionType> types;
         std::unordered_map<std::string, Attribute> attributes;
         std::string comment;
+        Documentation documentation;
 
-        static Union create(const Token& token, const std::unordered_map<std::string, Attribute>& attributes = {}, const std::string& comment = "");
+        static Union create(const Token& token, const std::unordered_map<std::string, Attribute>& attributes = {},
+            const std::string& comment = "", const Documentation& documentation = {});
         void add(const UnionType& type);
     };
 };

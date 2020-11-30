@@ -1,5 +1,5 @@
 
-// Generated from FlatBuffers.g4 by ANTLR 4.8
+// Generated from JavadocLexer.g4 by ANTLR 4.7.2
 
 #pragma once
 
@@ -9,20 +9,16 @@
 
 
 
-class  FlatBuffersLexer : public antlr4::Lexer {
+class  JavadocLexer : public antlr4::Lexer {
 public:
   enum {
-    T__0 = 1, T__1 = 2, T__2 = 3, T__3 = 4, T__4 = 5, T__5 = 6, T__6 = 7, 
-    T__7 = 8, T__8 = 9, T__9 = 10, T__10 = 11, T__11 = 12, T__12 = 13, T__13 = 14, 
-    T__14 = 15, T__15 = 16, T__16 = 17, T__17 = 18, T__18 = 19, T__19 = 20, 
-    T__20 = 21, T__21 = 22, T__22 = 23, T__23 = 24, T__24 = 25, T__25 = 26, 
-    STRING_CONSTANT = 27, BASE_TYPE_NAME = 28, IDENT = 29, HEX_INTEGER_CONSTANT = 30, 
-    INTEGER_CONSTANT = 31, FLOAT_CONSTANT = 32, BLOCK_COMMENT = 33, DOC_COMMENT = 34, 
-    COMMENT = 35, WHITESPACE = 36
+    NAME = 1, NEWLINE = 2, SPACE = 3, TEXT_CONTENT = 4, AT = 5, STAR = 6, 
+    SLASH = 7, JAVADOC_START = 8, JAVADOC_END = 9, INLINE_TAG_START = 10, 
+    BRACE_OPEN = 11, BRACE_CLOSE = 12
   };
 
-  FlatBuffersLexer(antlr4::CharStream *input);
-  ~FlatBuffersLexer();
+  JavadocLexer(antlr4::CharStream *input);
+  ~JavadocLexer();
 
   virtual std::string getGrammarFileName() const override;
   virtual const std::vector<std::string>& getRuleNames() const override;
@@ -34,6 +30,8 @@ public:
 
   virtual const std::vector<uint16_t> getSerializedATN() const override;
   virtual const antlr4::atn::ATN& getATN() const override;
+
+  virtual bool sempred(antlr4::RuleContext *_localctx, size_t ruleIndex, size_t predicateIndex) override;
 
 private:
   static std::vector<antlr4::dfa::DFA> _decisionToDFA;
@@ -53,6 +51,7 @@ private:
   // Individual action functions triggered by action() above.
 
   // Individual semantic predicate functions triggered by sempred() above.
+  bool NEWLINESempred(antlr4::RuleContext *_localctx, size_t predicateIndex);
 
   struct Initializer {
     Initializer();

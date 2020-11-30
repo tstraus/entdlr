@@ -1,5 +1,5 @@
 
-// Generated from FlatBuffers.g4 by ANTLR 4.8
+// Generated from FlatBuffersParser.g4 by ANTLR 4.7.2
 
 #pragma once
 
@@ -11,7 +11,7 @@
 /**
  * This interface defines an abstract listener for a parse tree produced by FlatBuffersParser.
  */
-class  FlatBuffersListener : public antlr4::tree::ParseTreeListener {
+class  FlatBuffersParserListener : public antlr4::tree::ParseTreeListener {
 public:
 
   virtual void enterSchema(FlatBuffersParser::SchemaContext *ctx) = 0;

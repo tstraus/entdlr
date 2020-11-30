@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "token.h"
+#include "documentation.h"
 
 namespace Entdlr
 {
@@ -27,8 +28,10 @@ namespace Entdlr
         bool isStatic;
         bool constant;
         std::string comment;
+        Documentation documentation;
 
-        static Method create(const Token& token, const std::string& returnType, const bool returnIsReference = false, const bool isStatic = false, const bool constant = false, const std::string& comment = "");
+        static Method create(const Token& token, const std::string& returnType, const bool returnIsReference = false, const bool isStatic = false,
+            const bool constant = false, const std::string& comment = "", const Documentation& documentation = {});
         void add(const Parameter& parameter);
     };
 };

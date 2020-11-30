@@ -1,19 +1,19 @@
 
-// Generated from FlatBuffers.g4 by ANTLR 4.8
+// Generated from FlatBuffersParser.g4 by ANTLR 4.7.2
 
 #pragma once
 
 
 #include "antlr4-runtime.h"
-#include "FlatBuffersListener.h"
+#include "FlatBuffersParserListener.h"
 
 
 /**
- * This class provides an empty implementation of FlatBuffersListener,
+ * This class provides an empty implementation of FlatBuffersParserListener,
  * which can be extended to create a listener which only needs to handle a subset
  * of the available methods.
  */
-class  FlatBuffersBaseListener : public FlatBuffersListener {
+class  FlatBuffersParserBaseListener : public FlatBuffersParserListener {
 public:
 
   virtual void enterSchema(FlatBuffersParser::SchemaContext * /*ctx*/) override { }

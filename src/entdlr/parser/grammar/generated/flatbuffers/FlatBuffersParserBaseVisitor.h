@@ -1,18 +1,18 @@
 
-// Generated from FlatBuffers.g4 by ANTLR 4.8
+// Generated from FlatBuffersParser.g4 by ANTLR 4.7.2
 
 #pragma once
 
 
 #include "antlr4-runtime.h"
-#include "FlatBuffersVisitor.h"
+#include "FlatBuffersParserVisitor.h"
 
 
 /**
- * This class provides an empty implementation of FlatBuffersVisitor, which can be
+ * This class provides an empty implementation of FlatBuffersParserVisitor, which can be
  * extended to create a visitor which only needs to handle a subset of the available methods.
  */
-class  FlatBuffersBaseVisitor : public FlatBuffersVisitor {
+class  FlatBuffersParserBaseVisitor : public FlatBuffersParserVisitor {
 public:
 
   virtual antlrcpp::Any visitSchema(FlatBuffersParser::SchemaContext *ctx) override {
