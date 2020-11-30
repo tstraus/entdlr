@@ -1,5 +1,5 @@
 
-// Generated from FlatBuffers.g4 by ANTLR 4.8
+// Generated from FlatBuffersParser.g4 by ANTLR 4.7.2
 
 #pragma once
 
@@ -13,7 +13,7 @@
  * This class defines an abstract visitor for a parse tree
  * produced by FlatBuffersParser.
  */
-class  FlatBuffersVisitor : public antlr4::tree::AbstractParseTreeVisitor {
+class  FlatBuffersParserVisitor : public antlr4::tree::AbstractParseTreeVisitor {
 public:
 
   /**

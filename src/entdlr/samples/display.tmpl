@@ -31,6 +31,10 @@ include {{include.name}}
 ## endfor
 ## for struct in namespace.structs
     /// struct : {{struct.comment}}
+      /// {{struct.documentation.description}}
+## for tag in struct.documentation.tags
+        /// {{tag.name}}: {{tag.content}}
+## endfor
     {{struct.name}} : struct
 ## for field in struct.fields
 ## if field.isArray == false

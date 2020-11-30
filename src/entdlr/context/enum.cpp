@@ -20,7 +20,7 @@ namespace Entdlr
         return out;
     }
 
-    Enum Enum::create(const Token& token, const std::string& type, const std::unordered_map<std::string, Attribute>& attributes, const std::string& comment)
+    Enum Enum::create(const Token& token, const std::string& type, const std::unordered_map<std::string, Attribute>& attributes, const std::string& comment, const Documentation& documentation)
     {
         Enum out;
         out.token = TokenType::Enum;
@@ -32,6 +32,7 @@ namespace Entdlr
         out.type = type;
         out.attributes = attributes;
         out.comment = comment;
+        out.documentation = documentation;
 
         return out;
     }

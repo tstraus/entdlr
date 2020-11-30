@@ -1,5 +1,8 @@
 #include "parser.h"
 
+#include "JavadocParser.h"
+#include "JavadocLexer.h"
+
 #include <iostream>
 #include <stdexcept>
 #include <limits>
@@ -107,7 +110,7 @@ namespace Entdlr
 
         catch (std::exception& e)
         {
-            throw std::runtime_error(std::string("SyntaxError: ") + e.what());
+            throw std::runtime_error(std::string("Syntax Error: ") + e.what());
         }
     }
 
@@ -219,6 +222,12 @@ namespace Entdlr
             );
             std::unordered_map<std::string, Attribute> attributes = parseAttributes(en->metadata(), filename);
 
+            if (en->BLOCK_COMMENT())
+            {
+                if (const auto doc = parseDocumentation(en->BLOCK_COMMENT()->getSymbol()->getText()))
+                    e.documentation = *doc;
+            }
+
             if (en->DOC_COMMENT())
                 comment = trimComment(en->DOC_COMMENT()->getSymbol()->getText());
                 //cout << "enum -> " << en->DOC_COMMENT()->getSymbol()->getText() << endl;
@@ -293,6 +302,12 @@ namespace Entdlr
                 )
             ); // make a new union with the name
             u.attributes = parseAttributes(un->metadata(), filename);
+
+            if (un->BLOCK_COMMENT())
+            {
+                if (const auto doc = parseDocumentation(un->BLOCK_COMMENT()->getSymbol()->getText()))
+                    u.documentation = *doc;
+            }
 
             if (un->DOC_COMMENT())
                 u.comment = trimComment(un->DOC_COMMENT()->getSymbol()->getText());
@@ -390,6 +405,12 @@ namespace Entdlr
                 )
             ); // make a new struct with the name
 
+            if (st->BLOCK_COMMENT())
+            {
+                if (const auto doc = parseDocumentation(st->BLOCK_COMMENT()->getSymbol()->getText()))
+                    s.documentation = *doc;
+            }
+
             if (st->DOC_COMMENT())
                 s.comment = trimComment(st->DOC_COMMENT()->getSymbol()->getText());
                 //cout << "struct -> " << st->DOC_COMMENT()->getSymbol()->getText() << endl;
@@ -422,6 +443,13 @@ namespace Entdlr
         uint32_t arraySize = 0;
         std::unordered_map<std::string, Attribute> attributes;
         std::string comment = "";
+        Documentation documentation = {};
+
+        if (field->BLOCK_COMMENT())
+        {
+            if (const auto doc = parseDocumentation(field->BLOCK_COMMENT()->getSymbol()->getText()))
+                documentation = *doc;
+        }
 
         if (field->DOC_COMMENT())
             comment = trimComment(field->DOC_COMMENT()->getSymbol()->getText());
@@ -487,7 +515,7 @@ namespace Entdlr
                 field->getStart()->getLine(),
                 field->getStart()->getCharPositionInLine()
             ),
-            type, isArray, arraySize, attributes, comment
+            type, isArray, arraySize, attributes, comment, documentation
         );
     }
 
@@ -498,6 +526,13 @@ namespace Entdlr
         bool isStatic = false;
         bool isConstant = true;
         std::string comment = "";
+        Documentation documentation;
+
+        if (method->BLOCK_COMMENT())
+        {
+            if (const auto doc = parseDocumentation(method->BLOCK_COMMENT()->getSymbol()->getText()))
+                documentation = *doc;
+        }
 
         if (method->DOC_COMMENT())
             comment = trimComment(method->DOC_COMMENT()->getSymbol()->getText());
@@ -541,7 +576,7 @@ namespace Entdlr
                 filename, method->getStart()->getLine(),
                 method->getStart()->getCharPositionInLine()
             ),
-            returnType, returnIsReference, isStatic, isConstant, comment
+            returnType, returnIsReference, isStatic, isConstant, comment, documentation
         );
 
         for (const auto& p : method->method_parameters()->method_parameter())
@@ -698,6 +733,12 @@ namespace Entdlr
                 )
             );
 
+            if (interface->BLOCK_COMMENT())
+            {
+                if (const auto doc = parseDocumentation(interface->BLOCK_COMMENT()->getSymbol()->getText()))
+                    f.documentation = *doc;
+            }
+
             if (interface->DOC_COMMENT())
                 f.comment = trimComment(interface->DOC_COMMENT()->getSymbol()->getText());
                 //cout << "interface -> " << interface->DOC_COMMENT()->getSymbol()->getText() << endl;
@@ -712,6 +753,86 @@ namespace Entdlr
         }
 
         return output;
+    }
+
+    nonstd::optional<Documentation> Parser::parseDocumentation(const std::string& comment)
+    {
+        // check that it's a documentation block comment, and not just `/*`
+        if (comment.rfind("/**", 0) == 0)
+        {
+            try
+            {
+                // parse with antlr
+                antlr4::ANTLRInputStream input(comment);
+                JavadocLexer lexer(&input);
+                antlr4::CommonTokenStream tokens(&lexer);
+                JavadocParser parser(&tokens);
+
+                // get the output
+                const auto& documentation = parser.documentation();
+
+                if (documentation->documentationContent())
+                {
+                    Documentation output;
+                    output.token = TokenType::Documentation;
+
+                    const auto& content = documentation->documentationContent();
+
+                    // check if there is a description
+                    if (content->description())
+                    {
+                        std::string description = "";
+                        const auto& lines = content->description()->descriptionLine();
+                        for (const auto& line : lines)
+                            description += line->getText();
+
+                        output.description = description;
+                    }
+
+                    // check if there are tags
+                    if (content->tagSection())
+                    {
+                        const auto& tags = content->tagSection()->blockTag();
+                        for (const auto& tag : tags)
+                        {
+                            Tag t;
+                            t.token = TokenType::Tag;
+                            t.name = tag->blockTagName()->NAME()->getSymbol()->getText();
+
+                            std::string tagContent = "";
+                            for (const auto& c : tag->blockTagContent())
+                            {
+                                if (c->blockTagText())
+                                {
+                                    for (const auto& e : c->blockTagText()->blockTagTextElement())
+                                    {
+                                        if (e->TEXT_CONTENT())
+                                            tagContent += e->TEXT_CONTENT()->getSymbol()->getText();
+                                        if (e->NAME())
+                                            tagContent += e->NAME()->getSymbol()->getText();
+                                        if (e->SPACE())
+                                            tagContent += " ";
+                                    }
+                                }
+                            }
+
+                            t.content = tagContent;
+
+                            output.add(t);
+                        }
+                    }
+
+                    return output;
+                }
+
+            }
+            catch (std::exception& e)
+            {
+                throw std::runtime_error(std::string("Documentation Syntax Error: ") + e.what());
+            }
+        }
+
+        return {};
     }
 
     std::string Parser::trimComment(const std::string& comment)

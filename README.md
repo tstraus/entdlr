@@ -42,8 +42,12 @@ union Number // declare a union named Number
 ```
 
 ### Structs
-Structs can contain multiple fields, defined with a name and a type. Fields can also be fixed length arrays. Structs can also have methods defined on them as well.
+Structs can contain multiple fields, defined with a name and a type. Fields can also be fixed length arrays. Structs can also have methods defined on them as well. Structs along with several other elements can be given documentation using the javadoc syntax.
 ```c#
+/**
+ * ECEF Position
+ * @units meters
+ */
 struct Vec3 // declare a struct named Vec3
 {
     x : float32; // declare 3 float32 fields
@@ -77,7 +81,7 @@ struct Request (correlated) // a key only attribute
 }
 ```
 
-Documentation comments can also be added to the same declarations. These are special comments that are also passed into the template.
+Documentation comments can also be added to the same declarations. These are special comments that are also passed into the template. These are seperate javadoc style documentation comments, which are only ever before a declaration.
 ```c++
 /// I'm the doc string for this struct
 struct Scalar
@@ -104,6 +108,7 @@ Inja templates use the filename extension `.tmpl`. Working with the `Context` in
 ## endfor
 ## endfor
 ```
+There are additional functions added to Inja, `getTokenType(tokenName)` which can be used in templates to find the type of token with that name, as well as `abort(reason)` which can be used to abort the evaluation of the template.
 If more capability is required in Inja scripts, you may write additional functions in Wren. Wren functions must be defined in a file next to the template file with the same name, but with the filename extension `.wren`. These scripts must have a class named `Functions`, who's static methods are those that are made available in Inja. Other classes and modules can be used in these methods, but they are not directly exposed to Inja. Files that define additional modules must be in the same directory as the template. The value returned from the Wren function is then given to Inja.
 
 ```javascript
@@ -152,3 +157,8 @@ for (n in c.namespaces.values) {
     }
 }
 ```
+
+## Links
+* [FlatBuffers](https://google.github.io/flatbuffers/flatbuffers_guide_writing_schema.html)
+* [Inja](https://pantor.github.io/inja/)
+* [Wren](https://wren.io/syntax.html)

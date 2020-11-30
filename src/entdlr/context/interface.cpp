@@ -2,7 +2,7 @@
 
 namespace Entdlr
 {
-    Interface Interface::create(const Token& token, const std::string& comment)
+    Interface Interface::create(const Token& token, const std::string& comment, const Documentation& documentation)
     {
         Interface out;
         out.token = TokenType::Interface;
@@ -11,6 +11,7 @@ namespace Entdlr
         out.column = token.column;
         out.name = token.name;
         out.comment = comment;
+        out.documentation = documentation;
 
         return out;
     }

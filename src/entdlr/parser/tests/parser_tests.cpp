@@ -155,6 +155,10 @@ TEST_SUITE("Parsing")
             std::string input = R"(
                 namespace grid;
 
+                /** 
+                 * ECEF Position
+                 * @units meters
+                 */
                 struct Position
                 {
                     x : float64;
@@ -175,6 +179,12 @@ TEST_SUITE("Parsing")
             CHECK(s.token == TokenType::Struct);
             CHECK(s.name == "Position");
             REQUIRE(s.fields.size() == 3);
+
+            const auto& d = s.documentation;
+            CHECK(d.description == "ECEF Position");
+            REQUIRE(d.tags.size() == 1);
+            CHECK(d.tags[0].name == "units");
+            CHECK(d.tags[0].content == "meters");
 
             const auto& fields = s.fields;
             CHECK(fields[0].token == TokenType::Field);

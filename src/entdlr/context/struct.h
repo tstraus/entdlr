@@ -8,6 +8,7 @@
 #include "token.h"
 #include "attribute.h"
 #include "method.h"
+#include "documentation.h"
 
 namespace Entdlr
 {
@@ -19,8 +20,10 @@ namespace Entdlr
         uint32_t arraySize;
         std::unordered_map<std::string, Attribute> attributes;
         std::string comment;
+        Documentation documentation;
 
-        static Field create(const Token& token, const std::string& type, const bool& isArray, const uint32_t& arraySize, const std::unordered_map<std::string, Attribute>& attributes = {}, const std::string& comment = "");
+        static Field create(const Token& token, const std::string& type, const bool& isArray, const uint32_t& arraySize,
+            const std::unordered_map<std::string, Attribute>& attributes = {}, const std::string& comment = "", const Documentation& documentation = {});
     };
 
     class Struct : public Token
@@ -30,8 +33,10 @@ namespace Entdlr
         std::vector<Method> methods;
         std::unordered_map<std::string, Attribute> attributes;
         std::string comment;
+        Documentation documentation;
 
-        static Struct create(const Token& token, const std::unordered_map<std::string, Attribute>& attributes = {}, const std::string& comment = "");
+        static Struct create(const Token& token, const std::unordered_map<std::string, Attribute>& attributes = {},
+            const std::string& comment = "", const Documentation& documentation = {});
         void add(const Field& field);
         void add(const Method& method);
     };

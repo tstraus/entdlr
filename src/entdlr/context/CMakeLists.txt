@@ -1,6 +1,7 @@
 project (entdlr_context)
 
 set (HEADERS
+    documentation.h
     token.h
     include.h
     attribute.h
@@ -14,6 +15,7 @@ set (HEADERS
 )
 
 set (SOURCE
+    documentation.cpp
     token.cpp
     include.cpp
     attribute.cpp

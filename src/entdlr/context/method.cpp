@@ -17,7 +17,7 @@ namespace Entdlr
         return out;
     }
 
-    Method Method::create(const Token& token, const std::string& returnType, const bool returnIsReference, const bool isStatic, const bool constant, const std::string& comment)
+    Method Method::create(const Token& token, const std::string& returnType, const bool returnIsReference, const bool isStatic, const bool constant, const std::string& comment, const Documentation& documentation)
     {
         Method out;
         out.token = TokenType::Method;
@@ -30,6 +30,7 @@ namespace Entdlr
         out.isStatic = isStatic;
         out.constant = constant;
         out.comment = comment;
+        out.documentation = documentation;
 
         return out;
     }
