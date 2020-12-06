@@ -7,6 +7,10 @@ set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_subdirectory (src)
 
+set (CMAKE_EXPORT_PACKAGE_REGISTRY ON)
+export (TARGETS entdlr_context entdlr_parser entdlr_flatbuffer_parser entdlr_javadoc_parser entdlr_template entdlr_template_interface entdlr_template_inja entdlr_template_wren entdlr tmplj antlr4_static inja wren NAMESPACE entdlr:: FILE entdlrTargets.cmake)
+export (PACKAGE entdlr)
+
 # Packaging support
 set (CPACK_GENERATOR "ZIP")
 set (CPACK_PACAKGE_VENDOR "tstraus")
