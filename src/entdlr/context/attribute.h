@@ -4,24 +4,24 @@
 #include <string>
 #include <vector>
 
-#include "token.h"
 #include "method.h"
+#include "token.h"
 
 namespace Entdlr
 {
-    class Attribute : public Token
-    {
-    public:
-        bool isString;
-        std::string string;
+class Attribute : public Token
+{
+  public:
+    bool isString;
+    std::string string;
 
-        bool isNumber;
-        double number;
+    bool isNumber;
+    double number;
 
-        static Attribute create(const Token& token);
-        static Attribute create(const Token& token, const std::string& s);
-        static Attribute create(const Token& token, const double n);
-    };
+    static Attribute create(const Token& token);
+    static Attribute create(const Token& token, const std::string& s);
+    static Attribute create(const Token& token, double n);
 };
+}; // namespace Entdlr
 
 #endif // __ENTDLR_ATTRIBUTE_H__

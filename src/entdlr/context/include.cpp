@@ -2,24 +2,25 @@
 
 #include <iostream>
 
-using std::cout; using std::endl;
+using std::cout;
+using std::endl;
 
 namespace Entdlr
 {
-    Include Include::create(const Token& token)
-    {
-        Include out;
-        out.token = TokenType::Include;
-        out.filename = token.filename;
-        out.line = token.line;
-        out.column = token.column;
-        out.name = token.name;
+Include Include::create(const Token& token)
+{
+    Include out;
+    out.token = TokenType::Include;
+    out.filename = token.filename;
+    out.line = token.line;
+    out.column = token.column;
+    out.name = token.name;
 
-        return out;
-    }
+    return out;
+}
 
-    void Include::add(const Namespace& n)
-    {
-        namespaces.push_back(n);
-    }
-};
+void Include::add(const Namespace& n)
+{
+    namespaces.push_back(n);
+}
+}; // namespace Entdlr

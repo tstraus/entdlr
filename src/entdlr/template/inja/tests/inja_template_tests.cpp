@@ -5,7 +5,8 @@
 #include "doctest.h"
 
 #include <iostream>
-using std::cout; using std::endl;
+using std::cout;
+using std::endl;
 
 using namespace Entdlr;
 
