@@ -1,5 +1,5 @@
 
-// Generated from JavadocParser.g4 by ANTLR 4.7.2
+// Generated from JavadocParser.g4 by ANTLR 4.9.1
 
 
 #include "JavadocParserListener.h"
@@ -91,7 +91,11 @@ JavadocParser::DocumentationContext* JavadocParser::documentation() {
   DocumentationContext *_localctx = _tracker.createInstance<DocumentationContext>(_ctx, getState());
   enterRule(_localctx, 0, JavadocParser::RuleDocumentation);
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -235,7 +239,11 @@ JavadocParser::DocumentationContentContext* JavadocParser::documentationContent(
   enterRule(_localctx, 2, JavadocParser::RuleDocumentationContent);
   size_t _la = 0;
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -320,6 +328,8 @@ JavadocParser::DocumentationContentContext* JavadocParser::documentationContent(
       break;
     }
 
+    default:
+      break;
     }
    
   }
@@ -376,7 +386,11 @@ JavadocParser::SkipWhitespaceContext* JavadocParser::skipWhitespace() {
   enterRule(_localctx, 4, JavadocParser::RuleSkipWhitespace);
   size_t _la = 0;
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -455,7 +469,11 @@ JavadocParser::DescriptionContext* JavadocParser::description() {
   enterRule(_localctx, 6, JavadocParser::RuleDescription);
   size_t _la = 0;
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -547,7 +565,11 @@ JavadocParser::DescriptionLineContext* JavadocParser::descriptionLine() {
   DescriptionLineContext *_localctx = _tracker.createInstance<DescriptionLineContext>(_ctx, getState());
   enterRule(_localctx, 8, JavadocParser::RuleDescriptionLine);
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -673,7 +695,11 @@ JavadocParser::DescriptionLineStartContext* JavadocParser::descriptionLineStart(
   enterRule(_localctx, 10, JavadocParser::RuleDescriptionLineStart);
   size_t _la = 0;
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -815,7 +841,11 @@ JavadocParser::DescriptionLineNoSpaceNoAtContext* JavadocParser::descriptionLine
   enterRule(_localctx, 12, JavadocParser::RuleDescriptionLineNoSpaceNoAt);
   size_t _la = 0;
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -889,7 +919,11 @@ JavadocParser::DescriptionLineElementContext* JavadocParser::descriptionLineElem
   DescriptionLineElementContext *_localctx = _tracker.createInstance<DescriptionLineElementContext>(_ctx, getState());
   enterRule(_localctx, 14, JavadocParser::RuleDescriptionLineElement);
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -990,7 +1024,11 @@ JavadocParser::DescriptionLineTextContext* JavadocParser::descriptionLineText() 
   DescriptionLineTextContext *_localctx = _tracker.createInstance<DescriptionLineTextContext>(_ctx, getState());
   enterRule(_localctx, 16, JavadocParser::RuleDescriptionLineText);
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -1091,7 +1129,11 @@ JavadocParser::DescriptionNewlineContext* JavadocParser::descriptionNewline() {
   DescriptionNewlineContext *_localctx = _tracker.createInstance<DescriptionNewlineContext>(_ctx, getState());
   enterRule(_localctx, 18, JavadocParser::RuleDescriptionNewline);
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -1153,7 +1195,11 @@ JavadocParser::TagSectionContext* JavadocParser::tagSection() {
   enterRule(_localctx, 20, JavadocParser::RuleTagSection);
   size_t _la = 0;
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -1241,7 +1287,11 @@ JavadocParser::BlockTagContext* JavadocParser::blockTag() {
   enterRule(_localctx, 22, JavadocParser::RuleBlockTag);
   size_t _la = 0;
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -1269,6 +1319,8 @@ JavadocParser::BlockTagContext* JavadocParser::blockTag() {
       break;
     }
 
+    default:
+      break;
     }
     setState(175);
     _errHandler->sync(this);
@@ -1332,7 +1384,11 @@ JavadocParser::BlockTagNameContext* JavadocParser::blockTagName() {
   BlockTagNameContext *_localctx = _tracker.createInstance<BlockTagNameContext>(_ctx, getState());
   enterRule(_localctx, 24, JavadocParser::RuleBlockTagName);
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -1397,7 +1453,11 @@ JavadocParser::BlockTagContentContext* JavadocParser::blockTagContent() {
   BlockTagContentContext *_localctx = _tracker.createInstance<BlockTagContentContext>(_ctx, getState());
   enterRule(_localctx, 26, JavadocParser::RuleBlockTagContent);
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -1488,7 +1548,11 @@ JavadocParser::BlockTagTextContext* JavadocParser::blockTagText() {
   BlockTagTextContext *_localctx = _tracker.createInstance<BlockTagTextContext>(_ctx, getState());
   enterRule(_localctx, 28, JavadocParser::RuleBlockTagText);
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -1587,7 +1651,11 @@ JavadocParser::BlockTagTextElementContext* JavadocParser::blockTagTextElement() 
   enterRule(_localctx, 30, JavadocParser::RuleBlockTagTextElement);
   size_t _la = 0;
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -1679,7 +1747,11 @@ JavadocParser::InlineTagContext* JavadocParser::inlineTag() {
   enterRule(_localctx, 32, JavadocParser::RuleInlineTag);
   size_t _la = 0;
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -1768,7 +1840,11 @@ JavadocParser::InlineTagNameContext* JavadocParser::inlineTagName() {
   InlineTagNameContext *_localctx = _tracker.createInstance<InlineTagNameContext>(_ctx, getState());
   enterRule(_localctx, 34, JavadocParser::RuleInlineTagName);
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -1830,7 +1906,11 @@ JavadocParser::InlineTagContentContext* JavadocParser::inlineTagContent() {
   enterRule(_localctx, 36, JavadocParser::RuleInlineTagContent);
   size_t _la = 0;
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -1915,7 +1995,11 @@ JavadocParser::BraceExpressionContext* JavadocParser::braceExpression() {
   enterRule(_localctx, 38, JavadocParser::RuleBraceExpression);
   size_t _la = 0;
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -2007,7 +2091,11 @@ JavadocParser::BraceContentContext* JavadocParser::braceContent() {
   BraceContentContext *_localctx = _tracker.createInstance<BraceContentContext>(_ctx, getState());
   enterRule(_localctx, 40, JavadocParser::RuleBraceContent);
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -2132,7 +2220,11 @@ JavadocParser::BraceTextContext* JavadocParser::braceText() {
   enterRule(_localctx, 42, JavadocParser::RuleBraceText);
   size_t _la = 0;
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {

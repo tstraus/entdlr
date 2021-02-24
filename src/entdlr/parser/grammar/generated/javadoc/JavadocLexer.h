@@ -1,5 +1,5 @@
 
-// Generated from JavadocLexer.g4 by ANTLR 4.7.2
+// Generated from JavadocLexer.g4 by ANTLR 4.9.1
 
 #pragma once
 
@@ -17,7 +17,7 @@ public:
     BRACE_OPEN = 11, BRACE_CLOSE = 12
   };
 
-  JavadocLexer(antlr4::CharStream *input);
+  explicit JavadocLexer(antlr4::CharStream *input);
   ~JavadocLexer();
 
   virtual std::string getGrammarFileName() const override;

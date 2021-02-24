@@ -1,5 +1,5 @@
 
-// Generated from JavadocLexer.g4 by ANTLR 4.7.2
+// Generated from JavadocLexer.g4 by ANTLR 4.9.1
 
 
 #include "JavadocLexer.h"
@@ -82,9 +82,8 @@ atn::ATN JavadocLexer::_atn;
 std::vector<uint16_t> JavadocLexer::_serializedATN;
 
 std::vector<std::string> JavadocLexer::_ruleNames = {
-  u8"NAME", u8"NEWLINE", u8"SPACE", u8"TEXT_CONTENT", u8"AT", u8"STAR", 
-  u8"SLASH", u8"JAVADOC_START", u8"JAVADOC_END", u8"INLINE_TAG_START", u8"BRACE_OPEN", 
-  u8"BRACE_CLOSE"
+  "NAME", "NEWLINE", "SPACE", "TEXT_CONTENT", "AT", "STAR", "SLASH", "JAVADOC_START", 
+  "JAVADOC_END", "INLINE_TAG_START", "BRACE_OPEN", "BRACE_CLOSE"
 };
 
 std::vector<std::string> JavadocLexer::_channelNames = {
@@ -92,18 +91,16 @@ std::vector<std::string> JavadocLexer::_channelNames = {
 };
 
 std::vector<std::string> JavadocLexer::_modeNames = {
-  u8"DEFAULT_MODE"
+  "DEFAULT_MODE"
 };
 
 std::vector<std::string> JavadocLexer::_literalNames = {
-  "", "", "", "", "", u8"'@'", u8"'*'", u8"'/'", "", "", u8"'{@'", u8"'{'", 
-  u8"'}'"
+  "", "", "", "", "", "'@'", "'*'", "'/'", "", "", "'{@'", "'{'", "'}'"
 };
 
 std::vector<std::string> JavadocLexer::_symbolicNames = {
-  "", u8"NAME", u8"NEWLINE", u8"SPACE", u8"TEXT_CONTENT", u8"AT", u8"STAR", 
-  u8"SLASH", u8"JAVADOC_START", u8"JAVADOC_END", u8"INLINE_TAG_START", u8"BRACE_OPEN", 
-  u8"BRACE_CLOSE"
+  "", "NAME", "NEWLINE", "SPACE", "TEXT_CONTENT", "AT", "STAR", "SLASH", 
+  "JAVADOC_START", "JAVADOC_END", "INLINE_TAG_START", "BRACE_OPEN", "BRACE_CLOSE"
 };
 
 dfa::Vocabulary JavadocLexer::_vocabulary(_literalNames, _symbolicNames);

@@ -1,5 +1,5 @@
 
-// Generated from FlatBuffersLexer.g4 by ANTLR 4.7.2
+// Generated from FlatBuffersLexer.g4 by ANTLR 4.9.1
 
 
 #include "FlatBuffersLexer.h"
@@ -60,14 +60,13 @@ atn::ATN FlatBuffersLexer::_atn;
 std::vector<uint16_t> FlatBuffersLexer::_serializedATN;
 
 std::vector<std::string> FlatBuffersLexer::_ruleNames = {
-  u8"INCLUDE", u8"NAMESPACE", u8"ATTRIBUTE", u8"TABLE", u8"STRUCT", u8"ENUM", 
-  u8"UNION", u8"INTERFACE", u8"MUTABLE", u8"STATIC", u8"REFERENCE", u8"ROOT_TYPE", 
-  u8"RPC_SERVICE", u8"FILE_EXTENSION", u8"FILE_IDENTIFIER", u8"STRING_CONSTANT", 
-  u8"BASE_TYPE_NAME", u8"IDENT", u8"HEX_INTEGER_CONSTANT", u8"INTEGER_CONSTANT", 
-  u8"FLOAT_CONSTANT", u8"BLOCK_COMMENT", u8"DOC_COMMENT", u8"COMMENT", u8"SEMICOLON", 
-  u8"COLON", u8"PERIOD", u8"COMMA", u8"EQUAL", u8"OPEN_BRACE", u8"CLOSE_BRACE", 
-  u8"OPEN_BRACKET", u8"CLOSE_BRACKET", u8"OPEN_PAREN", u8"CLOSE_PAREN", 
-  u8"WHITESPACE"
+  "INCLUDE", "NAMESPACE", "ATTRIBUTE", "TABLE", "STRUCT", "ENUM", "UNION", 
+  "INTERFACE", "MUTABLE", "STATIC", "REFERENCE", "ROOT_TYPE", "RPC_SERVICE", 
+  "FILE_EXTENSION", "FILE_IDENTIFIER", "STRING_CONSTANT", "BASE_TYPE_NAME", 
+  "IDENT", "HEX_INTEGER_CONSTANT", "INTEGER_CONSTANT", "FLOAT_CONSTANT", 
+  "BLOCK_COMMENT", "DOC_COMMENT", "COMMENT", "SEMICOLON", "COLON", "PERIOD", 
+  "COMMA", "EQUAL", "OPEN_BRACE", "CLOSE_BRACE", "OPEN_BRACKET", "CLOSE_BRACKET", 
+  "OPEN_PAREN", "CLOSE_PAREN", "WHITESPACE"
 };
 
 std::vector<std::string> FlatBuffersLexer::_channelNames = {
@@ -75,26 +74,25 @@ std::vector<std::string> FlatBuffersLexer::_channelNames = {
 };
 
 std::vector<std::string> FlatBuffersLexer::_modeNames = {
-  u8"DEFAULT_MODE"
+  "DEFAULT_MODE"
 };
 
 std::vector<std::string> FlatBuffersLexer::_literalNames = {
-  "", u8"'include'", u8"'namespace'", u8"'attribute'", u8"'table'", u8"'struct'", 
-  u8"'enum'", u8"'union'", u8"'interface'", u8"'mut'", u8"'static'", u8"'ref'", 
-  u8"'root_type'", u8"'rpc_service'", u8"'file_extension'", u8"'file_indentifier'", 
-  "", "", "", "", "", "", "", "", "", u8"';'", u8"':'", u8"'.'", u8"','", 
-  u8"'='", u8"'{'", u8"'}'", u8"'['", u8"']'", u8"'('", u8"')'"
+  "", "'include'", "'namespace'", "'attribute'", "'table'", "'struct'", 
+  "'enum'", "'union'", "'interface'", "'mut'", "'static'", "'ref'", "'root_type'", 
+  "'rpc_service'", "'file_extension'", "'file_indentifier'", "", "", "", 
+  "", "", "", "", "", "", "';'", "':'", "'.'", "','", "'='", "'{'", "'}'", 
+  "'['", "']'", "'('", "')'"
 };
 
 std::vector<std::string> FlatBuffersLexer::_symbolicNames = {
-  "", u8"INCLUDE", u8"NAMESPACE", u8"ATTRIBUTE", u8"TABLE", u8"STRUCT", 
-  u8"ENUM", u8"UNION", u8"INTERFACE", u8"MUTABLE", u8"STATIC", u8"REFERENCE", 
-  u8"ROOT_TYPE", u8"RPC_SERVICE", u8"FILE_EXTENSION", u8"FILE_IDENTIFIER", 
-  u8"STRING_CONSTANT", u8"BASE_TYPE_NAME", u8"IDENT", u8"HEX_INTEGER_CONSTANT", 
-  u8"INTEGER_CONSTANT", u8"FLOAT_CONSTANT", u8"BLOCK_COMMENT", u8"DOC_COMMENT", 
-  u8"COMMENT", u8"SEMICOLON", u8"COLON", u8"PERIOD", u8"COMMA", u8"EQUAL", 
-  u8"OPEN_BRACE", u8"CLOSE_BRACE", u8"OPEN_BRACKET", u8"CLOSE_BRACKET", 
-  u8"OPEN_PAREN", u8"CLOSE_PAREN", u8"WHITESPACE"
+  "", "INCLUDE", "NAMESPACE", "ATTRIBUTE", "TABLE", "STRUCT", "ENUM", "UNION", 
+  "INTERFACE", "MUTABLE", "STATIC", "REFERENCE", "ROOT_TYPE", "RPC_SERVICE", 
+  "FILE_EXTENSION", "FILE_IDENTIFIER", "STRING_CONSTANT", "BASE_TYPE_NAME", 
+  "IDENT", "HEX_INTEGER_CONSTANT", "INTEGER_CONSTANT", "FLOAT_CONSTANT", 
+  "BLOCK_COMMENT", "DOC_COMMENT", "COMMENT", "SEMICOLON", "COLON", "PERIOD", 
+  "COMMA", "EQUAL", "OPEN_BRACE", "CLOSE_BRACE", "OPEN_BRACKET", "CLOSE_BRACKET", 
+  "OPEN_PAREN", "CLOSE_PAREN", "WHITESPACE"
 };
 
 dfa::Vocabulary FlatBuffersLexer::_vocabulary(_literalNames, _symbolicNames);

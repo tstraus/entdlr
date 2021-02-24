@@ -1,5 +1,5 @@
 
-// Generated from JavadocParser.g4 by ANTLR 4.7.2
+// Generated from JavadocParser.g4 by ANTLR 4.9.1
 
 #pragma once
 
@@ -28,7 +28,7 @@ public:
     RuleBraceContent = 20, RuleBraceText = 21
   };
 
-  JavadocParser(antlr4::TokenStream *input);
+  explicit JavadocParser(antlr4::TokenStream *input);
   ~JavadocParser();
 
   virtual std::string getGrammarFileName() const override;

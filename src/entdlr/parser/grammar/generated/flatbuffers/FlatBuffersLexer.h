@@ -1,5 +1,5 @@
 
-// Generated from FlatBuffersLexer.g4 by ANTLR 4.7.2
+// Generated from FlatBuffersLexer.g4 by ANTLR 4.9.1
 
 #pragma once
 
@@ -22,7 +22,7 @@ public:
     OPEN_PAREN = 34, CLOSE_PAREN = 35, WHITESPACE = 36
   };
 
-  FlatBuffersLexer(antlr4::CharStream *input);
+  explicit FlatBuffersLexer(antlr4::CharStream *input);
   ~FlatBuffersLexer();
 
   virtual std::string getGrammarFileName() const override;

@@ -1,5 +1,5 @@
 
-// Generated from FlatBuffersParser.g4 by ANTLR 4.7.2
+// Generated from FlatBuffersParser.g4 by ANTLR 4.9.1
 
 #pragma once
 
@@ -37,7 +37,7 @@ public:
     RuleNs_ident = 37, RuleInteger_const = 38
   };
 
-  FlatBuffersParser(antlr4::TokenStream *input);
+  explicit FlatBuffersParser(antlr4::TokenStream *input);
   ~FlatBuffersParser();
 
   virtual std::string getGrammarFileName() const override;
