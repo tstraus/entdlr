@@ -23,7 +23,7 @@ target_link_libraries (${PROJECT_NAME}
     PUBLIC entdlr::javadoc_parser
 )
 
-if (UNIX)
+if (UNIX AND NOT APPLE)
     target_link_libraries (${PROJECT_NAME}
         PUBLIC stdc++fs
     )
