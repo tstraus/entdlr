@@ -4,28 +4,28 @@
 #include "context.h"
 #include "i_template.h"
 
-#include <unordered_map>
 #include <memory>
+#include <unordered_map>
 
 namespace Entdlr
 {
-    class TemplateRouter
+class TemplateRouter
+{
+  public:
+    TemplateRouter();
+
+    std::string applyTemplate(const Context& context, const std::string& template_name);
+
+  private:
+    template <typename T>
+    void addTemplate()
     {
-    public:
-        TemplateRouter();
+        std::unique_ptr<ITemplate> t = std::make_unique<T>();
+        templates[t->getFileExtension()] = std::move(t);
+    }
 
-        std::string applyTemplate(const Context& context, const std::string& template_name);
-
-    private:
-        template <typename T>
-        void addTemplate()
-        {
-            std::unique_ptr<ITemplate> t = std::make_unique<T>();
-            templates[t->getFileExtension()] = std::move(t);
-        }
-
-        std::unordered_map<std::string, std::unique_ptr<ITemplate>> templates;
-    };
+    std::unordered_map<std::string, std::unique_ptr<ITemplate>> templates;
 };
+}; // namespace Entdlr
 
-#endif // __ENTDLR_TEMPLATE_ROUTER_H__      
+#endif // __ENTDLR_TEMPLATE_ROUTER_H__

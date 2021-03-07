@@ -4,6 +4,7 @@
 .clangd/
 .vs/
 .vscode/
+.cache/
 .idea/
 .antlr/
 cmake-build-debug/

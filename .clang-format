@@ -1,0 +1,8 @@
+BasedOnStyle: Microsoft
+PointerAlignment: Left
+AlwaysBreakTemplateDeclarations: true
+AllowAllParametersOfDeclarationOnNextLine: false
+BreakInheritanceList: BeforeColon
+BreakConstructorInitializers: BeforeColon
+BinPackArguments: false
+BinPackParameters: false

@@ -1,5 +1,5 @@
 
-// Generated from FlatBuffersParser.g4 by ANTLR 4.7.2
+// Generated from FlatBuffersParser.g4 by ANTLR 4.9.1
 
 
 #include "FlatBuffersParserListener.h"
@@ -172,7 +172,11 @@ FlatBuffersParser::SchemaContext* FlatBuffersParser::schema() {
   enterRule(_localctx, 0, FlatBuffersParser::RuleSchema);
   size_t _la = 0;
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -280,6 +284,8 @@ FlatBuffersParser::SchemaContext* FlatBuffersParser::schema() {
         break;
       }
 
+      default:
+        break;
       }
       setState(100);
       _errHandler->sync(this);
@@ -343,7 +349,11 @@ FlatBuffersParser::IncludeContext* FlatBuffersParser::include() {
   IncludeContext *_localctx = _tracker.createInstance<IncludeContext>(_ctx, getState());
   enterRule(_localctx, 2, FlatBuffersParser::RuleInclude);
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -425,7 +435,11 @@ FlatBuffersParser::Namespace_declContext* FlatBuffersParser::namespace_decl() {
   enterRule(_localctx, 4, FlatBuffersParser::RuleNamespace_decl);
   size_t _la = 0;
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -506,7 +520,11 @@ FlatBuffersParser::Attribute_declContext* FlatBuffersParser::attribute_decl() {
   Attribute_declContext *_localctx = _tracker.createInstance<Attribute_declContext>(_ctx, getState());
   enterRule(_localctx, 6, FlatBuffersParser::RuleAttribute_decl);
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -612,7 +630,11 @@ FlatBuffersParser::Type_declContext* FlatBuffersParser::type_decl() {
   enterRule(_localctx, 8, FlatBuffersParser::RuleType_decl);
   size_t _la = 0;
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -673,6 +695,8 @@ FlatBuffersParser::Type_declContext* FlatBuffersParser::type_decl() {
         break;
       }
 
+      default:
+        break;
       }
       setState(136);
       _errHandler->sync(this);
@@ -767,7 +791,11 @@ FlatBuffersParser::Enum_declContext* FlatBuffersParser::enum_decl() {
   enterRule(_localctx, 10, FlatBuffersParser::RuleEnum_decl);
   size_t _la = 0;
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -889,7 +917,11 @@ FlatBuffersParser::Union_declContext* FlatBuffersParser::union_decl() {
   enterRule(_localctx, 12, FlatBuffersParser::RuleUnion_decl);
   size_t _la = 0;
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -980,7 +1012,11 @@ FlatBuffersParser::Root_declContext* FlatBuffersParser::root_decl() {
   Root_declContext *_localctx = _tracker.createInstance<Root_declContext>(_ctx, getState());
   enterRule(_localctx, 14, FlatBuffersParser::RuleRoot_decl);
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -1074,7 +1110,11 @@ FlatBuffersParser::Field_declContext* FlatBuffersParser::field_decl() {
   enterRule(_localctx, 16, FlatBuffersParser::RuleField_decl);
   size_t _la = 0;
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -1186,7 +1226,11 @@ FlatBuffersParser::Rpc_declContext* FlatBuffersParser::rpc_decl() {
   enterRule(_localctx, 18, FlatBuffersParser::RuleRpc_decl);
   size_t _la = 0;
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -1283,7 +1327,11 @@ FlatBuffersParser::Rpc_methodContext* FlatBuffersParser::rpc_method() {
   Rpc_methodContext *_localctx = _tracker.createInstance<Rpc_methodContext>(_ctx, getState());
   enterRule(_localctx, 20, FlatBuffersParser::RuleRpc_method);
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -1383,7 +1431,11 @@ FlatBuffersParser::Interface_declContext* FlatBuffersParser::interface_decl() {
   enterRule(_localctx, 22, FlatBuffersParser::RuleInterface_decl);
   size_t _la = 0;
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -1521,7 +1573,11 @@ FlatBuffersParser::Method_declContext* FlatBuffersParser::method_decl() {
   enterRule(_localctx, 24, FlatBuffersParser::RuleMethod_decl);
   size_t _la = 0;
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -1649,7 +1705,11 @@ FlatBuffersParser::Method_parametersContext* FlatBuffersParser::method_parameter
   enterRule(_localctx, 26, FlatBuffersParser::RuleMethod_parameters);
   size_t _la = 0;
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -1741,7 +1801,11 @@ FlatBuffersParser::Method_parameterContext* FlatBuffersParser::method_parameter(
   enterRule(_localctx, 28, FlatBuffersParser::RuleMethod_parameter);
   size_t _la = 0;
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -1760,6 +1824,8 @@ FlatBuffersParser::Method_parameterContext* FlatBuffersParser::method_parameter(
       break;
     }
 
+    default:
+      break;
     }
     setState(259);
     _errHandler->sync(this);
@@ -1821,7 +1887,11 @@ FlatBuffersParser::Method_return_typeContext* FlatBuffersParser::method_return_t
   Method_return_typeContext *_localctx = _tracker.createInstance<Method_return_typeContext>(_ctx, getState());
   enterRule(_localctx, 30, FlatBuffersParser::RuleMethod_return_type);
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -1887,7 +1957,11 @@ FlatBuffersParser::Method_typeContext* FlatBuffersParser::method_type() {
   enterRule(_localctx, 32, FlatBuffersParser::RuleMethod_type);
   size_t _la = 0;
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -1968,7 +2042,11 @@ FlatBuffersParser::Mutable_declContext* FlatBuffersParser::mutable_decl() {
   Mutable_declContext *_localctx = _tracker.createInstance<Mutable_declContext>(_ctx, getState());
   enterRule(_localctx, 34, FlatBuffersParser::RuleMutable_decl);
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -2025,7 +2103,11 @@ FlatBuffersParser::Static_declContext* FlatBuffersParser::static_decl() {
   Static_declContext *_localctx = _tracker.createInstance<Static_declContext>(_ctx, getState());
   enterRule(_localctx, 36, FlatBuffersParser::RuleStatic_decl);
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -2082,7 +2164,11 @@ FlatBuffersParser::Reference_declContext* FlatBuffersParser::reference_decl() {
   Reference_declContext *_localctx = _tracker.createInstance<Reference_declContext>(_ctx, getState());
   enterRule(_localctx, 38, FlatBuffersParser::RuleReference_decl);
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -2164,7 +2250,11 @@ FlatBuffersParser::TypeContext* FlatBuffersParser::type() {
   enterRule(_localctx, 40, FlatBuffersParser::RuleType);
   size_t _la = 0;
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -2259,7 +2349,11 @@ FlatBuffersParser::Uniontype_declContext* FlatBuffersParser::uniontype_decl() {
   Uniontype_declContext *_localctx = _tracker.createInstance<Uniontype_declContext>(_ctx, getState());
   enterRule(_localctx, 42, FlatBuffersParser::RuleUniontype_decl);
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -2329,7 +2423,11 @@ FlatBuffersParser::Commasep_uniontype_declContext* FlatBuffersParser::commasep_u
   enterRule(_localctx, 44, FlatBuffersParser::RuleCommasep_uniontype_decl);
   size_t _la = 0;
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -2418,7 +2516,11 @@ FlatBuffersParser::Enumval_declContext* FlatBuffersParser::enumval_decl() {
   enterRule(_localctx, 46, FlatBuffersParser::RuleEnumval_decl);
   size_t _la = 0;
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -2498,7 +2600,11 @@ FlatBuffersParser::Commasep_enumval_declContext* FlatBuffersParser::commasep_enu
   enterRule(_localctx, 48, FlatBuffersParser::RuleCommasep_enumval_decl);
   size_t _la = 0;
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -2587,7 +2693,11 @@ FlatBuffersParser::Ident_with_opt_single_valueContext* FlatBuffersParser::ident_
   enterRule(_localctx, 50, FlatBuffersParser::RuleIdent_with_opt_single_value);
   size_t _la = 0;
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -2667,7 +2777,11 @@ FlatBuffersParser::Commasep_ident_with_opt_single_valueContext* FlatBuffersParse
   enterRule(_localctx, 52, FlatBuffersParser::RuleCommasep_ident_with_opt_single_value);
   size_t _la = 0;
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -2745,7 +2859,11 @@ FlatBuffersParser::MetadataContext* FlatBuffersParser::metadata() {
   enterRule(_localctx, 54, FlatBuffersParser::RuleMetadata);
   size_t _la = 0;
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -2825,7 +2943,11 @@ FlatBuffersParser::ScalarContext* FlatBuffersParser::scalar() {
   enterRule(_localctx, 56, FlatBuffersParser::RuleScalar);
   size_t _la = 0;
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -2901,7 +3023,11 @@ FlatBuffersParser::ObjectContext* FlatBuffersParser::object() {
   ObjectContext *_localctx = _tracker.createInstance<ObjectContext>(_ctx, getState());
   enterRule(_localctx, 58, FlatBuffersParser::RuleObject);
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -2970,7 +3096,11 @@ FlatBuffersParser::Ident_with_valueContext* FlatBuffersParser::ident_with_value(
   Ident_with_valueContext *_localctx = _tracker.createInstance<Ident_with_valueContext>(_ctx, getState());
   enterRule(_localctx, 60, FlatBuffersParser::RuleIdent_with_value);
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -3044,7 +3174,11 @@ FlatBuffersParser::Commasep_ident_with_valueContext* FlatBuffersParser::commasep
   enterRule(_localctx, 62, FlatBuffersParser::RuleCommasep_ident_with_value);
   size_t _la = 0;
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -3128,7 +3262,11 @@ FlatBuffersParser::Single_valueContext* FlatBuffersParser::single_value() {
   Single_valueContext *_localctx = _tracker.createInstance<Single_valueContext>(_ctx, getState());
   enterRule(_localctx, 64, FlatBuffersParser::RuleSingle_value);
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -3221,7 +3359,11 @@ FlatBuffersParser::ValueContext* FlatBuffersParser::value() {
   ValueContext *_localctx = _tracker.createInstance<ValueContext>(_ctx, getState());
   enterRule(_localctx, 66, FlatBuffersParser::RuleValue);
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -3323,7 +3465,11 @@ FlatBuffersParser::Commasep_valueContext* FlatBuffersParser::commasep_value() {
   enterRule(_localctx, 68, FlatBuffersParser::RuleCommasep_value);
   size_t _la = 0;
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -3407,7 +3553,11 @@ FlatBuffersParser::File_extension_declContext* FlatBuffersParser::file_extension
   File_extension_declContext *_localctx = _tracker.createInstance<File_extension_declContext>(_ctx, getState());
   enterRule(_localctx, 70, FlatBuffersParser::RuleFile_extension_decl);
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -3470,7 +3620,11 @@ FlatBuffersParser::File_identifier_declContext* FlatBuffersParser::file_identifi
   File_identifier_declContext *_localctx = _tracker.createInstance<File_identifier_declContext>(_ctx, getState());
   enterRule(_localctx, 72, FlatBuffersParser::RuleFile_identifier_decl);
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -3542,7 +3696,11 @@ FlatBuffersParser::Ns_identContext* FlatBuffersParser::ns_ident() {
   enterRule(_localctx, 74, FlatBuffersParser::RuleNs_ident);
   size_t _la = 0;
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {
@@ -3616,7 +3774,11 @@ FlatBuffersParser::Integer_constContext* FlatBuffersParser::integer_const() {
   enterRule(_localctx, 76, FlatBuffersParser::RuleInteger_const);
   size_t _la = 0;
 
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
   auto onExit = finally([=] {
+#endif
     exitRule();
   });
   try {

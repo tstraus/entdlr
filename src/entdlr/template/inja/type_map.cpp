@@ -9,98 +9,118 @@ using nonstd::optional;
 
 namespace Entdlr
 {
-    TypeMap::TypeMap(const std::string& filename)
-    {
-        std::ifstream f(filename);
-        json j;
-        f >> j;
+TypeMap::TypeMap(const std::string& filename)
+{
+    std::ifstream f(filename);
+    json j;
+    f >> j;
 
-        j.at("mappings").get_to(mappings);
+    j.at("mappings").get_to(mappings);
+}
+
+TypeMap::TypeMap(const std::map<std::string, std::string>& mappings)
+{
+    this->mappings = mappings;
+}
+
+Context TypeMap::applyMapping(const Context& context)
+{
+    auto output = context;
+
+    for (auto& n : output.namespaces)
+    {
+        n = applyMapping(n);
     }
 
-    TypeMap::TypeMap(const std::map<std::string, std::string>& mappings)
+    for (auto& i : output.includes)
     {
-        this->mappings = mappings;
-    }
-
-    Context TypeMap::applyMapping(const Context& context)
-    {
-        auto output = context;
-
-        for (auto& n : output.namespaces)
+        for (auto& n : i.namespaces)
+        {
             n = applyMapping(n);
-
-        for (auto& i : output.includes)
-        {
-            for (auto& n : i.namespaces)
-                n = applyMapping(n);
         }
-
-        return output;
     }
 
-    Namespace TypeMap::applyMapping(const Namespace& n)
+    return output;
+}
+
+Namespace TypeMap::applyMapping(const Namespace& n)
+{
+    auto output = n;
+
+    for (auto& e : output.enums)
     {
-        auto output = n;
-
-        for (auto& e : output.enums)
+        if (mappings.count(e.type) != 0U)
         {
-            if (mappings.count(e.type))
-                e.type = mappings[e.type];
+            e.type = mappings[e.type];
         }
+    }
 
-        for (auto& u : output.unions)
+    for (auto& u : output.unions)
+    {
+        for (auto& t : u.types)
         {
-            for (auto& t : u.types)
+            if (mappings.count(t.name) != 0U)
             {
-                if (mappings.count(t.name))
-                    t.name = mappings[t.name];
+                t.name = mappings[t.name];
+            }
+        }
+    }
+
+    for (auto& s : output.structs)
+    {
+        for (auto& f : s.fields)
+        {
+            if (mappings.count(f.type) != 0U)
+            {
+                f.type = mappings[f.type];
             }
         }
 
-        for (auto& s : output.structs)
+        for (auto& m : s.methods)
         {
-            for (auto& f : s.fields)
+            if (mappings.count(m.returnType) != 0U)
             {
-                if (mappings.count(f.type))
-                    f.type = mappings[f.type];
+                m.returnType = mappings[m.returnType];
             }
 
-            for (auto& m : s.methods)
+            for (auto& p : m.parameters)
             {
-                if (mappings.count(m.returnType))
-                    m.returnType = mappings[m.returnType];
-
-                for (auto& p : m.parameters)
+                if (mappings.count(p.type) != 0U)
                 {
-                    if (mappings.count(p.type))
-                        p.type = mappings[p.type];
+                    p.type = mappings[p.type];
                 }
             }
         }
+    }
 
-        for (auto& i : output.interfaces)
+    for (auto& i : output.interfaces)
+    {
+        for (auto& m : i.methods)
         {
-            for (auto& m : i.methods)
+            if (mappings.count(m.returnType) != 0U)
             {
-                if (mappings.count(m.returnType))
-                    m.returnType = mappings[m.returnType];
+                m.returnType = mappings[m.returnType];
+            }
 
-                for (auto& p : m.parameters)
+            for (auto& p : m.parameters)
+            {
+                if (mappings.count(p.type) != 0U)
                 {
-                    if (mappings.count(p.type))
-                        p.type = mappings[p.type];
+                    p.type = mappings[p.type];
                 }
             }
         }
-
-        return output;
     }
 
-    optional<std::string> TypeMap::getType(const std::string& key)
+    return output;
+}
+
+optional<std::string> TypeMap::getType(const std::string& key)
+{
+    if (mappings.count(key) != 0U)
     {
-        if (mappings.count(key))
-            return mappings[key];
-        else return {};
+        return mappings[key];
     }
-};
+    return {};
+}
+}; // namespace Entdlr

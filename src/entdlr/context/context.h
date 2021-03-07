@@ -6,15 +6,15 @@
 
 namespace Entdlr
 {
-    class Context
-    {
-    public:
-        std::vector<Include> includes;
-        std::vector<Namespace> namespaces;
+class Context
+{
+  public:
+    std::vector<Include> includes;
+    std::vector<Namespace> namespaces;
 
-        void add(const Include& i);
-        void add(const Namespace& n);
-    };
+    void add(const Include& i);
+    void add(const Namespace& n);
 };
+}; // namespace Entdlr
 
 #endif // __ENTDLR_CONTEXT_H__
