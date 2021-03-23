@@ -38,8 +38,8 @@ TEST_SUITE("InjaTemplateTests")
         {
             std::string inputTemplate = R"(
 ## for namespace in entdlr.namespaces
-{{do_something(namespace.name)}}
-{{do_more_things(namespace.line, namespace.column)}}
+{{ do_something(namespace.name) }}
+{{ do_more_things(namespace.line, namespace.column) }}
 ## endfor
 )";
 
@@ -64,7 +64,7 @@ class Functions {
         {
             const auto output = t.applyTemplate(context, "Functions.tmpl");
 
-            CHECK(output == "I did the thing inside module -> WrenFunction\nERROR: (11, 22)\n");
+            CHECK(output == "I did the thing inside module -> WrenFunction\nERROR: (11, 22)\n\n\n");
         }
 
         SUBCASE("ReturnString")
