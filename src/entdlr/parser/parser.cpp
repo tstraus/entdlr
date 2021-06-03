@@ -759,7 +759,7 @@ std::unordered_map<std::string, Attribute> Parser::parseAttributes(FlatBuffersPa
                                                              filename,
                                                              attribute->getStart()->getLine(),
                                                              attribute->getStart()->getCharPositionInLine()),
-                                               std::stoll(scalar->INTEGER_CONSTANT()->getSymbol()->getText()));
+                                               (int64_t)std::stoll(scalar->INTEGER_CONSTANT()->getSymbol()->getText()));
                     attributes[a.name] = a;
                 }
 
@@ -769,7 +769,7 @@ std::unordered_map<std::string, Attribute> Parser::parseAttributes(FlatBuffersPa
                                                              filename,
                                                              attribute->getStart()->getLine(),
                                                              attribute->getStart()->getCharPositionInLine()),
-                                               std::stoll(scalar->HEX_INTEGER_CONSTANT()->getSymbol()->getText()));
+                                               (int64_t)std::stoll(scalar->HEX_INTEGER_CONSTANT()->getSymbol()->getText()));
                     attributes[a.name] = a;
                 }
 
