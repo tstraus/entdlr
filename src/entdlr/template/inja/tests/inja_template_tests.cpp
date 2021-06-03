@@ -30,9 +30,49 @@ TEST_SUITE("InjaTemplateTests")
         n.name = "WrenFunction";
         n.line = 11;
         n.column = 22;
+        Struct s;
+        s.name = "TestStruct";
+        s.line = 12;
+        s.column = 81;
+        Field f;
+        f.name = "TestField";
+        f.line = 13;
+        f.column = 34;
+        f.isArray = true;
+        f.arraySize = 7;
+        Attribute a;
+        a.name = "TestAttribute";
+        a.line = 13;
+        a.column = 40;
+        a.isNumber = true;
+        a.number = 7;
+        f.attributes[a.name] = a;
+        s.add(f);
+        n.add(s);
         context.add(n);
 
         InjaTemplate t;
+
+        SUBCASE("IntegralStrings")
+        {
+            std::string inputTemplate = R"(
+## for namespace in entdlr.namespaces
+## for struct in namespace.structs
+## for field in struct.fields
+## for name, attribute in field.attributes
+{{ attribute.number }}
+## endfor
+## endfor
+## endfor
+## endfor
+)";
+
+            std::string inputScript;
+
+            const auto output = t.applyString(context, inputTemplate, inputScript);
+
+            CHECK(output == "\n7\n");
+        }
 
         SUBCASE("String")
         {
