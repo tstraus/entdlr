@@ -22,6 +22,8 @@ class InjaTemplate : public ITemplate
   private:
     nlohmann::json checkWren(const std::string& name, unsigned int numArgs, const inja::Arguments& args);
 
+    static void log(const std::string& level, const std::string& message);
+
     static void error(WrenVM* vm, WrenErrorType type, const char* module_name, int line, const char* message);
     static void print(WrenVM* vm, const char* text);
     static char* loadModule(WrenVM* vm, const char* name);

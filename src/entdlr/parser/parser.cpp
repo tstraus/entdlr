@@ -740,11 +740,13 @@ std::unordered_map<std::string, Attribute> Parser::parseAttributes(FlatBuffersPa
         {
             if ((attribute->single_value() != nullptr) && (attribute->single_value()->STRING_CONSTANT() != nullptr))
             {
+                auto attributeString = attribute->single_value()->STRING_CONSTANT()->getSymbol()->getText();
+                attributeString = attributeString.substr(1, attributeString.size() - 2); // strip the surrounding quotes
                 auto a = Attribute::create(Token::create(attribute->IDENT()->getSymbol()->getText(),
                                                          filename,
                                                          attribute->getStart()->getLine(),
                                                          attribute->getStart()->getCharPositionInLine()),
-                                           attribute->single_value()->STRING_CONSTANT()->getSymbol()->getText());
+                                           attributeString);
                 attributes[a.name] = a;
             }
 
@@ -757,7 +759,7 @@ std::unordered_map<std::string, Attribute> Parser::parseAttributes(FlatBuffersPa
                                                              filename,
                                                              attribute->getStart()->getLine(),
                                                              attribute->getStart()->getCharPositionInLine()),
-                                               std::stod(scalar->INTEGER_CONSTANT()->getSymbol()->getText()));
+                                               (int64_t)std::stoll(scalar->INTEGER_CONSTANT()->getSymbol()->getText()));
                     attributes[a.name] = a;
                 }
 
@@ -767,7 +769,7 @@ std::unordered_map<std::string, Attribute> Parser::parseAttributes(FlatBuffersPa
                                                              filename,
                                                              attribute->getStart()->getLine(),
                                                              attribute->getStart()->getCharPositionInLine()),
-                                               std::stod(scalar->HEX_INTEGER_CONSTANT()->getSymbol()->getText()));
+                                               (int64_t)std::stoll(scalar->HEX_INTEGER_CONSTANT()->getSymbol()->getText()));
                     attributes[a.name] = a;
                 }
 

@@ -18,9 +18,13 @@ class Attribute : public Token
     bool isNumber;
     double number;
 
+    bool isInteger;
+    int64_t integer;
+
     static Attribute create(const Token& token);
     static Attribute create(const Token& token, const std::string& s);
     static Attribute create(const Token& token, double n);
+    static Attribute create(const Token& token, int64_t i);
 };
 }; // namespace Entdlr
 

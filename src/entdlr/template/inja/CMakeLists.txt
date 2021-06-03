@@ -4,6 +4,7 @@ set (HEADERS
     inja_template.h
     json_helpers.h
     type_map.h
+    rang.hpp
 )
 
 set (SOURCE
