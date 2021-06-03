@@ -44,8 +44,8 @@ TEST_SUITE("InjaTemplateTests")
         a.name = "TestAttribute";
         a.line = 13;
         a.column = 40;
-        a.isNumber = true;
-        a.number = 7;
+        a.integer = 7;
+        a.number = 7.0;
         f.attributes[a.name] = a;
         s.add(f);
         n.add(s);
@@ -53,13 +53,14 @@ TEST_SUITE("InjaTemplateTests")
 
         InjaTemplate t;
 
-        SUBCASE("IntegralStrings")
+        SUBCASE("IntegralNumberOutput")
         {
             std::string inputTemplate = R"(
 ## for namespace in entdlr.namespaces
 ## for struct in namespace.structs
 ## for field in struct.fields
 ## for name, attribute in field.attributes
+{{ attribute.integer }}
 {{ attribute.number }}
 ## endfor
 ## endfor
@@ -71,7 +72,7 @@ TEST_SUITE("InjaTemplateTests")
 
             const auto output = t.applyString(context, inputTemplate, inputScript);
 
-            CHECK(output == "\n7\n");
+            CHECK(output == "\n7\n7.0\n");
         }
 
         SUBCASE("String")

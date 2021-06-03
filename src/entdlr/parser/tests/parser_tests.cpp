@@ -309,8 +309,8 @@ TEST_SUITE("Parsing")
             std::string input = R"(
                 struct Test
                 {
-                    fixed : [uint16 : 8];
-                    variable : [float64];
+                    fixed : [uint16 : 8] (string_things : "asdf");
+                    variable : [float64] (things : 6.0);
                     attr : [string : 2] (max_length : 10);
                 }
             )";
@@ -326,12 +326,23 @@ TEST_SUITE("Parsing")
             CHECK(f[0].type == "uint16");
             CHECK(f[0].isArray == true);
             CHECK(f[0].arraySize == 8);
+            CHECK(f[0].attributes.begin()->second.isString == true);
+            CHECK(f[0].attributes.begin()->second.isNumber == false);
+            CHECK(f[0].attributes.begin()->second.isInteger == false);
+            CHECK(f[0].attributes.begin()->second.name == "string_things");
+            CHECK(f[0].attributes.begin()->second.string == "asdf");
 
             CHECK(f[1].token == TokenType::Field);
             CHECK(f[1].name == "variable");
             CHECK(f[1].type == "float64");
             CHECK(f[1].isArray == true);
             CHECK(f[1].arraySize == 0);
+            REQUIRE(f[1].attributes.size() == 1);
+            CHECK(f[1].attributes.begin()->second.isString == false);
+            CHECK(f[1].attributes.begin()->second.isNumber == true);
+            CHECK(f[1].attributes.begin()->second.isInteger == false);
+            CHECK(f[1].attributes.begin()->second.name == "things");
+            CHECK(f[1].attributes.begin()->second.number == 6.0);
 
             CHECK(f[2].token == TokenType::Field);
             CHECK(f[2].name == "attr");
@@ -339,8 +350,11 @@ TEST_SUITE("Parsing")
             CHECK(f[2].isArray == true);
             CHECK(f[2].arraySize == 2);
             REQUIRE(f[2].attributes.size() == 1);
+            CHECK(f[2].attributes.begin()->second.isString == false);
+            CHECK(f[2].attributes.begin()->second.isNumber == false);
+            CHECK(f[2].attributes.begin()->second.isInteger == true);
             CHECK(f[2].attributes.begin()->second.name == "max_length");
-            CHECK(f[2].attributes.begin()->second.number == 10);
+            CHECK(f[2].attributes.begin()->second.integer == 10);
         }
     }
 
