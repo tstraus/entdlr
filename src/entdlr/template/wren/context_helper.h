@@ -86,6 +86,8 @@ namespace Entdlr
         static void getFieldAttributeString(WrenVM* vm);
         static void getFieldAttributeIsNumber(WrenVM* vm);
         static void getFieldAttributeNumber(WrenVM* vm);
+        static void getFieldAttributeIsInteger(WrenVM* vm);
+        static void getFieldAttributeInteger(WrenVM* vm);
         // Method
         static void getStructMethodName(WrenVM* vm);
         static void getStructMethodReturnType(WrenVM* vm);

@@ -703,6 +703,34 @@ namespace Entdlr
         wrenSetSlotDouble(vm, 0, output);
     }
 
+void ContextHelper::getFieldAttributeIsInteger(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _struct = wrenGetSlotString(vm, 2);
+        std::string _field = wrenGetSlotString(vm, 3);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 4);
+
+        bool output = false;
+        if (auto a = getFieldAttribute(_namespace, _struct, _field, index))
+            output = a->isInteger;
+
+        wrenSetSlotBool(vm, 0, output);
+    }
+
+    void ContextHelper::getFieldAttributeInteger(WrenVM* vm)
+    {
+        std::string _namespace = wrenGetSlotString(vm, 1);
+        std::string _struct = wrenGetSlotString(vm, 2);
+        std::string _field = wrenGetSlotString(vm, 3);
+        size_t index = (size_t)wrenGetSlotDouble(vm, 4);
+
+        double output = 0.0;
+        if (auto a = getFieldAttribute(_namespace, _struct, _field, index))
+            output = (double)a->integer;
+
+        wrenSetSlotDouble(vm, 0, output);
+    }
+
     void ContextHelper::getStructMethodName(WrenVM* vm)
     {
         std::string _namespace = wrenGetSlotString(vm, 1);

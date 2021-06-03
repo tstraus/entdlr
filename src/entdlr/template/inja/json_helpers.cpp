@@ -171,6 +171,8 @@ void to_json(json& j, const Attribute& a)
         {"string", a.string},
         {"isNumber", a.isNumber},
         {"number", a.number},
+        {"isInteger", a.isInteger},
+        {"integer", a.integer},
     };
 }
 
@@ -185,6 +187,8 @@ void from_json(const json& j, Attribute& a)
     j.at("string").get_to(a.string);
     j.at("isNumber").get_to(a.isNumber);
     j.at("number").get_to(a.number);
+    j.at("isInteger").get_to(a.isInteger);
+    j.at("integer").get_to(a.integer);
 }
 
 void to_json(json& j, const Union& u)

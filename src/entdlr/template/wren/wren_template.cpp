@@ -79,6 +79,8 @@ namespace Entdlr
         boundForeignMethods["Context::Context::getFieldAttributeString(_,_,_,_)static"] = ContextHelper::getFieldAttributeString;
         boundForeignMethods["Context::Context::getFieldAttributeIsNumber(_,_,_,_)static"] = ContextHelper::getFieldAttributeIsNumber;
         boundForeignMethods["Context::Context::getFieldAttributeNumber(_,_,_,_)static"] = ContextHelper::getFieldAttributeNumber;
+        boundForeignMethods["Context::Context::getFieldAttributeIsInteger(_,_,_,_)static"] = ContextHelper::getFieldAttributeIsInteger;
+        boundForeignMethods["Context::Context::getFieldAttributeInteger(_,_,_,_)static"] = ContextHelper::getFieldAttributeInteger;
         boundForeignMethods["Context::Context::getStructMethodName(_,_,_)static"] = ContextHelper::getStructMethodName;
         boundForeignMethods["Context::Context::getStructMethodReturnType(_,_,_)static"] = ContextHelper::getStructMethodReturnType;
         boundForeignMethods["Context::Context::getStructMethodReturnIsReference(_,_,_)static"] = ContextHelper::getStructMethodReturnIsReference;

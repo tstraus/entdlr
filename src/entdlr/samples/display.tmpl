@@ -56,6 +56,9 @@ include {{include.name}}
 ## if attribute.isNumber == true
             {{attribute.name}} : {{attribute.number}}
 ## endif
+## if attribute.isInteger == true
+            {{attribute.name}} : {{attribute.integer}}
+## endif
 ## endfor
 ## endfor
 
