@@ -12,17 +12,18 @@ namespace Entdlr
 class Parser
 {
   public:
-    static Context parseDir(const std::string& dirname);
+    static Context parseDir(const std::string& dirname, const std::string& include_dir = "");
 
-    static Context parseFile(const std::string& filename);
+    static Context parseFile(const std::string& filename, const std::string& include_dir = "");
 
-    static Context parse(const std::string& content, const std::string& filename = "");
+    static Context parse(const std::string& content, const std::string& filename = "", const std::string& include_dir = "");
 
     static Context merge(const std::vector<Context>& contexts);
 
   private:
     static std::vector<Include> parseIncludes(const std::vector<FlatBuffersParser::IncludeContext*>& incs,
-                                              const std::string& filename);
+                                              const std::string& filename,
+                                              const std::string& include_dir = "");
 
     static Namespace parseNamespace(const std::vector<FlatBuffersParser::Namespace_declContext*>& namespaces,
                                     const std::string& filename);

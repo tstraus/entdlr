@@ -20,7 +20,7 @@ using std::endl;
 
 namespace Entdlr
 {
-Context Parser::parseDir(const std::string& dirname)
+Context Parser::parseDir(const std::string& dirname, const std::string& include_dir)
 {
     std::vector<Context> contexts;
 
@@ -33,7 +33,7 @@ Context Parser::parseDir(const std::string& dirname)
         {
             if (fs::is_regular_file(*it) && it->path().extension() == ".fbs")
             {
-                contexts.push_back(parseFile(it->path().string()));
+                contexts.push_back(parseFile(it->path().string(), include_dir));
             }
 
             it++;
@@ -48,16 +48,22 @@ Context Parser::parseDir(const std::string& dirname)
     return merge(contexts);
 }
 
-Context Parser::parseFile(const std::string& filename)
+Context Parser::parseFile(const std::string& filename, const std::string& include_dir)
 {
     try
     {
         // open and read the file
         std::ifstream file(filename);
+        file.exceptions(std::ifstream::failbit);
         std::stringstream buffer;
         buffer << file.rdbuf();
 
-        return parse(buffer.str(), filename);
+        return parse(buffer.str(), filename, include_dir);
+    }
+
+    catch (std::ios_base::failure& e)
+    {
+        throw std::runtime_error(std::string("Unable to open file ") + "\"" + filename + "\"");
     }
 
     catch (std::exception& e)
@@ -66,7 +72,7 @@ Context Parser::parseFile(const std::string& filename)
     }
 }
 
-Context Parser::parse(const std::string& content, const std::string& filename)
+Context Parser::parse(const std::string& content, const std::string& filename, const std::string& include_dir)
 {
     try
     {
@@ -82,7 +88,7 @@ Context Parser::parse(const std::string& content, const std::string& filename)
         Context context;
 
         // get the includes in the file
-        auto incs = parseIncludes(schema->include(), filename);
+        auto incs = parseIncludes(schema->include(), filename, include_dir);
         for (const auto& i : incs)
         {
             context.add(i);
@@ -173,7 +179,8 @@ Context Parser::merge(const std::vector<Context>& contexts)
 }
 
 std::vector<Include> Parser::parseIncludes(const std::vector<FlatBuffersParser::IncludeContext*>& incs,
-                                           const std::string& filename)
+                                           const std::string& filename,
+                                           const std::string& include_dir)
 {
     std::vector<Include> output;
 
@@ -182,18 +189,28 @@ std::vector<Include> Parser::parseIncludes(const std::vector<FlatBuffersParser::
         std::string name = inc->STRING_CONSTANT()->getSymbol()->getText();
         std::string includeName = name.substr(1, name.size() - 6); // strip quotes and .fbs off
 
-        std::string includeDir = fs::path(filename).parent_path().string();
-        if (includeDir.empty())
+        auto searchDir = include_dir;
+        if (searchDir.empty())
         {
-            includeDir = ".";
+            std::string fileParentDir = fs::path(filename).parent_path().string();
+            if (!fileParentDir.empty())
+            {
+                searchDir = fileParentDir;
+            }
+
+            else
+            {
+                searchDir = ".";
+            }
         }
+
         std::string includeFilename =
-            includeDir + "/" + name.substr(1, name.size() - 2); // strip quotes off and add the dir
+            searchDir + "/" + name.substr(1, name.size() - 2); // strip quotes off and add the dir
 
         auto i = Include::create(
             Token::create(includeName, filename, inc->getStart()->getLine(), inc->getStart()->getCharPositionInLine()));
 
-        const auto c = parseFile(includeFilename);
+        const auto c = parseFile(includeFilename, include_dir);
         i.namespaces = c.namespaces;
 
         output.push_back(i);
