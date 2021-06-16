@@ -1642,21 +1642,36 @@ public:
     function_storage.emplace(std::make_pair(static_cast<std::string>(name), num_args), FunctionData { Operation::Callback, callback });
   }
 
+   void set_fallback(std::function<json(const std::string&, const unsigned int, const Arguments&)> fallback) {
+    m_fallback = fallback;
+  }
+
   FunctionData find_function(nonstd::string_view name, int num_args) const {
     auto it = function_storage.find(std::make_pair(static_cast<std::string>(name), num_args));
     if (it != function_storage.end()) {
       return it->second;
 
     // Find variadic function
-    } else if (num_args > 0) {
+    }
+
+    if (num_args > 0) {
       it = function_storage.find(std::make_pair(static_cast<std::string>(name), VARIADIC));
       if (it != function_storage.end()) {
         return it->second;
       }
     }
 
+    if (m_fallback) {
+      std::string temp_string_of_name(name);
+      return FunctionData(Operation::Callback, [this, temp_string_of_name, num_args](Arguments& args) -> json {
+        return m_fallback(temp_string_of_name, num_args, args);
+      });
+    }
+
     return FunctionData { Operation::None };
   }
+
+  std::function<json(const std::string&, const unsigned int, const Arguments&)> m_fallback;
 };
 
 } // namespace inja
@@ -4120,6 +4135,11 @@ public:
   */
   void add_void_callback(const std::string &name, int num_args, const VoidCallbackFunction &callback) {
     function_storage.add_callback(name, num_args, [callback](Arguments& args) { callback(args); return json(); });
+  }
+
+  void set_fallback(std::function<json(const std::string&, const unsigned int, const Arguments&)> fallback)
+  {
+      function_storage.set_fallback(fallback);
   }
 
   /** Includes a template with a given name into the environment.
