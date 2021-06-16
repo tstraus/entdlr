@@ -364,8 +364,10 @@ void InjaTemplate::print(WrenVM* vm, const char* text)
     cerr << text;
 }
 
-char* InjaTemplate::loadModule(WrenVM* vm, const char* name)
+WrenLoadModuleResult InjaTemplate::loadModule(WrenVM* vm, const char* name)
 {
+    WrenLoadModuleResult output = {0};
+
     std::string source;
 
     std::string path = scriptDir + "/";
@@ -380,6 +382,8 @@ char* InjaTemplate::loadModule(WrenVM* vm, const char* name)
     char* cbuffer = (char*)malloc(source.size());
     std::memcpy(cbuffer, source.c_str(), source.size());
 
-    return cbuffer;
+    output.source = cbuffer;
+
+    return output;
 }
 } // namespace Entdlr
