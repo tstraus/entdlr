@@ -17,15 +17,17 @@ int main(int argc, char** argv)
         std::string template_name;
         std::string filename;
         std::string output_name;
+        std::string include_dir;
 
         argh::parser args(argv);
         if (args[{"-h", "--help"}])
         {
             cout << "Usage: entdlr [OPTION]\n"
-                 << "  -h, --help           Basic use help (this)\n"
-                 << "  -t, --template=FILE  Template file to use. Default: \"../samples/dump.wren\"\n"
-                 << "  -f, --file=FILE      Parse the specified file. Default: \"../samples/entity.fbs\"\n"
-                 << "  -o, --output=FILE    File to put template output in. Default: prints to STDOUT" << endl;
+                 << "  -h, --help             Basic use help (this)\n"
+                 << "  -t, --template=FILE    Template file to use. Default: \"../samples/dump.wren\"\n"
+                 << "  -f, --file=FILE        Parse the specified file. Default: \"../samples/entity.fbs\"\n"
+                 << "  -o, --output=FILE      File to put template output in. Default: prints to STDOUT\n"
+                 << "  -i, --include_dir=DIR  Directory to search for included files. Default: directory of --file" << endl;
 
             return 0;
         }
@@ -33,6 +35,7 @@ int main(int argc, char** argv)
         args({"-t", "--template"}, "../samples/display.tmpl") >> template_name;
         args({"-f", "--file"}) >> filename;
         args({"-o", "--output"}) >> output_name;
+        args({"-i", "--include_dir"}) >> include_dir;
 
         if (filename.empty())
         {
@@ -42,7 +45,7 @@ int main(int argc, char** argv)
         Entdlr::Context context;
         if (!filename.empty())
         {
-            context = Entdlr::Parser::parseFile(filename);
+            context = Entdlr::Parser::parseFile(filename, include_dir);
         }
 
         Entdlr::TemplateRouter t;
