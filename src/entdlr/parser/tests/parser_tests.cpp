@@ -16,8 +16,6 @@ TEST_SUITE("Parsing")
         SUBCASE("Struct")
         {
             std::string input = R"(
-                include "test/Measurement.fbs";
-
                 /// struct comment
                 struct Position (correlated)
                 {
@@ -28,10 +26,6 @@ TEST_SUITE("Parsing")
             )";
 
             const auto context = Parser::parse(input);
-            REQUIRE(context.includes.size() == 1);
-            CHECK(context.includes[0].token == TokenType::Include);
-            CHECK(context.includes[0].name == "test/Measurement");
-
             REQUIRE(context.namespaces.size() == 1);
 
             const auto& n = context.namespaces[0];

@@ -194,6 +194,11 @@ std::string InjaTemplate::applyJson(const nlohmann::json& j, const std::string& 
 
         return "";
     });
+    env.add_callback("dump_context", 0, [this, &j](inja::Arguments& args) {
+        cout << j.dump(4) << endl;
+
+        return "";
+    });
     env.set_fallback([this](const std::string& name, const unsigned int numArgs, const inja::Arguments& args) {
         return checkWren(name, numArgs, args);
     });
@@ -359,8 +364,10 @@ void InjaTemplate::print(WrenVM* vm, const char* text)
     cerr << text;
 }
 
-char* InjaTemplate::loadModule(WrenVM* vm, const char* name)
+WrenLoadModuleResult InjaTemplate::loadModule(WrenVM* vm, const char* name)
 {
+    WrenLoadModuleResult output = {0};
+
     std::string source;
 
     std::string path = scriptDir + "/";
@@ -375,6 +382,8 @@ char* InjaTemplate::loadModule(WrenVM* vm, const char* name)
     char* cbuffer = (char*)malloc(source.size());
     std::memcpy(cbuffer, source.c_str(), source.size());
 
-    return cbuffer;
+    output.source = cbuffer;
+
+    return output;
 }
 } // namespace Entdlr

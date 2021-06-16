@@ -144,8 +144,9 @@ namespace Entdlr
         else return "";
     }
 
-    char* WrenTemplate::loadModule(WrenVM* vm, const char* name)
+    WrenLoadModuleResult WrenTemplate::loadModule(WrenVM* vm, const char* name)
     {
+        WrenLoadModuleResult output = {0};
         std::string source = "";
 
         if (std::string(name) == "Context")
@@ -165,7 +166,9 @@ namespace Entdlr
         char* cbuffer = (char*)malloc(source.size());
         std::memcpy(cbuffer, source.c_str(), source.size());
 
-        return cbuffer;
+        output.source = cbuffer;
+
+        return output;
     }
 
     void WrenTemplate::error(WrenVM* vm, WrenErrorType type, const char* module_name, int line, const char* message)

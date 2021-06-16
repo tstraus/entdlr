@@ -19,7 +19,7 @@ namespace Entdlr
         std::string applyTemplate(const Context& context, const std::string& template_name);
 
     private:
-        static char* loadModule(WrenVM* vm, const char* name);
+        static WrenLoadModuleResult loadModule(WrenVM* vm, const char* name);
 
         static void error(WrenVM* vm, WrenErrorType type, const char* module_name, int line, const char* message);
 

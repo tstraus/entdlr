@@ -13,7 +13,7 @@ class ITemplate
     }
 
   public:
-    ~ITemplate()
+    virtual ~ITemplate()
     {
     }
 
