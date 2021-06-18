@@ -11,13 +11,7 @@ namespace antlr4 {
 
   class ANTLR4CPP_PUBLIC Recognizer {
   public:
-#if __cplusplus >= 201703L
-    static constexpr size_t EOF = std::numeric_limits<size_t>::max();
-#else
-    enum : size_t {
-      EOF = static_cast<size_t>(-1), // std::numeric_limits<size_t>::max(); doesn't work in VS 2013.
-    };
-#endif
+    static const size_t EOF = static_cast<size_t>(-1); // std::numeric_limits<size_t>::max(); doesn't work in VS 2013.
 
     Recognizer();
     Recognizer(Recognizer const&) = delete;
@@ -144,7 +138,7 @@ namespace antlr4 {
 
     virtual void setInputStream(IntStream *input) = 0;
 
-    virtual TokenFactory<CommonToken>* getTokenFactory() = 0;
+    virtual Ref<TokenFactory<CommonToken>> getTokenFactory() = 0;
 
     template<typename T1>
     void setTokenFactory(TokenFactory<T1> *input);

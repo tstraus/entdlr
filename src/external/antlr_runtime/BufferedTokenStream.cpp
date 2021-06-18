@@ -272,7 +272,7 @@ ssize_t BufferedTokenStream::previousTokenOnChannel(size_t i, size_t channel) {
     }
 
     if (i == 0)
-      return -1;
+      break;
     i--;
   }
   return i;
@@ -358,18 +358,17 @@ std::string BufferedTokenStream::getSourceName() const
 }
 
 std::string BufferedTokenStream::getText() {
-  fill();
   return getText(misc::Interval(0U, size() - 1));
 }
 
 std::string BufferedTokenStream::getText(const misc::Interval &interval) {
   lazyInit();
+  fill();
   size_t start = interval.a;
   size_t stop = interval.b;
   if (start == INVALID_INDEX || stop == INVALID_INDEX) {
     return "";
   }
-  sync(stop);
   if (stop >= _tokens.size()) {
     stop = _tokens.size() - 1;
   }

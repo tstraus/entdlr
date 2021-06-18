@@ -25,10 +25,11 @@ const std::string XPath::NOT = "!";
 XPath::XPath(Parser *parser, const std::string &path) {
   _parser = parser;
   _path = path;
+  _elements = split(path);
 }
 
-std::vector<std::unique_ptr<XPathElement>> XPath::split(const std::string &path) {
-  ANTLRInputStream in(path);
+std::vector<XPathElement> XPath::split(const std::string &path) {
+  ANTLRFileStream in(path);
   XPathLexer lexer(&in);
   lexer.removeErrorListeners();
   XPathLexerErrorListener listener;
@@ -43,7 +44,7 @@ std::vector<std::unique_ptr<XPathElement>> XPath::split(const std::string &path)
   }
 
   std::vector<Token *> tokens = tokenStream.getTokens();
-  std::vector<std::unique_ptr<XPathElement>> elements;
+  std::vector<XPathElement> elements;
   size_t n = tokens.size();
   size_t i = 0;
   bool done = false;
@@ -61,9 +62,9 @@ std::vector<std::unique_ptr<XPathElement>> XPath::split(const std::string &path)
           i++;
           next = tokens[i];
         }
-        std::unique_ptr<XPathElement> pathElement = getXPathElement(next, anywhere);
-        pathElement->setInvert(invert);
-        elements.push_back(std::move(pathElement));
+        XPathElement pathElement = getXPathElement(next, anywhere);
+        pathElement.setInvert(invert);
+        elements.push_back(pathElement);
         i++;
         break;
 
@@ -80,26 +81,25 @@ std::vector<std::unique_ptr<XPathElement>> XPath::split(const std::string &path)
         break;
 
       default :
-        throw IllegalArgumentException("Unknown path element " + el->toString());
+        throw IllegalArgumentException("Unknow path element " + el->toString());
     }
   }
 
   return elements;
 }
 
-std::unique_ptr<XPathElement> XPath::getXPathElement(Token *wordToken, bool anywhere) {
+XPathElement XPath::getXPathElement(Token *wordToken, bool anywhere) {
   if (wordToken->getType() == Token::EOF) {
     throw IllegalArgumentException("Missing path element at end of path");
   }
-
   std::string word = wordToken->getText();
   size_t ttype = _parser->getTokenType(word);
   ssize_t ruleIndex = _parser->getRuleIndex(word);
   switch (wordToken->getType()) {
     case XPathLexer::WILDCARD :
       if (anywhere)
-        return std::unique_ptr<XPathWildcardAnywhereElement>(new XPathWildcardAnywhereElement());
-      return std::unique_ptr<XPathWildcardElement>(new XPathWildcardElement());
+        return XPathWildcardAnywhereElement();
+      return XPathWildcardElement();
 
     case XPathLexer::TOKEN_REF:
     case XPathLexer::STRING :
@@ -107,25 +107,20 @@ std::unique_ptr<XPathElement> XPath::getXPathElement(Token *wordToken, bool anyw
         throw IllegalArgumentException(word + " at index " + std::to_string(wordToken->getStartIndex()) + " isn't a valid token name");
       }
       if (anywhere)
-        return std::unique_ptr<XPathTokenAnywhereElement>(new XPathTokenAnywhereElement(word, (int)ttype));
-      return std::unique_ptr<XPathTokenElement>(new XPathTokenElement(word, (int)ttype));
+        return XPathTokenAnywhereElement(word, (int)ttype);
+      return XPathTokenElement(word, (int)ttype);
 
     default :
       if (ruleIndex == -1) {
         throw IllegalArgumentException(word + " at index " + std::to_string(wordToken->getStartIndex()) + " isn't a valid rule name");
       }
       if (anywhere)
-        return std::unique_ptr<XPathRuleAnywhereElement>(new XPathRuleAnywhereElement(word, (int)ruleIndex));
-      return std::unique_ptr<XPathRuleElement>(new XPathRuleElement(word, (int)ruleIndex));
+        return XPathRuleAnywhereElement(word, (int)ruleIndex);
+      return XPathRuleElement(word, (int)ruleIndex);
   }
 }
 
 static ParserRuleContext dummyRoot;
-
-std::vector<ParseTree *> XPath::findAll(ParseTree *tree, std::string const& xpath, Parser *parser) {
-  XPath p(parser, xpath);
-  return p.evaluate(tree);
-}
 
 std::vector<ParseTree *> XPath::evaluate(ParseTree *t) {
   dummyRoot.children = { t }; // don't set t's parent.
@@ -133,16 +128,14 @@ std::vector<ParseTree *> XPath::evaluate(ParseTree *t) {
   std::vector<ParseTree *> work = { &dummyRoot };
 
   size_t i = 0;
-  std::vector<std::unique_ptr<XPathElement>> elements = split(_path);
-
-  while (i < elements.size()) {
+  while (i < _elements.size()) {
     std::vector<ParseTree *> next;
-    for (auto *node : work) {
+    for (auto node : work) {
       if (!node->children.empty()) {
         // only try to match next element if it has children
         // e.g., //func/*/stat might have a token node for which
         // we can't go looking for stat nodes.
-        auto matching = elements[i]->evaluate(node);
+        auto matching = _elements[i].evaluate(node);
         next.insert(next.end(), matching.begin(), matching.end());
       }
     }

@@ -698,22 +698,27 @@ std::vector<Ref<SemanticContext>> ParserATNSimulator::getPredsForAmbigAlts(const
 }
 
 std::vector<dfa::DFAState::PredPrediction *> ParserATNSimulator::getPredicatePredictions(const antlrcpp::BitSet &ambigAlts,
-  std::vector<Ref<SemanticContext>> const& altToPred) {
-  bool containsPredicate = std::find_if(altToPred.begin(), altToPred.end(), [](Ref<SemanticContext> const context) {
-    return context != SemanticContext::NONE;
-  }) != altToPred.end();
-  if (!containsPredicate)
-    return {};
-
+  std::vector<Ref<SemanticContext>> altToPred) {
   std::vector<dfa::DFAState::PredPrediction*> pairs;
-  for (size_t i = 1; i < altToPred.size(); ++i) {
-    Ref<SemanticContext> const& pred = altToPred[i];
-    assert(pred != nullptr); // unpredicted is indicated by SemanticContext.NONE
+  bool containsPredicate = false;
+  for (size_t i = 1; i < altToPred.size(); i++) {
+    Ref<SemanticContext> pred = altToPred[i];
+
+    // unpredicted is indicated by SemanticContext.NONE
+    assert(pred != nullptr);
 
     if (ambigAlts.test(i)) {
       pairs.push_back(new dfa::DFAState::PredPrediction(pred, (int)i)); /* mem-check: managed by the DFAState it will be assigned to after return */
     }
+    if (pred != SemanticContext::NONE) {
+      containsPredicate = true;
+    }
   }
+
+  if (!containsPredicate) {
+    pairs.clear();
+  }
+
   return pairs;
 }
 
@@ -774,7 +779,7 @@ std::pair<ATNConfigSet *, ATNConfigSet *> ParserATNSimulator::splitAccordingToSe
 BitSet ParserATNSimulator::evalSemanticContext(std::vector<dfa::DFAState::PredPrediction*> predPredictions,
                                                ParserRuleContext *outerContext, bool complete) {
   BitSet predictions;
-  for (auto *prediction : predPredictions) {
+  for (auto prediction : predPredictions) {
     if (prediction->pred == SemanticContext::NONE) {
       predictions.set(prediction->alt);
       if (!complete) {
@@ -922,7 +927,7 @@ void ParserATNSimulator::closure_(Ref<ATNConfig> const& config, ATNConfigSet *co
           }
         }
 
-        configs->dipsIntoOuterContext = true; // TODO: can remove? only care when we add to set per middle of this method
+        configs->dipsIntoOuterContext = true; // TO_DO: can remove? only care when we add to set per middle of this method
         assert(newDepth > INT_MIN);
 
         newDepth--;
@@ -1348,10 +1353,6 @@ Parser* ParserATNSimulator::getParser() {
   return parser;
 }
 
-#ifdef _MSC_VER
-#pragma warning (disable:4996) // 'getenv': This function or variable may be unsafe. Consider using _dupenv_s instead.
-#endif
-
 bool ParserATNSimulator::getLrLoopSetting() {
   char *var = std::getenv("TURN_OFF_LR_LOOP_ENTRY_BRANCH_OPT");
   if (var == nullptr)
@@ -1359,10 +1360,6 @@ bool ParserATNSimulator::getLrLoopSetting() {
   std::string value(var);
   return value == "true" || value == "1";
 }
-
-#ifdef _MSC_VER
-#pragma warning (default:4996)
-#endif
 
 void ParserATNSimulator::InitializeInstanceFields() {
   _mode = PredictionMode::LL;

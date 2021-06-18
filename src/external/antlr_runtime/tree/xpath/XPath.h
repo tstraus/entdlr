@@ -61,10 +61,8 @@ namespace xpath {
     XPath(Parser *parser, const std::string &path);
     virtual ~XPath() {}
 
-    // TODO: check for invalid token/rule names, bad syntax
-    virtual std::vector<std::unique_ptr<XPathElement>> split(const std::string &path);
-
-    static std::vector<ParseTree *> findAll(ParseTree *tree, std::string const& xpath, Parser *parser);
+    // TO_DO: check for invalid token/rule names, bad syntax
+    virtual std::vector<XPathElement> split(const std::string &path);
 
     /// Return a list of all nodes starting at {@code t} as root that satisfy the
     /// path. The root {@code /} is relative to the node passed to
@@ -73,12 +71,13 @@ namespace xpath {
 
   protected:
     std::string _path;
+    std::vector<XPathElement> _elements;
     Parser *_parser;
 
     /// Convert word like {@code *} or {@code ID} or {@code expr} to a path
     /// element. {@code anywhere} is {@code true} if {@code //} precedes the
     /// word.
-    virtual std::unique_ptr<XPathElement> getXPathElement(Token *wordToken, bool anywhere);
+    virtual XPathElement getXPathElement(Token *wordToken, bool anywhere);
   };
 
 } // namespace xpath
