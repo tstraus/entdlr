@@ -1,4 +1,6 @@
 #include <iostream>
+#include <ratio>
+#include <stdexcept>
 
 #include "parser.h"
 #include "template_router.h"
@@ -16,6 +18,7 @@ int main(int argc, char** argv)
     {
         std::string template_name;
         std::string filename;
+        std::string dirname;
         std::string output_name;
         std::string include_dir;
 
@@ -24,8 +27,9 @@ int main(int argc, char** argv)
         {
             cout << "Usage: entdlr [OPTION]\n"
                  << "  -h, --help             Basic use help (this)\n"
-                 << "  -t, --template=FILE    Template file to use. Default: \"../samples/dump.wren\"\n"
+                 << "  -t, --template=FILE    Template file to use. Default: \"../samples/display.tmpl\"\n"
                  << "  -f, --file=FILE        Parse the specified file. Default: \"../samples/entity.fbs\"\n"
+                 << "  -d, --dir=DIR          Parse all files in the specified directory.\n"
                  << "  -o, --output=FILE      File to put template output in. Default: prints to STDOUT\n"
                  << "  -i, --include_dir=DIR  Directory to search for included files. Default: directory of --file" << endl;
 
@@ -34,18 +38,30 @@ int main(int argc, char** argv)
 
         args({"-t", "--template"}, "../samples/display.tmpl") >> template_name;
         args({"-f", "--file"}) >> filename;
+        args({"-d", "--dir"}) >> dirname;
         args({"-o", "--output"}) >> output_name;
         args({"-i", "--include_dir"}) >> include_dir;
 
+        if (!filename.empty() && !dirname.empty())
+        {
+            throw std::runtime_error("Only one of \"--file\" or \"--dir\" can be given from the command line");
+        }
+
+        // set the default filename
         if (filename.empty())
         {
             filename = "../samples/entity.fbs";
         }
 
         Entdlr::Context context;
-        if (!filename.empty())
+        if (!filename.empty() && dirname.empty())
         {
             context = Entdlr::Parser::parseFile(filename, include_dir);
+        }
+
+        else if (!dirname.empty())
+        {
+            context = Entdlr::Parser::parseDir(dirname, include_dir);
         }
 
         Entdlr::TemplateRouter t;
