@@ -148,6 +148,8 @@ Context Parser::merge(const std::vector<Context>& contexts)
         for (const auto& n : context.namespaces)
         {
             Namespace ns = m[n.name];
+            ns.token = TokenType::Namespace;
+            ns.name = n.name;
 
             for (const auto& e : n.enums)
             {
