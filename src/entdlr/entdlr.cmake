@@ -1,5 +1,10 @@
 set (ENTDLR_ROOT "${CMAKE_CURRENT_LIST_DIR}/../")
-set (ENTDLR_EXECUTABLE "${ENTDLR_ROOT}/bin/entdlr")
+
+if (WIN32)
+    set (ENTDLR_EXECUTABLE "${ENTDLR_ROOT}/bin/entdlr.exe")
+else ()
+    set (ENTDLR_EXECUTABLE "${ENTDLR_ROOT}/bin/entdlr")
+endif ()
 
 # Make ENTDLR parse a file
 # Setting the variable "appendTemplateFilename" to true will append the template name to the output variable name
@@ -49,11 +54,13 @@ macro (ENTDLR_DIR_TARGET TargetName DefinitionDir TemplateFile OutputFile)
         set (includeOption "-i=${optional_args}")
     endif ()
 
+    FILE (GLOB_RECURSE DEF_FILES "${DefinitionDir}/*.fbs")
+
     add_custom_command (
         OUTPUT ${OutputFile}
         COMMAND ${ENTDLR_EXECUTABLE} "-t=${TemplateFile}" "-d=${DefinitionDir}" "-o=${OutputFile}" "${includeOption}"
         VERBATIM
-        DEPENDS ${TemplateFile} ${DefinitionDir} ${ENTDLR_EXECUTABLE}
+        DEPENDS ${TemplateFile} ${DEF_FILES} ${ENTDLR_EXECUTABLE}
         COMMENT "[ENTDLR][${TargetName}]"
         WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
     )
