@@ -31,7 +31,8 @@ int main(int argc, char** argv)
                  << "  -f, --file=FILE        Parse the specified file. Default: \"../samples/entity.fbs\"\n"
                  << "  -d, --dir=DIR          Parse all files in the specified directory.\n"
                  << "  -o, --output=FILE      File to put template output in. Default: prints to STDOUT\n"
-                 << "  -i, --include_dir=DIR  Directory to search for included files. Default: directory of --file" << endl;
+                 << "  -i, --include_dir=DIR  Directory to search for included files. Default: directory of --file"
+                 << endl;
 
             return 0;
         }
@@ -74,8 +75,15 @@ int main(int argc, char** argv)
         else
         {
             std::ofstream output_file(output_name);
-            output_file << output;
-            output_file.close();
+            if (output_file.is_open())
+            {
+                output_file << output;
+                output_file.close();
+            }
+            else
+            {
+                throw std::runtime_error("Couldn't open output file " + output_name);
+            }
         }
 
         return 0;
