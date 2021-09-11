@@ -4,6 +4,7 @@
 #include "type_map.h"
 
 #include <algorithm>
+#include <cstdlib>
 #include <iostream>
 
 #ifdef __cpp_lib_filesystem
@@ -188,17 +189,45 @@ std::string InjaTemplate::applyJson(const nlohmann::json& j, const std::string& 
 
         return "unknown";
     });
+
+    // used from template to exit as failure, useful for enforcing things in templates
     env.add_callback("abort", 1, [this](inja::Arguments& args) {
         std::string reason = *args[0];
         throw std::runtime_error(std::string("Template Called Abort -> ") + reason);
 
         return "";
     });
+
+    // dump entire context to console for debugging
     env.add_callback("dump_context", 0, [this, &j](inja::Arguments& args) {
         cout << j.dump(4) << endl;
 
         return "";
     });
+
+    // get environment variable value, throws when not set
+    env.add_callback("env", 1, [this](inja::Arguments& args) {
+        const char* value = std::getenv(std::string(*args[0]).c_str());
+        if (value != nullptr)
+        {
+            return json(value);
+        }
+
+        throw std::runtime_error("Environment variable " + std::string(*args[0]) + " not set, required by template.");
+    });
+
+    // get environment variable value, with default if not set
+    env.add_callback("env_default", 2, [this](inja::Arguments& args) {
+        const char* value = std::getenv((std::string(*args[0]).c_str()));
+        if (value != nullptr)
+        {
+            return json(value);
+        }
+
+        return json(std::string(*args[1]));
+    });
+
+    // used to search for functions in wren scripts
     env.set_fallback([this](const std::string& name, const unsigned int numArgs, const inja::Arguments& args) {
         return checkWren(name, numArgs, args);
     });
