@@ -190,6 +190,18 @@ std::string InjaTemplate::applyJson(const nlohmann::json& j, const std::string& 
         return "unknown";
     });
 
+    // used from template to log to users console
+    env.add_callback("log", 2, [this](inja::Arguments& args) {
+        if (args[0]->is_string() && args[1]->is_string())
+        {
+            log(args[0]->get<std::string>(), args[1]->get<std::string>());
+
+            return "";
+        }
+
+        throw std::runtime_error("InjaTemplate::log() called with incorrect arguments");
+    });
+
     // used from template to exit as failure, useful for enforcing things in templates
     env.add_callback("abort", 1, [this](inja::Arguments& args) {
         std::string reason = *args[0];
@@ -254,21 +266,6 @@ nlohmann::json InjaTemplate::checkWren(const std::string& name, const unsigned i
         }
     }
     functionName += ")";
-
-    if (functionName == "log(_,_)")
-    {
-        if (numArgs == 2 && args[0]->is_string() && args[1]->is_string())
-        {
-            log(args[0]->get<std::string>(), args[1]->get<std::string>());
-        }
-
-        else
-        {
-            throw std::runtime_error("InjaTemplate::log() called with incorrect arguments");
-        }
-
-        return "";
-    }
 
     // get wren ready to try calling the method
     wrenEnsureSlots(vm, 1);
