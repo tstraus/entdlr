@@ -235,7 +235,7 @@ nlohmann::json InjaTemplate::checkWren(const std::string& name, const unsigned i
 
         else
         {
-            cerr << "InjaTemplate::log() called with incorrect arguments" << endl;
+            throw std::runtime_error("InjaTemplate::log() called with incorrect arguments");
         }
 
         return "";
@@ -270,8 +270,8 @@ nlohmann::json InjaTemplate::checkWren(const std::string& name, const unsigned i
             break;
 
         default:
-            cerr << "ERROR: invalid type given, " << name << " argument #" << i + 1 << endl;
-            return "";
+            throw std::runtime_error("Invalid type given from template when calling wren function " + name +
+                                     ", argument #" + std::to_string(i + 1));
         }
     }
 
@@ -302,9 +302,8 @@ nlohmann::json InjaTemplate::checkWren(const std::string& name, const unsigned i
         break;
 
     default:
-        cerr << "ERROR: Invalid return type from Wren function \"" << functionName
-             << "\", must be boolean, number, or string" << endl;
-        break;
+        throw std::runtime_error("ERROR: Invalid return type from Wren function \"" + functionName +
+                                 "\", must be boolean, number, or string");
     }
 
     return returnValue;
