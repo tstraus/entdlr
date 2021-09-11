@@ -92,16 +92,16 @@ std::string InjaTemplate::applyJson(const nlohmann::json& j, const std::string& 
     // set up wren first
     WrenConfiguration config;
     wrenInitConfiguration(&config);
-    config.writeFn = print;
-    config.errorFn = error;
-    config.loadModuleFn = loadModule;
+    config.writeFn = &print;
+    config.errorFn = &error;
+    config.loadModuleFn = &loadModule;
     vm = wrenNewVM(&config);
 
     // load the script into wren
     const auto loadResult = wrenInterpret(vm, "entdlr", functions.c_str());
     if (loadResult != WrenInterpretResult::WREN_RESULT_SUCCESS)
     {
-        return "";
+        throw std::runtime_error("Failed to parse wren scripts");
     }
 
     // cout << j.dump(true) << endl;
@@ -280,7 +280,7 @@ nlohmann::json InjaTemplate::checkWren(const std::string& name, const unsigned i
     const auto executeResult = wrenCall(vm, handle);
     if (executeResult != WrenInterpretResult::WREN_RESULT_SUCCESS)
     {
-        return "";
+        throw std::runtime_error("Failed to execute wren function " + functionName);
     }
 
     nlohmann::json returnValue;
