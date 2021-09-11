@@ -10,6 +10,15 @@ using std::endl;
 
 using namespace Entdlr;
 
+void SetEnv(const std::string& name, const std::string& value)
+{
+#ifdef WIN32
+    _putenv_s(name.c_str(), value.c_str());
+#else
+    setenv(name.c_str(), value.c_str(), 1);
+#endif
+}
+
 TEST_SUITE("InjaTemplateTests")
 {
     TEST_CASE("Basic")
@@ -154,6 +163,42 @@ class Functions {
             const auto output = t.applyString(context, inputTemplate, inputScript);
 
             CHECK(output == "did bool");
+        }
+
+        SUBCASE("EnvironmentVariable_Set")
+        {
+            SetEnv("ENTDLR_INJA_TEST_VAR_1", "asdf");
+            std::string inputTemplate = R"({{ env("ENTDLR_INJA_TEST_VAR_1") }})";
+
+            const auto output = t.applyString(context, inputTemplate);
+
+            CHECK(output == "asdf");
+        }
+
+        SUBCASE("EnvironmentVariable_ThrowsNotSet")
+        {
+            std::string inputTemplate = R"({{ env("ENTDLR_INJA_TEST_VAR_2") }})";
+
+            bool threw = false;
+            try
+            {
+                const auto output = t.applyString(context, inputTemplate);
+            }
+            catch (...)
+            {
+                threw = true;
+            }
+
+            CHECK(threw == true);
+        }
+
+        SUBCASE("EnvironmentVariable_Default")
+        {
+            std::string inputTemplate = R"({{ env_default("ENTDLR_INJA_TEST_VAR_2", "fdsa") }})";
+
+            const auto output = t.applyString(context, inputTemplate);
+
+            CHECK(output == "fdsa");
         }
     }
 }

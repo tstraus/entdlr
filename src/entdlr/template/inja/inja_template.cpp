@@ -4,6 +4,7 @@
 #include "type_map.h"
 
 #include <algorithm>
+#include <cstdlib>
 #include <iostream>
 
 #ifdef __cpp_lib_filesystem
@@ -92,16 +93,16 @@ std::string InjaTemplate::applyJson(const nlohmann::json& j, const std::string& 
     // set up wren first
     WrenConfiguration config;
     wrenInitConfiguration(&config);
-    config.writeFn = print;
-    config.errorFn = error;
-    config.loadModuleFn = loadModule;
+    config.writeFn = &print;
+    config.errorFn = &error;
+    config.loadModuleFn = &loadModule;
     vm = wrenNewVM(&config);
 
     // load the script into wren
     const auto loadResult = wrenInterpret(vm, "entdlr", functions.c_str());
     if (loadResult != WrenInterpretResult::WREN_RESULT_SUCCESS)
     {
-        return "";
+        throw std::runtime_error("Failed to parse wren scripts");
     }
 
     // cout << j.dump(true) << endl;
@@ -188,17 +189,57 @@ std::string InjaTemplate::applyJson(const nlohmann::json& j, const std::string& 
 
         return "unknown";
     });
+
+    // used from template to log to users console
+    env.add_callback("log", 2, [this](inja::Arguments& args) {
+        if (args[0]->is_string() && args[1]->is_string())
+        {
+            log(args[0]->get<std::string>(), args[1]->get<std::string>());
+
+            return "";
+        }
+
+        throw std::runtime_error("InjaTemplate::log() called with incorrect arguments");
+    });
+
+    // used from template to exit as failure, useful for enforcing things in templates
     env.add_callback("abort", 1, [this](inja::Arguments& args) {
         std::string reason = *args[0];
         throw std::runtime_error(std::string("Template Called Abort -> ") + reason);
 
         return "";
     });
+
+    // dump entire context to console for debugging
     env.add_callback("dump_context", 0, [this, &j](inja::Arguments& args) {
         cout << j.dump(4) << endl;
 
         return "";
     });
+
+    // get environment variable value, throws when not set
+    env.add_callback("env", 1, [this](inja::Arguments& args) {
+        const char* value = std::getenv(std::string(*args[0]).c_str());
+        if (value != nullptr)
+        {
+            return json(value);
+        }
+
+        throw std::runtime_error("Environment variable " + std::string(*args[0]) + " not set, required by template.");
+    });
+
+    // get environment variable value, with default if not set
+    env.add_callback("env_default", 2, [this](inja::Arguments& args) {
+        const char* value = std::getenv((std::string(*args[0]).c_str()));
+        if (value != nullptr)
+        {
+            return json(value);
+        }
+
+        return json(std::string(*args[1]));
+    });
+
+    // used to search for functions in wren scripts
     env.set_fallback([this](const std::string& name, const unsigned int numArgs, const inja::Arguments& args) {
         return checkWren(name, numArgs, args);
     });
@@ -225,21 +266,6 @@ nlohmann::json InjaTemplate::checkWren(const std::string& name, const unsigned i
         }
     }
     functionName += ")";
-
-    if (functionName == "log(_,_)")
-    {
-        if (numArgs == 2 && args[0]->is_string() && args[1]->is_string())
-        {
-            log(args[0]->get<std::string>(), args[1]->get<std::string>());
-        }
-
-        else
-        {
-            cerr << "InjaTemplate::log() called with incorrect arguments" << endl;
-        }
-
-        return "";
-    }
 
     // get wren ready to try calling the method
     wrenEnsureSlots(vm, 1);
@@ -270,8 +296,8 @@ nlohmann::json InjaTemplate::checkWren(const std::string& name, const unsigned i
             break;
 
         default:
-            cerr << "ERROR: invalid type given, " << name << " argument #" << i + 1 << endl;
-            return "";
+            throw std::runtime_error("Invalid type given from template when calling wren function " + name +
+                                     ", argument #" + std::to_string(i + 1));
         }
     }
 
@@ -280,7 +306,7 @@ nlohmann::json InjaTemplate::checkWren(const std::string& name, const unsigned i
     const auto executeResult = wrenCall(vm, handle);
     if (executeResult != WrenInterpretResult::WREN_RESULT_SUCCESS)
     {
-        return "";
+        throw std::runtime_error("Failed to execute wren function " + functionName);
     }
 
     nlohmann::json returnValue;
@@ -302,9 +328,8 @@ nlohmann::json InjaTemplate::checkWren(const std::string& name, const unsigned i
         break;
 
     default:
-        cerr << "ERROR: Invalid return type from Wren function \"" << functionName
-             << "\", must be boolean, number, or string" << endl;
-        break;
+        throw std::runtime_error("ERROR: Invalid return type from Wren function \"" + functionName +
+                                 "\", must be boolean, number, or string");
     }
 
     return returnValue;
