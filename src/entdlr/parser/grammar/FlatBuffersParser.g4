@@ -26,7 +26,7 @@ rpc_decl : RPC_SERVICE IDENT OPEN_BRACE rpc_method+ CLOSE_BRACE ;
 rpc_method : IDENT OPEN_PAREN IDENT CLOSE_PAREN COLON IDENT metadata SEMICOLON ;
 
 // overload grpc syntax for interfaces
-interface_decl : BLOCK_COMMENT? DOC_COMMENT? INTERFACE IDENT OPEN_BRACE method_decl+ CLOSE_BRACE ;
+interface_decl : BLOCK_COMMENT? DOC_COMMENT? INTERFACE IDENT metadata OPEN_BRACE method_decl+ CLOSE_BRACE ;
 
 method_decl : BLOCK_COMMENT? ( static_decl | mutable_decl )? IDENT OPEN_PAREN method_parameters CLOSE_PAREN (COLON method_return_type)? metadata SEMICOLON DOC_COMMENT? ;
 method_parameters : ( method_parameter )? ( COMMA method_parameter )* ;

@@ -3,7 +3,9 @@
 
 #include <string>
 #include <vector>
+#include <unordered_map>
 
+#include "attribute.h"
 #include "documentation.h"
 #include "token.h"
 
@@ -28,6 +30,7 @@ class Method : public Token
     bool isStatic;
     bool constant;
     std::string comment;
+    std::unordered_map<std::string, Attribute> attributes;
     Documentation documentation;
 
     static Method create(const Token& token,
@@ -35,6 +38,7 @@ class Method : public Token
                          bool returnIsReference = false,
                          bool isStatic = false,
                          bool constant = false,
+                         std::unordered_map<std::string, Attribute> attributes = {},
                          const std::string& comment = "",
                          const Documentation& documentation = {});
     void add(const Parameter& parameter);

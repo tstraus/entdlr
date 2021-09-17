@@ -647,6 +647,8 @@ Method Parser::parseMethod(FlatBuffersParser::Method_declContext* method, const 
         isConstant = false;
     }
 
+    const auto attributes = parseAttributes(method->metadata(), filename);
+
     if ((method->method_return_type() != nullptr) && (method->method_return_type()->method_type() != nullptr))
     {
         const auto& rt = method->method_return_type()->method_type();
@@ -692,6 +694,7 @@ Method Parser::parseMethod(FlatBuffersParser::Method_declContext* method, const 
                                  returnIsReference,
                                  isStatic,
                                  isConstant,
+                                 attributes,
                                  comment,
                                  documentation);
 
@@ -784,11 +787,12 @@ std::unordered_map<std::string, Attribute> Parser::parseAttributes(FlatBuffersPa
 
                 else if (scalar->HEX_INTEGER_CONSTANT() != nullptr)
                 {
-                    auto a = Attribute::create(Token::create(attribute->IDENT()->getSymbol()->getText(),
-                                                             filename,
-                                                             attribute->getStart()->getLine(),
-                                                             attribute->getStart()->getCharPositionInLine()),
-                                               (int64_t)std::stoll(scalar->HEX_INTEGER_CONSTANT()->getSymbol()->getText()));
+                    auto a =
+                        Attribute::create(Token::create(attribute->IDENT()->getSymbol()->getText(),
+                                                        filename,
+                                                        attribute->getStart()->getLine(),
+                                                        attribute->getStart()->getCharPositionInLine()),
+                                          (int64_t)std::stoll(scalar->HEX_INTEGER_CONSTANT()->getSymbol()->getText()));
                     attributes[a.name] = a;
                 }
 
@@ -837,7 +841,8 @@ std::vector<Interface> Parser::parseInterfaces(const std::vector<FlatBuffersPars
         auto f = Interface::create(Token::create(interface->IDENT()->getSymbol()->getText(),
                                                  filename,
                                                  interface->getStart()->getLine(),
-                                                 interface->getStart()->getCharPositionInLine()));
+                                                 interface->getStart()->getCharPositionInLine()),
+                                   parseAttributes(interface->metadata(), filename));
 
         if (interface->BLOCK_COMMENT() != nullptr)
         {

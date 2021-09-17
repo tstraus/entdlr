@@ -48,16 +48,16 @@ include {{include.name}}
 ## endif
 ## for name, attribute in field.attributes
 ## if attribute.isString == false and attribute.isNumber == false
-            {{attribute.name}}
+            @{{attribute.name}}
 ## endif
 ## if attribute.isString == true
-            {{attribute.name}} : {{attribute.string}}
+            @{{attribute.name}} : {{attribute.string}}
 ## endif
 ## if attribute.isNumber == true
-            {{attribute.name}} : {{attribute.number}}
+            @{{attribute.name}} : {{attribute.number}}
 ## endif
 ## if attribute.isInteger == true
-            {{attribute.name}} : {{attribute.integer}}
+            @{{attribute.name}} : {{attribute.integer}}
 ## endif
 ## endfor
 ## endfor
@@ -70,6 +70,20 @@ include {{include.name}}
 ## if method.isStatic == false
         {{method.name}} : {{method.returnType}}
 ## endif
+## for name, attribute in method.attributes
+## if attribute.isString == false and attribute.isNumber == false
+            @{{attribute.name}}
+## endif
+## if attribute.isString == true
+            @{{attribute.name}} : {{attribute.string}}
+## endif
+## if attribute.isNumber == true
+            @{{attribute.name}} : {{attribute.number}}
+## endif
+## if attribute.isInteger == true
+            @{{attribute.name}} : {{attribute.integer}}
+## endif
+## endfor
 ## for parameter in method.parameters
             {{parameter.name}} : {% if parameter.reference == true %}reference {% endif %}{% if parameter.constant == false %}mutable {% endif %}{{parameter.type}}
 ## endfor
@@ -78,6 +92,20 @@ include {{include.name}}
 ## for interface in namespace.interfaces
     /// interface : {{interface.comment}}
     {{interface.name}} : interface
+## for name, attribute in interface.attributes
+## if attribute.isString == false and attribute.isNumber == false
+        @{{attribute.name}}
+## endif
+## if attribute.isString == true
+        @{{attribute.name}} : {{attribute.string}}
+## endif
+## if attribute.isNumber == true
+        @{{attribute.name}} : {{attribute.number}}
+## endif
+## if attribute.isInteger == true
+        @{{attribute.name}} : {{attribute.integer}}
+## endif
+## endfor
 ## for method in interface.methods
         /// method : {{method.comment}}
 ## if method.isStatic == true
@@ -86,6 +114,20 @@ include {{include.name}}
 ## if method.isStatic == false
         {{method.name}} : {{method.returnType}}
 ## endif
+## for name, attribute in method.attributes
+## if attribute.isString == false and attribute.isNumber == false
+            @{{attribute.name}}
+## endif
+## if attribute.isString == true
+            @{{attribute.name}} : {{attribute.string}}
+## endif
+## if attribute.isNumber == true
+            @{{attribute.name}} : {{attribute.number}}
+## endif
+## if attribute.isInteger == true
+            @{{attribute.name}} : {{attribute.integer}}
+## endif
+## endfor
 ## for parameter in method.parameters
 ## if parameter.constant == true
             {{parameter.name}} : {{parameter.type}}

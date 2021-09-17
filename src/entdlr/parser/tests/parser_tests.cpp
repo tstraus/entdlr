@@ -499,11 +499,11 @@ TEST_SUITE("Parsing")
         {
             std::string input = R"(
                 /// interface comment
-                interface Time
+                interface Time (stateless)
                 {
                     now_a();
                     now_b(start: uint64);
-                    now_0() : time;
+                    now_0() : time (wooo);
                     now_1(start: mut uint64) : time; /// method comment
                     now_2(start: int32, end: mut uint16) : time;
                     static create(lat: angle, lon: angle, alt: length) : Position;
@@ -516,8 +516,15 @@ TEST_SUITE("Parsing")
             CHECK(f.token == TokenType::Interface);
             CHECK(f.name == "Time");
             CHECK(f.comment == "interface comment");
-            REQUIRE(f.methods.size() == 6);
 
+            REQUIRE(f.attributes.size() == 1);
+            const auto& attributes = f.attributes;
+            CHECK(attributes.begin()->second.token == TokenType::Attribute);
+            CHECK(attributes.begin()->second.name == "stateless");
+            CHECK(attributes.begin()->second.isNumber == false);
+            CHECK(attributes.begin()->second.isString == false);
+
+            REQUIRE(f.methods.size() == 6);
             const auto& ma = f.methods[0];
             CHECK(ma.token == TokenType::Method);
             CHECK(ma.name == "now_a");
@@ -538,6 +545,13 @@ TEST_SUITE("Parsing")
             CHECK(m0.name == "now_0");
             CHECK(m0.returnType == "time");
             CHECK(m0.parameters.size() == 0);
+            REQUIRE(m0.attributes.size() == 1);
+
+            const auto& m0_attributes = m0.attributes;
+            CHECK(m0_attributes.begin()->second.token == TokenType::Attribute);
+            CHECK(m0_attributes.begin()->second.name == "wooo");
+            CHECK(m0_attributes.begin()->second.isNumber == false);
+            CHECK(m0_attributes.begin()->second.isString == false);
 
             const auto& m1 = f.methods[3];
             CHECK(m1.token == TokenType::Method);

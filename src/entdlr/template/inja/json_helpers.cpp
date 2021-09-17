@@ -295,6 +295,7 @@ void to_json(json& j, const Interface& i)
              {"line", i.line},
              {"column", i.column},
              {"methods", i.methods},
+             {"attributes", i.attributes},
              {"comment", i.comment},
              {"documentation", i.documentation}};
 }
@@ -307,6 +308,7 @@ void from_json(const json& j, Interface& i)
     j.at("line").get_to(i.line);
     j.at("column").get_to(i.column);
     j.at("methods").get_to(i.methods);
+    j.at("attributes").get_to(i.attributes);
     j.at("comment").get_to(i.comment);
     j.at("documentation").get_to(i.documentation);
 }
@@ -323,6 +325,7 @@ void to_json(json& j, const Method& m)
              {"isStatic", m.isStatic},
              {"constant", m.constant},
              {"parameters", m.parameters},
+             {"attributes", m.attributes},
              {"comment", m.comment},
              {"documentation", m.documentation}};
 }
@@ -339,6 +342,7 @@ void from_json(const json& j, Method& m)
     j.at("isStatic").get_to(m.isStatic);
     j.at("constant").get_to(m.constant);
     j.at("parameters").get_to(m.parameters);
+    j.at("attributes").get_to(m.attributes);
     j.at("comment").get_to(m.comment);
     j.at("documentation").get_to(m.documentation);
 }

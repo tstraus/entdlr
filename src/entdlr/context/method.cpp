@@ -22,6 +22,7 @@ Method Method::create(const Token& token,
                       const bool returnIsReference,
                       const bool isStatic,
                       const bool constant,
+                      const std::unordered_map<std::string, Attribute> attributes,
                       const std::string& comment,
                       const Documentation& documentation)
 {
@@ -35,6 +36,7 @@ Method Method::create(const Token& token,
     out.returnIsReference = returnIsReference;
     out.isStatic = isStatic;
     out.constant = constant;
+    out.attributes = attributes;
     out.comment = comment;
     out.documentation = documentation;
 

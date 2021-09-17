@@ -13,9 +13,9 @@ struct TimeResult
     date : Date;
 }
 
-interface Time
+interface Time (neat_attribute)
 {
-    now() : TimeResult;
+    now() : TimeResult (omg);
     difference(start: time, end: mut time) : time;
 
     static isValid() : bool;

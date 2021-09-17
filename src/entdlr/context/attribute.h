@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 
-#include "method.h"
 #include "token.h"
 
 namespace Entdlr

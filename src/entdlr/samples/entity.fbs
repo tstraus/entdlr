@@ -23,7 +23,7 @@ struct DisEntityType (correlated, fanciness:6.23)
     specific : uint8;
     extra : uint8;
 
-    isSubset(other: ref DisEntityType) : bool; /// document your methods
+    isSubset(other: ref DisEntityType) : bool (awesome); /// document your methods
     static fromString(str: mut string) : DisEntityType; // or not
 }
 

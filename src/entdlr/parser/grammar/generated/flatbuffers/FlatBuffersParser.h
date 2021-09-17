@@ -1,5 +1,5 @@
 
-// Generated from FlatBuffersParser.g4 by ANTLR 4.9.1
+// Generated from FlatBuffersParser.g4 by ANTLR 4.9.2
 
 #pragma once
 
@@ -340,6 +340,7 @@ public:
     virtual size_t getRuleIndex() const override;
     antlr4::tree::TerminalNode *INTERFACE();
     antlr4::tree::TerminalNode *IDENT();
+    MetadataContext *metadata();
     antlr4::tree::TerminalNode *OPEN_BRACE();
     antlr4::tree::TerminalNode *CLOSE_BRACE();
     antlr4::tree::TerminalNode *BLOCK_COMMENT();
