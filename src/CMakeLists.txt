@@ -6,4 +6,3 @@ add_subdirectory (external)
 
 enable_testing ()
 add_subdirectory (entdlr)
-add_subdirectory (tmplj)

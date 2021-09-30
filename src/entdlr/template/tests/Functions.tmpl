@@ -1,4 +1,5 @@
-## for namespace in entdlr.namespaces
+{{ import("Functions.wren") }}
+## for namespace in fbs.namespaces
 {{ do_something(namespace.name) }}
 {{ do_more_things(namespace.line, namespace.column) }}
 {{ log("warning", "asdf") }}

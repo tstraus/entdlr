@@ -38,6 +38,3 @@ target_include_directories (${PROJECT_NAME}
     PRIVATE optional
 )
 
-install (TARGETS ${PROJECT_NAME} DESTINATION lib)
-install (FILES ${HEADERS} DESTINATION include/wren)
-

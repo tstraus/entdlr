@@ -29,6 +29,3 @@ target_link_libraries (${PROJECT_NAME}
     PUBLIC antlr4_static
 )
 
-install (TARGETS ${PROJECT_NAME} DESTINATION lib)
-install (FILES ${HEADERS} DESTINATION include/entdlr/parser)
-

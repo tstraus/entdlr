@@ -29,8 +29,5 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     )
 endif ()
 
-install (TARGETS ${PROJECT_NAME} DESTINATION lib)
-install (FILES ${HEADERS} DESTINATION include/entdlr/parser)
-
 add_subdirectory (tests)
 

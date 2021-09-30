@@ -8,6 +8,7 @@ set (TEMPLATES
     "Functions.tmpl"
     "Functions.wren"
     "Module.wren"
+    "TestFunctions.wren"
 )
 
 add_executable (${PROJECT_NAME} ${SOURCE})
@@ -15,12 +16,12 @@ add_test (NAME ${PROJECT_NAME} COMMAND ${PROJECT_NAME})
 
 target_link_libraries (${PROJECT_NAME}
     PUBLIC entdlr::parser
-    PUBLIC entdlr::template::inja
+    PUBLIC entdlr::template
     PUBLIC doctest
 )
 
-install (TARGETS ${PROJECT_NAME} DESTINATION tests)
-install (FILES ${TEMPLATES} DESTINATION tests)
+#install (TARGETS ${PROJECT_NAME} DESTINATION tests)
+#install (FILES ${TEMPLATES} DESTINATION tests)
 
 # also copy test templates to where ctest runs the tests
 foreach (TEMPLATE ${TEMPLATES})

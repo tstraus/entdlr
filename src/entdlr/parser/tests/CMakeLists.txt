@@ -12,4 +12,4 @@ target_link_libraries (${PROJECT_NAME}
     doctest
 )
 
-install (TARGETS ${PROJECT_NAME} DESTINATION tests)
+#install (TARGETS ${PROJECT_NAME} DESTINATION tests)

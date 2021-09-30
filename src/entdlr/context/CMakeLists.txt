@@ -41,6 +41,3 @@ target_include_directories (${PROJECT_NAME}
     PUBLIC ${CMAKE_CURRENT_LIST_DIR}
 )
 
-install (TARGETS ${PROJECT_NAME} DESTINATION lib)
-install (FILES ${HEADERS} DESTINATION include/entdlr/context)
-install (FILES ${UTIL} DESTINATION include/entdlr/context/util)

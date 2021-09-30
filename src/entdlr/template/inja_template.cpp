@@ -25,12 +25,14 @@ std::string scriptDir;
 
 namespace Entdlr
 {
-std::string InjaTemplate::getFileExtension() const
+std::string InjaTemplate::getFileExtension()
 {
     return ".tmpl";
 }
 
-std::string InjaTemplate::applyTemplate(const Context& context, const std::string& template_name)
+std::string InjaTemplate::applyTemplate(const Context& context,
+                                        const std::string& template_name,
+                                        const std::string& data_json_name)
 {
     // save the location for loading other scripts
     scriptDir = fs::path(template_name).parent_path().string();
@@ -61,34 +63,40 @@ std::string InjaTemplate::applyTemplate(const Context& context, const std::strin
             TypeMap typeMap(typeMapFilename);
             c = typeMap.applyMapping(context);
         }
-
-        // check for a wren file with functions in it
-        std::string functionsFilename =
-            template_name.substr(0, template_name.size() - templateExtension.size()) + ".wren";
-        if (fs::exists(functionsFilename))
-        {
-            // open and read the script
-            std::ifstream functionsFile(functionsFilename);
-            std::stringstream functions;
-            functions << functionsFile.rdbuf();
-            scriptContent = functions.str();
-        }
     }
 
     return applyString(c, tmpl.str(), scriptContent);
 }
 
-std::string InjaTemplate::applyString(const Context& context, const std::string& tmpl, const std::string& functions)
+std::string InjaTemplate::applyString(const Context& context, const std::string& tmpl, const nlohmann::json& data)
 {
     json j;
-    j["entdlr"] = context;
+    j["fbs"] = context;
+    j["json"] = data;
 
     this->context = context;
 
-    return applyJson(j, tmpl, functions);
+    return applyJson(j, tmpl);
 }
 
-std::string InjaTemplate::applyJson(const nlohmann::json& j, const std::string& tmpl, const std::string& functions)
+void InjaTemplate::loadWrenSource(const std::string& source)
+{
+    if (vm != nullptr)
+    {
+        // load the script into wren
+        const auto loadResult = wrenInterpret(vm, "entdlr", source.c_str());
+        if (loadResult != WrenInterpretResult::WREN_RESULT_SUCCESS)
+        {
+            throw std::runtime_error("Failed to parse wren scripts");
+        }
+
+        return;
+    }
+
+    throw std::runtime_error("loadWrenSource() called before initializing Wren VM");
+}
+
+std::string InjaTemplate::applyJson(const nlohmann::json& j, const std::string& tmpl)
 {
     // set up wren first
     WrenConfiguration config;
@@ -98,17 +106,34 @@ std::string InjaTemplate::applyJson(const nlohmann::json& j, const std::string& 
     config.loadModuleFn = &loadModule;
     vm = wrenNewVM(&config);
 
-    // load the script into wren
-    const auto loadResult = wrenInterpret(vm, "entdlr", functions.c_str());
-    if (loadResult != WrenInterpretResult::WREN_RESULT_SUCCESS)
-    {
-        throw std::runtime_error("Failed to parse wren scripts");
-    }
-
     // cout << j.dump(true) << endl;
     // cout << tmpl.str() << endl;
 
     inja::Environment env;
+    env.add_callback("import", 1, [this](inja::Arguments& args) {
+        if (args[0]->is_string())
+        {
+            // check for a wren file with functions in it
+            std::string wrenImportFilename = *args[0];
+            if (fs::exists(wrenImportFilename))
+            {
+                // open and read the script
+                std::ifstream functionsFile(wrenImportFilename);
+                std::stringstream functions;
+                functions << functionsFile.rdbuf();
+                const auto scriptContent = functions.str();
+
+                loadWrenSource(scriptContent);
+
+                return nlohmann::json{};
+            }
+
+            throw std::runtime_error(std::string("import(_) called with non existant file ") + wrenImportFilename);
+        }
+
+        throw std::runtime_error("import(_) called with invalid argument");
+    });
+
     env.add_callback("getTokenType", 1, [this](inja::Arguments& args) {
         std::string type = *args[0];
 

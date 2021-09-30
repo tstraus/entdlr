@@ -2,8 +2,8 @@
 #include <ratio>
 #include <stdexcept>
 
+#include "inja_template.h" // I must be included before parser.h because json and antlr don't get along
 #include "parser.h"
-#include "template_router.h"
 
 #include "util/argh.h"
 #include "util/rang.hpp"
@@ -65,7 +65,7 @@ int main(int argc, char** argv)
             context = Entdlr::Parser::parseDir(dirname, include_dir);
         }
 
-        Entdlr::TemplateRouter t;
+        Entdlr::InjaTemplate t;
         const auto output = t.applyTemplate(context, template_name);
 
         if (output_name.empty())

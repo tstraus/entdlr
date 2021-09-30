@@ -21,5 +21,4 @@ target_link_libraries (${PROJECT_NAME}
 )
 
 install (TARGETS ${PROJECT_NAME} DESTINATION bin)
-install (FILES ${HEADERS} DESTINATION include/entdlr)
 install (FILES entdlr.cmake DESTINATION cmake)
