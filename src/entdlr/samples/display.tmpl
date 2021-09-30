@@ -1,11 +1,11 @@
-## for include in entdlr.includes
+## for include in fbs.includes
 include {{include.name}}
 ## for namespace in include.namespaces
     {{namespace.name}}
 ## endfor
 ## endfor
 
-## for namespace in entdlr.namespaces
+## for namespace in fbs.namespaces
 {{namespace.name}}
 ## for enum in namespace.enums
     /// enum : {{enum.comment}}
