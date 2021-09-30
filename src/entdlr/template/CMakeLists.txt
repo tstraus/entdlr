@@ -14,7 +14,6 @@ target_include_directories (${PROJECT_NAME}
 install (FILES ${HEADERS} DESTINATION include/entdlr/template)
 
 add_subdirectory (inja)
-add_subdirectory (wren)
 
 project (entdlr_template)
 
@@ -32,7 +31,6 @@ add_library (entdlr::template ALIAS ${PROJECT_NAME})
 target_link_libraries (${PROJECT_NAME}
     PUBLIC entdlr::template::interface
     PUBLIC entdlr::template::inja
-    PUBLIC entdlr::template::wren
 )
 
 install (TARGETS ${PROJECT_NAME} DESTINATION lib)

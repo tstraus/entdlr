@@ -217,6 +217,26 @@ std::string InjaTemplate::applyJson(const nlohmann::json& j, const std::string& 
         return "";
     });
 
+    // convert float to int, useful for interacting with wren
+    env.add_callback("float_to_int", 1, [](inja::Arguments& args) {
+        if (args[0]->is_number())
+        {
+            return static_cast<std::int64_t>(*args[0]);
+        }
+
+        throw std::runtime_error("InjaTemplate::float_to_int(_) called with something other than a number");
+    });
+
+    // convert float to uint, useful for interacting with wren
+    env.add_callback("float_to_uint", 1, [](inja::Arguments& args) {
+        if (args[0]->is_number())
+        {
+            return static_cast<std::uint64_t>(*args[0]);
+        }
+
+        throw std::runtime_error("InjaTemplate::float_to_uint(_) called with something other than a number");
+    });
+
     // get environment variable value, throws when not set
     env.add_callback("env", 1, [this](inja::Arguments& args) {
         const char* value = std::getenv(std::string(*args[0]).c_str());

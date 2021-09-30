@@ -13,7 +13,6 @@ namespace fs = std::experimental::filesystem;
 #endif
 
 #include "inja_template.h"
-#include "wren_template.h"
 
 using std::cout;
 using std::endl;
@@ -23,7 +22,6 @@ namespace Entdlr
 TemplateRouter::TemplateRouter()
 {
     addTemplate<InjaTemplate>();
-    addTemplate<WrenTemplate>();
 }
 
 std::string TemplateRouter::applyTemplate(const Context& context, const std::string& template_name)
