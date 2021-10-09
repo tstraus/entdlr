@@ -17,14 +17,14 @@ macro (ENTDLR_FILE_TARGET DefinitionFile TemplateFile OutputFile)
 
     # parse option arguments
     set (optional_args ${ARGN})
-    set (includeOption "-i=")
+    set (includeOption "-i")
     if (NOT "${optional_args}" STREQUAL "")
-        set (includeOption "-i=${optional_args}")
+        set (includeOption "-i ${optional_args}")
     endif ()
 
     add_custom_command (
         OUTPUT ${OutputFile}
-        COMMAND ${ENTDLR_EXECUTABLE} "-t=${TemplateFile}" "-f=${DefinitionFile}" "-o=${OutputFile}" "${includeOption}"
+        COMMAND ${ENTDLR_EXECUTABLE} ${TemplateFile} ${DefinitionFile} "-o ${OutputFile}" "${includeOption}"
         VERBATIM
         DEPENDS ${TemplateFile} ${DefinitionFile} ${ENTDLR_EXECUTABLE}
         COMMENT "[ENTDLR][${Name}]"
@@ -49,16 +49,16 @@ macro (ENTDLR_DIR_TARGET TargetName DefinitionDir TemplateFile OutputFile)
 
     # parse option arguments
     set (optional_args ${ARGN})
-    set (includeOption "-i=")
+    set (includeOption "-i")
     if (NOT "${optional_args}" STREQUAL "")
-        set (includeOption "-i=${optional_args}")
+        set (includeOption "-i ${optional_args}")
     endif ()
 
     FILE (GLOB_RECURSE DEF_FILES "${DefinitionDir}/*.fbs")
 
     add_custom_command (
         OUTPUT ${OutputFile}
-        COMMAND ${ENTDLR_EXECUTABLE} "-t=${TemplateFile}" "-d=${DefinitionDir}" "-o=${OutputFile}" "${includeOption}"
+        COMMAND ${ENTDLR_EXECUTABLE} ${TemplateFile} "-d ${DefinitionDir}" "-o ${OutputFile}" "${includeOption}"
         VERBATIM
         DEPENDS ${TemplateFile} ${DEF_FILES} ${ENTDLR_EXECUTABLE}
         COMMENT "[ENTDLR][${TargetName}]"
