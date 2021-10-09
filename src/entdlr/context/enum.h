@@ -6,7 +6,7 @@
 #include <unordered_map>
 #include <vector>
 
-#include "util/optional.hpp"
+#include "optional.hpp"
 using nonstd::optional;
 
 #include "attribute.h"

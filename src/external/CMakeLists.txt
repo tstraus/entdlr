@@ -2,4 +2,4 @@ add_subdirectory (antlr_runtime)
 add_subdirectory (inja)
 add_subdirectory (wren)
 add_subdirectory (doctest)
-
+add_subdirectory (util)

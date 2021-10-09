@@ -1,7 +1,7 @@
 #ifndef __TYPE_MAP_H__
 #define __TYPE_MAP_H__
 
-#include "util/optional.hpp"
+#include "optional.hpp"
 #include <map>
 #include <string>
 using nonstd::optional;

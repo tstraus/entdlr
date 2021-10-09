@@ -5,8 +5,8 @@
 #include "inja_template.h" // I must be included before parser.h because json and antlr don't get along
 #include "parser.h"
 
-#include "util/argh.h"
-#include "util/rang.hpp"
+#include "CLI11.hpp"
+#include "rang.hpp"
 
 using std::cout;
 using std::endl;
@@ -22,26 +22,14 @@ int main(int argc, char** argv)
         std::string output_name;
         std::string include_dir;
 
-        argh::parser args(argv);
-        if (args[{"-h", "--help"}])
-        {
-            cout << "Usage: entdlr [OPTION]\n"
-                 << "  -h, --help             Basic use help (this)\n"
-                 << "  -t, --template=FILE    Template file to use. Default: \"../samples/display.tmpl\"\n"
-                 << "  -f, --file=FILE        Parse the specified file. Default: \"../samples/entity.fbs\"\n"
-                 << "  -d, --dir=DIR          Parse all files in the specified directory.\n"
-                 << "  -o, --output=FILE      File to put template output in. Default: prints to STDOUT\n"
-                 << "  -i, --include_dir=DIR  Directory to search for included files. Default: directory of --file"
-                 << endl;
+        CLI::App app {"entdlr"};
+        app.add_option("-t,--template", template_name, "Template file to use.")->default_val("../samples/display.tmpl");
+        app.add_option("-f,--file", filename, "Parse the specified file.")->default_val("../samples/entity.fbs");
+        app.add_option("-d,--dir", dirname, "Parse all files in the specified directory.");
+        app.add_option("-o,--output", output_name, "File to put template output in, otherwise prints to STDOUT");
+        app.add_option("-i,--include_dir", include_dir, "Directory to search for included files, otherwise directory of --file");
 
-            return 0;
-        }
-
-        args({"-t", "--template"}, "../samples/display.tmpl") >> template_name;
-        args({"-f", "--file"}) >> filename;
-        args({"-d", "--dir"}) >> dirname;
-        args({"-o", "--output"}) >> output_name;
-        args({"-i", "--include_dir"}) >> include_dir;
+        CLI11_PARSE(app, argc, argv);
 
         if (!filename.empty() && !dirname.empty())
         {
