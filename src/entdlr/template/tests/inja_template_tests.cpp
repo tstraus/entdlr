@@ -60,6 +60,30 @@ TEST_SUITE("InjaTemplateTests")
         n.add(s);
         context.add(n);
 
+        std::string scriptContent = R"asdf(
+class Functions {
+    static do_something(what) {
+        return "I did the thing -> " + what
+    }
+
+    static do_more_things(line, column) {
+        return "ERROR: (" + line.toString + ", " + column.toString + ")"
+    }
+    
+    static do_string() {
+        return "strstrstr"
+    }
+        
+    static do_number() {
+        return 1.234
+    }
+
+    static do_bool() {
+        return true
+    }
+}
+)asdf";
+
         InjaTemplate t;
 
         SUBCASE("IntegralNumberOutput")
@@ -77,9 +101,7 @@ TEST_SUITE("InjaTemplateTests")
 ## endfor
 )";
 
-            std::string inputScript;
-
-            const auto output = t.applyString(context, inputTemplate, inputScript);
+            const auto output = t.applyString(context, inputTemplate, scriptContent);
 
             CHECK(output == "\n7\n7.0\n");
         }
@@ -87,48 +109,47 @@ TEST_SUITE("InjaTemplateTests")
         SUBCASE("String")
         {
             std::string inputTemplate = R"(
-{{ import("TestFunctions.wren") }}
 ## for namespace in fbs.namespaces
 {{ do_something(namespace.name) }}
 {{ do_more_things(namespace.line, namespace.column) }}
 ## endfor
 )";
 
-            const auto output = t.applyString(context, inputTemplate);
+            const auto output = t.applyString(context, inputTemplate, scriptContent);
 
-            CHECK(output == "\n\nI did the thing -> WrenFunction\nERROR: (11, 22)\n");
+            CHECK(output == "\nI did the thing -> WrenFunction\nERROR: (11, 22)\n");
         }
 
         SUBCASE("File")
       {
-            const auto output = t.applyTemplate(context, "Functions.tmpl");
+            const auto output = t.applyTemplate(context, "Functions.tmpl", "Functions.wren");
 
-            CHECK(output == "\nI did the thing inside module -> WrenFunction\nERROR: (11, 22)\n\n\n1\n2\n");
+            CHECK(output == "nI did the thing inside module -> WrenFunction\nERROR: (11, 22)\n\n\n1\n2\n");
         }
 
         SUBCASE("ReturnString")
         {
-            std::string inputTemplate = R"({{ import("TestFunctions.wren") }}{% if do_string() == "strstrstr" %}did string{% endif %})";
+            std::string inputTemplate = R"({% if do_string() == "strstrstr" %}did string{% endif %})";
 
-            const auto output = t.applyString(context, inputTemplate);
+            const auto output = t.applyString(context, inputTemplate, scriptContent);
 
             CHECK(output == "did string");
         }
 
         SUBCASE("ReturnNumber")
         {
-            std::string inputTemplate = R"({{ import("TestFunctions.wren") }}{% if do_number() > 1.0 %}did number{% endif %})";
+            std::string inputTemplate = R"({% if do_number() > 1.0 %}did number{% endif %})";
 
-            const auto output = t.applyString(context, inputTemplate);
+            const auto output = t.applyString(context, inputTemplate, scriptContent);
 
             CHECK(output == "did number");
         }
 
         SUBCASE("ReturnBool")
         {
-            std::string inputTemplate = R"({{ import("TestFunctions.wren") }}{% if do_bool() %}did bool{% endif %})";
+            std::string inputTemplate = R"({% if do_bool() %}did bool{% endif %})";
 
-            const auto output = t.applyString(context, inputTemplate);
+            const auto output = t.applyString(context, inputTemplate, scriptContent);
 
             CHECK(output == "did bool");
         }

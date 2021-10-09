@@ -25,14 +25,10 @@ std::string scriptDir;
 
 namespace Entdlr
 {
-std::string InjaTemplate::getFileExtension()
-{
-    return ".tmpl";
-}
-
 std::string InjaTemplate::applyTemplate(const Context& context,
                                         const std::string& template_name,
-                                        const std::string& data_json_name)
+                                        const std::string& script_name,
+                                        const std::string& config_name)
 {
     // save the location for loading other scripts
     scriptDir = fs::path(template_name).parent_path().string();
@@ -46,93 +42,77 @@ std::string InjaTemplate::applyTemplate(const Context& context,
     std::stringstream tmpl;
     tmpl << templateFile.rdbuf();
 
-    auto c = context;
-
+    // load wren script content
     std::string scriptContent;
-
-    // look for helper files
-    const auto templateExtension = getFileExtension();
-    if (template_name != templateExtension && template_name.size() > templateExtension.size() &&
-        template_name.substr(template_name.size() - templateExtension.size()) == ".tmpl")
+    if (!script_name.empty() && fs::exists(script_name))
     {
-        // check for a json type map file
-        std::string typeMapFilename =
-            template_name.substr(0, template_name.size() - templateExtension.size()) + ".json";
-        if (fs::exists(typeMapFilename))
-        {
-            TypeMap typeMap(typeMapFilename);
-            c = typeMap.applyMapping(context);
-        }
+        std::ifstream functionsFile(script_name);
+        std::stringstream functions;
+        functions << functionsFile.rdbuf();
+        scriptContent = functions.str();
     }
 
-    return applyString(c, tmpl.str(), scriptContent);
+    // load config content
+    std::string configContent;
+    if (!config_name.empty() && fs::exists(config_name))
+    {
+        std::ifstream configFile(config_name);
+        std::stringstream config;
+        config << configFile.rdbuf();
+        configContent = config.str();
+    }
+
+    return applyString(context, tmpl.str(), scriptContent, configContent);
 }
 
-std::string InjaTemplate::applyString(const Context& context, const std::string& tmpl, const nlohmann::json& data)
+std::string InjaTemplate::applyString(const Context& context,
+                                      const std::string& tmpl,
+                                      const std::string& script,
+                                      const std::string& config)
 {
+    json c;
+    if (!config.empty())
+    {
+        c = json::parse(config);
+    }
+
+    return applyJson(context, tmpl, script, c);
+}
+
+std::string InjaTemplate::applyJson(const nlohmann::json& c,
+                                    const std::string& tmpl,
+                                    const std::string& script,
+                                    const nlohmann::json& config)
+{
+    context = c;
+
+    // apply a type map if configured
+    if (config.contains("type_map") && config["type_map"].is_object())
+    {
+        TypeMap typeMap(config["type_map"]);
+        this->context = typeMap.applyMapping(context);
+    }
+
     json j;
     j["fbs"] = context;
-    j["json"] = data;
 
-    this->context = context;
-
-    return applyJson(j, tmpl);
-}
-
-void InjaTemplate::loadWrenSource(const std::string& source)
-{
-    if (vm != nullptr)
+    if (config.contains("json"))
     {
-        // load the script into wren
-        const auto loadResult = wrenInterpret(vm, "entdlr", source.c_str());
-        if (loadResult != WrenInterpretResult::WREN_RESULT_SUCCESS)
-        {
-            throw std::runtime_error("Failed to parse wren scripts");
-        }
-
-        return;
+        j["json"] = config["json"];
     }
 
-    throw std::runtime_error("loadWrenSource() called before initializing Wren VM");
-}
-
-std::string InjaTemplate::applyJson(const nlohmann::json& j, const std::string& tmpl)
-{
     // set up wren first
-    WrenConfiguration config;
-    wrenInitConfiguration(&config);
-    config.writeFn = &print;
-    config.errorFn = &error;
-    config.loadModuleFn = &loadModule;
-    vm = wrenNewVM(&config);
+    WrenConfiguration wren_config;
+    wrenInitConfiguration(&wren_config);
+    wren_config.writeFn = &print;
+    wren_config.errorFn = &error;
+    wren_config.loadModuleFn = &loadModule;
+    vm = wrenNewVM(&wren_config);
 
-    // cout << j.dump(true) << endl;
-    // cout << tmpl.str() << endl;
+    loadWrenSource(script);
+
 
     inja::Environment env;
-    env.add_callback("import", 1, [this](inja::Arguments& args) {
-        if (args[0]->is_string())
-        {
-            // check for a wren file with functions in it
-            std::string wrenImportFilename = *args[0];
-            if (fs::exists(wrenImportFilename))
-            {
-                // open and read the script
-                std::ifstream functionsFile(wrenImportFilename);
-                std::stringstream functions;
-                functions << functionsFile.rdbuf();
-                const auto scriptContent = functions.str();
-
-                loadWrenSource(scriptContent);
-
-                return nlohmann::json{};
-            }
-
-            throw std::runtime_error(std::string("import(_) called with non existant file ") + wrenImportFilename);
-        }
-
-        throw std::runtime_error("import(_) called with invalid argument");
-    });
 
     env.add_callback("getTokenType", 1, [this](inja::Arguments& args) {
         std::string type = *args[0];
@@ -294,6 +274,23 @@ std::string InjaTemplate::applyJson(const nlohmann::json& j, const std::string& 
     wrenFreeVM(vm);
 
     return output;
+}
+
+void InjaTemplate::loadWrenSource(const std::string& source)
+{
+    if (vm != nullptr)
+    {
+        // load the script into wren
+        const auto loadResult = wrenInterpret(vm, "entdlr", source.c_str());
+        if (loadResult != WrenInterpretResult::WREN_RESULT_SUCCESS)
+        {
+            throw std::runtime_error("Failed to parse wren scripts");
+        }
+
+        return;
+    }
+
+    throw std::runtime_error("loadWrenSource() called before initializing Wren VM");
 }
 
 nlohmann::json InjaTemplate::checkWren(const std::string& name, const unsigned int numArgs, const inja::Arguments& args)

@@ -9,16 +9,7 @@ using nonstd::optional;
 
 namespace Entdlr
 {
-TypeMap::TypeMap(const std::string& filename)
-{
-    std::ifstream f(filename);
-    json j;
-    f >> j;
-
-    j.at("mappings").get_to(mappings);
-}
-
-TypeMap::TypeMap(const std::map<std::string, std::string>& mappings)
+TypeMap::TypeMap(const std::unordered_map<std::string, std::string>& mappings)
 {
     this->mappings = mappings;
 }

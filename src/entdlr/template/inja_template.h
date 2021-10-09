@@ -11,13 +11,11 @@ namespace Entdlr
 class InjaTemplate
 {
   public:
-    static std::string getFileExtension();
+    std::string applyTemplate(const Context& context, const std::string& template_name, const std::string& script_name = "", const std::string& config_name = "");
 
-    std::string applyTemplate(const Context& context, const std::string& template_name, const std::string& data_json_name = "");
+    std::string applyString(const Context& context, const std::string& tmpl, const std::string& script = "", const std::string& config = "");
 
-    std::string applyString(const Context& context, const std::string& tmpl, const nlohmann::json& data = {});
-
-    std::string applyJson(const nlohmann::json& j, const std::string& tmpl);
+    std::string applyJson(const nlohmann::json& c, const std::string& tmpl, const std::string& script = "", const nlohmann::json& config = {});
 
   private:
     void loadWrenSource(const std::string& source);

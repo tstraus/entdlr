@@ -19,6 +19,8 @@ int main(int argc, char** argv)
         std::string template_name;
         std::string filename;
         std::string dirname;
+        std::string wren;
+        std::string config;
         std::string output_name;
         std::string include_dir;
 
@@ -27,10 +29,14 @@ int main(int argc, char** argv)
         auto* templateOption = app.add_option("template", template_name, "Template file to use.");
         auto* fileOption = app.add_option("file", filename, "Parse the specified file.");
         auto* dirOption = app.add_option("-d,--dir", dirname, "Parse all files in the specified directory.");
+        auto* wrenOptions = app.add_option("-w,--wren", wren, "Wren functions made available in the template.");
+        auto* configOption = app.add_option("-c,--config", config, "Config file with type map and additional context");
         auto* outputOption =
             app.add_option("-o,--output", output_name, "File to put template output in, otherwise prints to STDOUT");
-        auto* includeOption = app.add_option(
-            "-i,--include_dir", include_dir, "Directory to search for included files, otherwise directory of --file");
+        auto* includeOption =
+            app.add_option("-i,--include_dir",
+                           include_dir,
+                           "Directory to search for included .fbs files, otherwise directory of file");
 
         templateOption->required();
         dirOption->excludes(fileOption);
@@ -49,7 +55,7 @@ int main(int argc, char** argv)
         }
 
         Entdlr::InjaTemplate t;
-        const auto output = t.applyTemplate(context, template_name);
+        const auto output = t.applyTemplate(context, template_name, wren, config);
 
         if (output_name.empty())
         { // no output file given, print it

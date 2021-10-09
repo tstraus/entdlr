@@ -2,7 +2,7 @@
 #define __TYPE_MAP_H__
 
 #include "optional.hpp"
-#include <map>
+#include <unordered_map>
 #include <string>
 using nonstd::optional;
 
@@ -13,9 +13,7 @@ namespace Entdlr
 class TypeMap
 {
   public:
-    TypeMap(const std::string& filename); // load a json mapping file
-
-    TypeMap(const std::map<std::string, std::string>& mappings);
+    TypeMap(const std::unordered_map<std::string, std::string>& mappings);
 
     Context applyMapping(const Context& context);
 
@@ -24,7 +22,7 @@ class TypeMap
   private:
     Namespace applyMapping(const Namespace& n);
 
-    std::map<std::string, std::string> mappings;
+    std::unordered_map<std::string, std::string> mappings;
 };
 }; // namespace Entdlr
 
