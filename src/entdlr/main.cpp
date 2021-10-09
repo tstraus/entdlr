@@ -22,33 +22,28 @@ int main(int argc, char** argv)
         std::string output_name;
         std::string include_dir;
 
-        CLI::App app {"entdlr"};
-        app.add_option("-t,--template", template_name, "Template file to use.")->default_val("../samples/display.tmpl");
-        app.add_option("-f,--file", filename, "Parse the specified file.")->default_val("../samples/entity.fbs");
-        app.add_option("-d,--dir", dirname, "Parse all files in the specified directory.");
-        app.add_option("-o,--output", output_name, "File to put template output in, otherwise prints to STDOUT");
-        app.add_option("-i,--include_dir", include_dir, "Directory to search for included files, otherwise directory of --file");
+        CLI::App app{"entdlr"};
+
+        auto* templateOption = app.add_option("template", template_name, "Template file to use.");
+        auto* fileOption = app.add_option("file", filename, "Parse the specified file.");
+        auto* dirOption = app.add_option("-d,--dir", dirname, "Parse all files in the specified directory.");
+        auto* outputOption =
+            app.add_option("-o,--output", output_name, "File to put template output in, otherwise prints to STDOUT");
+        auto* includeOption = app.add_option(
+            "-i,--include_dir", include_dir, "Directory to search for included files, otherwise directory of --file");
+
+        templateOption->required();
+        dirOption->excludes(fileOption);
 
         CLI11_PARSE(app, argc, argv);
 
-        if (!filename.empty() && !dirname.empty())
-        {
-            throw std::runtime_error("Only one of \"--file\" or \"--dir\" can be given from the command line");
-        }
-
-        // set the default filename
-        if (filename.empty())
-        {
-            filename = "../samples/entity.fbs";
-        }
-
         Entdlr::Context context;
-        if (!filename.empty() && dirname.empty())
+        if (dirname.empty())
         {
             context = Entdlr::Parser::parseFile(filename, include_dir);
         }
 
-        else if (!dirname.empty())
+        else
         {
             context = Entdlr::Parser::parseDir(dirname, include_dir);
         }
