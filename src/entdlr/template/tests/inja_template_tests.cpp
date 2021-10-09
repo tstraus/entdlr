@@ -124,7 +124,7 @@ class Functions {
       {
             const auto output = t.applyTemplate(context, "Functions.tmpl", "Functions.wren");
 
-            CHECK(output == "nI did the thing inside module -> WrenFunction\nERROR: (11, 22)\n\n\n1\n2\n");
+            CHECK(output == "I did the thing inside module -> WrenFunction\nERROR: (11, 22)\n\n\n1\n2\n");
         }
 
         SUBCASE("ReturnString")
