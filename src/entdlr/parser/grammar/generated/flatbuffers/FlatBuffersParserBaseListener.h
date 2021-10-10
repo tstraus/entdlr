@@ -76,6 +76,15 @@ public:
   virtual void enterReference_decl(FlatBuffersParser::Reference_declContext * /*ctx*/) override { }
   virtual void exitReference_decl(FlatBuffersParser::Reference_declContext * /*ctx*/) override { }
 
+  virtual void enterService_component_type(FlatBuffersParser::Service_component_typeContext * /*ctx*/) override { }
+  virtual void exitService_component_type(FlatBuffersParser::Service_component_typeContext * /*ctx*/) override { }
+
+  virtual void enterService_component_decl(FlatBuffersParser::Service_component_declContext * /*ctx*/) override { }
+  virtual void exitService_component_decl(FlatBuffersParser::Service_component_declContext * /*ctx*/) override { }
+
+  virtual void enterService_decl(FlatBuffersParser::Service_declContext * /*ctx*/) override { }
+  virtual void exitService_decl(FlatBuffersParser::Service_declContext * /*ctx*/) override { }
+
   virtual void enterType(FlatBuffersParser::TypeContext * /*ctx*/) override { }
   virtual void exitType(FlatBuffersParser::TypeContext * /*ctx*/) override { }
 

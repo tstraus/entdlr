@@ -7,6 +7,7 @@ set (SOURCE
 set (TEMPLATES
     "Functions.tmpl"
     "Functions.wren"
+    "Functions.json"
     "Module.wren"
 )
 

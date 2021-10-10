@@ -31,10 +31,16 @@ std::string InjaTemplate::applyTemplate(const Context& context,
                                         const std::string& config_name)
 {
     // save the location for loading other scripts
-    scriptDir = fs::path(template_name).parent_path().string();
+    scriptDir = fs::path(script_name).parent_path().string();
     if (scriptDir.empty())
     {
         scriptDir = "./";
+    }
+
+    // check if template file exists
+    if (!fs::exists(template_name))
+    {
+        throw std::runtime_error("Template file " + template_name + " doesn't exist");
     }
 
     // open and read the template file
@@ -44,22 +50,38 @@ std::string InjaTemplate::applyTemplate(const Context& context,
 
     // load wren script content
     std::string scriptContent;
-    if (!script_name.empty() && fs::exists(script_name))
+    if (!script_name.empty())
     {
-        std::ifstream functionsFile(script_name);
-        std::stringstream functions;
-        functions << functionsFile.rdbuf();
-        scriptContent = functions.str();
+        if (fs::exists(script_name))
+        {
+            std::ifstream functionsFile(script_name);
+            std::stringstream functions;
+            functions << functionsFile.rdbuf();
+            scriptContent = functions.str();
+        }
+
+        else
+        {
+            throw std::runtime_error("Wren script " + script_name + " doesn't exist");
+        }
     }
 
     // load config content
     std::string configContent;
-    if (!config_name.empty() && fs::exists(config_name))
+    if (!config_name.empty())
     {
-        std::ifstream configFile(config_name);
-        std::stringstream config;
-        config << configFile.rdbuf();
-        configContent = config.str();
+        if (fs::exists(config_name))
+        {
+            std::ifstream configFile(config_name);
+            std::stringstream config;
+            config << configFile.rdbuf();
+            configContent = config.str();
+        }
+
+        else
+        {
+            throw std::runtime_error("Config file " + config_name + " doesn't exist");
+        }
     }
 
     return applyString(context, tmpl.str(), scriptContent, configContent);
@@ -151,6 +173,13 @@ std::string InjaTemplate::applyJson(const nlohmann::json& c,
                     return "interface";
                 }
             }
+            for (const auto& s : n.services)
+            {
+                if (s.name == type)
+                {
+                    return "service";
+                }
+            }
         }
 
         for (const auto& i : context.includes)
@@ -187,6 +216,13 @@ std::string InjaTemplate::applyJson(const nlohmann::json& c,
                     if (i.name == type)
                     {
                         return "interface";
+                    }
+                }
+                for (const auto& s : n.services)
+                {
+                    if (s.name == type)
+                    {
+                        return "service";
                     }
                 }
             }

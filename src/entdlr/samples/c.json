@@ -1,5 +1,5 @@
 {
-    "mappings" : {
+    "type_map" : {
         "byte": "int8_t",
         "int8": "int8_t",
         "ubyte": "uint8_t",

@@ -45,6 +45,7 @@ TEST_SUITE("InjaTemplateTests")
         s.column = 81;
         Field f;
         f.name = "TestField";
+        f.type = "float64";
         f.line = 13;
         f.column = 34;
         f.isArray = true;
@@ -121,10 +122,11 @@ class Functions {
         }
 
         SUBCASE("File")
-      {
-            const auto output = t.applyTemplate(context, "Functions.tmpl", "Functions.wren");
+        {
+            const auto output = t.applyTemplate(context, "Functions.tmpl", "Functions.wren", "Functions.json");
 
-            CHECK(output == "I did the thing inside module -> WrenFunction\nERROR: (11, 22)\n\n\n1\n2\n");
+            CHECK(output ==
+                  "I did the thing inside module -> WrenFunction\nERROR: (11, 22)\n\n\n1\n2\ndouble : data\n");
         }
 
         SUBCASE("ReturnString")

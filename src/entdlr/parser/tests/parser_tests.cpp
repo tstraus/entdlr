@@ -294,6 +294,58 @@ TEST_SUITE("Parsing")
             CHECK(types[1].isArray == true);
             CHECK(types[1].arraySize == 4);
         }
+
+        SUBCASE("Service")
+        {
+            std::string input = R"(
+                namespace grid;
+
+                service SellerMonitor (type:"Stream")
+                {
+                    Trade : input (state);
+
+                    SellerMonitorJoin : register;
+                    SellerMonitorLeave : unregister;
+
+                    MonitoredTrade : stream;
+                }
+            )";
+
+            const auto context = Parser::parse(input);
+            REQUIRE(context.namespaces.size() == 1);
+
+            const auto& n = context.namespaces[0];
+            CHECK(n.token == TokenType::Namespace);
+            CHECK(n.name == "grid");
+            REQUIRE(n.services.size() == 1);
+
+            const auto& s = n.services[0];
+            CHECK(s.token == TokenType::Service);
+            CHECK(s.name == "SellerMonitor");
+            REQUIRE(s.attributes.size() == 1);
+            CHECK(s.attributes.begin()->second.isString == true);
+            CHECK(s.attributes.begin()->second.isNumber == false);
+            CHECK(s.attributes.begin()->second.isInteger == false);
+            CHECK(s.attributes.begin()->second.name == "type");
+            CHECK(s.attributes.begin()->second.string == "Stream");
+
+            const auto& components = s.components;
+            REQUIRE(components.size() == 4);
+            CHECK(components[0].token == TokenType::ServiceComponent);
+            CHECK(components[0].name == "Trade");
+            CHECK(components[0].type == "input");
+            REQUIRE(components[0].attributes.size() == 1);
+            CHECK(components[0].attributes.begin()->second.name == "state");
+            CHECK(components[1].token == TokenType::ServiceComponent);
+            CHECK(components[1].name == "SellerMonitorJoin");
+            CHECK(components[1].type == "register");
+            CHECK(components[2].token == TokenType::ServiceComponent);
+            CHECK(components[2].name == "SellerMonitorLeave");
+            CHECK(components[2].type == "unregister");
+            CHECK(components[3].token == TokenType::ServiceComponent);
+            CHECK(components[3].name == "MonitoredTrade");
+            CHECK(components[3].type == "stream");
+        }
     }
 
     TEST_CASE("Arrays")

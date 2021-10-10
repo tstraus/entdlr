@@ -52,6 +52,12 @@ void from_json(const json& j, Method& m);
 
 void to_json(json& j, const Parameter& p);
 void from_json(const json& j, Parameter& p);
+
+void to_json(json& j, const ServiceComponent& c);
+void from_json(const json& j, ServiceComponent& c);
+
+void to_json(json& j, const Service& s);
+void from_json(const json& j, Service& s);
 }; // namespace Entdlr
 
 #endif // __ENTDLR_JSON_HELPERS_H__

@@ -125,6 +125,13 @@ Context Parser::parse(const std::string& content, const std::string& filename, c
             ns.add(i);
         }
 
+        // get services defined in the file
+        const auto services = parseServices(schema->service_decl(), filename);
+        for (const auto& s : services)
+        {
+            ns.add(s);
+        }
+
         context.add(ns);
 
         return context;
@@ -865,6 +872,109 @@ std::vector<Interface> Parser::parseInterfaces(const std::vector<FlatBuffersPars
         }
 
         output.push_back(f);
+    }
+
+    return output;
+}
+
+ServiceComponent Parser::parseServiceComponent(FlatBuffersParser::Service_component_declContext* component,
+                                               const std::string& filename)
+{
+    const auto type = component->service_component_type()->IDENT()->getSymbol()->getText();
+    std::string name;
+    std::unordered_map<std::string, Attribute> attributes;
+    std::string comment;
+    Documentation documentation = {};
+
+    // plain type
+    if (component->type()->BASE_TYPE_NAME() != nullptr)
+    {
+        name = component->type()->BASE_TYPE_NAME()->getSymbol()->getText();
+    }
+
+    // namespaced type
+    else if (component->type()->ns_ident() != nullptr)
+    {
+        bool afterFirst = false;
+        for (const auto& segment : component->type()->ns_ident()->IDENT())
+        { // get the namespace separated by "::"
+            if (afterFirst)
+            {
+                name += "::";
+            }
+            else
+            {
+                afterFirst = true;
+            }
+
+            name += segment->getSymbol()->getText();
+        }
+    }
+
+    else
+    {
+        throw std::runtime_error(std::to_string(component->type()->getStart()->getLine()) + ", " +
+                                 std::to_string(component->type()->getStart()->getCharPositionInLine()) +
+                                 ": service components may not be arrays");
+    }
+
+    if (component->BLOCK_COMMENT() != nullptr)
+    {
+        if (const auto doc = parseDocumentation(component->BLOCK_COMMENT()->getSymbol()->getText()))
+        {
+            documentation = *doc;
+        }
+    }
+
+    if (component->DOC_COMMENT() != nullptr)
+    {
+        comment = trimComment(component->DOC_COMMENT()->getSymbol()->getText());
+    }
+
+    attributes = parseAttributes(component->metadata(), filename);
+
+    return ServiceComponent::create(
+        Token::create(name, filename, component->getStart()->getLine(), component->getStart()->getCharPositionInLine()),
+        type,
+        attributes,
+        comment,
+        documentation);
+}
+
+std::vector<Service> Parser::parseServices(const std::vector<FlatBuffersParser::Service_declContext*>& services,
+                                           const std::string& filename)
+{
+    std::vector<Service> output;
+
+    for (const auto& service : services)
+    {
+        auto s = Service::create(Token::create(service->IDENT()->getSymbol()->getText(),
+                                               filename,
+                                               service->getStart()->getLine(),
+                                               service->getStart()->getCharPositionInLine()));
+
+        if (service->BLOCK_COMMENT() != nullptr)
+        {
+            if (const auto doc = parseDocumentation(service->BLOCK_COMMENT()->getSymbol()->getText()))
+            {
+                s.documentation = *doc;
+            }
+        }
+
+        if (service->DOC_COMMENT() != nullptr)
+        {
+            s.comment = trimComment(service->DOC_COMMENT()->getSymbol()->getText());
+        }
+
+        s.attributes = parseAttributes(service->metadata(), filename);
+
+        // get the components of the service
+        for (const auto& c : service->service_component_decl())
+        {
+            s.add(parseServiceComponent(c, filename));
+        }
+
+        output.push_back(s);
     }
 
     return output;

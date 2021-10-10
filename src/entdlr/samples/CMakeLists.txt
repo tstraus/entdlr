@@ -10,6 +10,7 @@ set (SAMPLES
     ./namespace_test2.fbs
     ./resultinfo.fbs
     ./saveschema.fbs
+    ./service.fbs
 
     ./display.tmpl
     ./c.tmpl
@@ -18,7 +19,8 @@ set (SAMPLES
     ./c.json
     ./cpp.json
 
-    ./dump.wren
+    ./Functions.json
+    ./Functions.wren
 )
 
 install (FILES ${SAMPLES} DESTINATION samples)

@@ -4,6 +4,7 @@
 #include "enum.h"
 #include "interface.h"
 #include "struct.h"
+#include "service.h"
 #include "token.h"
 #include "union.h"
 
@@ -19,12 +20,14 @@ class Namespace : public Token
     std::vector<Union> unions;
     std::vector<Struct> structs;
     std::vector<Interface> interfaces;
+    std::vector<Service> services;
 
     static Namespace create(const Token& token);
     void add(const Enum& e);
     void add(const Union& u);
     void add(const Struct& s);
     void add(const Interface& i);
+    void add(const Service& s);
 };
 }; // namespace Entdlr
 

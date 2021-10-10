@@ -9,6 +9,10 @@ include {{include.name}}
 {{namespace.name}}
 ## for enum in namespace.enums
     /// enum : {{enum.comment}}
+      /// {{enum.documentation.description}}
+## for tag in enum.documentation.tags
+        /// {{tag.name}}: {{tag.content}}
+## endfor
     {{enum.name}} : enum ({{enum.type}})
 ## for e in enum.values
         {{e.name}} = {{e.value}}
@@ -16,6 +20,10 @@ include {{include.name}}
 ## endfor
 ## for union in namespace.unions
     /// union : {{union.comment}}
+      /// {{union.documentation.description}}
+## for tag in union.documentation.tags
+        /// {{tag.name}}: {{tag.content}}
+## endfor
     {{union.name}} : union
 ## for t in union.types
 ## if t.isArray == false
@@ -91,6 +99,10 @@ include {{include.name}}
 ## endfor
 ## for interface in namespace.interfaces
     /// interface : {{interface.comment}}
+      /// {{interface.documentation.description}}
+## for tag in interface.documentation.tags
+        /// {{tag.name}}: {{tag.content}}
+## endfor
     {{interface.name}} : interface
 ## for name, attribute in interface.attributes
 ## if attribute.isString == false and attribute.isNumber == false
@@ -138,5 +150,43 @@ include {{include.name}}
 ## endfor
 ## endfor
 ## endfor
+## for service in namespace.services
+    /// service : {{service.comment}}
+      /// {{service.documentation.description}}
+## for tag in service.documentation.tags
+        /// {{tag.name}}: {{tag.content}}
 ## endfor
-
+    {{service.name}} : service
+## for name, attribute in service.attributes
+## if attribute.isString == false and attribute.isNumber == false
+        @{{attribute.name}}
+## endif
+## if attribute.isString == true
+        @{{attribute.name}} : {{attribute.string}}
+## endif
+## if attribute.isNumber == true
+        @{{attribute.name}} : {{attribute.number}}
+## endif
+## if attribute.isInteger == true
+        @{{attribute.name}} : {{attribute.integer}}
+## endif
+## endfor
+## for component in service.components
+        {{component.name}} : {{component.type}} /// {{component.comment}}
+## for name, attribute in component.attributes
+## if attribute.isString == false and attribute.isNumber == false
+            @{{attribute.name}}
+## endif
+## if attribute.isString == true
+            @{{attribute.name}} : {{attribute.string}}
+## endif
+## if attribute.isNumber == true
+            @{{attribute.name}} : {{attribute.number}}
+## endif
+## if attribute.isInteger == true
+            @{{attribute.name}} : {{attribute.integer}}
+## endif
+## endfor
+## endfor
+## endfor
+## endfor

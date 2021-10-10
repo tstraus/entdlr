@@ -14,6 +14,6 @@ class Include : public Token
     static Include create(const Token& token);
     void add(const Namespace& n);
 };
-} // namespace Entdlr
+}; // namespace Entdlr
 
 #endif // __ENTDLR_INCLUDE_H__
