@@ -151,6 +151,13 @@ std::string InjaTemplate::applyJson(const nlohmann::json& c,
                     return "interface";
                 }
             }
+            for (const auto& s : n.services)
+            {
+                if (s.name == type)
+                {
+                    return "service";
+                }
+            }
         }
 
         for (const auto& i : context.includes)
@@ -187,6 +194,13 @@ std::string InjaTemplate::applyJson(const nlohmann::json& c,
                     if (i.name == type)
                     {
                         return "interface";
+                    }
+                }
+                for (const auto& s : n.services)
+                {
+                    if (s.name == type)
+                    {
+                        return "service";
                     }
                 }
             }

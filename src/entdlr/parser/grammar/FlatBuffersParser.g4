@@ -3,7 +3,7 @@ options { tokenVocab = FlatBuffersLexer; }
 
 // Parser rules
 
-schema : include* ( namespace_decl | type_decl | enum_decl | union_decl | root_decl | file_extension_decl | file_identifier_decl | attribute_decl | rpc_decl | interface_decl | object | BLOCK_COMMENT)* ;
+schema : include* ( namespace_decl | type_decl | enum_decl | union_decl | root_decl | file_extension_decl | file_identifier_decl | attribute_decl | rpc_decl | interface_decl | service_decl | object | BLOCK_COMMENT)* ;
 
 include : INCLUDE STRING_CONSTANT SEMICOLON ;
 
@@ -36,6 +36,10 @@ method_type : reference_decl? ( BASE_TYPE_NAME | ns_ident ) ;
 mutable_decl : MUTABLE ;
 static_decl : STATIC ;
 reference_decl : REFERENCE ;
+
+service_component_type : IDENT ;
+service_component_decl : BLOCK_COMMENT? type COLON service_component_type metadata SEMICOLON DOC_COMMENT? ;
+service_decl : BLOCK_COMMENT? DOC_COMMENT? SERVICE IDENT metadata OPEN_BRACE service_component_decl+ CLOSE_BRACE ;
 
 // fixed original grammar: allow namespaces for IDENTs
 // add fixed size arrays TSS

@@ -13,13 +13,13 @@ class  FlatBuffersParser : public antlr4::Parser {
 public:
   enum {
     INCLUDE = 1, NAMESPACE = 2, ATTRIBUTE = 3, TABLE = 4, STRUCT = 5, ENUM = 6, 
-    UNION = 7, INTERFACE = 8, MUTABLE = 9, STATIC = 10, REFERENCE = 11, 
-    ROOT_TYPE = 12, RPC_SERVICE = 13, FILE_EXTENSION = 14, FILE_IDENTIFIER = 15, 
-    STRING_CONSTANT = 16, BASE_TYPE_NAME = 17, IDENT = 18, HEX_INTEGER_CONSTANT = 19, 
-    INTEGER_CONSTANT = 20, FLOAT_CONSTANT = 21, BLOCK_COMMENT = 22, DOC_COMMENT = 23, 
-    COMMENT = 24, SEMICOLON = 25, COLON = 26, PERIOD = 27, COMMA = 28, EQUAL = 29, 
-    OPEN_BRACE = 30, CLOSE_BRACE = 31, OPEN_BRACKET = 32, CLOSE_BRACKET = 33, 
-    OPEN_PAREN = 34, CLOSE_PAREN = 35, WHITESPACE = 36
+    UNION = 7, INTERFACE = 8, SERVICE = 9, MUTABLE = 10, STATIC = 11, REFERENCE = 12, 
+    ROOT_TYPE = 13, RPC_SERVICE = 14, FILE_EXTENSION = 15, FILE_IDENTIFIER = 16, 
+    STRING_CONSTANT = 17, BASE_TYPE_NAME = 18, IDENT = 19, HEX_INTEGER_CONSTANT = 20, 
+    INTEGER_CONSTANT = 21, FLOAT_CONSTANT = 22, BLOCK_COMMENT = 23, DOC_COMMENT = 24, 
+    COMMENT = 25, SEMICOLON = 26, COLON = 27, PERIOD = 28, COMMA = 29, EQUAL = 30, 
+    OPEN_BRACE = 31, CLOSE_BRACE = 32, OPEN_BRACKET = 33, CLOSE_BRACKET = 34, 
+    OPEN_PAREN = 35, CLOSE_PAREN = 36, WHITESPACE = 37
   };
 
   enum {
@@ -28,13 +28,14 @@ public:
     RuleField_decl = 8, RuleRpc_decl = 9, RuleRpc_method = 10, RuleInterface_decl = 11, 
     RuleMethod_decl = 12, RuleMethod_parameters = 13, RuleMethod_parameter = 14, 
     RuleMethod_return_type = 15, RuleMethod_type = 16, RuleMutable_decl = 17, 
-    RuleStatic_decl = 18, RuleReference_decl = 19, RuleType = 20, RuleUniontype_decl = 21, 
-    RuleCommasep_uniontype_decl = 22, RuleEnumval_decl = 23, RuleCommasep_enumval_decl = 24, 
-    RuleIdent_with_opt_single_value = 25, RuleCommasep_ident_with_opt_single_value = 26, 
-    RuleMetadata = 27, RuleScalar = 28, RuleObject = 29, RuleIdent_with_value = 30, 
-    RuleCommasep_ident_with_value = 31, RuleSingle_value = 32, RuleValue = 33, 
-    RuleCommasep_value = 34, RuleFile_extension_decl = 35, RuleFile_identifier_decl = 36, 
-    RuleNs_ident = 37, RuleInteger_const = 38
+    RuleStatic_decl = 18, RuleReference_decl = 19, RuleService_component_type = 20, 
+    RuleService_component_decl = 21, RuleService_decl = 22, RuleType = 23, 
+    RuleUniontype_decl = 24, RuleCommasep_uniontype_decl = 25, RuleEnumval_decl = 26, 
+    RuleCommasep_enumval_decl = 27, RuleIdent_with_opt_single_value = 28, 
+    RuleCommasep_ident_with_opt_single_value = 29, RuleMetadata = 30, RuleScalar = 31, 
+    RuleObject = 32, RuleIdent_with_value = 33, RuleCommasep_ident_with_value = 34, 
+    RuleSingle_value = 35, RuleValue = 36, RuleCommasep_value = 37, RuleFile_extension_decl = 38, 
+    RuleFile_identifier_decl = 39, RuleNs_ident = 40, RuleInteger_const = 41
   };
 
   explicit FlatBuffersParser(antlr4::TokenStream *input);
@@ -67,6 +68,9 @@ public:
   class Mutable_declContext;
   class Static_declContext;
   class Reference_declContext;
+  class Service_component_typeContext;
+  class Service_component_declContext;
+  class Service_declContext;
   class TypeContext;
   class Uniontype_declContext;
   class Commasep_uniontype_declContext;
@@ -113,6 +117,8 @@ public:
     Rpc_declContext* rpc_decl(size_t i);
     std::vector<Interface_declContext *> interface_decl();
     Interface_declContext* interface_decl(size_t i);
+    std::vector<Service_declContext *> service_decl();
+    Service_declContext* service_decl(size_t i);
     std::vector<ObjectContext *> object();
     ObjectContext* object(size_t i);
     std::vector<antlr4::tree::TerminalNode *> BLOCK_COMMENT();
@@ -496,6 +502,65 @@ public:
   };
 
   Reference_declContext* reference_decl();
+
+  class  Service_component_typeContext : public antlr4::ParserRuleContext {
+  public:
+    Service_component_typeContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *IDENT();
+
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  Service_component_typeContext* service_component_type();
+
+  class  Service_component_declContext : public antlr4::ParserRuleContext {
+  public:
+    Service_component_declContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    TypeContext *type();
+    antlr4::tree::TerminalNode *COLON();
+    Service_component_typeContext *service_component_type();
+    MetadataContext *metadata();
+    antlr4::tree::TerminalNode *SEMICOLON();
+    antlr4::tree::TerminalNode *BLOCK_COMMENT();
+    antlr4::tree::TerminalNode *DOC_COMMENT();
+
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  Service_component_declContext* service_component_decl();
+
+  class  Service_declContext : public antlr4::ParserRuleContext {
+  public:
+    Service_declContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *SERVICE();
+    antlr4::tree::TerminalNode *IDENT();
+    MetadataContext *metadata();
+    antlr4::tree::TerminalNode *OPEN_BRACE();
+    antlr4::tree::TerminalNode *CLOSE_BRACE();
+    antlr4::tree::TerminalNode *BLOCK_COMMENT();
+    antlr4::tree::TerminalNode *DOC_COMMENT();
+    std::vector<Service_component_declContext *> service_component_decl();
+    Service_component_declContext* service_component_decl(size_t i);
+
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  Service_declContext* service_decl();
 
   class  TypeContext : public antlr4::ParserRuleContext {
   public:

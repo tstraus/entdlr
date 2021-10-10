@@ -10,6 +10,7 @@ set (SAMPLES
     ./namespace_test2.fbs
     ./resultinfo.fbs
     ./saveschema.fbs
+    ./service.fbs
 
     ./display.tmpl
     ./c.tmpl

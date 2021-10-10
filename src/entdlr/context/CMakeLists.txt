@@ -10,6 +10,7 @@ set (HEADERS
     method.h
     struct.h
     interface.h
+    service.h
     namespace.h
     context.h
 )
@@ -24,6 +25,7 @@ set (SOURCE
     method.cpp
     struct.cpp
     interface.cpp
+    service.cpp
     namespace.cpp
     context.cpp
 )

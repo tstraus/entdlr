@@ -95,6 +95,18 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitService_component_type(FlatBuffersParser::Service_component_typeContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitService_component_decl(FlatBuffersParser::Service_component_declContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitService_decl(FlatBuffersParser::Service_declContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitType(FlatBuffersParser::TypeContext *ctx) override {
     return visitChildren(ctx);
   }

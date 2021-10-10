@@ -16,7 +16,9 @@ class Parser
 
     static Context parseFile(const std::string& filename, const std::string& include_dir = "");
 
-    static Context parse(const std::string& content, const std::string& filename = "", const std::string& include_dir = "");
+    static Context parse(const std::string& content,
+                         const std::string& filename = "",
+                         const std::string& include_dir = "");
 
     static Context merge(const std::vector<Context>& contexts);
 
@@ -47,6 +49,12 @@ class Parser
     static std::vector<Interface> parseInterfaces(
         const std::vector<FlatBuffersParser::Interface_declContext*>& interfaces,
         const std::string& filename);
+
+    static ServiceComponent parseServiceComponent(FlatBuffersParser::Service_component_declContext* component,
+                                                  const std::string& filename);
+
+    static std::vector<Service> parseServices(const std::vector<FlatBuffersParser::Service_declContext*>& services,
+                                              const std::string& filename);
 
     static nonstd::optional<Documentation> parseDocumentation(const std::string& comment);
 

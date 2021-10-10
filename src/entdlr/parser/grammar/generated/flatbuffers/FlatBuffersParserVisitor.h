@@ -59,6 +59,12 @@ public:
 
     virtual antlrcpp::Any visitReference_decl(FlatBuffersParser::Reference_declContext *context) = 0;
 
+    virtual antlrcpp::Any visitService_component_type(FlatBuffersParser::Service_component_typeContext *context) = 0;
+
+    virtual antlrcpp::Any visitService_component_decl(FlatBuffersParser::Service_component_declContext *context) = 0;
+
+    virtual antlrcpp::Any visitService_decl(FlatBuffersParser::Service_declContext *context) = 0;
+
     virtual antlrcpp::Any visitType(FlatBuffersParser::TypeContext *context) = 0;
 
     virtual antlrcpp::Any visitUniontype_decl(FlatBuffersParser::Uniontype_declContext *context) = 0;

@@ -85,7 +85,8 @@ void to_json(json& j, const Namespace& n)
              {"enums", n.enums},
              {"unions", n.unions},
              {"structs", n.structs},
-             {"interfaces", n.interfaces}};
+             {"interfaces", n.interfaces},
+             {"services", n.services}};
 }
 
 void from_json(const json& j, Namespace& n)
@@ -99,6 +100,7 @@ void from_json(const json& j, Namespace& n)
     j.at("unions").get_to(n.unions);
     j.at("structs").get_to(n.structs);
     j.at("interfaces").get_to(n.interfaces);
+    j.at("services").get_to(n.services);
 }
 
 void to_json(json& j, const Struct& s)
@@ -369,5 +371,57 @@ void from_json(const json& j, Parameter& p)
     j.at("type").get_to(p.type);
     j.at("constant").get_to(p.constant);
     j.at("reference").get_to(p.reference);
+}
+
+void to_json(json& j, const ServiceComponent& c)
+{
+    j = json{{"token", c.token},
+             {"name", c.name},
+             {"filename", c.filename},
+             {"line", c.line},
+             {"column", c.column},
+             {"type", c.type},
+             {"attributes", c.attributes},
+             {"comment", c.comment},
+             {"documentation", c.documentation}};
+}
+
+void from_json(const json& j, ServiceComponent& c)
+{
+    j.at("token").get_to(c.token);
+    j.at("name").get_to(c.name);
+    j.at("filename").get_to(c.filename);
+    j.at("line").get_to(c.line);
+    j.at("column").get_to(c.column);
+    j.at("type").get_to(c.type);
+    j.at("attributes").get_to(c.attributes);
+    j.at("comment").get_to(c.comment);
+    j.at("documentation").get_to(c.documentation);
+}
+
+void to_json(json& j, const Service& s)
+{
+    j = json{{"token", s.token},
+             {"name", s.name},
+             {"filename", s.filename},
+             {"line", s.line},
+             {"column", s.column},
+             {"components", s.components},
+             {"attributes", s.attributes},
+             {"comment", s.comment},
+             {"documentation", s.documentation}};
+}
+
+void from_json(const json& j, Service& s)
+{
+    j.at("token").get_to(s.token);
+    j.at("name").get_to(s.name);
+    j.at("filename").get_to(s.filename);
+    j.at("line").get_to(s.line);
+    j.at("column").get_to(s.column);
+    j.at("components").get_to(s.components);
+    j.at("attributes").get_to(s.attributes);
+    j.at("comment").get_to(s.comment);
+    j.at("documentation").get_to(s.documentation);
 }
 } // namespace Entdlr

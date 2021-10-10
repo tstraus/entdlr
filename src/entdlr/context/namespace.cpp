@@ -33,4 +33,9 @@ void Namespace::add(const Interface& i)
 {
     interfaces.push_back(i);
 }
+
+void Namespace::add(const Service& s)
+{
+    services.push_back(s);
+}
 }; // namespace Entdlr

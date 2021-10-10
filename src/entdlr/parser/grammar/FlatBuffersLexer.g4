@@ -11,6 +11,7 @@ STRUCT : 'struct' ;
 ENUM : 'enum' ;
 UNION : 'union' ;
 INTERFACE : 'interface' ;
+SERVICE : 'service' ;
 
 MUTABLE : 'mut' ;
 STATIC : 'static' ;

@@ -22,6 +22,8 @@ enum class TokenType
     Field,
     Struct,
     Interface,
+    ServiceComponent,
+    Service,
     Namespace
 };
 

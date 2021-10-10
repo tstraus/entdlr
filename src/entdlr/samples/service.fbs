@@ -1,0 +1,38 @@
+namespace exchange;
+
+struct Trade
+{
+    name : string;
+    price : float64;
+    buyer : string;
+    seller : string;
+}
+
+struct SellerMonitorJoin
+{
+    user : uint64;
+    seller :  string;
+    minimumPrice : float64;
+}
+
+struct SellerMonitorLeave
+{
+    user : uint64;
+}
+
+struct MonitoredTrade
+{
+    name : string;
+    price : float64;
+    buyer : string;
+}
+
+service SellerMonitor (type:"Stream")
+{
+    Trade : input;
+
+    SellerMonitorJoin : register;
+    SellerMonitorLeave : unregister;
+
+    MonitoredTrade : stream;
+}
