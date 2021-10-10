@@ -5,4 +5,9 @@
 {{ log("error", "fdsa") }}
 {{ float_to_int(increment_state()) }}
 {{ float_to_uint(increment_state()) }}
+## for struct in namespace.structs
+## for field in struct.fields
+{{ field.type }} : {{ json.configurable }}
+## endfor
+## endfor
 ## endfor
