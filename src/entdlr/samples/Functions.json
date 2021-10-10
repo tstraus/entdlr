@@ -1,0 +1,8 @@
+{
+    "type_map": {
+        "float64": "double"
+    },
+    "json": {
+        "configurable": "data"
+    }
+}
