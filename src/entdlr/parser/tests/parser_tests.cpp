@@ -263,7 +263,7 @@ TEST_SUITE("Parsing")
         SUBCASE("Unions")
         {
             std::string input = R"(
-                namespace grid;
+                namespace grid.the_second;
 
                 union EntityIdUnion
                 {
@@ -277,7 +277,7 @@ TEST_SUITE("Parsing")
 
             const auto& n = context.namespaces[0];
             CHECK(n.token == TokenType::Namespace);
-            CHECK(n.name == "grid");
+            CHECK(n.name == "grid.the_second");
             REQUIRE(n.unions.size() == 1);
 
             const auto& u = n.unions[0];
