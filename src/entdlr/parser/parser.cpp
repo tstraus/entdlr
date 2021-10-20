@@ -243,10 +243,10 @@ Namespace Parser::parseNamespace(const std::vector<FlatBuffersParser::Namespace_
         const auto& ns = namespaces[0];
         bool afterFirst = false;
         for (const auto& segment : ns->IDENT())
-        { // make the namespace into a string separated by "::"
+        { // make the namespace into a string separated by "."
             if (afterFirst)
             {
-                output += "::";
+                output += ".";
             }
             else
             {
