@@ -8,7 +8,10 @@ add_subdirectory (parser)
 add_subdirectory (context)
 add_subdirectory (template)
 add_subdirectory (samples)
-add_subdirectory (python)
+
+if (BUILD_PY_ENTDLR)
+    add_subdirectory (python)
+endif ()
 
 project (entdlr)
 

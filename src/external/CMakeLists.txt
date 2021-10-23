@@ -3,4 +3,7 @@ add_subdirectory (inja)
 add_subdirectory (wren)
 add_subdirectory (doctest)
 add_subdirectory (util)
-add_subdirectory (pybind)
+
+if (BUILD_PY_ENTDLR)
+    add_subdirectory (pybind)
+endif ()
