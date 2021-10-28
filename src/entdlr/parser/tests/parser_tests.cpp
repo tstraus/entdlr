@@ -307,7 +307,7 @@ TEST_SUITE("Parsing")
                     SellerMonitorJoin : register;
                     SellerMonitorLeave : unregister;
 
-                    MonitoredTrade : stream;
+                    grid.trading_floor.MonitoredTrade : stream;
                 }
             )";
 
@@ -343,7 +343,7 @@ TEST_SUITE("Parsing")
             CHECK(components[2].name == "SellerMonitorLeave");
             CHECK(components[2].type == "unregister");
             CHECK(components[3].token == TokenType::ServiceComponent);
-            CHECK(components[3].name == "MonitoredTrade");
+            CHECK(components[3].name == "grid.trading_floor.MonitoredTrade");
             CHECK(components[3].type == "stream");
         }
     }
@@ -414,7 +414,7 @@ TEST_SUITE("Parsing")
                 {
                     x : float64;
                     y : float64;
-                    z : float64;
+                    z : measurements.length;
 
                     normalize(); /// method comment
                     valid() : bool;
@@ -544,7 +544,7 @@ TEST_SUITE("Parsing")
             CHECK(fields[1].type == "float64");
             CHECK(fields[2].token == TokenType::Field);
             CHECK(fields[2].name == "z");
-            CHECK(fields[2].type == "float64");
+            CHECK(fields[2].type == "measurements.length");
         }
 
         SUBCASE("Interfaces")
@@ -558,7 +558,7 @@ TEST_SUITE("Parsing")
                     now_0() : time (wooo);
                     now_1(start: mut uint64) : time; /// method comment
                     now_2(start: int32, end: mut uint16) : time;
-                    static create(lat: angle, lon: angle, alt: length) : Position;
+                    static create(lat: measurements.angle, lon: angle, alt: length) : Position;
                 }
             )";
 
@@ -634,7 +634,7 @@ TEST_SUITE("Parsing")
             CHECK(m6.isStatic == true);
             REQUIRE(m6.parameters.size() == 3);
             CHECK(m6.parameters[0].name == "lat");
-            CHECK(m6.parameters[0].type == "angle");
+            CHECK(m6.parameters[0].type == "measurements.angle");
             CHECK(m6.parameters[0].constant == true);
             CHECK(m6.parameters[1].name == "lon");
             CHECK(m6.parameters[1].type == "angle");
