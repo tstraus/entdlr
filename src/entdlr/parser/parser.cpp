@@ -416,10 +416,10 @@ std::vector<Union> Parser::parseUnions(const std::vector<FlatBuffersParser::Unio
             {
                 bool afterFirst = false;
                 for (const auto& segment : t->type()->ns_ident()->IDENT())
-                { // get the namespace separated by "::"
+                { // get the namespace separated by "."
                     if (afterFirst)
                     {
-                        type += "::";
+                        type += ".";
                     }
                     else
                     {
@@ -435,10 +435,10 @@ std::vector<Union> Parser::parseUnions(const std::vector<FlatBuffersParser::Unio
             {
                 bool afterFirst = false;
                 for (const auto& segment : t->type()->type()->ns_ident()->IDENT())
-                { // get the namespace separated by "::"
+                { // get the namespace separated by "."
                     if (afterFirst)
                     {
-                        type += "::";
+                        type += ".";
                     }
                     else
                     {
@@ -567,10 +567,10 @@ Field Parser::parseField(FlatBuffersParser::Field_declContext* field, const std:
     {
         bool afterFirst = false;
         for (const auto& segment : field->type()->ns_ident()->IDENT())
-        { // get the namespace separated by "::"
+        { // get the namespace separated by "."
             if (afterFirst)
             {
-                type += "::";
+                type += ".";
             }
             else
             {
@@ -586,10 +586,10 @@ Field Parser::parseField(FlatBuffersParser::Field_declContext* field, const std:
     {
         bool afterFirst = false;
         for (const auto& segment : field->type()->type()->ns_ident()->IDENT())
-        { // get the namespace separated by "::"
+        { // get the namespace separated by "."
             if (afterFirst)
             {
-                type += "::";
+                type += ".";
             }
             else
             {
@@ -673,10 +673,10 @@ Method Parser::parseMethod(FlatBuffersParser::Method_declContext* method, const 
         {
             bool afterFirst = false;
             for (const auto& segment : rt->ns_ident()->IDENT())
-            { // get the namespace separated by "::"
+            { // get the namespace separated by "."
                 if (afterFirst)
                 {
-                    returnType += "::";
+                    returnType += ".";
                 }
                 else
                 {
@@ -720,10 +720,10 @@ Method Parser::parseMethod(FlatBuffersParser::Method_declContext* method, const 
         {
             bool afterFirst = false;
             for (const auto& segment : p->method_type()->ns_ident()->IDENT())
-            { // get the namespace separated by "::"
+            { // get the namespace separated by "."
                 if (afterFirst)
                 {
-                    t += "::";
+                    t += ".";
                 }
                 else
                 {
@@ -897,10 +897,10 @@ ServiceComponent Parser::parseServiceComponent(FlatBuffersParser::Service_compon
     {
         bool afterFirst = false;
         for (const auto& segment : component->type()->ns_ident()->IDENT())
-        { // get the namespace separated by "::"
+        { // get the namespace separated by "."
             if (afterFirst)
             {
-                name += "::";
+                name += ".";
             }
             else
             {
