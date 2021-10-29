@@ -174,6 +174,10 @@ Context Parser::merge(const std::vector<Context>& contexts)
             {
                 ns.add(i);
             }
+            for (const auto& s : n.services)
+            {
+                ns.add(s);
+            }
 
             m[n.name] = ns;
         }
