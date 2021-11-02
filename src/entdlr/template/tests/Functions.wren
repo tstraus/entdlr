@@ -17,4 +17,8 @@ class Functions {
         GlobalState = GlobalState + 1
         return GlobalState
     }
+
+    static no_return_value() {
+        GlobalState = 0
+    }
 }

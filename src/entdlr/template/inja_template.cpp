@@ -133,7 +133,6 @@ std::string InjaTemplate::applyJson(const nlohmann::json& c,
 
     loadWrenSource(script);
 
-
     inja::Environment env;
 
     env.add_callback("getTokenType", 1, [this](inja::Arguments& args) {
@@ -403,6 +402,10 @@ nlohmann::json InjaTemplate::checkWren(const std::string& name, const unsigned i
 
     case WrenType::WREN_TYPE_STRING:
         returnValue = std::string(wrenGetSlotString(vm, 0));
+        break;
+
+    case WrenType::WREN_TYPE_NULL:
+        returnValue = nlohmann::json(nullptr);
         break;
 
     default:
