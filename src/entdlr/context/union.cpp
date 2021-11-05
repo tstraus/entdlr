@@ -7,7 +7,7 @@ using std::endl;
 
 namespace Entdlr
 {
-UnionType UnionType::create(const Token& token, const bool& isArray, const uint32_t& arraySize)
+UnionType UnionType::create(const Token& token, const bool isArray, const uint32_t arraySize)
 {
     UnionType out;
     out.token = TokenType::UnionType;

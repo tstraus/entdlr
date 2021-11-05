@@ -627,8 +627,13 @@ Field Parser::parseField(FlatBuffersParser::Field_declContext* field, const std:
 
 Method Parser::parseMethod(FlatBuffersParser::Method_declContext* method, const std::string& filename)
 {
-    std::string returnType;
-    bool returnIsReference = false;
+    Parameter returnValue;
+    returnValue.token = TokenType::Parameter;
+    returnValue.reference = false;
+    returnValue.constant = false;
+    returnValue.isArray = false;
+    returnValue.arraySize = 0;
+
     bool isStatic = false;
     bool isConstant = true;
     std::string comment;
@@ -663,46 +668,64 @@ Method Parser::parseMethod(FlatBuffersParser::Method_declContext* method, const 
     if ((method->method_return_type() != nullptr) && (method->method_return_type()->method_type() != nullptr))
     {
         const auto& rt = method->method_return_type()->method_type();
+        const auto& rtt = rt->type();
+
+        const auto returnToken = Token::create("return", filename, rtt->getStart()->getLine(), rtt->getStart()->getCharPositionInLine());
+        returnValue.name = returnToken.name;
+        returnValue.filename = returnToken.filename;
+        returnValue.line = returnToken.line;
+        returnValue.column = returnToken.column;
+
+        returnValue.constant = true;
+        if (rt->mutable_decl() != nullptr)
+        {
+            returnValue.constant = false;
+        }
 
         if (rt->reference_decl() != nullptr)
         {
-            returnIsReference = true;
+            returnValue.reference = true;
         }
 
-        if (rt->BASE_TYPE_NAME() != nullptr)
+        if (rtt->type() != nullptr)
         {
-            returnType = rt->BASE_TYPE_NAME()->getSymbol()->getText();
+            returnValue.isArray = true;
         }
-        else if (rt->ns_ident() != nullptr)
+
+        if (rtt->BASE_TYPE_NAME() != nullptr)
+        {
+            returnValue.type = rtt->BASE_TYPE_NAME()->getSymbol()->getText();
+        }
+
+        else if (rtt->ns_ident() != nullptr)
         {
             bool afterFirst = false;
-            for (const auto& segment : rt->ns_ident()->IDENT())
+            for (const auto& segment : rtt->ns_ident()->IDENT())
             { // get the namespace separated by "."
                 if (afterFirst)
                 {
-                    returnType += ".";
+                    returnValue.type += ".";
                 }
                 else
                 {
                     afterFirst = true;
                 }
 
-                returnType += segment->getSymbol()->getText();
+                returnValue.type += segment->getSymbol()->getText();
             }
         }
     }
 
     else
     {
-        returnType = "void";
+        returnValue.type = "void";
     }
 
     auto output = Method::create(Token::create(method->IDENT()->getSymbol()->getText(),
                                                filename,
                                                method->getStart()->getLine(),
                                                method->getStart()->getCharPositionInLine()),
-                                 returnType,
-                                 returnIsReference,
+                                 returnValue,
                                  isStatic,
                                  isConstant,
                                  attributes,

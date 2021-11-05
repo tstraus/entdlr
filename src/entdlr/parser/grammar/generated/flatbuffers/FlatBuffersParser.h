@@ -414,8 +414,6 @@ public:
     antlr4::tree::TerminalNode *IDENT();
     antlr4::tree::TerminalNode *COLON();
     Method_typeContext *method_type();
-    Reference_declContext *reference_decl();
-    Mutable_declContext *mutable_decl();
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
@@ -445,9 +443,9 @@ public:
   public:
     Method_typeContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
-    antlr4::tree::TerminalNode *BASE_TYPE_NAME();
-    Ns_identContext *ns_ident();
+    TypeContext *type();
     Reference_declContext *reference_decl();
+    Mutable_declContext *mutable_decl();
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
