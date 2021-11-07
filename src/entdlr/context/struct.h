@@ -24,8 +24,8 @@ class Field : public Token
 
     static Field create(const Token& token,
                         const std::string& type,
-                        const bool& isArray,
-                        const uint32_t& arraySize,
+                        bool isArray,
+                        uint32_t arraySize,
                         const std::unordered_map<std::string, Attribute>& attributes = {},
                         const std::string& comment = "",
                         const Documentation& documentation = {});

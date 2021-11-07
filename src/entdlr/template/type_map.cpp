@@ -69,9 +69,9 @@ Namespace TypeMap::applyMapping(const Namespace& n)
 
         for (auto& m : s.methods)
         {
-            if (mappings.count(m.returnType) != 0U)
+            if (mappings.count(m.returnValue.type) != 0U)
             {
-                m.returnType = mappings[m.returnType];
+                m.returnValue.type = mappings[m.returnValue.type];
             }
 
             for (auto& p : m.parameters)
@@ -88,9 +88,9 @@ Namespace TypeMap::applyMapping(const Namespace& n)
     {
         for (auto& m : i.methods)
         {
-            if (mappings.count(m.returnType) != 0U)
+            if (mappings.count(m.returnValue.type) != 0U)
             {
-                m.returnType = mappings[m.returnType];
+                m.returnValue.type = mappings[m.returnValue.type];
             }
 
             for (auto& p : m.parameters)

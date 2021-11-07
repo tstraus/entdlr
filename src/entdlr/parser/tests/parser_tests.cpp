@@ -419,7 +419,7 @@ TEST_SUITE("Parsing")
                     normalize(); /// method comment
                     valid() : bool;
                     azTo(otherPos: Position) : angle;
-                    elTo(otherPos: mut Position) : angle;
+                    elTo(otherPos: mut [Position:3]) : [angle:2];
                     between(a: ref Position, b: mut Position) : bool;
                     static create(lat: mut angle, lon: ref angle, alt: ref mut length) : ref Position;
                     mut multiply(other: float64);
@@ -437,7 +437,11 @@ TEST_SUITE("Parsing")
             const auto& m1 = s.methods[0];
             CHECK(m1.token == TokenType::Method);
             CHECK(m1.name == "normalize");
-            CHECK(m1.returnType == "void");
+            CHECK(m1.returnValue.name == "return");
+            CHECK(m1.returnValue.type == "void");
+            CHECK(m1.returnValue.constant == false);
+            CHECK(m1.returnValue.reference == false);
+            CHECK(m1.returnValue.isArray == false);
             CHECK(m1.isStatic == false);
             CHECK(m1.constant == true);
             CHECK(m1.parameters.size() == 0);
@@ -446,7 +450,7 @@ TEST_SUITE("Parsing")
             const auto& m2 = s.methods[1];
             CHECK(m2.token == TokenType::Method);
             CHECK(m2.name == "valid");
-            CHECK(m2.returnType == "bool");
+            CHECK(m2.returnValue.type == "bool");
             CHECK(m2.isStatic == false);
             CHECK(m2.constant == true);
             REQUIRE(m2.parameters.size() == 0);
@@ -454,7 +458,7 @@ TEST_SUITE("Parsing")
             const auto& m3 = s.methods[2];
             CHECK(m3.token == TokenType::Method);
             CHECK(m3.name == "azTo");
-            CHECK(m3.returnType == "angle");
+            CHECK(m3.returnValue.type == "angle");
             CHECK(m3.isStatic == false);
             CHECK(m3.constant == true);
             REQUIRE(m3.parameters.size() == 1);
@@ -467,20 +471,24 @@ TEST_SUITE("Parsing")
             const auto& m4 = s.methods[3];
             CHECK(m4.token == TokenType::Method);
             CHECK(m4.name == "elTo");
-            CHECK(m4.returnType == "angle");
+            CHECK(m4.returnValue.type == "angle");
+            CHECK(m4.returnValue.isArray == true);
+            CHECK(m4.returnValue.arraySize == 2);
             CHECK(m4.isStatic == false);
             CHECK(m4.constant == true);
             REQUIRE(m4.parameters.size() == 1);
             CHECK(m4.parameters[0].token == TokenType::Parameter);
             CHECK(m4.parameters[0].name == "otherPos");
             CHECK(m4.parameters[0].type == "Position");
+            CHECK(m4.parameters[0].isArray == true);
+            CHECK(m4.parameters[0].arraySize == 3);
             CHECK(m4.parameters[0].constant == false);
             CHECK(m4.parameters[0].reference == false);
 
             const auto& m5 = s.methods[4];
             CHECK(m5.token == TokenType::Method);
             CHECK(m5.name == "between");
-            CHECK(m5.returnType == "bool");
+            CHECK(m5.returnValue.type == "bool");
             CHECK(m5.isStatic == false);
             CHECK(m5.constant == true);
             REQUIRE(m5.parameters.size() == 2);
@@ -498,8 +506,8 @@ TEST_SUITE("Parsing")
             const auto& m6 = s.methods[5];
             CHECK(m6.token == TokenType::Method);
             CHECK(m6.name == "create");
-            CHECK(m6.returnType == "Position");
-            CHECK(m6.returnIsReference == true);
+            CHECK(m6.returnValue.type == "Position");
+            CHECK(m6.returnValue.reference == true);
             CHECK(m6.isStatic == true);
             CHECK(m6.constant == true);
             REQUIRE(m6.parameters.size() == 3);
@@ -522,8 +530,8 @@ TEST_SUITE("Parsing")
             const auto& m7 = s.methods[6];
             CHECK(m7.token == TokenType::Method);
             CHECK(m7.name == "multiply");
-            CHECK(m7.returnType == "void");
-            CHECK(m7.returnIsReference == false);
+            CHECK(m7.returnValue.type == "void");
+            CHECK(m7.returnValue.reference == false);
             CHECK(m7.isStatic == false);
             CHECK(m7.constant == false);
             REQUIRE(m7.parameters.size() == 1);
@@ -580,13 +588,13 @@ TEST_SUITE("Parsing")
             const auto& ma = f.methods[0];
             CHECK(ma.token == TokenType::Method);
             CHECK(ma.name == "now_a");
-            CHECK(ma.returnType == "void");
+            CHECK(ma.returnValue.type == "void");
             CHECK(ma.parameters.size() == 0);
 
             const auto& mb = f.methods[1];
             CHECK(mb.token == TokenType::Method);
             CHECK(mb.name == "now_b");
-            CHECK(mb.returnType == "void");
+            CHECK(mb.returnValue.type == "void");
             REQUIRE(mb.parameters.size() == 1);
             CHECK(mb.parameters[0].name == "start");
             CHECK(mb.parameters[0].type == "uint64");
@@ -595,7 +603,7 @@ TEST_SUITE("Parsing")
             const auto& m0 = f.methods[2];
             CHECK(m0.token == TokenType::Method);
             CHECK(m0.name == "now_0");
-            CHECK(m0.returnType == "time");
+            CHECK(m0.returnValue.type == "time");
             CHECK(m0.parameters.size() == 0);
             REQUIRE(m0.attributes.size() == 1);
 
@@ -608,7 +616,7 @@ TEST_SUITE("Parsing")
             const auto& m1 = f.methods[3];
             CHECK(m1.token == TokenType::Method);
             CHECK(m1.name == "now_1");
-            CHECK(m1.returnType == "time");
+            CHECK(m1.returnValue.type == "time");
             REQUIRE(m1.parameters.size() == 1);
             CHECK(m1.parameters[0].name == "start");
             CHECK(m1.parameters[0].type == "uint64");
@@ -618,7 +626,7 @@ TEST_SUITE("Parsing")
             const auto& m2 = f.methods[4];
             CHECK(m2.token == TokenType::Method);
             CHECK(m2.name == "now_2");
-            CHECK(m2.returnType == "time");
+            CHECK(m2.returnValue.type == "time");
             REQUIRE(m2.parameters.size() == 2);
             CHECK(m2.parameters[0].name == "start");
             CHECK(m2.parameters[0].type == "int32");
@@ -630,7 +638,7 @@ TEST_SUITE("Parsing")
             const auto& m6 = f.methods[5];
             CHECK(m6.token == TokenType::Method);
             CHECK(m6.name == "create");
-            CHECK(m6.returnType == "Position");
+            CHECK(m6.returnValue.type == "Position");
             CHECK(m6.isStatic == true);
             REQUIRE(m6.parameters.size() == 3);
             CHECK(m6.parameters[0].name == "lat");

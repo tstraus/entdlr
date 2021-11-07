@@ -322,8 +322,7 @@ void to_json(json& j, const Method& m)
              {"filename", m.filename},
              {"line", m.line},
              {"column", m.column},
-             {"returnType", m.returnType},
-             {"returnIsReference", m.returnIsReference},
+             {"returnValue", m.returnValue},
              {"isStatic", m.isStatic},
              {"constant", m.constant},
              {"parameters", m.parameters},
@@ -339,8 +338,7 @@ void from_json(const json& j, Method& m)
     j.at("filename").get_to(m.filename);
     j.at("line").get_to(m.line);
     j.at("column").get_to(m.column);
-    j.at("returnType").get_to(m.returnType);
-    j.at("returnIsReference").get_to(m.returnIsReference);
+    j.at("returnValue").get_to(m.returnValue);
     j.at("isStatic").get_to(m.isStatic);
     j.at("constant").get_to(m.constant);
     j.at("parameters").get_to(m.parameters);
@@ -358,7 +356,9 @@ void to_json(json& j, const Parameter& p)
              {"column", p.column},
              {"type", p.type},
              {"constant", p.constant},
-             {"reference", p.reference}};
+             {"reference", p.reference},
+             {"isArray", p.isArray},
+             {"arraySize", p.arraySize}};
 }
 
 void from_json(const json& j, Parameter& p)
@@ -371,6 +371,8 @@ void from_json(const json& j, Parameter& p)
     j.at("type").get_to(p.type);
     j.at("constant").get_to(p.constant);
     j.at("reference").get_to(p.reference);
+    j.at("isArray").get_to(p.isArray);
+    j.at("arraySize").get_to(p.arraySize);
 }
 
 void to_json(json& j, const ServiceComponent& c)
