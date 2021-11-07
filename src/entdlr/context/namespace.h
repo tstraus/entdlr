@@ -3,8 +3,8 @@
 
 #include "enum.h"
 #include "interface.h"
-#include "struct.h"
 #include "service.h"
+#include "struct.h"
 #include "token.h"
 #include "union.h"
 

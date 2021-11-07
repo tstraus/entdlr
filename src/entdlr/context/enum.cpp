@@ -8,7 +8,7 @@ using std::endl;
 
 namespace Entdlr
 {
-EnumValue EnumValue::create(const Token& token, const int64_t& value)
+EnumValue EnumValue::create(const Token& token, const int64_t value)
 {
     EnumValue out;
     out.token = TokenType::EnumValue;

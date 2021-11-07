@@ -18,7 +18,7 @@ class UnionType : public Token
     bool isArray;
     uint32_t arraySize;
 
-    static UnionType create(const Token& token, const bool& isArray, const uint32_t& arraySize);
+    static UnionType create(const Token& token, bool isArray, uint32_t arraySize);
 };
 
 class Union : public Token
