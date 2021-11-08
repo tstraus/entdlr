@@ -73,10 +73,10 @@ include {{include.name}}
 ## for method in struct.methods
         /// method : {{method.comment}}
 ## if method.isStatic == true
-        static {{method.name}} : {{method.returnType}}
+        static {{method.name}} : {{method.returnValue.type}}
 ## endif
 ## if method.isStatic == false
-        {{method.name}} : {{method.returnType}}
+        {{method.name}} : {{method.returnValue.type}}
 ## endif
 ## for name, attribute in method.attributes
 ## if attribute.isString == false and attribute.isNumber == false
@@ -121,10 +121,10 @@ include {{include.name}}
 ## for method in interface.methods
         /// method : {{method.comment}}
 ## if method.isStatic == true
-        static {{method.name}} : {{method.returnType}}
+        static {{method.name}} : {{method.returnValue.type}}
 ## endif
 ## if method.isStatic == false
-        {{method.name}} : {{method.returnType}}
+        {{method.name}} : {{method.returnValue.type}}
 ## endif
 ## for name, attribute in method.attributes
 ## if attribute.isString == false and attribute.isNumber == false
