@@ -627,8 +627,14 @@ Field Parser::parseField(FlatBuffersParser::Field_declContext* field, const std:
 
 Method Parser::parseMethod(FlatBuffersParser::Method_declContext* method, const std::string& filename)
 {
-    std::string returnType;
-    bool returnIsReference = false;
+    Parameter returnValue;
+    returnValue.token = TokenType::Parameter;
+    returnValue.name = "return";
+    returnValue.reference = false;
+    returnValue.constant = false;
+    returnValue.isArray = false;
+    returnValue.arraySize = 0;
+
     bool isStatic = false;
     bool isConstant = true;
     std::string comment;
@@ -660,49 +666,109 @@ Method Parser::parseMethod(FlatBuffersParser::Method_declContext* method, const 
 
     const auto attributes = parseAttributes(method->metadata(), filename);
 
+    // non-void method
     if ((method->method_return_type() != nullptr) && (method->method_return_type()->method_type() != nullptr))
     {
-        const auto& rt = method->method_return_type()->method_type();
+        auto* rt = method->method_return_type()->method_type();
+
+        const auto returnToken = Token::create(
+            "return", filename, rt->type()->getStart()->getLine(), rt->type()->getStart()->getCharPositionInLine());
+        returnValue.name = returnToken.name;
+        returnValue.filename = returnToken.filename;
+        returnValue.line = returnToken.line;
+        returnValue.column = returnToken.column;
+
+        returnValue.constant = false; // make return values always mutable
+        if (rt->mutable_decl() != nullptr)
+        {
+            returnValue.constant = false;
+        }
 
         if (rt->reference_decl() != nullptr)
         {
-            returnIsReference = true;
+            returnValue.reference = true;
         }
 
-        if (rt->BASE_TYPE_NAME() != nullptr)
+        // plain type
+        if (rt->type()->BASE_TYPE_NAME() != nullptr)
         {
-            returnType = rt->BASE_TYPE_NAME()->getSymbol()->getText();
+            returnValue.type = rt->type()->BASE_TYPE_NAME()->getSymbol()->getText();
         }
-        else if (rt->ns_ident() != nullptr)
+
+        // array of plain type
+        else if ((rt->type()->type() != nullptr) && (rt->type()->type()->BASE_TYPE_NAME() != nullptr))
+        {
+            returnValue.type = rt->type()->type()->BASE_TYPE_NAME()->getSymbol()->getText();
+
+            returnValue.isArray = true;
+
+            // fixed size array
+            if ((rt->type()->integer_const() != nullptr) &&
+                (rt->type()->integer_const()->INTEGER_CONSTANT() != nullptr))
+            {
+                returnValue.arraySize = std::stoul(rt->type()->integer_const()->INTEGER_CONSTANT()->getSymbol()->getText());
+            }
+        }
+
+        // namespaced type
+        else if (rt->type()->ns_ident() != nullptr)
         {
             bool afterFirst = false;
-            for (const auto& segment : rt->ns_ident()->IDENT())
+            for (const auto& segment : rt->type()->ns_ident()->IDENT())
             { // get the namespace separated by "."
                 if (afterFirst)
                 {
-                    returnType += ".";
+                    returnValue.type += ".";
                 }
                 else
                 {
                     afterFirst = true;
                 }
 
-                returnType += segment->getSymbol()->getText();
+                returnValue.type += segment->getSymbol()->getText();
+            }
+        }
+
+        // array of namespaced type
+        if ((rt->type()->type() != nullptr) && (rt->type()->type()->ns_ident() != nullptr))
+        {
+            bool afterFirst = false;
+            for (const auto& segment : rt->type()->type()->ns_ident()->IDENT())
+            { // get the namespace separated by "."
+                if (afterFirst)
+                {
+                    returnValue.type += ".";
+                }
+                else
+                {
+                    afterFirst = true;
+                }
+
+                returnValue.type += segment->getSymbol()->getText();
+            }
+
+            returnValue.isArray = true;
+
+            // fixed size array
+            if ((rt->type()->integer_const() != nullptr) &&
+                (rt->type()->integer_const()->INTEGER_CONSTANT() != nullptr))
+            {
+                returnValue.arraySize =
+                    std::stoul(rt->type()->integer_const()->INTEGER_CONSTANT()->getSymbol()->getText());
             }
         }
     }
 
     else
     {
-        returnType = "void";
+        returnValue.type = "void";
     }
 
     auto output = Method::create(Token::create(method->IDENT()->getSymbol()->getText(),
                                                filename,
                                                method->getStart()->getLine(),
                                                method->getStart()->getCharPositionInLine()),
-                                 returnType,
-                                 returnIsReference,
+                                 returnValue,
                                  isStatic,
                                  isConstant,
                                  attributes,
@@ -711,50 +777,101 @@ Method Parser::parseMethod(FlatBuffersParser::Method_declContext* method, const 
 
     for (const auto& p : method->method_parameters()->method_parameter())
     {
-        std::string t;
-        bool constant = true;
-        bool reference = false;
+        std::string type;
+        bool isArray = false;
+        bool isConstant = true;
+        bool isReference = false;
+        uint32_t arraySize = 0;
 
-        if (p->method_type()->BASE_TYPE_NAME() != nullptr)
+        auto* mt = p->method_type();
+
+        // plain type
+        if (mt->type()->BASE_TYPE_NAME() != nullptr)
         {
-            t = p->method_type()->BASE_TYPE_NAME()->getSymbol()->getText();
+            type = mt->type()->BASE_TYPE_NAME()->getSymbol()->getText();
         }
 
-        else if (p->method_type()->ns_ident() != nullptr)
+        // array of plain type
+        else if ((mt->type()->type() != nullptr) && (mt->type()->type()->BASE_TYPE_NAME() != nullptr))
+        {
+            type = mt->type()->type()->BASE_TYPE_NAME()->getSymbol()->getText();
+
+            isArray = true;
+
+            // fixed size array
+            if ((mt->type()->integer_const() != nullptr) &&
+                (mt->type()->integer_const()->INTEGER_CONSTANT() != nullptr))
+            {
+                arraySize = std::stoul(mt->type()->integer_const()->INTEGER_CONSTANT()->getSymbol()->getText());
+            }
+        }
+
+        // namespaced type
+        else if (mt->type()->ns_ident() != nullptr)
         {
             bool afterFirst = false;
-            for (const auto& segment : p->method_type()->ns_ident()->IDENT())
+            for (const auto& segment : mt->type()->ns_ident()->IDENT())
             { // get the namespace separated by "."
                 if (afterFirst)
                 {
-                    t += ".";
+                    type += ".";
                 }
                 else
                 {
                     afterFirst = true;
                 }
 
-                t += segment->getSymbol()->getText();
+                type += segment->getSymbol()->getText();
             }
         }
 
-        if (p->mutable_decl() != nullptr)
+        // array of namespaced type
+        if ((mt->type()->type() != nullptr) && (mt->type()->type()->ns_ident() != nullptr))
         {
-            constant = false;
+            bool afterFirst = false;
+            for (const auto& segment : mt->type()->type()->ns_ident()->IDENT())
+            { // get the namespace separated by "."
+                if (afterFirst)
+                {
+                    type += ".";
+                }
+                else
+                {
+                    afterFirst = true;
+                }
+
+                type += segment->getSymbol()->getText();
+            }
+
+            isArray = true;
+
+            // fixed size array
+            if ((mt->type()->integer_const() != nullptr) &&
+                (mt->type()->integer_const()->INTEGER_CONSTANT() != nullptr))
+            {
+                arraySize = std::stoul(mt->type()->integer_const()->INTEGER_CONSTANT()->getSymbol()->getText());
+            }
         }
 
-        if (p->reference_decl() != nullptr)
+        if (mt->mutable_decl() != nullptr)
         {
-            reference = true;
+            isConstant = false;
+        }
+
+        if (mt->reference_decl() != nullptr)
+        {
+            isReference = true;
         }
 
         output.add(Parameter::create(Token::create(p->IDENT()->getSymbol()->getText(),
                                                    filename,
                                                    p->getStart()->getLine(),
                                                    p->getStart()->getCharPositionInLine()),
-                                     t,
-                                     constant,
-                                     reference));
+                                     type,
+                                     isConstant,
+                                     isReference,
+                                     isArray,
+                                     arraySize));
     }
 
     return output;

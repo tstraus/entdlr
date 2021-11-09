@@ -20,7 +20,7 @@ class EnumValue : public Token
   public:
     int64_t value;
 
-    static EnumValue create(const Token& token, const int64_t& value);
+    static EnumValue create(const Token& token, int64_t value);
 };
 
 class Enum : public Token

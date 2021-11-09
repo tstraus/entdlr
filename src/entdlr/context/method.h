@@ -2,8 +2,8 @@
 #define __ENTDLR_METHOD_H__
 
 #include <string>
-#include <vector>
 #include <unordered_map>
+#include <vector>
 
 #include "attribute.h"
 #include "documentation.h"
@@ -17,15 +17,21 @@ class Parameter : public Token
     std::string type;
     bool constant;
     bool reference;
+    bool isArray;
+    uint32_t arraySize;
 
-    static Parameter create(const Token& token, const std::string& type, bool constant = true, bool reference = false);
+    static Parameter create(const Token& token,
+                            const std::string& type,
+                            bool constant = true,
+                            bool reference = false,
+                            bool isArray = false,
+                            uint32_t arraySize = 0);
 };
 
 class Method : public Token
 {
   public:
-    std::string returnType;
-    bool returnIsReference;
+    Parameter returnValue;
     std::vector<Parameter> parameters;
     bool isStatic;
     bool constant;
@@ -34,11 +40,10 @@ class Method : public Token
     Documentation documentation;
 
     static Method create(const Token& token,
-                         const std::string& returnType,
-                         bool returnIsReference = false,
+                         const Parameter& returnValue,
                          bool isStatic = false,
                          bool constant = false,
-                         std::unordered_map<std::string, Attribute> attributes = {},
+                         const std::unordered_map<std::string, Attribute>& attributes = {},
                          const std::string& comment = "",
                          const Documentation& documentation = {});
     void add(const Parameter& parameter);
