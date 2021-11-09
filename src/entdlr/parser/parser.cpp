@@ -706,7 +706,7 @@ Method Parser::parseMethod(FlatBuffersParser::Method_declContext* method, const 
             if ((rt->type()->integer_const() != nullptr) &&
                 (rt->type()->integer_const()->INTEGER_CONSTANT() != nullptr))
             {
-                returnValue.arraySize = std::stoul(rt->type()->type()->BASE_TYPE_NAME()->getSymbol()->getText());
+                returnValue.arraySize = std::stoul(rt->type()->integer_const()->INTEGER_CONSTANT()->getSymbol()->getText());
             }
         }
 
@@ -802,7 +802,7 @@ Method Parser::parseMethod(FlatBuffersParser::Method_declContext* method, const 
             if ((mt->type()->integer_const() != nullptr) &&
                 (mt->type()->integer_const()->INTEGER_CONSTANT() != nullptr))
             {
-                arraySize = std::stoul(mt->type()->type()->BASE_TYPE_NAME()->getSymbol()->getText());
+                arraySize = std::stoul(mt->type()->integer_const()->INTEGER_CONSTANT()->getSymbol()->getText());
             }
         }
 

@@ -424,6 +424,11 @@ TEST_SUITE("Parsing")
                     static create(lat: mut angle, lon: ref angle, alt: ref mut length) : ref Position;
                     mut multiply(other: float64);
                 }
+
+                interface ILos
+                {
+                    tryGetLineOfSightRow(ids : [uint64:2]) : bool;
+                };
             )";
 
             const auto context = Parser::parse(input);
