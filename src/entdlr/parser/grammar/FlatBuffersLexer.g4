@@ -13,9 +13,10 @@ UNION : 'union' ;
 INTERFACE : 'interface' ;
 SERVICE : 'service' ;
 
-MUTABLE : 'mut' ;
 STATIC : 'static' ;
-REFERENCE : 'ref' ;
+MUTABLE : 'mutable' ;
+IN : 'in' ;
+OUT : 'out' ;
 
 ROOT_TYPE : 'root_type' ;
 RPC_SERVICE : 'rpc_service' ;
