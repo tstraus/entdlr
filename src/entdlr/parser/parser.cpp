@@ -672,39 +672,39 @@ Method Parser::parseMethod(FlatBuffersParser::Method_declContext* method, const 
         auto* rt = method->type();
 
         const auto returnToken = Token::create(
-            "return", filename, rt->type()->getStart()->getLine(), rt->type()->getStart()->getCharPositionInLine());
+            "return", filename, rt->getStart()->getLine(), rt->getStart()->getCharPositionInLine());
         returnValue.name = returnToken.name;
         returnValue.filename = returnToken.filename;
         returnValue.line = returnToken.line;
         returnValue.column = returnToken.column;
 
         // plain type
-        if (rt->type()->BASE_TYPE_NAME() != nullptr)
+        if (rt->BASE_TYPE_NAME() != nullptr)
         {
-            returnValue.type = rt->type()->BASE_TYPE_NAME()->getSymbol()->getText();
+            returnValue.type = rt->BASE_TYPE_NAME()->getSymbol()->getText();
         }
 
         // array of plain type
-        else if ((rt->type()->type() != nullptr) && (rt->type()->type()->BASE_TYPE_NAME() != nullptr))
+        else if ((rt->type() != nullptr) && (rt->type()->BASE_TYPE_NAME() != nullptr))
         {
-            returnValue.type = rt->type()->type()->BASE_TYPE_NAME()->getSymbol()->getText();
+            returnValue.type = rt->type()->BASE_TYPE_NAME()->getSymbol()->getText();
 
             returnValue.isArray = true;
 
             // fixed size array
-            if ((rt->type()->integer_const() != nullptr) &&
-                (rt->type()->integer_const()->INTEGER_CONSTANT() != nullptr))
+            if ((rt->integer_const() != nullptr) &&
+                (rt->integer_const()->INTEGER_CONSTANT() != nullptr))
             {
                 returnValue.arraySize =
-                    std::stoul(rt->type()->integer_const()->INTEGER_CONSTANT()->getSymbol()->getText());
+                    std::stoul(rt->integer_const()->INTEGER_CONSTANT()->getSymbol()->getText());
             }
         }
 
         // namespaced type
-        else if (rt->type()->ns_ident() != nullptr)
+        else if (rt->ns_ident() != nullptr)
         {
             bool afterFirst = false;
-            for (const auto& segment : rt->type()->ns_ident()->IDENT())
+            for (const auto& segment : rt->ns_ident()->IDENT())
             { // get the namespace separated by "."
                 if (afterFirst)
                 {
@@ -720,10 +720,10 @@ Method Parser::parseMethod(FlatBuffersParser::Method_declContext* method, const 
         }
 
         // array of namespaced type
-        if ((rt->type()->type() != nullptr) && (rt->type()->type()->ns_ident() != nullptr))
+        if ((rt->type() != nullptr) && (rt->type()->ns_ident() != nullptr))
         {
             bool afterFirst = false;
-            for (const auto& segment : rt->type()->type()->ns_ident()->IDENT())
+            for (const auto& segment : rt->type()->ns_ident()->IDENT())
             { // get the namespace separated by "."
                 if (afterFirst)
                 {
@@ -740,11 +740,11 @@ Method Parser::parseMethod(FlatBuffersParser::Method_declContext* method, const 
             returnValue.isArray = true;
 
             // fixed size array
-            if ((rt->type()->integer_const() != nullptr) &&
-                (rt->type()->integer_const()->INTEGER_CONSTANT() != nullptr))
+            if ((rt->integer_const() != nullptr) &&
+                (rt->integer_const()->INTEGER_CONSTANT() != nullptr))
             {
                 returnValue.arraySize =
-                    std::stoul(rt->type()->integer_const()->INTEGER_CONSTANT()->getSymbol()->getText());
+                    std::stoul(rt->integer_const()->INTEGER_CONSTANT()->getSymbol()->getText());
             }
         }
     }
@@ -855,7 +855,7 @@ Method Parser::parseMethod(FlatBuffersParser::Method_declContext* method, const 
 
         if (in == out)
         {
-            throw std::runtime_error(std::to_string(mt->type() ->getStart()->getLine()) + ", " +
+            throw std::runtime_error(std::to_string(mt->type()->getStart()->getLine()) + ", " +
                                      std::to_string(mt->type()->getStart()->getCharPositionInLine()) +
                                      ": Method parameters must be either 'in' or 'out'");
         }
