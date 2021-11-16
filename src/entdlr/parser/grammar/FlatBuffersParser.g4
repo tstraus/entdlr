@@ -28,19 +28,12 @@ rpc_method : IDENT OPEN_PAREN IDENT CLOSE_PAREN COLON IDENT metadata SEMICOLON ;
 // overload grpc syntax for interfaces
 interface_decl : BLOCK_COMMENT? DOC_COMMENT? INTERFACE IDENT metadata OPEN_BRACE method_decl+ CLOSE_BRACE ;
 
-method_decl : BLOCK_COMMENT? ( static_decl | mutable_decl )? IDENT OPEN_PAREN method_parameters CLOSE_PAREN ( COLON method_return_type )? metadata SEMICOLON DOC_COMMENT? ;
+method_decl : BLOCK_COMMENT? ( STATIC | MUTABLE )? IDENT OPEN_PAREN method_parameters CLOSE_PAREN ( COLON type )? metadata SEMICOLON DOC_COMMENT? ;
 method_parameters : ( method_parameter )? ( COMMA method_parameter )* ;
-//method_parameter : IDENT COLON reference_decl? mutable_decl? method_type ;
 method_parameter : IDENT COLON method_type;
-method_return_type : method_type ;
-method_type : reference_decl? mutable_decl? type ;
-//method_type : reference_decl? ( BASE_TYPE_NAME | ns_ident ) ;
-mutable_decl : MUTABLE ;
-static_decl : STATIC ;
-reference_decl : REFERENCE ;
+method_type : IN? OUT? type ;
 
-service_component_type : IDENT ;
-service_component_decl : BLOCK_COMMENT? type COLON service_component_type metadata SEMICOLON DOC_COMMENT? ;
+service_component_decl : BLOCK_COMMENT? type COLON IDENT metadata SEMICOLON DOC_COMMENT? ;
 service_decl : BLOCK_COMMENT? DOC_COMMENT? SERVICE IDENT metadata OPEN_BRACE service_component_decl+ CLOSE_BRACE ;
 
 // fixed original grammar: allow namespaces for IDENTs

@@ -418,16 +418,16 @@ TEST_SUITE("Parsing")
 
                     normalize(); /// method comment
                     valid() : bool;
-                    azTo(otherPos: Position) : angle;
-                    elTo(otherPos: mut [Position:3]) : [angle:2];
-                    between(a: ref Position, b: mut Position) : bool;
-                    static create(lat: mut angle, lon: ref angle, alt: ref mut length) : ref Position;
-                    mut multiply(other: float64);
+                    azTo(otherPos: in Position) : angle;
+                    elTo(otherPos: out [Position:3]) : [angle:2];
+                    between(a: in Position, b: out Position) : bool;
+                    static create(lat: out angle, lon: in angle, alt: out length) : Position;
+                    mutable multiply(other: in float64);
                 }
 
                 interface ILos
                 {
-                    tryGetLineOfSightRow(ids : [uint64:2]) : bool;
+                    tryGetLineOfSightRow(ids : in [uint64:2]) : bool;
                 };
             )";
 
@@ -444,11 +444,11 @@ TEST_SUITE("Parsing")
             CHECK(m1.name == "normalize");
             CHECK(m1.returnValue.name == "return");
             CHECK(m1.returnValue.type == "void");
-            CHECK(m1.returnValue.constant == false);
-            CHECK(m1.returnValue.reference == false);
+            CHECK(m1.returnValue.in == false);
+            CHECK(m1.returnValue.out == false);
             CHECK(m1.returnValue.isArray == false);
             CHECK(m1.isStatic == false);
-            CHECK(m1.constant == true);
+            CHECK(m1.isConstant == true);
             CHECK(m1.parameters.size() == 0);
             CHECK(m1.comment == "method comment");
 
@@ -457,7 +457,7 @@ TEST_SUITE("Parsing")
             CHECK(m2.name == "valid");
             CHECK(m2.returnValue.type == "bool");
             CHECK(m2.isStatic == false);
-            CHECK(m2.constant == true);
+            CHECK(m2.isConstant == true);
             REQUIRE(m2.parameters.size() == 0);
 
             const auto& m3 = s.methods[2];
@@ -465,13 +465,13 @@ TEST_SUITE("Parsing")
             CHECK(m3.name == "azTo");
             CHECK(m3.returnValue.type == "angle");
             CHECK(m3.isStatic == false);
-            CHECK(m3.constant == true);
+            CHECK(m3.isConstant == true);
             REQUIRE(m3.parameters.size() == 1);
             CHECK(m3.parameters[0].token == TokenType::Parameter);
             CHECK(m3.parameters[0].name == "otherPos");
             CHECK(m3.parameters[0].type == "Position");
-            CHECK(m3.parameters[0].constant == true);
-            CHECK(m3.parameters[0].reference == false);
+            CHECK(m3.parameters[0].in == true);
+            CHECK(m3.parameters[0].out == false);
 
             const auto& m4 = s.methods[3];
             CHECK(m4.token == TokenType::Method);
@@ -480,71 +480,69 @@ TEST_SUITE("Parsing")
             CHECK(m4.returnValue.isArray == true);
             CHECK(m4.returnValue.arraySize == 2);
             CHECK(m4.isStatic == false);
-            CHECK(m4.constant == true);
+            CHECK(m4.isConstant == true);
             REQUIRE(m4.parameters.size() == 1);
             CHECK(m4.parameters[0].token == TokenType::Parameter);
             CHECK(m4.parameters[0].name == "otherPos");
             CHECK(m4.parameters[0].type == "Position");
             CHECK(m4.parameters[0].isArray == true);
             CHECK(m4.parameters[0].arraySize == 3);
-            CHECK(m4.parameters[0].constant == false);
-            CHECK(m4.parameters[0].reference == false);
+            CHECK(m4.parameters[0].in == false);
+            CHECK(m4.parameters[0].out == true);
 
             const auto& m5 = s.methods[4];
             CHECK(m5.token == TokenType::Method);
             CHECK(m5.name == "between");
             CHECK(m5.returnValue.type == "bool");
             CHECK(m5.isStatic == false);
-            CHECK(m5.constant == true);
+            CHECK(m5.isConstant == true);
             REQUIRE(m5.parameters.size() == 2);
             CHECK(m5.parameters[0].token == TokenType::Parameter);
             CHECK(m5.parameters[0].name == "a");
             CHECK(m5.parameters[0].type == "Position");
-            CHECK(m5.parameters[0].constant == true);
-            CHECK(m5.parameters[0].reference == true);
+            CHECK(m5.parameters[0].in == true);
+            CHECK(m5.parameters[0].out == false);
             CHECK(m5.parameters[1].token == TokenType::Parameter);
             CHECK(m5.parameters[1].name == "b");
             CHECK(m5.parameters[1].type == "Position");
-            CHECK(m5.parameters[1].constant == false);
-            CHECK(m5.parameters[1].reference == false);
+            CHECK(m5.parameters[1].in == false);
+            CHECK(m5.parameters[1].out == true);
 
             const auto& m6 = s.methods[5];
             CHECK(m6.token == TokenType::Method);
             CHECK(m6.name == "create");
             CHECK(m6.returnValue.type == "Position");
-            CHECK(m6.returnValue.reference == true);
             CHECK(m6.isStatic == true);
-            CHECK(m6.constant == true);
+            CHECK(m6.isConstant == true);
             REQUIRE(m6.parameters.size() == 3);
             CHECK(m6.parameters[0].token == TokenType::Parameter);
             CHECK(m6.parameters[0].name == "lat");
             CHECK(m6.parameters[0].type == "angle");
-            CHECK(m6.parameters[0].constant == false);
-            CHECK(m6.parameters[0].reference == false);
+            CHECK(m6.parameters[0].in == false);
+            CHECK(m6.parameters[0].out == true);
             CHECK(m6.parameters[1].token == TokenType::Parameter);
             CHECK(m6.parameters[1].name == "lon");
             CHECK(m6.parameters[1].type == "angle");
-            CHECK(m6.parameters[1].constant == true);
-            CHECK(m6.parameters[1].reference == true);
+            CHECK(m6.parameters[1].in == true);
+            CHECK(m6.parameters[1].out == false);
             CHECK(m6.parameters[2].token == TokenType::Parameter);
             CHECK(m6.parameters[2].name == "alt");
             CHECK(m6.parameters[2].type == "length");
-            CHECK(m6.parameters[2].constant == false);
-            CHECK(m6.parameters[2].reference == true);
+            CHECK(m6.parameters[2].in == false);
+            CHECK(m6.parameters[2].out == true);
 
             const auto& m7 = s.methods[6];
             CHECK(m7.token == TokenType::Method);
             CHECK(m7.name == "multiply");
             CHECK(m7.returnValue.type == "void");
-            CHECK(m7.returnValue.reference == false);
             CHECK(m7.isStatic == false);
-            CHECK(m7.constant == false);
+            CHECK(m7.isConstant == false);
             REQUIRE(m7.parameters.size() == 1);
             CHECK(m7.parameters[0].token == TokenType::Parameter);
             CHECK(m7.parameters[0].name == "other");
             CHECK(m7.parameters[0].type == "float64");
-            CHECK(m7.parameters[0].constant == true);
-            CHECK(m7.parameters[0].reference == false);
+            CHECK(m7.parameters[0].in == true);
+            CHECK(m7.parameters[0].out == false);
 
             REQUIRE(s.fields.size() == 3);
 
@@ -567,11 +565,11 @@ TEST_SUITE("Parsing")
                 interface Time (stateless)
                 {
                     now_a();
-                    now_b(start: uint64);
+                    now_b(start: in uint64);
                     now_0() : time (wooo);
-                    now_1(start: mut uint64) : time; /// method comment
-                    now_2(start: int32, end: mut uint16) : time;
-                    static create(lat: measurements.angle, lon: angle, alt: length) : Position;
+                    now_1(start: out uint64) : time; /// method comment
+                    now_2(start: in int32, end: out uint16) : time;
+                    static create(lat: in measurements.angle, lon: in angle, alt: in length) : Position;
                 }
             )";
 
@@ -603,7 +601,8 @@ TEST_SUITE("Parsing")
             REQUIRE(mb.parameters.size() == 1);
             CHECK(mb.parameters[0].name == "start");
             CHECK(mb.parameters[0].type == "uint64");
-            CHECK(mb.parameters[0].constant == true);
+            CHECK(mb.parameters[0].in == true);
+            CHECK(mb.parameters[0].out == false);
 
             const auto& m0 = f.methods[2];
             CHECK(m0.token == TokenType::Method);
@@ -625,7 +624,8 @@ TEST_SUITE("Parsing")
             REQUIRE(m1.parameters.size() == 1);
             CHECK(m1.parameters[0].name == "start");
             CHECK(m1.parameters[0].type == "uint64");
-            CHECK(m1.parameters[0].constant == false);
+            CHECK(m1.parameters[0].in == false);
+            CHECK(m1.parameters[0].out == true);
             CHECK(m1.comment == "method comment");
 
             const auto& m2 = f.methods[4];
@@ -635,10 +635,12 @@ TEST_SUITE("Parsing")
             REQUIRE(m2.parameters.size() == 2);
             CHECK(m2.parameters[0].name == "start");
             CHECK(m2.parameters[0].type == "int32");
-            CHECK(m2.parameters[0].constant == true);
+            CHECK(m2.parameters[0].in == true);
+            CHECK(m2.parameters[0].out == false);
             CHECK(m2.parameters[1].name == "end");
             CHECK(m2.parameters[1].type == "uint16");
-            CHECK(m2.parameters[1].constant == false);
+            CHECK(m2.parameters[1].in == false);
+            CHECK(m2.parameters[1].out == true);
 
             const auto& m6 = f.methods[5];
             CHECK(m6.token == TokenType::Method);
@@ -648,13 +650,16 @@ TEST_SUITE("Parsing")
             REQUIRE(m6.parameters.size() == 3);
             CHECK(m6.parameters[0].name == "lat");
             CHECK(m6.parameters[0].type == "measurements.angle");
-            CHECK(m6.parameters[0].constant == true);
+            CHECK(m6.parameters[0].in == true);
+            CHECK(m6.parameters[0].out == false);
             CHECK(m6.parameters[1].name == "lon");
             CHECK(m6.parameters[1].type == "angle");
-            CHECK(m6.parameters[1].constant == true);
+            CHECK(m6.parameters[1].in == true);
+            CHECK(m6.parameters[1].out == false);
             CHECK(m6.parameters[2].name == "alt");
             CHECK(m6.parameters[2].type == "length");
-            CHECK(m6.parameters[2].constant == true);
+            CHECK(m6.parameters[2].in == true);
+            CHECK(m6.parameters[2].out == false);
         }
     }
 }
