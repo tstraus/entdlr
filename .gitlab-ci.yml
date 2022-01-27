@@ -7,7 +7,7 @@ stages:
   - package
 
 build:
-  type: build
+  stage: build
   tags:
     - htpc
   script:
@@ -20,7 +20,7 @@ build:
       - build
 
 test:
-  type: test
+  stage: test
   tags:
     - htpc
   script:
@@ -33,7 +33,7 @@ test:
       - build
 
 package:
-  type: package
+  stage: package
   tags:
     - htpc
   script:
