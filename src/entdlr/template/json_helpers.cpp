@@ -324,7 +324,7 @@ void to_json(json& j, const Method& m)
              {"column", m.column},
              {"returnValue", m.returnValue},
              {"isStatic", m.isStatic},
-             {"constant", m.constant},
+             {"isConstant", m.isConstant},
              {"parameters", m.parameters},
              {"attributes", m.attributes},
              {"comment", m.comment},
@@ -340,7 +340,7 @@ void from_json(const json& j, Method& m)
     j.at("column").get_to(m.column);
     j.at("returnValue").get_to(m.returnValue);
     j.at("isStatic").get_to(m.isStatic);
-    j.at("constant").get_to(m.constant);
+    j.at("isConstant").get_to(m.isConstant);
     j.at("parameters").get_to(m.parameters);
     j.at("attributes").get_to(m.attributes);
     j.at("comment").get_to(m.comment);
@@ -355,8 +355,8 @@ void to_json(json& j, const Parameter& p)
              {"line", p.line},
              {"column", p.column},
              {"type", p.type},
-             {"constant", p.constant},
-             {"reference", p.reference},
+             {"in", p.in},
+             {"out", p.out},
              {"isArray", p.isArray},
              {"arraySize", p.arraySize}};
 }
@@ -369,8 +369,8 @@ void from_json(const json& j, Parameter& p)
     j.at("line").get_to(p.line);
     j.at("column").get_to(p.column);
     j.at("type").get_to(p.type);
-    j.at("constant").get_to(p.constant);
-    j.at("reference").get_to(p.reference);
+    j.at("in").get_to(p.in);
+    j.at("out").get_to(p.out);
     j.at("isArray").get_to(p.isArray);
     j.at("arraySize").get_to(p.arraySize);
 }

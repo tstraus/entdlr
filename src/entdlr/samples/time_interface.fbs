@@ -16,7 +16,7 @@ struct TimeResult
 interface Time (neat_attribute)
 {
     now() : TimeResult (omg);
-    difference(start: time, end: mut time) : time;
+    difference(start: in time, end: out time) : time;
 
     static isValid() : bool;
 }

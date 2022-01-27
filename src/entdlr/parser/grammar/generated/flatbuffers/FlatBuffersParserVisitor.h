@@ -1,5 +1,5 @@
 
-// Generated from FlatBuffersParser.g4 by ANTLR 4.9.2
+// Generated from FlatBuffersParser.g4 by ANTLR 4.9.3
 
 #pragma once
 
@@ -49,17 +49,7 @@ public:
 
     virtual antlrcpp::Any visitMethod_parameter(FlatBuffersParser::Method_parameterContext *context) = 0;
 
-    virtual antlrcpp::Any visitMethod_return_type(FlatBuffersParser::Method_return_typeContext *context) = 0;
-
     virtual antlrcpp::Any visitMethod_type(FlatBuffersParser::Method_typeContext *context) = 0;
-
-    virtual antlrcpp::Any visitMutable_decl(FlatBuffersParser::Mutable_declContext *context) = 0;
-
-    virtual antlrcpp::Any visitStatic_decl(FlatBuffersParser::Static_declContext *context) = 0;
-
-    virtual antlrcpp::Any visitReference_decl(FlatBuffersParser::Reference_declContext *context) = 0;
-
-    virtual antlrcpp::Any visitService_component_type(FlatBuffersParser::Service_component_typeContext *context) = 0;
 
     virtual antlrcpp::Any visitService_component_decl(FlatBuffersParser::Service_component_declContext *context) = 0;
 

@@ -15,15 +15,15 @@ class Parameter : public Token
 {
   public:
     std::string type;
-    bool constant;
-    bool reference;
+    bool in;
+    bool out;
     bool isArray;
     uint32_t arraySize;
 
     static Parameter create(const Token& token,
                             const std::string& type,
-                            bool constant = true,
-                            bool reference = false,
+                            bool in = true,
+                            bool out = false,
                             bool isArray = false,
                             uint32_t arraySize = 0);
 };
@@ -34,7 +34,7 @@ class Method : public Token
     Parameter returnValue;
     std::vector<Parameter> parameters;
     bool isStatic;
-    bool constant;
+    bool isConstant;
     std::string comment;
     std::unordered_map<std::string, Attribute> attributes;
     Documentation documentation;
@@ -42,7 +42,7 @@ class Method : public Token
     static Method create(const Token& token,
                          const Parameter& returnValue,
                          bool isStatic = false,
-                         bool constant = false,
+                         bool isConstant = false,
                          const std::unordered_map<std::string, Attribute>& attributes = {},
                          const std::string& comment = "",
                          const Documentation& documentation = {});

@@ -93,7 +93,7 @@ include {{include.name}}
 ## endif
 ## endfor
 ## for parameter in method.parameters
-            {{parameter.name}} : {% if parameter.reference == true %}reference {% endif %}{% if parameter.constant == false %}mutable {% endif %}{{parameter.type}}
+            {{parameter.name}} : {% if parameter.in == true %}in {% endif %}{% if parameter.out == true %}out {% endif %}{{parameter.type}}
 ## endfor
 ## endfor
 ## endfor
@@ -141,12 +141,7 @@ include {{include.name}}
 ## endif
 ## endfor
 ## for parameter in method.parameters
-## if parameter.constant == true
-            {{parameter.name}} : {{parameter.type}}
-## endif
-## if parameter.constant == false
-            {{parameter.name}} : mutable {{parameter.type}}
-## endif
+            {{parameter.name}} : {% if parameter.in == true %}in {% endif %}{% if parameter.out == true %}out {% endif %}{{parameter.type}}
 ## endfor
 ## endfor
 ## endfor

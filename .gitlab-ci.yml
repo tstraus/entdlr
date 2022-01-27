@@ -7,11 +7,11 @@ stages:
   - package
 
 build:
-  type: build
+  stage: build
   tags:
     - htpc
   script:
-    - ./generate.sh
+    #- ./generate.sh
     - ./configure.sh
     - ./build.sh 8
   cache:
@@ -20,7 +20,7 @@ build:
       - build
 
 test:
-  type: test
+  stage: test
   tags:
     - htpc
   script:
@@ -33,7 +33,7 @@ test:
       - build
 
 package:
-  type: package
+  stage: package
   tags:
     - htpc
   script:

@@ -28,6 +28,8 @@ class Namespace : public Token
     void add(const Struct& s);
     void add(const Interface& i);
     void add(const Service& s);
+
+    void sort();
 };
 }; // namespace Entdlr
 

@@ -630,8 +630,8 @@ Method Parser::parseMethod(FlatBuffersParser::Method_declContext* method, const 
     Parameter returnValue;
     returnValue.token = TokenType::Parameter;
     returnValue.name = "return";
-    returnValue.reference = false;
-    returnValue.constant = false;
+    returnValue.in = false;
+    returnValue.out = false;
     returnValue.isArray = false;
     returnValue.arraySize = 0;
 
@@ -654,12 +654,12 @@ Method Parser::parseMethod(FlatBuffersParser::Method_declContext* method, const 
     }
     // cout  << "method -> " << method->DOC_COMMENT()->getSymbol()->getText() << endl;
 
-    if (method->static_decl() != nullptr)
+    if (method->STATIC() != nullptr)
     {
         isStatic = true;
     }
 
-    if (method->mutable_decl() != nullptr)
+    if (method->MUTABLE() != nullptr)
     {
         isConstant = false;
     }
@@ -667,54 +667,44 @@ Method Parser::parseMethod(FlatBuffersParser::Method_declContext* method, const 
     const auto attributes = parseAttributes(method->metadata(), filename);
 
     // non-void method
-    if ((method->method_return_type() != nullptr) && (method->method_return_type()->method_type() != nullptr))
+    if (method->type() != nullptr)
     {
-        auto* rt = method->method_return_type()->method_type();
+        auto* rt = method->type();
 
         const auto returnToken = Token::create(
-            "return", filename, rt->type()->getStart()->getLine(), rt->type()->getStart()->getCharPositionInLine());
+            "return", filename, rt->getStart()->getLine(), rt->getStart()->getCharPositionInLine());
         returnValue.name = returnToken.name;
         returnValue.filename = returnToken.filename;
         returnValue.line = returnToken.line;
         returnValue.column = returnToken.column;
 
-        returnValue.constant = false; // make return values always mutable
-        if (rt->mutable_decl() != nullptr)
-        {
-            returnValue.constant = false;
-        }
-
-        if (rt->reference_decl() != nullptr)
-        {
-            returnValue.reference = true;
-        }
-
         // plain type
-        if (rt->type()->BASE_TYPE_NAME() != nullptr)
+        if (rt->BASE_TYPE_NAME() != nullptr)
         {
-            returnValue.type = rt->type()->BASE_TYPE_NAME()->getSymbol()->getText();
+            returnValue.type = rt->BASE_TYPE_NAME()->getSymbol()->getText();
         }
 
         // array of plain type
-        else if ((rt->type()->type() != nullptr) && (rt->type()->type()->BASE_TYPE_NAME() != nullptr))
+        else if ((rt->type() != nullptr) && (rt->type()->BASE_TYPE_NAME() != nullptr))
         {
-            returnValue.type = rt->type()->type()->BASE_TYPE_NAME()->getSymbol()->getText();
+            returnValue.type = rt->type()->BASE_TYPE_NAME()->getSymbol()->getText();
 
             returnValue.isArray = true;
 
             // fixed size array
-            if ((rt->type()->integer_const() != nullptr) &&
-                (rt->type()->integer_const()->INTEGER_CONSTANT() != nullptr))
+            if ((rt->integer_const() != nullptr) &&
+                (rt->integer_const()->INTEGER_CONSTANT() != nullptr))
             {
-                returnValue.arraySize = std::stoul(rt->type()->integer_const()->INTEGER_CONSTANT()->getSymbol()->getText());
+                returnValue.arraySize =
+                    std::stoul(rt->integer_const()->INTEGER_CONSTANT()->getSymbol()->getText());
             }
         }
 
         // namespaced type
-        else if (rt->type()->ns_ident() != nullptr)
+        else if (rt->ns_ident() != nullptr)
         {
             bool afterFirst = false;
-            for (const auto& segment : rt->type()->ns_ident()->IDENT())
+            for (const auto& segment : rt->ns_ident()->IDENT())
             { // get the namespace separated by "."
                 if (afterFirst)
                 {
@@ -730,10 +720,10 @@ Method Parser::parseMethod(FlatBuffersParser::Method_declContext* method, const 
         }
 
         // array of namespaced type
-        if ((rt->type()->type() != nullptr) && (rt->type()->type()->ns_ident() != nullptr))
+        if ((rt->type() != nullptr) && (rt->type()->ns_ident() != nullptr))
         {
             bool afterFirst = false;
-            for (const auto& segment : rt->type()->type()->ns_ident()->IDENT())
+            for (const auto& segment : rt->type()->ns_ident()->IDENT())
             { // get the namespace separated by "."
                 if (afterFirst)
                 {
@@ -750,11 +740,11 @@ Method Parser::parseMethod(FlatBuffersParser::Method_declContext* method, const 
             returnValue.isArray = true;
 
             // fixed size array
-            if ((rt->type()->integer_const() != nullptr) &&
-                (rt->type()->integer_const()->INTEGER_CONSTANT() != nullptr))
+            if ((rt->integer_const() != nullptr) &&
+                (rt->integer_const()->INTEGER_CONSTANT() != nullptr))
             {
                 returnValue.arraySize =
-                    std::stoul(rt->type()->integer_const()->INTEGER_CONSTANT()->getSymbol()->getText());
+                    std::stoul(rt->integer_const()->INTEGER_CONSTANT()->getSymbol()->getText());
             }
         }
     }
@@ -779,8 +769,8 @@ Method Parser::parseMethod(FlatBuffersParser::Method_declContext* method, const 
     {
         std::string type;
         bool isArray = false;
-        bool isConstant = true;
-        bool isReference = false;
+        bool in = false;
+        bool out = false;
         uint32_t arraySize = 0;
 
         auto* mt = p->method_type();
@@ -853,14 +843,21 @@ Method Parser::parseMethod(FlatBuffersParser::Method_declContext* method, const 
             }
         }
 
-        if (mt->mutable_decl() != nullptr)
+        if (mt->IN() != nullptr)
         {
-            isConstant = false;
+            in = true;
         }
 
-        if (mt->reference_decl() != nullptr)
+        if (mt->OUT() != nullptr)
         {
-            isReference = true;
+            out = true;
+        }
+
+        if (in == out)
+        {
+            throw std::runtime_error(std::to_string(mt->type()->getStart()->getLine()) + ", " +
+                                     std::to_string(mt->type()->getStart()->getCharPositionInLine()) +
+                                     ": Method parameters must be either 'in' or 'out'");
         }
 
         output.add(Parameter::create(Token::create(p->IDENT()->getSymbol()->getText(),
@@ -868,8 +865,8 @@ Method Parser::parseMethod(FlatBuffersParser::Method_declContext* method, const 
                                                    p->getStart()->getLine(),
                                                    p->getStart()->getCharPositionInLine()),
                                      type,
-                                     isConstant,
-                                     isReference,
+                                     in,
+                                     out,
                                      isArray,
                                      arraySize));
     }
@@ -1001,7 +998,7 @@ std::vector<Interface> Parser::parseInterfaces(const std::vector<FlatBuffersPars
 ServiceComponent Parser::parseServiceComponent(FlatBuffersParser::Service_component_declContext* component,
                                                const std::string& filename)
 {
-    const auto type = component->service_component_type()->IDENT()->getSymbol()->getText();
+    const auto type = component->IDENT()->getSymbol()->getText();
     std::string name;
     std::unordered_map<std::string, Attribute> attributes;
     std::string comment;
