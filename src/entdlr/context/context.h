@@ -14,6 +14,8 @@ class Context
 
     void add(const Include& i);
     void add(const Namespace& n);
+
+    void sort();
 };
 }; // namespace Entdlr
 

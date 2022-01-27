@@ -23,6 +23,7 @@ int main(int argc, char** argv)
         std::string config;
         std::string output_name;
         std::string include_dir;
+        bool sort = false;
 
         CLI::App app{"entdlr"};
 
@@ -37,6 +38,8 @@ int main(int argc, char** argv)
             app.add_option("-i,--include_dir",
                            include_dir,
                            "Directory to search for included .fbs files, otherwise directory of file");
+        auto* sortOption =
+            app.add_flag("-s,--sort", sort, "Order declarations alphebetically, rather than in the order parsed");
 
         templateOption->required();
         dirOption->excludes(fileOption);
@@ -52,6 +55,11 @@ int main(int argc, char** argv)
         else
         {
             context = Entdlr::Parser::parseDir(dirname, include_dir);
+        }
+
+        if (sort)
+        {
+            context.sort();
         }
 
         Entdlr::InjaTemplate t;
