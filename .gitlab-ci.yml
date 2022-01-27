@@ -11,7 +11,7 @@ build:
   tags:
     - htpc
   script:
-    - ./generate.sh
+    #- ./generate.sh
     - ./configure.sh
     - ./build.sh 8
   cache:
