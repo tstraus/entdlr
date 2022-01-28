@@ -23,7 +23,7 @@ target_link_libraries (${PROJECT_NAME}
     PUBLIC entdlr::javadoc_parser
 )
 
-if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+if (UNIX)
     target_link_libraries (${PROJECT_NAME}
         PUBLIC stdc++fs
     )
