@@ -14,6 +14,8 @@ Attribute Attribute::create(const Token& token)
     out.string = "";
     out.isNumber = false;
     out.number = 0;
+    out.isInteger = false;
+    out.integer = 0;
 
     return out;
 }
