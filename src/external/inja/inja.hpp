@@ -1589,6 +1589,8 @@ public:
     Round,
     Sort,
     Upper,
+    CamelUpper,
+    CamelLower,
     Callback,
     ParenLeft,
     ParenRight,
@@ -1631,6 +1633,8 @@ private:
     {std::make_pair("round", 2), FunctionData { Operation::Round }},
     {std::make_pair("sort", 1), FunctionData { Operation::Sort }},
     {std::make_pair("upper", 1), FunctionData { Operation::Upper }},
+    {std::make_pair("camelUpper", 1), FunctionData { Operation::CamelUpper }},
+    {std::make_pair("camelLower", 1), FunctionData { Operation::CamelLower }},
   };
 
 public:
@@ -3765,6 +3769,56 @@ class Renderer : public NodeVisitor  {
     case Op::Upper: {
       std::string result = get_arguments<1>(node)[0]->get<std::string>();
       std::transform(result.begin(), result.end(), result.begin(), ::toupper);
+      result_ptr = std::make_shared<json>(std::move(result));
+      json_tmp_stack.push_back(result_ptr);
+      json_eval_stack.push(result_ptr.get());
+    } break;
+    case Op::CamelUpper: {
+      std::string input = get_arguments<1>(node)[0]->get<std::string>();
+      std::stringstream result_ss;
+      bool nextUpper = true;
+      for (const auto& ch : input)
+      {
+        if (ch == ' ' || ch == '_')
+          nextUpper = true;
+        else if (nextUpper)
+        {
+          nextUpper = false;
+          result_ss << (char)::toupper(ch);
+        }
+        else
+          result_ss << (char)::tolower(ch);
+      }
+      std::string result = result_ss.str();
+      result_ptr = std::make_shared<json>(std::move(result));
+      json_tmp_stack.push_back(result_ptr);
+      json_eval_stack.push(result_ptr.get());
+    } break;
+    case Op::CamelLower: {
+      std::string input = get_arguments<1>(node)[0]->get<std::string>();
+      std::stringstream result_ss;
+      bool nextUpper = false;
+      bool trimFront = true;
+      for (const auto& ch : input)
+      {
+        if (ch == ' ' || ch == '_')
+        {
+          if (!trimFront)
+            nextUpper = true;
+        }
+        else if (nextUpper)
+        {
+          trimFront = false;
+          nextUpper = false;
+          result_ss << (char)::toupper(ch);
+        }
+        else
+        {
+          trimFront = false;
+          result_ss << (char)::tolower(ch);
+        }
+      }
+      std::string result = result_ss.str();
       result_ptr = std::make_shared<json>(std::move(result));
       json_tmp_stack.push_back(result_ptr);
       json_eval_stack.push(result_ptr.get());
